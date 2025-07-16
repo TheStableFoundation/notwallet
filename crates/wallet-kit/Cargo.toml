@@ -14,10 +14,10 @@ name = "uniffi-bindgen"
 path = "uniffi-bindgen.rs"
 
 [dependencies]
-solana-sdk = "2"
-solana-client = "2"
-solana-account-decoder = "2"
-solana-program = "2"
+solana-sdk = "2.3.1"
+solana-client = "2.3.1"
+solana-account-decoder = "2.3.1"
+solana-program = "2.3.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = { version = "1.35.1", features = ["full"] }
@@ -25,6 +25,9 @@ thiserror = "1.0.56"
 log = "0.4.20"
 bip39 = { version = "2", features = ["rand"] }
 uniffi = { version = "0.28", features = ["cli"] }
+
+[patch.crates-io]
+getrandom = { git = "https://github.com/keypair34/getrandom", tag = "v0.3.3" }
 
 [build-dependencies]
 uniffi = { version = "0.28", features = ["build"] }
