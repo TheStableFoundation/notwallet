@@ -2,11 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.cargo.ndk)
+    //alias(libs.plugins.cargo.ndk)
 }
 
 android {
-    namespace = "xyz.notwallet.NotWallet"
+    namespace = "xyz.notwallet.notwallet"
     compileSdk = 36
 
     defaultConfig {
@@ -47,12 +47,17 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.core.splashscreen)
     implementation(libs.material3.android)
+    implementation(libs.horologist.compose.layout)
+    implementation(libs.androidx.material.icons.extended)
+    // Compose preview annotations for Wear OS.
+    implementation(libs.androidx.compose.ui.tooling)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 }
 
+/*
 cargoNdk {
     module = "../crates/wallet-kit"
     librariesNames = arrayListOf("libwallet_kit.so")
@@ -92,3 +97,4 @@ android.applicationVariants.forEach { variant ->
         java.srcDir(layout.buildDirectory.dir("generated/source/uniffi/${variant.name}/java"))
     }
 }
+*/

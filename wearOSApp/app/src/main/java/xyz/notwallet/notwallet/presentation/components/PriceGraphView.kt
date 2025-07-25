@@ -1,4 +1,4 @@
-package xyz.notwallet.NotWallet.presentation.components
+package xyz.notwallet.notwallet.presentation.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
