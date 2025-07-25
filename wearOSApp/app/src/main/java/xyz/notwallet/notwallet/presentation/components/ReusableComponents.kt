@@ -132,8 +132,13 @@ fun TextHeader(text: String, modifier: Modifier = Modifier, transformation: Surf
 fun Card(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    contentDescription: String = "",
+    iconContentDescription: String = "",
+    name: String = "",
+    time: String = "",
+    title: String = "",
+    content: String = "",
     imageVector: ImageVector,
+    onClick: () -> Unit,
     transformation: SurfaceTransformation,
 ) {
     AppCard(
@@ -142,39 +147,45 @@ fun Card(
         appImage = {
             Icon(
                 imageVector = imageVector,
-                contentDescription = contentDescription,
+                contentDescription = iconContentDescription,
                 modifier = iconModifier,
             )
         },
-        appName = { Text("Messages") },
-        time = { Text("12m") },
-        title = { Text("Kim Green") },
-        onClick = { /* ... */ },
+        appName = { Text(name) },
+        time = { Text(time) },
+        title = { Text(title) },
+        onClick = onClick,
     ) {
-        Text("On my way!")
+        Text(content)
     }
 }
 
 @Composable
 fun Chip(
     modifier: Modifier = Modifier,
+    maxLines: Int = 1,
+    overflow: TextOverflow = TextOverflow.Ellipsis,
+    text: String,
+    imageVector: ImageVector,
+    iconContentDescription: String,
+    onClick: () -> Unit,
     transformation: SurfaceTransformation,
 ) {
     Button(
         modifier = modifier,
         transformation = transformation,
-        onClick = { /* ... */ },
+        onClick = onClick,
         icon = {
             Icon(
-                imageVector = Icons.Rounded.SelfImprovement,
-                contentDescription = "triggers meditation action",
+                imageVector = imageVector,
+                contentDescription = iconContentDescription,
             )
         },
     ) {
         Text(
-            text = "5 minute Meditation",
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            text = text,
+            maxLines = maxLines,
+            overflow = overflow,
         )
     }
 }
@@ -310,7 +321,16 @@ fun CardPreview() {
             ) { cp ->
                 TransformingLazyColumn(state = listState, contentPadding = cp) {
                     item {
-                        Card(imageVector = Icons.AutoMirrored.Rounded.Message, transformation = SurfaceTransformation(transformationSpec))
+                        Card(
+                            imageVector = Icons.AutoMirrored.Rounded.Message,
+                            iconContentDescription = "Message icon",
+                            name = "Message",
+                            time = "12am",
+                            title = "Kim Green",
+                            content = "On my way!",
+                            onClick = {},
+                            transformation = SurfaceTransformation(transformationSpec)
+                        )
                     }
                 }
             }
@@ -334,7 +354,13 @@ fun ChipPreview() {
             ) { contentPadding ->
                 TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
-                        Chip(transformation = SurfaceTransformation(transformationSpec))
+                        Chip(
+                            text = "5 minute Meditation",
+                            imageVector = Icons.Rounded.SelfImprovement,
+                            iconContentDescription = "triggers meditation action",
+                            onClick = {},
+                            transformation = SurfaceTransformation(transformationSpec)
+                        )
                     }
                 }
             }

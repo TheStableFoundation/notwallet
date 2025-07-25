@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Euro
+import androidx.compose.material.icons.rounded.SelfImprovement
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,8 +43,10 @@ import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
 import xyz.notwallet.notwallet.R
 import xyz.notwallet.notwallet.presentation.components.BaseText
+import xyz.notwallet.notwallet.presentation.components.Chip
 import xyz.notwallet.notwallet.presentation.components.IconButton
 import xyz.notwallet.notwallet.presentation.components.PriceGraphView
+import xyz.notwallet.notwallet.presentation.components.TextHeader
 import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
 import xyz.notwallet.notwallet.presentation.transactions.TransactionListActivity
 
@@ -71,48 +74,24 @@ fun WearApp() {
                 contentPadding = rememberResponsiveColumnPadding(
                     first = ColumnItemType.IconButton,
                     last = ColumnItemType.Button,
-                ),
-                edgeButton = {
-                    EdgeButton(
-                        onClick = { /* ... */ },
-                        buttonSize = EdgeButtonSize.Medium,
-                    ) {
-                        androidx.wear.compose.material3.Text(stringResource(R.string.more))
-                    }
-                },
+                )
             ) { contentPadding ->
                 TransformingLazyColumn(
                     state = listState,
                     contentPadding = contentPadding,
                 ) {
                     item {
-                        IconButton(
+                        Chip(
+                            text = "BACH Token",
+                            imageVector = Icons.Rounded.Euro,
+                            iconContentDescription = "BACH Token information",
                             onClick = {
                                 context.startActivity(
-                                    Intent(context, TransactionListActivity::class.java)
+                                    Intent(context, BachInfoActivity::class.java)
                                 )
                             },
-                            imageVector = Icons.Rounded.Euro
-                        )
-                    }
-                    item {
-                        BaseText(
-                            text = "Fixed supply",
-                            fontSize = 12.sp,
-                            color = Color.Gray,
                             transformation = SurfaceTransformation(transformationSpec)
                         )
-                    }
-                    item {
-                        BaseText(
-                            text = "12 million BACH",
-                            fontSize = 18.sp,
-                            textAlign = TextAlign.Center,
-                            transformation = SurfaceTransformation(transformationSpec)
-                        )
-                    }
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
                     }
                     item {
                         Box(
@@ -133,7 +112,6 @@ fun WearApp() {
                             fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = Color.Gray,
-                            modifier = Modifier.padding(vertical = 8.dp),
                             transformation = SurfaceTransformation(transformationSpec)
                         )
                     }
@@ -147,21 +125,15 @@ fun WearApp() {
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             BaseText(
-                                text = "10.624434723489 BACH",
+                                text = "10.624 BACH",
                                 fontSize = 20.sp,
                                 fontFamily = FontFamily.Monospace,
-                                color = Color.Black,
                                 modifier =
-                                    Modifier.padding(8.dp)
-                                        .clip(RectangleShape),
-                                        //.horizontalScroll(rememberScrollState()),
+                                    Modifier.clip(RectangleShape),
                                 maxLines = 1,
                                 transformation = SurfaceTransformation(transformationSpec)
                             )
                         }
-                    }
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
