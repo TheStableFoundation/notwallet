@@ -1,4 +1,4 @@
-package xyz.notwallet.NotWallet.presentation
+package xyz.notwallet.notwallet.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.tooling.preview.devices.WearDevices
-import xyz.notwallet.NotWallet.presentation.components.PriceGraphView
-import xyz.notwallet.NotWallet.presentation.theme.NotWalletTheme
+import xyz.notwallet.notwallet.presentation.components.PriceGraphView
+import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
 
 class BachInfoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

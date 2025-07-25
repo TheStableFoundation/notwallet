@@ -1,4 +1,4 @@
-package xyz.notwallet.NotWallet.presentation.theme
+package xyz.notwallet.notwallet.presentation.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

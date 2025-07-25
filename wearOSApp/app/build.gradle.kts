@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "xyz.notwallet.NotWallet"
+    namespace = "xyz.notwallet.notwallet"
     compileSdk = 36
 
     defaultConfig {

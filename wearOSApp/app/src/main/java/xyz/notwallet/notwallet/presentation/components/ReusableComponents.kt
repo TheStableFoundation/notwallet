@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.notwallet.NotWallet.presentation.components
+package xyz.notwallet.notwallet.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,8 +55,8 @@ import androidx.wear.compose.material3.lazy.rememberTransformationSpec
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
-import xyz.notwallet.NotWallet.R
-import xyz.notwallet.NotWallet.presentation.theme.NotWalletTheme
+import xyz.notwallet.notwallet.R
+import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
 
 @Composable
 fun IconButton(
@@ -95,6 +95,7 @@ fun BaseText(text: String,
             modifier = modifier,
             textAlign = TextAlign.Center,
             text = text,
+            fontSize = fontSize
         )
     }
 }
@@ -154,9 +155,8 @@ fun Card(
     }
 }
 
-// TODO: Create a Chip Composable
 @Composable
-fun ChipExample(
+fun Chip(
     modifier: Modifier = Modifier,
     transformation: SurfaceTransformation,
 ) {
@@ -179,12 +179,12 @@ fun ChipExample(
     }
 }
 
-// TODO: Create a Switch Chip Composable
 @Composable
 fun SwitchChip(modifier: Modifier = Modifier, transformation: SurfaceTransformation) {
     var checked by remember { mutableStateOf(true) }
     SwitchButton(
         modifier = modifier,
+        transformation = transformation,
         label = {
             Text(
                 "Sound",
@@ -240,7 +240,7 @@ fun StartOnlyTextComposablesPreview() {
 // Button Preview
 @WearPreviewDevices
 @Composable
-fun ButtonExamplePreview() {
+fun ButtonPreview() {
     NotWalletTheme {
         //  val transformationSpec = rememberTransformationSpec()
         AppScaffold {
@@ -267,7 +267,7 @@ fun ButtonExamplePreview() {
 // Text Preview
 @WearPreviewDevices
 @Composable
-fun TextExamplePreview() {
+fun BaseTextPreview() {
     NotWalletTheme {
         val transformationSpec = rememberTransformationSpec()
         AppScaffold {
@@ -281,6 +281,12 @@ fun TextExamplePreview() {
                 TransformingLazyColumn(state = listState, contentPadding = contentPadding, modifier = Modifier.fillMaxWidth()) {
                     item {
                         BaseText(text = "Hello world!", transformation = SurfaceTransformation(transformationSpec))
+                    }
+                    item {
+                        TextHeader(text = "This is Header", transformation = SurfaceTransformation(transformationSpec))
+                    }
+                    item {
+                        TextRegular(text = "Regular text", transformation = SurfaceTransformation(transformationSpec))
                     }
                 }
             }
@@ -328,7 +334,7 @@ fun ChipPreview() {
             ) { contentPadding ->
                 TransformingLazyColumn(state = listState, contentPadding = contentPadding) {
                     item {
-                        ChipExample(transformation = SurfaceTransformation(transformationSpec))
+                        Chip(transformation = SurfaceTransformation(transformationSpec))
                     }
                 }
             }
@@ -339,7 +345,7 @@ fun ChipPreview() {
 // Switch Chip Preview
 @WearPreviewDevices
 @Composable
-fun SwitchChipExamplePreview() {
+fun SwitchChipPreview() {
     NotWalletTheme {
         val transformationSpec = rememberTransformationSpec()
         AppScaffold {

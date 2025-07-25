@@ -1,27 +1,20 @@
-package xyz.notwallet.NotWallet.presentation
+package xyz.notwallet.notwallet.presentation
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Euro
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -44,17 +37,15 @@ import androidx.wear.compose.material3.EdgeButtonSize
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.lazy.rememberTransformationSpec
-import androidx.wear.compose.material3.lazy.transformedHeight
 import androidx.wear.tooling.preview.devices.WearDevices
 import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
-import xyz.notwallet.NotWallet.R
-import xyz.notwallet.NotWallet.presentation.components.BaseText
-import xyz.notwallet.NotWallet.presentation.components.IconButton
-import xyz.notwallet.NotWallet.presentation.components.PriceGraphView
-import xyz.notwallet.NotWallet.presentation.components.TextRegular
-import xyz.notwallet.NotWallet.presentation.theme.NotWalletTheme
-import xyz.notwallet.NotWallet.presentation.transactions.TransactionListActivity
+import xyz.notwallet.notwallet.R
+import xyz.notwallet.notwallet.presentation.components.BaseText
+import xyz.notwallet.notwallet.presentation.components.IconButton
+import xyz.notwallet.notwallet.presentation.components.PriceGraphView
+import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
+import xyz.notwallet.notwallet.presentation.transactions.TransactionListActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,8 +96,12 @@ fun WearApp() {
                         )
                     }
                     item {
-                        BaseText(text = "Fixed supply", fontSize = 12.sp, color = Color.Gray,
-                            transformation = SurfaceTransformation(transformationSpec))
+                        BaseText(
+                            text = "Fixed supply",
+                            fontSize = 12.sp,
+                            color = Color.Gray,
+                            transformation = SurfaceTransformation(transformationSpec)
+                        )
                     }
                     item {
                         BaseText(

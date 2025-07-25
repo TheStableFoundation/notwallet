@@ -1,4 +1,4 @@
-package xyz.notwallet.NotWallet.presentation.transactions
+package xyz.notwallet.notwallet.presentation.transactions
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.tooling.preview.devices.WearDevices
-import xyz.notwallet.NotWallet.presentation.theme.NotWalletTheme
+import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
 
 data class TransactionDetail(val amount: String, val description: String, val date: String)
 

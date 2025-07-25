@@ -1,4 +1,4 @@
-package xyz.notwallet.NotWallet.presentation.transactions
+package xyz.notwallet.notwallet.presentation.transactions
 
 import android.content.Intent
 import android.os.Bundle
@@ -32,7 +32,7 @@ import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.tooling.preview.devices.WearDevices
-import xyz.notwallet.NotWallet.presentation.theme.NotWalletTheme
+import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
 
 data class Transaction(val date: String, val amount: String, val description: String)
 
