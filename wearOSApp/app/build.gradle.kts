@@ -13,7 +13,7 @@ android {
         applicationId = "xyz.notwallet.NotWallet"
         minSdk = 30
         targetSdk = 36
-        versionCode = 3
+        versionCode = 4
         versionName = "1.0"
     }
 
