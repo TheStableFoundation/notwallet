@@ -37,7 +37,7 @@ import androidx.wear.tooling.preview.devices.WearDevices
 import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
 import xyz.notwallet.notwallet.R
-import xyz.notwallet.notwallet.presentation.components.Card
+import xyz.notwallet.notwallet.presentation.components.TransactionCard
 import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
 
 data class Transaction(val date: String, val amount: String, val description: String)
@@ -130,13 +130,12 @@ private fun ScrollViewContent(
             val isIncoming = tx.amount.startsWith("+")
             val icon = if (isIncoming) Icons.Rounded.Euro else Icons.Rounded.Info
             val iconDesc = if (isIncoming) "Incoming" else "Outgoing"
-            Card(
+            TransactionCard(
                     imageVector = icon,
                     iconContentDescription = iconDesc,
                     name = tx.description,
                     time = tx.date,
                     title = tx.amount,
-                    content = "",
                     onClick = { selectedTransaction = tx },
                     transformation = SurfaceTransformation(transformationSpec)
             )

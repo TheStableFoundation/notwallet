@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -58,6 +59,7 @@ import com.google.android.horologist.compose.layout.ColumnItemType
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnPadding
 import xyz.notwallet.notwallet.R
 import xyz.notwallet.notwallet.presentation.theme.NotWalletTheme
+import xyz.notwallet.notwallet.presentation.transactions.Transaction
 
 @Composable
 fun IconButton(
@@ -154,11 +156,48 @@ fun Card(
             )
         },
         appName = { Text(name) },
-        time = { Text(time) },
         title = { Text(title) },
         onClick = onClick,
     ) {
         Text(content)
+        Text(time)
+    }
+}
+
+@Composable
+fun TransactionCard(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    iconContentDescription: String = "",
+    name: String = "",
+    time: String = "",
+    title: String = "",
+    imageVector: ImageVector,
+    onClick: () -> Unit,
+    transformation: SurfaceTransformation,
+) {
+    AppCard(
+        modifier = modifier,
+        transformation = transformation,
+        appImage = {
+            Icon(
+                imageVector = imageVector,
+                contentDescription = iconContentDescription,
+                modifier = iconModifier,
+            )
+        },
+        appName = { Text(name) },
+        title = { Text(title) },
+        onClick = onClick,
+    ) {
+        Text(
+            time,
+            modifier = Modifier.fillMaxWidth(),
+            fontWeight = FontWeight.Light,
+            fontStyle = FontStyle.Italic,
+            fontSize = 12.sp,
+            textAlign = TextAlign.End
+        )
     }
 }
 
@@ -367,7 +406,37 @@ fun CardPreview() {
         }
     }
 }
-
+// Card Preview
+@WearPreviewDevices
+@Composable
+fun TransactionCardPreview() {
+    NotWalletTheme {
+        val transformationSpec = rememberTransformationSpec()
+        AppScaffold {
+            val listState = rememberTransformingLazyColumnState()
+            val contentPadding =
+                rememberResponsiveColumnPadding(first = ColumnItemType.Card)
+            ScreenScaffold(
+                scrollState = listState,
+                contentPadding = contentPadding,
+            ) { cp ->
+                TransformingLazyColumn(state = listState, contentPadding = cp) {
+                    item {
+                        TransactionCard(
+                            imageVector = Icons.Rounded.Euro,
+                            iconContentDescription = "Message icon",
+                            name = "Salary",
+                            time = "2025-07-13",
+                            title = "+2.000 BACH",
+                            onClick = {},
+                            transformation = SurfaceTransformation(transformationSpec)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 
 // Token Card Preview
 @WearPreviewDevices
