@@ -8,10 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  selectionFeedback
-} from '@tauri-apps/plugin-haptics'
-
+import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 
 export default function BottomTabBar() {
   const pathname = usePathname();
@@ -19,17 +16,20 @@ export default function BottomTabBar() {
   let value = 0;
   if (
     pathname === "/wallet" ||
+    pathname === "/wallet/token" ||
+    pathname === "/wallet/settings" ||
     pathname === "/deposit" ||
-    pathname === "/create-new-wallet" // Include the new wallet creation page in the Wallet tab
-  ) value = 1;
+    pathname === "/create-new-wallet"
+  )
+    value = 1;
   else if (
     pathname === "/settings" ||
-    pathname === "/about"
-  ) value = 2;
-  else if (
-    pathname === "/home" ||
-    pathname.startsWith("/activity")
-  ) value = 0;
+    pathname === "/settings/about" ||
+    pathname === "/settings/app-info" ||
+    pathname === "/settings/app-preferences"
+  )
+    value = 2;
+  else if (pathname === "/home" || pathname.startsWith("/activity")) value = 0;
 
   const handleChange = async (_: React.SyntheticEvent, newValue: number) => {
     try {
@@ -71,24 +71,24 @@ export default function BottomTabBar() {
           label="Home"
           icon={<HomeIcon />}
           sx={{
-            color: value === 0 ? "#1e88e5" : undefined,
-            "&.Mui-selected": { color: "#1e88e5" },
+            color: value === 0 ? "#AD5AD7" : undefined,
+            "&.Mui-selected": { color: "#AD5AD7" },
           }}
         />
         <BottomNavigationAction
           label="Wallet"
           icon={<AccountBalanceWalletIcon />}
           sx={{
-            color: value === 1 ? "#1e88e5" : undefined,
-            "&.Mui-selected": { color: "#1e88e5" },
+            color: value === 1 ? "#AD5AD7" : undefined,
+            "&.Mui-selected": { color: "#AD5AD7" },
           }}
         />
         <BottomNavigationAction
           label="Settings"
           icon={<SettingsIcon />}
           sx={{
-            color: value === 2 ? "#1e88e5" : undefined,
-            "&.Mui-selected": { color: "#1e88e5" },
+            color: value === 2 ? "#AD5AD7" : undefined,
+            "&.Mui-selected": { color: "#AD5AD7" },
           }}
         />
       </BottomNavigation>

@@ -1,7 +1,9 @@
-use crate::setup::store::setup_store;
+use crate::setup::{client::setup_client, store::setup_store};
 use log::info;
 use tauri::{App, Manager};
 
+mod client;
+pub(crate) mod commands;
 mod store;
 
 pub(crate) fn setup(app: &App) -> Result<(), Box<dyn std::error::Error>> {
@@ -12,5 +14,6 @@ pub(crate) fn setup(app: &App) -> Result<(), Box<dyn std::error::Error>> {
 
     info!("App local data dir: {:?}", app_data_dir);
     setup_store(app)?;
+    setup_client(app)?;
     Ok(())
 }

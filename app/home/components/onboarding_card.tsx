@@ -9,6 +9,7 @@ type OnboardingCardProps = {
 };
 
 export default function OnboardingCard({ open, onClose }: OnboardingCardProps) {
+
   const [showUsername, setShowUsername] = React.useState(false);
 
   if (!open) return null;

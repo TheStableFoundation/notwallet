@@ -123,7 +123,7 @@ export default function DepositPage() {
             labelId="denom-select-label"
             value={selectedDenom}
             label="Stablecoin"
-            onChange={e => setSelectedDenom(e.target.value)}
+            onChange={(e) => setSelectedDenom(e.target.value)}
             sx={{
               borderRadius: 3,
               bgcolor: "#fff",
@@ -191,7 +191,7 @@ export default function DepositPage() {
             width: "100%",
           }}
         >
-          <Typography variant="subtitle2" sx={{ color: "#1e88e5", mb: 1 }}>
+          <Typography variant="subtitle2" sx={{ color: "#AD5AD7", mb: 1 }}>
             Pay with Card
           </Typography>
           <Button
@@ -202,18 +202,22 @@ export default function DepositPage() {
               fontWeight: "bold",
               px: 4,
               py: 1,
-              bgcolor: "#1e88e5",
+              bgcolor: "#9932CC",
               color: "#fff",
               boxShadow: 2,
-              "&:hover": { bgcolor: "#1565c0" },
+              "&:hover": { bgcolor: "#AD5AD7" },
             }}
             disabled
           >
             Card Payment (Coming Soon)
           </Button>
         </Box>
-        <Typography variant="body1" sx={{ mb: 2, width: "100%", textAlign: "center" }}>
-          To deposit funds, send your {selectedDenom} stablecoins to your wallet address.
+        <Typography
+          variant="body1"
+          sx={{ mb: 2, width: "100%", textAlign: "center" }}
+        >
+          To deposit funds, send your {selectedDenom} stablecoins to your wallet
+          address.
         </Typography>
       </Card>
     </Box>

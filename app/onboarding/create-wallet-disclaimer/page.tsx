@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 
@@ -14,7 +15,7 @@ export default function CreateWalletDisclaimerPage() {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        minHeight: "60vh",
         bgcolor: "#f5f6fa",
         display: "flex",
         flexDirection: "column",
@@ -23,6 +24,35 @@ export default function CreateWalletDisclaimerPage() {
         p: 2,
       }}
     >
+      <Box
+        sx={{
+          width: "100%",
+          mb: 2,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
+          startIcon={<ArrowBackIcon />}
+          variant="text"
+          color="primary"
+          sx={{ mb: 0 }}
+          onClick={async () => {
+            await selectionFeedback();
+            router.push("/");
+          }}
+        >
+          Back
+        </Button>
+        <Typography
+          variant="body1"
+          fontWeight="bold"
+          sx={{ ml: 2, flex: 1, textAlign: "right" }}
+        >
+          Create Wallet
+        </Typography>
+      </Box>
       <Card
         sx={{
           maxWidth: 420,
@@ -40,7 +70,10 @@ export default function CreateWalletDisclaimerPage() {
         >
           Important Disclaimer
         </Typography>
-        <Typography sx={{ mb: 3, color: "#333", textAlign: "center" }}>
+        <Typography
+          variant="body1"
+          sx={{ mb: 3, color: "#333", textAlign: "center" }}
+        >
           You are about to create a self-custody wallet. <br />
           <br />
           <b>You are the only one who controls your wallet and funds.</b> <br />

@@ -141,6 +141,11 @@ export default function CreatePasswordPage() {
             }}
             color="secondary"
             variant="outlined"
+            sx={{
+              borderColor: "#AD5AD7",
+              color: "#AD5AD7",
+              "&:hover": { background: "#F5F6FA", borderColor: "#C792EA" },
+            }}
           >
             Create New Password
           </Button>
@@ -152,7 +157,7 @@ export default function CreatePasswordPage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
+          minHeight: "60vh",
           bgcolor: "#f5f6fa",
         }}
       >

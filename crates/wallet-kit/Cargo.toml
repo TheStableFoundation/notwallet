@@ -1,0 +1,30 @@
+[package]
+name = "wallet_kit"
+version = "0.1.0"
+edition = "2021"
+description = "Solana toolkit for Not Wallet"
+license = "MIT"
+
+[lib]
+crate-type = ["lib", "cdylib", "staticlib"]
+name = "wallet_kit"
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "uniffi-bindgen.rs"
+
+[dependencies]
+solana-sdk = "2"
+solana-client = "2"
+solana-account-decoder = "2"
+solana-program = "2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.35.1", features = ["full"] }
+thiserror = "1.0.56"
+log = "0.4.20"
+bip39 = { version = "2", features = ["rand"] }
+uniffi = { version = "0.28", features = ["cli"] }
+
+[build-dependencies]
+uniffi = { version = "0.28", features = ["build"] }

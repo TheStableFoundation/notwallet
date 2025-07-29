@@ -1,14 +1,20 @@
 use crate::constants::store::{store, STORE_KEYPAIRS, STORE_SEEDS};
+use crate::constants::{
+    address::{BACH_TOKEN_ADDRESS, SPL_TOKEN_PROGRAM_ID},
+    rpc::rpc_url,
+};
 use crate::model::keypair::SolanaWallet;
 use crate::model::seed::{Seed, SeedType};
 use crate::model::wallet::OnboardingCreateWallet;
-use crate::wallet::derive_keypair::derive_keypair_default;
 use bip39::{Language, Mnemonic};
 use chrono::Utc;
 use log::{debug, error, info};
 use solana_sdk::signature::Signer;
 use tauri::{command, AppHandle};
 use uuid::Uuid;
+use wallet_kit::balance::bach_balance;
+use wallet_kit::derive_keypair::derive_keypair_default;
+use wallet_kit::token_info::token_info;
 
 #[command]
 pub fn onboarding_create_wallet(app: AppHandle) -> Result<OnboardingCreateWallet, String> {
@@ -133,4 +139,21 @@ pub async fn derive_next_keypair(app: AppHandle, seed_uuid: Uuid) -> Result<Sola
     debug!("Derived keypair: {}", wallet.pubkey);
     info!("Derived keypair for seed {}: {}", seed.id, wallet.pubkey);
     Ok(wallet)
+}
+
+#[command]
+pub fn get_bach_balance(pubkey: String) -> String {
+    info!("Getting Bach balance for {}", pubkey);
+    bach_balance(
+        rpc_url(),
+        pubkey,
+        SPL_TOKEN_PROGRAM_ID.to_string(),
+        BACH_TOKEN_ADDRESS.to_string(),
+    )
+}
+
+#[command]
+pub fn get_token_info(id: String) -> String {
+    info!("Getting token info for {}", id);
+    token_info(id)
 }

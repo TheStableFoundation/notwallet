@@ -1,0 +1,9 @@
+/*
+  InfoPlist.strings
+  NotWallet
+
+  Created for NotWallet Watch App.
+*/
+
+CFBundleDisplayName = "NotWallet";
+NSHumanReadableCopyright = "© 2025 NotWallet";

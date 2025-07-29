@@ -46,7 +46,7 @@ export default function ImportWalletPage() {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        minHeight: "60vh",
         bgcolor: "#f5f6fa",
         display: "flex",
         flexDirection: "column",
@@ -65,7 +65,6 @@ export default function ImportWalletPage() {
           maxWidth: 480,
         }}
       >
-        {/* Move the header (back button + title) inside the inner Box */}
         <Box
           sx={{
             width: "100%",
@@ -88,8 +87,7 @@ export default function ImportWalletPage() {
             Back
           </Button>
           <Typography
-            variant="h4"
-            component="h1"
+            variant="body1"
             fontWeight="bold"
             sx={{ ml: 2, flex: 1, textAlign: "right" }}
           >

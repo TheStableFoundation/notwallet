@@ -26,3 +26,15 @@ dist-ssr
 # NextJS
 /.next/
 /out/
+
+# Android keystore files
+*.keystore
+*.jks
+upload-keystore.jks
+keystore.properties
+
+# Allow encrypted keystore files
+!secrets/*.gpg
+
+# App builds
+*.pkg

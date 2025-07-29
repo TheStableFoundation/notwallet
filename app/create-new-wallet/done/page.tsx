@@ -50,7 +50,11 @@ function DoneContent() {
           textAlign: "center",
         }}
       >
-        <Typography variant="h4" fontWeight="bold" sx={{ mb: 2, color: "#1e88e5" }}>
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          sx={{ mb: 2, color: "#AD5AD7" }}
+        >
           🎉 New Address Created!
         </Typography>
         <Typography variant="subtitle1" sx={{ mb: 2 }}>

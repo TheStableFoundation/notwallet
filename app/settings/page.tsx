@@ -16,14 +16,31 @@ export default function SettingsPage() {
   const router = useRouter();
 
   // Centralized click handler for all links
-  const handleClick = async (type: "about" | "openSource" | "footer") => {
+  const handleClick = async (
+    type:
+      | "about"
+      | "openSource"
+      | "footer"
+      | "privacyPolicy"
+      | "termsOfService"
+      | "appInfo"
+      | "appPreferences",
+  ) => {
     await selectionFeedback();
     if (type === "about") {
-      router.push("/about");
+      router.push("/settings/about");
+    } else if (type === "privacyPolicy") {
+      openUrl("https://bach.money/privacy-policy");
+    } else if (type === "termsOfService") {
+      openUrl("https://bach.money/terms-of-service");
     } else if (type === "openSource") {
       openUrl("https://github.com/TheStableFoundation/not");
     } else if (type === "footer") {
       openUrl("https://bach.money/");
+    } else if (type === "appInfo") {
+      router.push("/settings/app-info");
+    } else if (type === "appPreferences") {
+      router.push("/settings/app-preferences");
     }
   };
 
@@ -36,9 +53,20 @@ export default function SettingsPage() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        py: 4,
+        pb: 10,
       }}
     >
+      <Box sx={{ width: "100%", maxWidth: 480 }}>
+        <Typography
+          variant="h5"
+          component="h1"
+          fontWeight="bold"
+          align="center"
+          sx={{ mb: 2 }}
+        >
+          Settings
+        </Typography>
+      </Box>
       <Card
         sx={{
           maxWidth: 400,
@@ -50,7 +78,7 @@ export default function SettingsPage() {
       >
         <Box sx={{ pt: 4, pb: 2, px: 4 }}>
           <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>
-            Settings
+            About
           </Typography>
         </Box>
         <Divider />
@@ -85,12 +113,98 @@ export default function SettingsPage() {
               "&:hover": { bgcolor: "#f3f4f6" },
               transition: "background 0.2s",
             }}
+            onClick={() => handleClick("termsOfService")}
+            component="li"
+            disablePadding
+          >
+            <ListItemText
+              primary="Terms of Service"
+              primaryTypographyProps={{
+                sx: { fontSize: "1.08rem", fontWeight: 500, py: 1 },
+              }}
+            />
+          </ListItem>
+          <Divider />
+          <ListItem
+            sx={{
+              px: 4,
+              cursor: "pointer",
+              minHeight: 56,
+              borderRadius: 2,
+              "&:hover": { bgcolor: "#f3f4f6" },
+              transition: "background 0.2s",
+            }}
+            onClick={() => handleClick("privacyPolicy")}
+            component="li"
+            disablePadding
+          >
+            <ListItemText
+              primary="Privacy Policy"
+              primaryTypographyProps={{
+                sx: { fontSize: "1.08rem", fontWeight: 500, py: 1 },
+              }}
+            />
+          </ListItem>
+          <Divider />
+          <ListItem
+            sx={{
+              px: 4,
+              cursor: "pointer",
+              minHeight: 56,
+              borderRadius: 2,
+              "&:hover": { bgcolor: "#f3f4f6" },
+              transition: "background 0.2s",
+            }}
             onClick={() => handleClick("openSource")}
             component="li"
             disablePadding
           >
             <ListItemText
               primary="Open Source"
+              primaryTypographyProps={{
+                sx: { fontSize: "1.08rem", fontWeight: 500, py: 1 },
+              }}
+            />
+          </ListItem>
+          <Divider />
+          <ListItem
+            sx={{
+              px: 4,
+              cursor: "pointer",
+              minHeight: 56,
+              borderRadius: 2,
+              "&:hover": { bgcolor: "#f3f4f6" },
+              transition: "background 0.2s",
+            }}
+            onClick={() => handleClick("appPreferences")}
+            component="li"
+            disablePadding
+          >
+            {" "}
+            <ListItemText
+              primary="App Preferences"
+              primaryTypographyProps={{
+                sx: { fontSize: "1.08rem", fontWeight: 500, py: 1 },
+              }}
+            />
+          </ListItem>
+          <Divider />
+          <ListItem
+            sx={{
+              px: 4,
+              cursor: "pointer",
+              minHeight: 56,
+              borderRadius: 2,
+              "&:hover": { bgcolor: "#f3f4f6" },
+              transition: "background 0.2s",
+            }}
+            onClick={() => handleClick("appInfo")}
+            component="li"
+            disablePadding
+          >
+            {" "}
+            <ListItemText
+              primary="App Info"
               primaryTypographyProps={{
                 sx: { fontSize: "1.08rem", fontWeight: 500, py: 1 },
               }}
@@ -110,7 +224,7 @@ export default function SettingsPage() {
         }}
         onClick={() => handleClick("footer")}
       >
-        © {new Date().getFullYear()}{" "}
+        NotWallet - A Crypto Dollar Wallet © {new Date().getFullYear()}{" "}
         <span style={{ color: "#1e88e5", textDecoration: "underline" }}>
           bach.money
         </span>

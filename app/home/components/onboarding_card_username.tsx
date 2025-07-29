@@ -7,22 +7,31 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { store } from "@/lib/store/store";
 
 type OnboardingCardUsernameProps = {
   open: boolean;
   onClose: () => void;
 };
 
-export default function OnboardingCardUsername({ open, onClose }: OnboardingCardUsernameProps) {
+export default function OnboardingCardUsername({
+  open,
+  onClose,
+}: OnboardingCardUsernameProps) {
   const [username, setUsername] = React.useState("");
   const [usernameSaved, setUsernameSaved] = React.useState(false);
 
-  const handleSaveUsername = () => {
-    // You can add logic to persist username here
-    setUsernameSaved(true);
-    setTimeout(() => {
-      onClose();
-    }, 1200);
+  const handleSaveUsername = async () => {
+    try {
+      await store().set("username", username);
+      setUsernameSaved(true);
+      setTimeout(() => {
+        onClose();
+      }, 1200);
+    } catch (e) {
+      // Optionally handle error
+      setUsernameSaved(false);
+    }
   };
 
   if (!open) return null;
@@ -35,11 +44,11 @@ export default function OnboardingCardUsername({ open, onClose }: OnboardingCard
         mb: 3,
         borderRadius: 4,
         boxShadow: 6,
-        background: "linear-gradient(135deg, #212529 60%, #1e88e5 100%)",
+        background: "linear-gradient(135deg, #9932CC 0%, #AD5AD7 100%)",
         color: "#fff",
         position: "relative",
         overflow: "visible",
-        border: "2px solid #1e88e5",
+        border: "2px solid #AD5AD7",
       }}
     >
       <IconButton
@@ -49,9 +58,9 @@ export default function OnboardingCardUsername({ open, onClose }: OnboardingCard
           position: "absolute",
           top: 10,
           right: 10,
-          color: "#1e88e5",
+          color: "#AD5AD7",
           bgcolor: "#fff",
-          "&:hover": { bgcolor: "#e3f2fd" },
+          "&:hover": { bgcolor: "#F5F6FA" },
           zIndex: 2,
         }}
       >
@@ -62,9 +71,9 @@ export default function OnboardingCardUsername({ open, onClose }: OnboardingCard
           variant="h5"
           fontWeight="bold"
           sx={{
-            mb: 1,
+            mt: 2,
             color: "#fff",
-            textShadow: "0 2px 8px #1e88e599",
+            textShadow: "0 2px 8px #AD5AD799",
             letterSpacing: 1,
           }}
         >
@@ -86,7 +95,9 @@ export default function OnboardingCardUsername({ open, onClose }: OnboardingCard
           variant="outlined"
           placeholder="Enter your username"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setUsername(e.target.value)
+          }
           sx={{
             mb: 2,
             bgcolor: "#f3f4f6",
@@ -112,7 +123,11 @@ export default function OnboardingCardUsername({ open, onClose }: OnboardingCard
             },
           }}
           inputProps={{
-            style: { fontFamily: "monospace", fontSize: "1.1rem", color: "#212529" },
+            style: {
+              fontFamily: "monospace",
+              fontSize: "1.1rem",
+              color: "#212529",
+            },
             maxLength: 32,
           }}
           disabled={usernameSaved}
@@ -122,18 +137,15 @@ export default function OnboardingCardUsername({ open, onClose }: OnboardingCard
           size="large"
           sx={{
             bgcolor: "#fff",
-            color: "#1e88e5",
+            color: "#AD5AD7",
             fontWeight: "bold",
             fontSize: "1.1rem",
-            borderRadius: 3,
+            borderRadius: 2,
             boxShadow: 2,
             px: 4,
             py: 1.5,
-            "&:hover": { bgcolor: "#e3f2fd", color: "#1565c0" },
+            "&:hover": { bgcolor: "#F5F6FA" },
             transition: "all 0.2s",
-            opacity: !username || usernameSaved ? 0.5 : 1,
-            pointerEvents: !username || usernameSaved ? "none" : "auto",
-            mt: 1,
           }}
           onClick={handleSaveUsername}
           disabled={!username || usernameSaved}

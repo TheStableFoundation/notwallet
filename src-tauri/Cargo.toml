@@ -1,6 +1,6 @@
 [package]
 name = "notwallet"
-version = "0.2.2"
+version = "0.4.0"
 description = "Solana non-custodial wallet, stable coin payment platform, and more 🔐"
 authors = ["info@bach.money"]
 edition = "2021"
@@ -31,10 +31,18 @@ tauri-plugin-store = "2"
 bs58 = "0.5"
 tsync = "2"
 openssl = { version = "0.10", features = ["vendored"] }
+os_info = "2"
 tauri-plugin-opener = "2"
-reqwest = { version = "0.11", default-features = false, features = [
+reqwest = { version = "0.12", default-features = false, features = [
     "json",
-    "rustls-tls-native-roots",
+    "native-tls-vendored",
 ] }
 uuid = { version = "1", features = ["v4"] }
 chrono = { version = "0.4", features = ["serde"] }
+
+# Transitive dependencies override.
+curve25519-dalek = "4.1.3"
+tauri-plugin-clipboard-manager = "2"
+
+# Local crates
+wallet_kit = { path = "./../crates/wallet-kit" }

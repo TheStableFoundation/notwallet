@@ -61,7 +61,9 @@ export default function CreateNewWalletPage() {
     try {
       const result = await invoke<any>(DERIVE_NEXT_KEYPAIR, { seedUuid });
       // Navigate to done page with pubkey in search params
-      router.replace(`/create-new-wallet/done?pubkey=${encodeURIComponent(result.pubkey)}`);
+      router.replace(
+        `/create-new-wallet/done?pubkey=${encodeURIComponent(result.pubkey)}`,
+      );
     } catch (e: any) {
       setErrorMsg(e?.toString() || "Failed to derive keypair.");
     } finally {
@@ -88,7 +90,7 @@ export default function CreateNewWalletPage() {
           width: "100%",
           p: 4,
           boxShadow: 4,
-          background: "linear-gradient(135deg, #212529 60%, #1e88e5 100%)",
+          background: "linear-gradient(135deg, #9932CC 0%, #AD5AD7 100%)",
           color: "#fff",
         }}
       >
@@ -96,15 +98,24 @@ export default function CreateNewWalletPage() {
           <Button
             startIcon={<ArrowBackIcon />}
             onClick={async () => {
-              await selectionFeedback()
-              router.back()
+              await selectionFeedback();
+              router.back();
             }}
-            sx={{ minWidth: 0, color: "#1e88e5", bgcolor: "#fff", "&:hover": { bgcolor: "#e3f2fd" } }}
+            sx={{
+              minWidth: 0,
+              color: "#9932CC",
+              bgcolor: "#fff",
+              "&:hover": { bgcolor: "#F5F6FA" },
+            }}
           >
             Back
           </Button>
           <Box sx={{ flex: 1 }} />
-          <Typography variant="h5" fontWeight="bold" sx={{ textAlign: "right", color: "#fff" }}>
+          <Typography
+            variant="h5"
+            fontWeight="bold"
+            sx={{ textAlign: "right", color: "#fff" }}
+          >
             Create New Wallet
           </Typography>
         </Stack>
@@ -116,7 +127,7 @@ export default function CreateNewWalletPage() {
             value={selectedSeed}
             onChange={async (e) => {
               await selectionFeedback();
-              setSelectedSeed(e.target.value)
+              setSelectedSeed(e.target.value);
             }}
           >
             <List sx={{ bgcolor: "transparent", color: "#fff", p: 0 }}>
@@ -125,7 +136,8 @@ export default function CreateNewWalletPage() {
                   key={seed.id}
                   disableGutters
                   sx={{
-                    bgcolor: selectedSeed === seed.id ? "#1e88e5" : "transparent",
+                    bgcolor:
+                      selectedSeed === seed.id ? "#9932CC" : "transparent",
                     borderRadius: 2,
                     mb: 1,
                     px: 1,
@@ -133,10 +145,14 @@ export default function CreateNewWalletPage() {
                 >
                   <FormControlLabel
                     value={seed.id}
-                    control={<Radio sx={{
-                      color: "#fff",
-                      "&.Mui-checked": { color: "#fff" }
-                    }} />}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "#fff",
+                          "&.Mui-checked": { color: "#fff" },
+                        }}
+                      />
+                    }
                     label={
                       <ListItemText
                         primary={
@@ -161,7 +177,8 @@ export default function CreateNewWalletPage() {
                 key={CREATE_NEW_ID}
                 disableGutters
                 sx={{
-                  bgcolor: selectedSeed === CREATE_NEW_ID ? "#1e88e5" : "transparent",
+                  bgcolor:
+                    selectedSeed === CREATE_NEW_ID ? "#9932CC" : "transparent",
                   borderRadius: 2,
                   mb: 1,
                   px: 1,
@@ -169,10 +186,14 @@ export default function CreateNewWalletPage() {
               >
                 <FormControlLabel
                   value={CREATE_NEW_ID}
-                  control={<Radio sx={{
-                    color: "#fff",
-                    "&.Mui-checked": { color: "#fff" }
-                  }} />}
+                  control={
+                    <Radio
+                      sx={{
+                        color: "#fff",
+                        "&.Mui-checked": { color: "#fff" },
+                      }}
+                    />
+                  }
                   label={<ListItemText primary="+ Create New Seed Phrase" />}
                   sx={{ flex: 1, m: 0, color: "#fff" }}
                 />
@@ -181,9 +202,7 @@ export default function CreateNewWalletPage() {
           </RadioGroup>
         </FormControl>
         {errorMsg && (
-          <Typography sx={{ color: "#ff5252", mb: 2 }}>
-            {errorMsg}
-          </Typography>
+          <Typography sx={{ color: "#ff5252", mb: 2 }}>{errorMsg}</Typography>
         )}
         <Button
           variant="contained"
@@ -192,18 +211,18 @@ export default function CreateNewWalletPage() {
           sx={{
             mt: 2,
             bgcolor: "#fff",
-            color: "#1e88e5",
+            color: "#9932CC",
             fontWeight: "bold",
             borderRadius: 2,
             boxShadow: 2,
-            "&:hover": { bgcolor: "#e3f2fd" },
+            "&:hover": { bgcolor: "#F5F6FA" },
           }}
           onClick={async () => {
             await selectionFeedback();
             if (selectedSeed === CREATE_NEW_ID) {
               router.push("/onboarding/create-wallet");
             } else {
-              const seed = existingSeeds.find(s => s.id === selectedSeed);
+              const seed = existingSeeds.find((s) => s.id === selectedSeed);
               if (seed) {
                 await deriveNextKeypair(seed.id);
               }

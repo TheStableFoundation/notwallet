@@ -9,6 +9,4 @@
 /gen/apple/*
 !/gen/apple/*.xcprivacy
 gen/android/*
-!gen/android/app/build.gradle.kts
-!gen/android/keystore.properties
 /gen/schemas/*

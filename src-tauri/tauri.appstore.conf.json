@@ -1,0 +1,11 @@
+{
+  "bundle": {
+    "macOS": {
+      "entitlements": "./Entitlements.plist",
+      "signingIdentity": "your_signing_identity_here",
+      "files": {
+        "embedded.provisionprofile": "/path/to/provisionprofile.provisionprofile"
+      }
+    }
+  }
+}

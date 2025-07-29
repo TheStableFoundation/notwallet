@@ -40,9 +40,9 @@ export default function ActiveKeypairSelectionModal({
     >
       <Box
         sx={{
-          bgcolor: "background.paper",
-          borderRadius: 3,
-          boxShadow: 24,
+          bgcolor: "#fff",
+          borderRadius: 4,
+          boxShadow: "0 2px 16px rgba(153,50,204,0.12)",
           p: { xs: 2, sm: 3 },
           minWidth: 300,
           maxWidth: 380,
@@ -58,8 +58,13 @@ export default function ActiveKeypairSelectionModal({
             mb: 2,
             textAlign: "center",
             fontWeight: "bold",
-            color: "#1e88e5",
-            letterSpacing: 1,
+            color: "transparent",
+            background: "linear-gradient(90deg, #9932CC 0%, #A64DFF 100%)",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            letterSpacing: "0.02em",
+            fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
           }}
         >
           Switch Keypair
@@ -88,14 +93,13 @@ export default function ActiveKeypairSelectionModal({
                 mb: 1,
                 p: 1.2,
                 borderRadius: 2,
-                bgcolor: activePubkey === kp.pubkey ? "#e3f2fd" : "#f5f6fa",
+                bgcolor: activePubkey === kp.pubkey ? "#EDE7F6" : "#f5f6fa",
                 border:
                   activePubkey === kp.pubkey
-                    ? "2px solid #1e88e5"
-                    : "1px solid #e0e0e0",
+                    ? "2px solid #9932CC"
+                    : "1px solid #E0E0E0",
                 cursor: "pointer",
                 transition: "background 0.2s, border 0.2s",
-                "&:hover": { bgcolor: "#e3f2fd" },
                 minWidth: 0,
               }}
               onClick={async () => {
@@ -115,8 +119,7 @@ export default function ActiveKeypairSelectionModal({
                   component="span"
                   sx={{
                     fontWeight: "bold",
-                    color: "#1e88e5",
-                    mb: 0.2,
+                    color: "#9932CC",
                     fontSize: "1.05rem",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
@@ -124,15 +127,13 @@ export default function ActiveKeypairSelectionModal({
                   }}
                 >
                   {kp.name}
-                </Typography>
-                  {" "}
+                </Typography>{" "}
                 <Typography
                   variant="body2"
                   component="span"
                   sx={{
                     fontWeight: "regular",
-                    color: "#1e88e5",
-                    mb: 0.2,
+                    color: "#9932CC",
                     fontSize: "0.85rem",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
@@ -176,13 +177,15 @@ export default function ActiveKeypairSelectionModal({
         </Box>
         <Button
           variant="outlined"
-          color="secondary"
           fullWidth
           sx={{
             mt: 1,
             borderRadius: 2,
             fontWeight: "bold",
             letterSpacing: 1,
+            color: "#9932CC",
+            borderColor: "#9932CC",
+            "&:hover": { background: "#f5f6fa", borderColor: "#A64DFF" },
           }}
           onClick={async () => {
             await selectionFeedback();

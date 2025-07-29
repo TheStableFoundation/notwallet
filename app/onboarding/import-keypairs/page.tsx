@@ -87,7 +87,7 @@ export default function ImportKeypairsPage() {
         alignItems: "center",
         justifyContent: "center",
         position: "relative",
-        height: "100vh",
+        height: "60vh",
       }}
     >
       <Box
@@ -118,8 +118,7 @@ export default function ImportKeypairsPage() {
             Back
           </Button>
           <Typography
-            variant="h4"
-            component="h1"
+            variant="body1"
             fontWeight="bold"
             sx={{ ml: 2, flex: 1, textAlign: "right" }}
           >
@@ -167,13 +166,18 @@ export default function ImportKeypairsPage() {
               variant="outlined"
               color="secondary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                color: "#AD5AD7",
+                borderColor: "#AD5AD7",
+                "&:hover": { background: "#F5F6FA", borderColor: "#C792EA" },
+              }}
               onClick={async () => {
                 await selectionFeedback();
                 router.replace("/onboarding/create-password");
               }}
             >
-              I&apos;m done
+              Continue
             </Button>
           </CardContent>
         </Card>

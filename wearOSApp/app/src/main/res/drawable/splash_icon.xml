@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="48dp"
+        android:height="48dp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="#9932CC" />
+        </shape>
+    </item>
+    <item
+        android:width="40dp"
+        android:height="40dp"
+        android:gravity="center">
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Background Circle -->
+    <path
+        android:fillColor="#9932CC"
+        android:pathData="M24,2A22,22 0 1,0 24,46A22,22 0 1,0 24,2Z" />
+    <!-- Euro Symbol (€) - simplified, centered -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,18c-1.5-2.5-4.5-3.5-7-2.5
+            c-2.5,1-4,3.5-4,6.5h-2c-0.5,0-1,0.5-1,1s0.5,1,1,1h2v2h-2c-0.5,0-1,0.5-1,1s0.5,1,1,1h2
+            c0,3,2,5.5,4.5,6.5c2.5,1,5.5,0,7-2.5c0.5-0.5,0.5-1.5-0.5-2c-0.5-0.5-1.5-0.5-2,0
+            c-1,1.5-3,2-4.5,1.5c-1.5-0.5-2.5-2-2.5-3.5h5c0.5,0,1-0.5,1-1s-0.5-1-1-1h-5v-2h5
+            c0.5,0,1-0.5,1-1s-0.5-1-1-1h-5c0-1.5,1-3,2.5-3.5c1.5-0.5,3.5,0,4.5,1.5c0.5,0.5,1.5,0.5,2,0
+            C30.5,19.5,30.5,18.5,30,18z" />
+</vector>
+
+    </item>
+</layer-list>

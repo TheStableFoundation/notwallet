@@ -1,8 +1,6 @@
 # NotWallet
 
-Solana wallet and more. Do your own research.
-
-**Use at your own risk.**
+Solana wallet and more. Do your own research. Use at your own risk.
 
 ## Recommended IDE Setup
 
@@ -12,7 +10,7 @@ Solana wallet and more. Do your own research.
 
 ## Run targets
 
-Build desktop, iOS, and Android targets:
+This repo consists of source code to build desktop, iOS, (experimental) watchOS, and Android targets:
 
 ```bash
 # Desktop
@@ -27,6 +25,8 @@ $ pnpm run tauri android dev
 
 - Follow Tauri guide for more information.
 - When updating `tauri.conf.json`, always clean up `src-tauri/gen` folder and init the android and ios project again.
+
+watchOS app is under the watchApp folder as an Xcode project.
 
 ```bash
 $ pnpm run tauri android init
@@ -47,12 +47,7 @@ For iOS, modify the api key and api user in the publish-ios.sh script with your 
 $ pnpm publish-ios
 ```
 
-<details>
-  <summary>Screenshots</summary>
+## Download
 
-  <p><img src="screenshots/0.png" alt="locked-wallet-view.png" width="250"/></p>
-  <p><img src="screenshots/1.png" alt="wallet-home.png" width="250"/></p>
-  <p><img src="screenshots/2.png" alt="wallet-mobile.png" width="250"/></p>
-
-</details>
-
+- [TestFlight (iOS)](https://testflight.apple.com/join/your-app-id)
+- [Google Play Store (Android)](https://play.google.com/store/apps/details?id=your.app.id)

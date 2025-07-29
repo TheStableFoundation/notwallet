@@ -1,0 +1,40 @@
+name: "publish iOS"
+
+on:
+  workflow_dispatch:
+
+# These permissions are needed to interact with GitHub's OIDC Token endpoint
+
+jobs:
+  publish-ios:
+    permissions:
+      contents: write
+      id-token: write # Required for requesting the JWT
+
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install cargo tauri
+        run: |
+          cargo install tauri-cli --version "^2.0.0" --locked
+          cargo tauri ios init
+
+      - name: Install frontend dependencies
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: true
+      - name: Publish iOS
+        env:
+          API_KEY: ${{ secrets.IOS_API_KEY }}
+          API_ISSUER: ${{ secrets.IOS_API_ISSUER }}
+        run: |
+          pnpm publish-ios --apiKey "$API_KEY" --apiIssuer "$API_ISSUER"

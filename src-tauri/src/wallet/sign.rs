@@ -4,7 +4,6 @@ use crate::model::keypair::SolanaWallet;
 use crate::network::airdrop::airdrop;
 use bs58;
 use solana_sdk::signature::{Keypair, Signer};
-use std::convert::TryFrom;
 use tauri::{command, AppHandle};
 
 #[command]
@@ -23,7 +22,7 @@ pub async fn sign_message(app: AppHandle, message: String) -> Result<String, Str
         .map_err(|_| "Failed to decode private key".to_string())?;
 
     // Use Keypair::try_from instead of deprecated from_bytes
-    let keypair = Keypair::try_from(privkey_bytes.as_slice())
+    let keypair = Keypair::from_bytes(&privkey_bytes)
         .map_err(|_| "Failed to create keypair from private key".to_string())?;
 
     // Sign the message

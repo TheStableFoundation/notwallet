@@ -1,0 +1,131 @@
+name: "publish Android"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-android:
+    permissions:
+      contents: write
+      id-token: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Android targets
+        run: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+
+      - name: Install cargo tauri
+        run: |
+          cargo install tauri-cli --version "^2.0.0" --locked
+      - name: Tauri Info
+        run: cargo tauri info
+
+      - name: Install frontend dependencies
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Cache NDK
+        id: cache-ndk
+        uses: actions/cache@v4
+        with:
+          # Path where NDK version 29.0.13113456 is expected to be installed by setup-android
+          path: /usr/local/lib/android/sdk/ndk/29.0.13113456
+          key: ndk-${{ runner.os }}-29.0.13113456
+
+      - name: Setup Android SDK and NDK
+        uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: 12266719 # v16
+
+      - name: Install NDK
+        run: sdkmanager "ndk;29.0.13113456"
+      - name: Install CMake
+        run: sdkmanager "cmake;4.0.2"
+
+      - name: Set main environment variables
+        run: |
+          echo "NDK_HOME=$ANDROID_HOME/ndk/29.0.13113456" >> $GITHUB_ENV
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/29.0.13113456" >> $GITHUB_ENV
+          echo "ANDROID_NDK=$ANDROID_HOME/ndk/29.0.13113456" >> $GITHUB_ENV
+          echo "CMAKE=$ANDROID_HOME/cmake/4.0.2/bin/cmake" >> $GITHUB_ENV
+
+          echo "TOOLCHAIN=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64" >> $GITHUB_ENV
+          echo "TARGET=aarch64-linux-android" >> $GITHUB_ENV
+          echo "API=34" >> $GITHUB_ENV
+      - name: Set NDK variables
+        run: |
+          echo "AR=$TOOLCHAIN/bin/llvm-ar" >> $GITHUB_ENV
+          echo "CC=$TOOLCHAIN/bin/$TARGET$API-clang" >> $GITHUB_ENV
+          echo "AS=$CC" >> $GITHUB_ENV
+          echo "CXX=$TOOLCHAIN/bin/$TARGET$API-clang++" >> $GITHUB_ENV
+          echo "LD=$TOOLCHAIN/bin/ld" >> $GITHUB_ENV
+          echo "RANLIB=$TOOLCHAIN/bin/llvm-ranlib" >> $GITHUB_ENV
+          echo "STRIP=$TOOLCHAIN/bin/llvm-strip" >> $GITHUB_ENV
+
+          echo "PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_ENV
+          echo "PATH=$PATH:$TOOLCHAIN/bin" >> $GITHUB_ENV
+
+      - name: Initialize Android project
+        run: cargo tauri android init
+
+      - name: Copy build.gradle.kts
+        run: |
+          rm src-tauri/gen/android/app/build.gradle.kts
+          yes | cp -rf scripts/android/build.gradle.kts src-tauri/gen/android/app/build.gradle.kts
+
+      - name: Install OpenSSL development packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssl libssl-dev pkg-config
+          # Info
+          openssl version -d
+          echo "OPENSSL_DIR=/usr/lib/ssl" >> $GITHUB_ENV
+
+      - name: Decrypt Android keystore
+        run: |
+          ./scripts/decrypt-keystore.sh \
+            --encrypted ./secrets/upload-keystore.jks.gpg \
+            --output ./upload-keystore.jks \
+            --password ${{ secrets.KEYSTORE_ENCRYPTION_PASSWORD }}
+
+      - name: Create keystore.properties
+        run: |
+          cat > src-tauri/gen/android/keystore.properties << EOF
+          password=${{ secrets.KEYSTORE_PASSWORD }}
+          keyAlias=upload
+          storeFile=${{ github.workspace }}/upload-keystore.jks
+          #EOF
+      - name: Publish Android
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          pnpm publish-android
+      - name: Upload Android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # Name of the artifact to upload.
+          # Optional. Default is 'artifact'
+          name: app-bundle
+          # A file, directory or wildcard pattern that describes what to upload
+          # Required.
+          #
+          path: src-tauri/gen/android/app/build/outputs/bundle/universalRelease/app-universal-release.aab
