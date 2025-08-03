@@ -39,6 +39,8 @@ reqwest = { version = "0.12", default-features = false, features = [
 ] }
 uuid = { version = "1", features = ["v4"] }
 chrono = { version = "0.4", features = ["serde"] }
+base64 = "0.21"
+thiserror = "1.0"
 
 # Transitive dependencies override.
 curve25519-dalek = "4.1.3"

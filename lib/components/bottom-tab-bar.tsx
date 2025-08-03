@@ -18,6 +18,7 @@ export default function BottomTabBar() {
     pathname === "/wallet" ||
     pathname === "/wallet/token" ||
     pathname === "/wallet/settings" ||
+    pathname === "/wallet/buy" ||
     pathname === "/deposit" ||
     pathname === "/create-new-wallet"
   )

@@ -17,6 +17,7 @@ import ActivityCard from "./components/activity_card";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ActiveKeypairSelectionModal from "./components/active-keypair-selection";
+import { SET_ACTIVE_KEYPAIR } from "@/lib/commands";
 
 enum State {
   Loading,
@@ -63,7 +64,7 @@ export default function WalletHome() {
   const onSelectWallet = async (wallet: SolanaWallet) => {
     setState(State.Loading);
     try {
-      await invoke("set_active_keypair", { keypair: wallet });
+      await invoke(SET_ACTIVE_KEYPAIR, { keypair: wallet });
       setTimeout(() => {
         setWallet(wallet);
         setState(State.Loaded);
@@ -90,12 +91,6 @@ export default function WalletHome() {
     }
     fetchKeypairs();
   }, []);
-
-  // Add onDeposit function
-  const onDeposit = React.useCallback(async () => {
-    await selectionFeedback();
-    router.push("/deposit");
-  }, [router]);
 
   if (state === State.Loading) {
     return (
@@ -168,7 +163,6 @@ export default function WalletHome() {
             lock();
             router.replace("/");
           }}
-          onDeposit={onDeposit}
           onSwitchKeypair={async () => {
             await selectionFeedback();
             setShowSwitchModal(true);

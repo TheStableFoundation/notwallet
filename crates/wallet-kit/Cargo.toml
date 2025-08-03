@@ -26,8 +26,5 @@ log = "0.4.20"
 bip39 = { version = "2", features = ["rand"] }
 uniffi = { version = "0.28", features = ["cli"] }
 
-[patch.crates-io]
-getrandom = { git = "https://github.com/keypair34/getrandom", tag = "v0.3.3" }
-
 [build-dependencies]
 uniffi = { version = "0.28", features = ["build"] }

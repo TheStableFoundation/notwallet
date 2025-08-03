@@ -1,5 +1,7 @@
 /* This file is generated and managed by tsync */
 
+export const STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key";
+
 /**
  * Generate:
  * tsync -i src-tauri/src/ -o lib/crate/generated.ts
@@ -24,7 +26,7 @@ export const STORE_WALLET = "wallet.json";
  * Legacy wallet key.
  * This is used to store the wallet in the old format.
  */
-export const WALET_0 = "wallet_0";
+export const WALLET_0 = "wallet_0";
 
 export interface SolanaWallet {
   /**
@@ -58,6 +60,21 @@ export interface SolanaWallet {
   /** The UUID of the seed that this keypair is derived from. */
   seed_id: string;
 }
+
+export interface OnrampSession {
+  id: string;
+  client_secret: string;
+}
+
+/** Error type for Stripe operations */
+export type StripeError =
+  | { "RequestError": Error }
+  | {
+      "InvalidApiKey": {
+        [key: PropertyKey]: never;
+      }
+    }
+  | { "ApiError": string };
 
 export interface Seed {
   id: string;

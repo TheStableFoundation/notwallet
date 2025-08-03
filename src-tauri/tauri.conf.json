@@ -49,7 +49,7 @@
     },
     "iOS": {
       "minimumSystemVersion": "13.0",
-      "developmentTeam": "2TQF86ZACD"
+      "developmentTeam": "your_team_id"
     },
     "macOS": {
       "entitlements": null,

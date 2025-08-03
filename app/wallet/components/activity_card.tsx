@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import LoadingCard from "@/lib/components/loading-card";
 import ActivityListView from "./activity_list_view";
-import { activitiesTestnet } from "./transactions";
+import { activities } from "./transactions";
 
 enum State {
   Loading,
@@ -47,9 +47,7 @@ export default function ActivityCard({}: ActivityCardProps) {
       </Typography>
       <Divider sx={{ mb: 2 }} />
       {state === State.Loading && <LoadingCard />}
-      {state === State.Loaded && (
-        <ActivityListView activities={activitiesTestnet} />
-      )}
+      {state === State.Loaded && <ActivityListView activities={activities} />}
     </Card>
   );
 }

@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LockIcon from "@mui/icons-material/Lock";
-import { SolanaWallet } from "../../../lib/crate/generated";
+import { SolanaWallet } from "@/lib/crate/generated";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
@@ -15,12 +15,12 @@ import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
+import { GET_BACH_BALANCE } from "@/lib/commands";
 
 interface WalletCardProps {
   userName: string;
   wallet: SolanaWallet;
   onLock: () => void;
-  onDeposit: () => void;
   onSwitchKeypair: () => void;
 }
 
@@ -28,22 +28,30 @@ export default function WalletCard({
   userName,
   wallet,
   onLock,
-  onDeposit,
   onSwitchKeypair,
 }: WalletCardProps) {
   const router = useRouter();
-  const [balance, setBalance] = React.useState<string>("");
+  const [balance, setBalance] = React.useState<string>("-");
 
   const handleWalletSettings = async () => {
     await selectionFeedback();
     router.push("/wallet/settings");
   };
 
+  const onBuySol = React.useCallback(async () => {
+    await selectionFeedback();
+    router.push("/wallet/buy?address=" + wallet.pubkey);
+  }, [router, wallet]);
+
   const init = async () => {
-    const balance = await invoke<string>("get_bach_balance", {
-      pubkey: wallet.pubkey,
-    });
-    setBalance(`${balance} BACH`);
+    try {
+      const balance = await invoke<string>(GET_BACH_BALANCE, {
+        pubkey: wallet.pubkey,
+      });
+      setBalance(`${balance} BACH`);
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+    }
   };
 
   React.useEffect(() => {
@@ -220,9 +228,9 @@ export default function WalletCard({
             "&:hover": { background: "#A64DFF" },
           }}
           fullWidth
-          onClick={onDeposit}
+          onClick={onBuySol}
         >
-          Deposit
+          Buy SOL
         </Button>
       </Stack>
     </Card>

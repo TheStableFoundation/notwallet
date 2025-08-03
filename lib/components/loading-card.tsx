@@ -16,7 +16,7 @@ const LoadingCard = () => (
     }}
   >
     <Rive
-      src="animation/purple_loader.riv"
+      src="/animation/purple_loader.riv"
       layout={new Layout({ fit: Fit.FitWidth, alignment: Alignment.Center })}
     />
   </Card>

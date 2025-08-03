@@ -1,10 +1,12 @@
 mod constants;
 mod model;
 mod network;
+mod onramp;
 mod setup;
 mod wallet;
 
 use crate::{
+    onramp::commands::onramp_session,
     setup::{commands::get_installation_id, setup},
     wallet::{
         check_pubkey::check_pubkey,
@@ -47,6 +49,7 @@ pub fn run() {
             get_installation_id,
             get_bach_balance,
             get_token_info,
+            onramp_session,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
