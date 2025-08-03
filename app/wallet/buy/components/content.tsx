@@ -7,6 +7,9 @@ import OnrampView from "./onramp-view";
 import { ONRAMP_SESSION } from "@/lib/commands";
 import Confetti from "react-confetti";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 enum State {
   Loading,
@@ -21,6 +24,14 @@ export default function Content() {
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
   const searchParams = useSearchParams();
   const address = searchParams.get("address");
+  const router = useRouter();
+
+  const onPurchaseComplete = () => {
+    setState(State.PurchaseComplete);
+    setTimeout(() => {
+      router.push("/wallet");
+    }, 5000);
+  };
 
   const init = async () => {
     try {
@@ -59,11 +70,27 @@ export default function Content() {
       {state === State.Loaded && clientSecret && (
         <OnrampView
           clientSecret={clientSecret}
-          onPurchaseComplete={() => setState(State.PurchaseComplete)}
+          onPurchaseComplete={onPurchaseComplete}
         />
       )}
       {state === State.PurchaseComplete && (
-        <Confetti width={dimensions.width} height={dimensions.height} />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <Confetti width={dimensions.width} height={dimensions.height} />
+          <Typography variant="h4" color="primary">
+            Thank you for your purchase!
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Your purchase has been successfully completed. You will be
+            redirected to your wallet shortly.
+          </Typography>
+        </Box>
       )}
     </>
   );
