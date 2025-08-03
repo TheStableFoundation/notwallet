@@ -13,13 +13,15 @@ export default function CreateOrImportWalletView() {
   const router = useRouter();
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
+        minHeight: "unset",
+        bgcolor: "#f5f6fa",
+        pb: 10,
+        pt: 10,
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
-        minHeight: "60vh",
-        background: "#f5f6fa",
       }}
     >
       <Card
@@ -29,7 +31,7 @@ export default function CreateOrImportWalletView() {
           <CardMedia
             component="img"
             height="120"
-            image="/images/usd-coin-usdc-logo.png"
+            image="/images/app-icon-v2.png"
             alt="Stablecoin Wallet"
             sx={{ objectFit: "contain", bgcolor: "#fff" }}
           />
@@ -42,7 +44,7 @@ export default function CreateOrImportWalletView() {
             fontWeight="bold"
             align="center"
           >
-            Not
+            NotWallet
           </Typography>
           <Typography variant="body2" color="text.secondary" align="center">
             Crypto Dollar Wallet: Secure & easy USD stablecoin wallet
@@ -88,6 +90,6 @@ export default function CreateOrImportWalletView() {
           </Button>
         </CardActions>
       </Card>
-    </div>
+    </Box>
   );
 }
