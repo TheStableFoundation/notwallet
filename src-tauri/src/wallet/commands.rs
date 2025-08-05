@@ -1,7 +1,7 @@
-use crate::constants::store::{store, STORE_KEYPAIRS, STORE_SEEDS};
 use crate::constants::{
-    address::{BACH_TOKEN_ADDRESS, SPL_TOKEN_PROGRAM_ID},
-    rpc::rpc_url,
+    address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL, SPL_TOKEN_PROGRAM_ID},
+    rpc::{rpc_url, USE_LOCAL_RPC},
+    store::{store, STORE_KEYPAIRS, STORE_SEEDS},
 };
 use crate::model::keypair::SolanaWallet;
 use crate::model::seed::{Seed, SeedType};
@@ -144,11 +144,16 @@ pub async fn derive_next_keypair(app: AppHandle, seed_uuid: Uuid) -> Result<Sola
 #[command]
 pub fn get_bach_balance(pubkey: String) -> String {
     info!("Getting Bach balance for {}", pubkey);
+    let bach_token_address = if USE_LOCAL_RPC {
+        BACH_TOKEN_ADDRESS_LOCAL.to_string()
+    } else {
+        BACH_TOKEN_ADDRESS.to_string()
+    };
     bach_balance(
         rpc_url(),
         pubkey,
         SPL_TOKEN_PROGRAM_ID.to_string(),
-        BACH_TOKEN_ADDRESS.to_string(),
+        bach_token_address,
     )
 }
 
