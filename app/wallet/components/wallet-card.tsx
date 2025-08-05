@@ -67,47 +67,73 @@ export default function WalletCard({
   return (
     <Card
       sx={{
-        mb: 3,
-        borderRadius: 4,
+        mb: 2,
+        borderRadius: 2,
         boxShadow: "0 2px 16px rgba(153,50,204,0.08)",
-        p: 4,
+        p: 2,
         background: "linear-gradient(135deg, #9932CC 0%, #A64DFF 100%)",
         color: "#fff",
         overflow: "hidden",
         position: "relative",
       }}
     >
-      <Button
-        size="small"
-        variant="contained"
-        sx={{
-          position: "absolute",
-          top: 16,
-          right: 16,
-          minWidth: 0,
-          px: 1.5,
-          borderRadius: 2,
-          fontWeight: "bold",
-          background: "#fff",
-          color: "#9932CC",
-          boxShadow: "0 1px 6px #9932CC22",
-          "&:hover": { background: "#f5f6fa" },
-        }}
-        onClick={onLock}
-        startIcon={<LockIcon />}
+      <Stack
+        direction="row"
+        alignItems="start"
+        justifyContent="space-between"
+        sx={{ mb: 2 }}
       >
-        Lock
-      </Button>
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          color="#fff"
+          sx={{ fontSize: 16 }}
+        >
+          {userName}
+        </Typography>
+        <Stack direction="row" spacing={1}>
+          <Tooltip title="Toggle Lock Wallet" arrow>
+            <IconButton
+              size="small"
+              sx={{
+                minWidth: 0,
+                px: 1.5,
+                borderRadius: 2,
+                fontWeight: "bold",
+                background: "#fff",
+                color: "#9932CC",
+                boxShadow: "0 1px 6px #9932CC22",
+                "&:hover": { background: "#f5f6fa" },
+              }}
+              onClick={onLock}
+            >
+              <LockIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Wallet settings" arrow>
+            <IconButton
+              sx={{
+                color: "#9932CC",
+                bgcolor: "#f5f6fa",
+                "&:hover": { bgcolor: "#EDE7F6" },
+                borderRadius: 2,
+              }}
+              onClick={handleWalletSettings}
+              size="small"
+            >
+              <SettingsIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      </Stack>
       <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
         <Avatar sx={{ width: 56, height: 56, bgcolor: "#fff" }}>
           <Typography variant="h5" color="#9932CC">
             {userName[0]}
+            {userName[1]}
           </Typography>
         </Avatar>
-        <Box>
-          <Typography variant="h6" fontWeight="bold" color="#fff">
-            {userName}
-          </Typography>
+        <Box sx={{ flex: 1 }}>
           <Box
             sx={{
               mt: 1,
@@ -182,21 +208,6 @@ export default function WalletCard({
                     strokeLinejoin="round"
                   />
                 </svg>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Wallet settings" arrow>
-              <IconButton
-                sx={{
-                  color: "#9932CC",
-                  bgcolor: "#f5f6fa",
-                  "&:hover": { bgcolor: "#EDE7F6" },
-                  ml: 1,
-                  borderRadius: 2,
-                }}
-                onClick={handleWalletSettings}
-                size="small"
-              >
-                <SettingsIcon fontSize="small" />
               </IconButton>
             </Tooltip>
           </Box>
