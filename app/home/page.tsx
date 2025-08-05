@@ -1,13 +1,13 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { feed } from "./components/feed";
 import LoadingCard from "@/lib/components/loading-card";
 import ActivityListView from "./components/activity_list_view";
 import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@/lib/crate/generated";
 import { store } from "@/lib/store/store";
+import PageTitleBar from "@/lib/components/page-title-bar";
 
 enum State {
   Loading,
@@ -47,17 +47,7 @@ export default function HomeFeedPage() {
         alignItems: "center",
       }}
     >
-      <Box sx={{ width: "100%", maxWidth: 480 }}>
-        <Typography
-          variant="h5"
-          component="h1"
-          fontWeight="bold"
-          align="center"
-          sx={{ mb: 2 }}
-        >
-          Activity Feed
-        </Typography>
-      </Box>
+      <PageTitleBar title="Activity Feed" />
       {state === State.Loading && <LoadingCard />}
       {state === State.Loaded && pubkey && (
         <ActivityListView feed={feed} pubkey={pubkey} />

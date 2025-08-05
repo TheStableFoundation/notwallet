@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import PageTitleBar from "@/lib/components/page-title-bar";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -56,17 +57,7 @@ export default function SettingsPage() {
         pb: 10,
       }}
     >
-      <Box sx={{ width: "100%", maxWidth: 480 }}>
-        <Typography
-          variant="h5"
-          component="h1"
-          fontWeight="bold"
-          align="center"
-          sx={{ mb: 2 }}
-        >
-          Settings
-        </Typography>
-      </Box>
+      <PageTitleBar title="Settings" />
       <Card
         sx={{
           maxWidth: 400,

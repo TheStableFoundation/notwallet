@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import LoadingCard from "@/lib/components/loading-card";
 import { store } from "../../lib/store/store";
 import {
@@ -18,6 +17,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ActiveKeypairSelectionModal from "./components/active-keypair-selection";
 import { SET_ACTIVE_KEYPAIR } from "@/lib/commands";
+import PageTitleBar from "@/lib/components/page-title-bar";
 
 enum State {
   Loading,
@@ -143,17 +143,7 @@ export default function WalletHome() {
         alignItems: "center",
       }}
     >
-      <Box sx={{ width: "100%", maxWidth: 480 }}>
-        <Typography
-          variant="h5"
-          component="h1"
-          fontWeight="bold"
-          align="center"
-          sx={{ my: 2 }}
-        >
-          Wallet
-        </Typography>
-      </Box>
+      <PageTitleBar title="Wallet" />
       <Box sx={{ width: "100%", maxWidth: 480 }}>
         <WalletCard
           userName={userName}
