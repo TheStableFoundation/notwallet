@@ -71,7 +71,8 @@ export default function WalletCard({
         borderRadius: 2,
         boxShadow: "0 2px 16px rgba(153,50,204,0.08)",
         p: 2,
-        background: "linear-gradient(135deg, #9932CC 0%, #A64DFF 100%)",
+        background:
+          "linear-gradient(135deg, rgba(153, 50, 204, 0.85) 0%, rgba(166, 77, 255, 0.8) 100%)",
         color: "#fff",
         overflow: "hidden",
         position: "relative",
@@ -250,12 +251,32 @@ export default function WalletCard({
           variant="contained"
           startIcon={<AddIcon />}
           sx={{
-            background: "linear-gradient(90deg, #9932CC 0%, #A64DFF 100%)",
+            background:
+              "linear-gradient(90deg, rgba(153, 50, 204, 0.9) 0%, rgba(166, 77, 255, 0.85) 100%)",
             color: "#fff",
             fontWeight: "bold",
             borderRadius: 2,
-            boxShadow: "0 1px 6px #9932CC22",
-            "&:hover": { background: "#A64DFF" },
+            boxShadow: "0 2px 10px rgba(153, 50, 204, 0.3)",
+            backdropFilter: "blur(8px)",
+            transition: "all 0.3s ease",
+            position: "relative",
+            overflow: "hidden",
+            "&:before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "40%",
+              background:
+                "linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent)",
+              borderRadius: "2px 2px 0 0",
+            },
+            "&:hover": {
+              background:
+                "linear-gradient(90deg, rgba(166, 77, 255, 0.9) 0%, rgba(153, 50, 204, 0.85) 100%)",
+              boxShadow: "0 4px 15px rgba(153, 50, 204, 0.4)",
+            },
           }}
           fullWidth
           onClick={onBuySol}

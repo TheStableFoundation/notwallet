@@ -149,7 +149,7 @@ export default function WalletHome() {
           component="h1"
           fontWeight="bold"
           align="center"
-          sx={{ mb: 2 }}
+          sx={{ my: 2 }}
         >
           Wallet
         </Typography>

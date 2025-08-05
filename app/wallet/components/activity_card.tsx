@@ -30,12 +30,12 @@ export default function ActivityCard({}: ActivityCardProps) {
   return (
     <Card
       sx={{
-        mb: 3,
-        borderRadius: 3,
+        mb: 2,
+        borderRadius: 2,
         boxShadow: 2,
         background: "linear-gradient(135deg, #f5f6fa 60%, #e3f2fd 100%)",
         overflow: "hidden",
-        p: 4,
+        p: 2,
       }}
     >
       <Typography
