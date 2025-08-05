@@ -1,4 +1,13 @@
 {
+  "productName": "NotWallet",
+  "identifier": "xyz.notwallet.NotWallet",
+  "app": {
+    "windows": [
+      {
+        "title": "NotWallet"
+      }
+    ]
+  },
   "bundle": {
     "macOS": {
       "entitlements": "./Entitlements.plist",
