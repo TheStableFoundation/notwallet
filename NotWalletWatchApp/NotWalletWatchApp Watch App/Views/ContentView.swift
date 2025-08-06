@@ -20,7 +20,7 @@ struct ContentView: View {
                 .onTapGesture {
                     showBachInfo = true
                 }
-            Text("Fixed supply: 12 million BACH")
+            Text("Fixed supply: 10.8 million BACH")
                 .font(.system(size: 12, weight: .regular, design: .rounded))
                 .foregroundColor(.secondary)
 
@@ -29,7 +29,7 @@ struct ContentView: View {
                 .padding(.vertical, 8)
 
             Divider()
-            Text("My saldo")
+            Text("Balance")
                 .font(.system(size: 18, weight: .semibold, design: .rounded))
                 .foregroundColor(.secondary)
             Button(action: { showTransactions = true }) {

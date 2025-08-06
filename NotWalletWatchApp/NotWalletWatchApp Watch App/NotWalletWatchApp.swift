@@ -1,5 +1,5 @@
 //
-//  NotWalletWatchAppApp.swift
+//  NotWalletWatchApp.swift
 //  NotWalletWatchApp Watch App
 //
 //  Created by Seto Elkahfi on 2025-08-06.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct NotWalletWatchApp_Watch_AppApp: App {
+struct NotWalletWatchApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

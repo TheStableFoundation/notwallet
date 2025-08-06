@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A78CDFA2E434ED60007B16F /* NotWalletWatchApp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 8A78CDF92E434ED60007B16F /* NotWalletWatchApp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		8A78CDFF2E434ED60007B16F /* NotWalletWatchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78CDFE2E434ED60007B16F /* NotWalletWatchAppApp.swift */; };
+		8A78CDFF2E434ED60007B16F /* NotWalletWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78CDFE2E434ED60007B16F /* NotWalletWatchApp.swift */; };
 		8A78CE032E434EDA0007B16F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A78CE022E434EDA0007B16F /* Assets.xcassets */; };
 		8A78CE062E434EDA0007B16F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A78CE052E434EDA0007B16F /* Preview Assets.xcassets */; };
 		8A78CE102E434EDB0007B16F /* NotWalletWatchApp_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A78CE0F2E434EDB0007B16F /* NotWalletWatchApp_Watch_AppTests.swift */; };
@@ -63,7 +63,7 @@
 /* Begin PBXFileReference section */
 		8A78CDF32E434ED60007B16F /* NotWalletWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotWalletWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A78CDF92E434ED60007B16F /* NotWalletWatchApp Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NotWalletWatchApp Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A78CDFE2E434ED60007B16F /* NotWalletWatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotWalletWatchAppApp.swift; sourceTree = "<group>"; };
+		8A78CDFE2E434ED60007B16F /* NotWalletWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotWalletWatchApp.swift; sourceTree = "<group>"; };
 		8A78CE022E434EDA0007B16F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A78CE052E434EDA0007B16F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A78CE0B2E434EDB0007B16F /* NotWalletWatchApp Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NotWalletWatchApp Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +76,7 @@
 		8AC1B8872E436D710077652E /* BachInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BachInfoView.swift; sourceTree = "<group>"; };
 		8AC1B8882E436D720077652E /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		8AC1B8892E436D720077652E /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
-		8AC1B88D2E436DF10077652E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = "../../watchOSApp/NotWallet Watch App/Main/ContentView.swift"; sourceTree = "<group>"; };
+		8AC1B88D2E436DF10077652E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +104,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A56DDA62E43F77E00F13F48 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8AC1B8842E436B380077652E /* MarqueeText.swift */,
+				8AC1B88D2E436DF10077652E /* ContentView.swift */,
+				8AC1B8872E436D710077652E /* BachInfoView.swift */,
+				8AC1B8882E436D720077652E /* TransactionDetailView.swift */,
+				8AC1B8892E436D720077652E /* TransactionListView.swift */,
+				8AC1B8832E436B370077652E /* PriceGraphView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		8A78CDEC2E434ED60007B16F = {
 			isa = PBXGroup;
 			children = (
@@ -128,13 +141,8 @@
 		8A78CDFD2E434ED60007B16F /* NotWalletWatchApp Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				8A78CDFE2E434ED60007B16F /* NotWalletWatchAppApp.swift */,
-				8AC1B8842E436B380077652E /* MarqueeText.swift */,
-				8AC1B88D2E436DF10077652E /* ContentView.swift */,
-				8AC1B8872E436D710077652E /* BachInfoView.swift */,
-				8AC1B8882E436D720077652E /* TransactionDetailView.swift */,
-				8AC1B8892E436D720077652E /* TransactionListView.swift */,
-				8AC1B8832E436B370077652E /* PriceGraphView.swift */,
+				8A78CDFE2E434ED60007B16F /* NotWalletWatchApp.swift */,
+				8A56DDA62E43F77E00F13F48 /* Views */,
 				8A78CE022E434EDA0007B16F /* Assets.xcassets */,
 				8A78CE042E434EDA0007B16F /* Preview Content */,
 			);
@@ -330,7 +338,7 @@
 				8AC1B88C2E436D720077652E /* BachInfoView.swift in Sources */,
 				8AC1B8862E436B380077652E /* PriceGraphView.swift in Sources */,
 				8AC1B88B2E436D720077652E /* TransactionListView.swift in Sources */,
-				8A78CDFF2E434ED60007B16F /* NotWalletWatchAppApp.swift in Sources */,
+				8A78CDFF2E434ED60007B16F /* NotWalletWatchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
