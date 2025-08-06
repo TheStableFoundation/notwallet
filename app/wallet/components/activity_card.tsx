@@ -1,7 +1,6 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import LoadingCard from "@/lib/components/loading-card";
 import ActivityListView from "./activity_list_view";
 import { activities } from "./transactions";
