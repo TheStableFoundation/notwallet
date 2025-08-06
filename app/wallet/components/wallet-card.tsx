@@ -216,7 +216,12 @@ export default function WalletCard({
       </Stack>
       <Typography
         variant="subtitle2"
-        sx={{ color: "#B768FF", mb: 1, letterSpacing: 1 }}
+        sx={{
+          color: "#000",
+          fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
+          mb: 1,
+          letterSpacing: 1,
+        }}
       >
         Balance
       </Typography>

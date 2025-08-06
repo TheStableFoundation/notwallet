@@ -45,7 +45,6 @@ export default function ActivityCard({}: ActivityCardProps) {
       >
         Recent Activity (demo)
       </Typography>
-      <Divider sx={{ mb: 2 }} />
       {state === State.Loading && <LoadingCard />}
       {state === State.Loaded && <ActivityListView activities={activities} />}
     </Card>
