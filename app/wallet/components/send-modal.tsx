@@ -132,7 +132,6 @@ export default function SendModal({
   return (
     <Modal
       open={open}
-      onClose={handleClose}
       aria-labelledby="send-modal-title"
       sx={{
         display: "flex",
