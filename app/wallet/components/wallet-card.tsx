@@ -19,6 +19,28 @@ import { invoke } from "@tauri-apps/api/core";
 import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@/lib/commands";
 import SendModal from "./send-modal";
 
+// Solana Icon Component
+const SolanaIcon = ({ size = 24 }: { size?: number }) => (
+  <img
+    src="/images/solana-coin.svg"
+    width={size}
+    height={size}
+    alt="Solana"
+    style={{ borderRadius: "50%" }}
+  />
+);
+
+// BACH Token Icon Component
+const BachIcon = ({ size = 24 }: { size?: number }) => (
+  <img
+    src="https://raw.githubusercontent.com/solana-labs/token-list/badd1dbe8c2d1e38c4f77b77f1d5fd5c60d3cccb/assets/mainnet/CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf/bach-token-logo-Est.2022.png"
+    width={size}
+    height={size}
+    alt="BACH Token"
+    style={{ borderRadius: "50%" }}
+  />
+);
+
 interface WalletCardProps {
   userName: string;
   wallet: SolanaWallet;
@@ -250,25 +272,36 @@ export default function WalletCard({
       >
         Balance
       </Typography>
-      <Stack
-        direction="row"
-        spacing={2}
-        alignItems="start"
-        justifyContent="space-between"
-      >
-        <Typography
-          variant="h3"
-          fontWeight="bold"
-          sx={{
-            color: "#fff",
-            mb: 2,
-            textShadow: "0 2px 12px #9932CC55",
-            fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-            fontSize: 24,
-          }}
-        >
-          {bachBalance}
-        </Typography>
+      {/* BACH Balance with Token Icon */}
+      <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
+        <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1 }}>
+          <Box
+            sx={{
+              width: 32,
+              height: 32,
+              borderRadius: "50%",
+              bgcolor: "#fff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            }}
+          >
+            <BachIcon size={20} />
+          </Box>
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            sx={{
+              color: "#fff",
+              textShadow: "0 2px 12px #9932CC55",
+              fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
+              fontSize: 24,
+            }}
+          >
+            {bachBalance}
+          </Typography>
+        </Stack>
         <Tooltip title="Send">
           <IconButton
             sx={{
@@ -284,19 +317,35 @@ export default function WalletCard({
           </IconButton>
         </Tooltip>
       </Stack>
-      <Typography
-        variant="h4"
-        fontWeight="bold"
-        sx={{
-          color: "#fff",
-          mb: 2,
-          textShadow: "0 2px 12px #9932CC55",
-          fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-          fontSize: 16,
-        }}
-      >
-        {solBalance}
-      </Typography>
+      {/* SOL Balance with Solana Icon */}
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
+        <Box
+          sx={{
+            width: 32,
+            height: 32,
+            borderRadius: "50%",
+            bgcolor: "#fff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          }}
+        >
+          <SolanaIcon size={20} />
+        </Box>
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          sx={{
+            color: "#fff",
+            textShadow: "0 2px 12px #9932CC55",
+            fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
+            fontSize: 16,
+          }}
+        >
+          {solBalance}
+        </Typography>
+      </Stack>
       <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
         <Button
           variant="contained"
