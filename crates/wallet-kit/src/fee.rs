@@ -1,5 +1,4 @@
-use crate::constants::address::THE_STABLE_FOUNDATION_TREASURY;
-use crate::constants::{LAMPORTS_PER_SOL, SEMITONE_PER_BACH};
+use crate::constants::{LAMPORTS_PER_SOL, SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY};
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
 use solana_client::nonblocking::rpc_client::RpcClient;
