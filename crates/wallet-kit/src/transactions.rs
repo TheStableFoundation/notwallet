@@ -1,12 +1,7 @@
+use crate::constants::{LAMPORTS_PER_SOL, SEMITONE_PER_BACH};
 use solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter};
 use solana_sdk::{
-    instruction::{AccountMeta, Instruction},
-    message::Message,
-    program_pack::Pack,
-    pubkey::Pubkey,
-    signature::{Keypair, Signature},
-    signer::Signer,
-    system_instruction,
+    program_pack::Pack, pubkey::Pubkey, signature::Keypair, signer::Signer, system_instruction,
     transaction::Transaction,
 };
 use spl_token::{
@@ -40,7 +35,7 @@ pub async fn create_transfer_ix(
     sender_keypair: Keypair,
     from_pubkey: String,
     to_pubkey: String,
-    amount_lamports: u64,
+    amount: f64,
 ) -> Result<String, TransactionError> {
     // Connect to the Solana cluster
     let rpc_client = RpcClient::new(rpc_url);
@@ -59,6 +54,7 @@ pub async fn create_transfer_ix(
         .map_err(|e| TransactionError::ConnectionError(e.to_string()))?;
 
     // Ensure sufficient balance (accounting for transaction fee ~5000 lamports)
+    let amount_lamports = (amount * LAMPORTS_PER_SOL) as u64; // Convert to lamports
     if balance < amount_lamports + 5000 {
         return Err(TransactionError::InsufficientFunds);
     }
@@ -90,6 +86,7 @@ pub async fn create_transfer_ix(
 }
 
 /// Creates and sends an SPL token transfer transaction
+/// Only for BACH token transfer
 pub async fn create_token_transfer_ix(
     rpc_url: String,
     sender_keypair: Keypair,
@@ -97,7 +94,7 @@ pub async fn create_token_transfer_ix(
     to_pubkey: String,
     token_mint_address: String,
     token_program_id: String,
-    amount: u64,
+    amount: f64,
 ) -> Result<String, TransactionError> {
     // Connect to the Solana cluster
     let rpc_client = RpcClient::new(rpc_url);
@@ -141,7 +138,10 @@ pub async fn create_token_transfer_ix(
 
     // Check token balance
     let token_balance = get_token_balance(&rpc_client, &sender_token_account).await?;
-    if token_balance < amount {
+
+    let amount_semitones = (amount * SEMITONE_PER_BACH) as u64; // Convert to semitones
+
+    if token_balance < amount_semitones {
         return Err(TransactionError::InsufficientFunds);
     }
 
@@ -152,7 +152,7 @@ pub async fn create_token_transfer_ix(
         &recipient_token_account,
         &from_wallet,
         &[&from_wallet],
-        amount,
+        amount_semitones,
     )
     .map_err(|e| TransactionError::TransactionError(e.to_string()))?;
 

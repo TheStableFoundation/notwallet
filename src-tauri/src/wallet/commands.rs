@@ -225,8 +225,6 @@ pub async fn send_token(
             BACH_TOKEN_ADDRESS.to_string()
         };
 
-        let amount_lamports = (amount * 1_000_000_000.0) as u64; // Convert to lamports
-
         // Create token transfer instruction
         create_token_transfer_ix(
             rpc_url(),
@@ -235,16 +233,13 @@ pub async fn send_token(
             to,
             bach_token_address,
             SPL_TOKEN_PROGRAM_ID.to_string(),
-            amount_lamports,
+            amount,
         )
         .await
         .map_err(|e| format!("Failed to send BACH tokens: {:?}", e))?
     } else {
-        // For SOL transfers
-        let amount_lamports = (amount * 1_000_000_000.0) as u64; // Convert to lamports
-
         // Create SOL transfer instruction
-        create_transfer_ix(rpc_url(), keypair, from, to, amount_lamports)
+        create_transfer_ix(rpc_url(), keypair, from, to, amount)
             .await
             .map_err(|e| format!("Failed to send SOL: {:?}", e))?
     };

@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import { SolanaWallet } from "@/lib/crate/generated";
@@ -54,7 +54,7 @@ export default function SendModal({
 
   // Filter out the sender address from the available keypairs for the dropdown
   const filteredKeypairs = availableKeypairs.filter(
-    (keypair) => keypair.pubkey !== senderAddress
+    (keypair) => keypair.pubkey !== senderAddress,
   );
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,12 +65,12 @@ export default function SendModal({
     }
   };
 
-  const handleRecipientChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-    setRecipient(e.target.value as string);
+  const handleRecipientChange = (event: SelectChangeEvent) => {
+    setRecipient(event.target.value);
   };
 
-  const handleTokenTypeChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-    setTokenType(e.target.value as "BACH" | "SOL");
+  const handleTokenTypeChange = (event: SelectChangeEvent) => {
+    setTokenType(event.target.value as "BACH" | "SOL");
   };
 
   const handleSend = async () => {
@@ -115,7 +115,9 @@ export default function SendModal({
     } catch (err) {
       console.error("Error sending tokens:", err);
       setError(
-        err instanceof Error ? err.message : "Failed to send tokens. Try again."
+        err instanceof Error
+          ? err.message
+          : "Failed to send tokens. Try again.",
       );
     } finally {
       setIsLoading(false);
@@ -282,18 +284,14 @@ export default function SendModal({
             sx={{
               flex: 1,
               borderRadius: 2,
-              background:
-                "linear-gradient(90deg, #9932CC 0%, #A64DFF 100%)",
+              background: "linear-gradient(90deg, #9932CC 0%, #A64DFF 100%)",
               color: "#fff",
               "&:hover": {
-                background:
-                  "linear-gradient(90deg, #8A2BE2 0%, #9400D3 100%)",
+                background: "linear-gradient(90deg, #8A2BE2 0%, #9400D3 100%)",
               },
             }}
             startIcon={
-              isLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : null
+              isLoading ? <CircularProgress size={20} color="inherit" /> : null
             }
           >
             {isLoading ? "Sending..." : "Send"}
