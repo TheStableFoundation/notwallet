@@ -6,3 +6,4 @@ export const ONRAMP_SESSION = "onramp_session";
 export const GET_BACH_BALANCE = "get_bach_balance";
 export const GET_SOL_BALANCE = "get_sol_balance";
 export const GET_TOKEN_INFO = "get_token_info";
+export const SEND_TOKEN = "send_token";

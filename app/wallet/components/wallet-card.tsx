@@ -17,6 +17,7 @@ import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
 import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@/lib/commands";
+import SendModal from "./send-modal";
 
 interface WalletCardProps {
   userName: string;
@@ -34,6 +35,10 @@ export default function WalletCard({
   const router = useRouter();
   const [bachBalance, setBachBalance] = React.useState<string>("-");
   const [solBalance, setSolBalance] = React.useState<string>("-");
+  const [sendModalOpen, setSendModalOpen] = React.useState<boolean>(false);
+  const [availableKeypairs, setAvailableKeypairs] = React.useState<
+    SolanaWallet[]
+  >([]);
 
   const handleWalletSettings = async () => {
     await selectionFeedback();
@@ -42,7 +47,21 @@ export default function WalletCard({
 
   const handleSend = async () => {
     await selectionFeedback();
-    router.push("/wallet/send?address=" + wallet.pubkey);
+    // Get all available keypairs for the dropdown
+    try {
+      const keypairs = await invoke<SolanaWallet[]>("get_all_keypairs");
+      setAvailableKeypairs(keypairs || []);
+    } catch (error) {
+      console.error("Error fetching keypairs:", error);
+      setAvailableKeypairs([]);
+    }
+    setSendModalOpen(true);
+  };
+
+  const handleCloseSendModal = () => {
+    setSendModalOpen(false);
+    // Refresh balances after sending
+    init();
   };
 
   const onBuySol = React.useCallback(async () => {
@@ -316,6 +335,16 @@ export default function WalletCard({
           Buy SOL
         </Button>
       </Stack>
+
+      {/* Send Modal */}
+      <SendModal
+        open={sendModalOpen}
+        onClose={handleCloseSendModal}
+        senderAddress={wallet.pubkey}
+        availableKeypairs={availableKeypairs}
+        bachBalance={bachBalance}
+        solBalance={solBalance}
+      />
     </Card>
   );
 }

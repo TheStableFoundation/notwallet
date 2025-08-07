@@ -6052,7 +6052,7 @@ dependencies = [
  "solana-sysvar",
  "solana-vote-interface",
  "spl-generic-token",
- "spl-token",
+ "spl-token 8.0.0",
  "spl-token-2022",
  "spl-token-group-interface",
  "spl-token-metadata-interface",
@@ -8093,6 +8093,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "spl-associated-token-account"
+version = "7.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ae179d4a26b3c7a20c839898e6aed84cb4477adf108a366c95532f058aea041b"
+dependencies = [
+ "borsh 1.5.7",
+ "num-derive",
+ "num-traits",
+ "solana-program",
+ "spl-associated-token-account-client",
+ "spl-token 8.0.0",
+ "spl-token-2022",
+ "thiserror 2.0.12",
+]
+
+[[package]]
+name = "spl-associated-token-account-client"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d6f8349dbcbe575f354f9a533a21f272f3eb3808a49e2fdc1c34393b88ba76cb"
+dependencies = [
+ "solana-instruction",
+ "solana-pubkey",
+]
+
+[[package]]
 name = "spl-discriminator"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8246,6 +8272,21 @@ dependencies = [
 
 [[package]]
 name = "spl-token"
+version = "7.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed320a6c934128d4f7e54fe00e16b8aeaecf215799d060ae14f93378da6dc834"
+dependencies = [
+ "arrayref",
+ "bytemuck",
+ "num-derive",
+ "num-traits",
+ "num_enum",
+ "solana-program",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "spl-token"
 version = "8.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "053067c6a82c705004f91dae058b11b4780407e9ccd6799dc9e7d0fab5f242da"
@@ -8305,7 +8346,7 @@ dependencies = [
  "spl-elgamal-registry",
  "spl-memo",
  "spl-pod",
- "spl-token",
+ "spl-token 8.0.0",
  "spl-token-confidential-transfer-ciphertext-arithmetic",
  "spl-token-confidential-transfer-proof-extraction",
  "spl-token-confidential-transfer-proof-generation",
@@ -9975,6 +10016,7 @@ name = "wallet_kit"
 version = "0.1.0"
 dependencies = [
  "bip39",
+ "bs58",
  "log",
  "serde",
  "serde_json",
@@ -9982,6 +10024,8 @@ dependencies = [
  "solana-client",
  "solana-program",
  "solana-sdk",
+ "spl-associated-token-account",
+ "spl-token 7.0.0",
  "thiserror 1.0.69",
  "tokio",
  "uniffi",

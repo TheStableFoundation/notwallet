@@ -18,6 +18,8 @@ solana-sdk = "2.3.1"
 solana-client = "2.3.1"
 solana-account-decoder = "2.3.1"
 solana-program = "2.3.0"
+spl-token = { version = "7", features = ["no-entrypoint"] }
+spl-associated-token-account = { version = "7", features = ["no-entrypoint"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = { version = "1.35.1", features = ["full"] }
@@ -25,6 +27,7 @@ thiserror = "1.0.56"
 log = "0.4.20"
 bip39 = { version = "2", features = ["rand"] }
 uniffi = { version = "0.28", features = ["cli"] }
+bs58 = "0.5.0"
 
 [build-dependencies]
 uniffi = { version = "0.28", features = ["build"] }
