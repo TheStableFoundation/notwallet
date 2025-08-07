@@ -1,6 +1,8 @@
 # NotWallet
 
-Solana non-custodial wallet, stable coin payment platform, and more 🔐
+Solana non-custodial wallet and more 🔐
+
+**Under active development.**
 
 **Do your own research.**
 
