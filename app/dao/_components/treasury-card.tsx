@@ -198,15 +198,6 @@ export default function TreasuryCard() {
               >
                 {bachBalance}
               </Typography>
-              <Typography
-                variant="caption"
-                sx={{
-                  color: "rgba(255,255,255,0.8)",
-                  fontWeight: "bold",
-                }}
-              >
-                Treasury
-              </Typography>
             </Box>
           </Stack>
 
@@ -243,15 +234,6 @@ export default function TreasuryCard() {
                 }}
               >
                 {solBalance}
-              </Typography>
-              <Typography
-                variant="caption"
-                sx={{
-                  color: "rgba(255,255,255,0.8)",
-                  fontWeight: "bold",
-                }}
-              >
-                SOL
               </Typography>
             </Box>
           </Stack>
