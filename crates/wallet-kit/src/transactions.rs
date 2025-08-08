@@ -1,4 +1,4 @@
-use crate::constants::{LAMPORTS_PER_SOL, SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY};
+use crate::constants::{LAMPORTS_PER_SOL, SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS};
 use crate::fee::{FeeBreakdown, TreasuryFeeManager};
 use log::{debug, info, warn};
 use solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter};
@@ -172,8 +172,8 @@ pub async fn create_token_transfer_ix(
         };
 
     // Check if treasury has a token account for this mint, if not we'll need to create one
-    let treasury_wallet = Pubkey::from_str(THE_STABLE_FOUNDATION_TREASURY).map_err(|_| {
-        TransactionError::InvalidAddress(THE_STABLE_FOUNDATION_TREASURY.to_string())
+    let treasury_wallet = Pubkey::from_str(THE_STABLE_FOUNDATION_TREASURY_ADDRESS).map_err(|_| {
+        TransactionError::InvalidAddress(THE_STABLE_FOUNDATION_TREASURY_ADDRESS.to_string())
     })?;
 
     let treasury_token_account_result =
