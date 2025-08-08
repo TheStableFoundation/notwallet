@@ -30,7 +30,12 @@ export default function BottomTabBar() {
     pathname === "/settings/app-preferences"
   )
     value = 2;
-  else if (pathname === "/home" || pathname.startsWith("/activity")) value = 0;
+  else if (
+    pathname === "/home" ||
+    pathname.startsWith("/activity") ||
+    pathname.startsWith("/dao")
+  )
+    value = 0;
 
   const handleChange = async (_: React.SyntheticEvent, newValue: number) => {
     try {
