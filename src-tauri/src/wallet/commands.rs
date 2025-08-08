@@ -247,3 +247,27 @@ pub async fn send_token(
     info!("Transaction sent successfully: {}", tx_signature);
     Ok(tx_signature)
 }
+
+#[command]
+pub fn get_treasury_bach_balance() -> String {
+    info!("Getting treasury BACH balance");
+    let treasury_address = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
+    let bach_token_address = if USE_LOCAL_RPC {
+        BACH_TOKEN_ADDRESS_LOCAL.to_string()
+    } else {
+        BACH_TOKEN_ADDRESS.to_string()
+    };
+    bach_balance(
+        rpc_url(),
+        treasury_address.to_string(),
+        SPL_TOKEN_PROGRAM_ID.to_string(),
+        bach_token_address,
+    )
+}
+
+#[command]
+pub fn get_treasury_sol_balance() -> String {
+    info!("Getting treasury SOL balance");
+    let treasury_address = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
+    sol_balance(rpc_url(), treasury_address.to_string())
+}

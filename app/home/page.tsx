@@ -5,6 +5,7 @@ import { useState } from "react";
 import { feed } from "./components/feed";
 import LoadingCard from "@/lib/components/loading-card";
 import ActivityListView from "./components/activity_list_view";
+import HorizontalMenu from "./components/horizontal-menu";
 import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@/lib/crate/generated";
 import { store } from "@/lib/store/store";
 import PageTitleBar from "@/lib/components/page-title-bar";
@@ -50,7 +51,10 @@ export default function HomeFeedPage() {
       <PageTitleBar title="Activity Feed" />
       {state === State.Loading && <LoadingCard />}
       {state === State.Loaded && pubkey && (
-        <ActivityListView feed={feed} pubkey={pubkey} />
+        <>
+          <HorizontalMenu />
+          <ActivityListView feed={feed} pubkey={pubkey} />
+        </>
       )}
     </Box>
   );

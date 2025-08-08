@@ -12,7 +12,8 @@ use crate::{
         check_pubkey::check_pubkey,
         commands::{
             derive_next_keypair, get_all_keypairs, get_bach_balance, get_sol_balance,
-            get_token_info, onboarding_create_wallet, send_token,
+            get_token_info, get_treasury_bach_balance, get_treasury_sol_balance,
+            onboarding_create_wallet, send_token,
         },
         import_wallet::{derive_new_keypair, import_solana_wallet},
         set_active_keypair::set_active_keypair,
@@ -54,6 +55,8 @@ pub fn run() {
             onramp_session,
             get_all_keypairs,
             send_token,
+            get_treasury_bach_balance,
+            get_treasury_sol_balance,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

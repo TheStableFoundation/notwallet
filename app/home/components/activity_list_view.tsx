@@ -33,7 +33,7 @@ export default function ActivityListView({
   }, [pubkey]);
 
   return (
-    <Box sx={{ width: "100%", maxWidth: 480 }}>
+    <Box sx={{ width: "100%", maxWidth: 480, px: 2 }}>
       {showOnboardingCard && (
         <OnboardingCard
           open={showOnboardingCard}

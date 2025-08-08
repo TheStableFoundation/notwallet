@@ -7,3 +7,5 @@ export const GET_BACH_BALANCE = "get_bach_balance";
 export const GET_SOL_BALANCE = "get_sol_balance";
 export const GET_TOKEN_INFO = "get_token_info";
 export const SEND_TOKEN = "send_token";
+export const GET_TREASURY_BACH_BALANCE = "get_treasury_bach_balance";
+export const GET_TREASURY_SOL_BALANCE = "get_treasury_sol_balance";
