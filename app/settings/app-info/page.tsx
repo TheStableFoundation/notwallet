@@ -11,6 +11,10 @@ import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import List from "@mui/material/List";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
 
@@ -37,101 +41,197 @@ export default function AppInfoPage() {
     Promise.all([fetchVersion(), fetchInstallationId()]);
   }, []);
 
+  const handleBack = async () => {
+    await selectionFeedback();
+    router.back();
+  };
+
+  const appInfoItems = [
+    {
+      id: "version",
+      label: "Version",
+      value: version ? `${version}` : "Loading...",
+      icon: <InfoOutlinedIcon />,
+    },
+    {
+      id: "installationId",
+      label: "Installation ID",
+      value: installationId || "Loading...",
+      icon: <FingerprintIcon />,
+    },
+  ];
+
   return (
     <Box
       sx={{
-        minHeight: "unset",
-        height: "auto",
-        bgcolor: "#f5f6fa",
+        minHeight: "100vh",
+        bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         py: 4,
       }}
     >
-      <Card
+      {/* Header */}
+      <Box
         sx={{
-          maxWidth: 400,
           width: "100%",
+          maxWidth: 420,
           px: 2,
-          py: 2,
-          boxShadow: 3,
-          position: "relative",
+          mb: 3,
         }}
       >
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            pl: 2,
-            pt: 2,
-            pb: 1,
-            bgcolor: "transparent",
+            justifyContent: "space-between",
+            py: 2,
           }}
         >
           <Button
             startIcon={<ArrowBackIcon />}
-            onClick={async () => {
-              await selectionFeedback();
-              router.back();
-            }}
+            onClick={handleBack}
             sx={{
               minWidth: 0,
-              px: 1,
-              py: 0.5,
-              fontSize: "0.95rem",
-              mr: 1,
+              px: 2,
+              py: 1,
+              fontSize: "16px",
+              fontWeight: 500,
+              color: "#8B5CF6",
+              borderRadius: "12px",
+              textTransform: "none",
+              "&:hover": {
+                bgcolor: "rgba(139, 92, 246, 0.08)",
+              },
             }}
           >
             Back
           </Button>
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-            <Typography variant="h5" fontWeight="bold" paddingRight={2}>
-              App Info
+          <Typography
+            variant="h5"
+            sx={{
+              fontSize: "20px",
+              fontWeight: 600,
+              color: "#1F2937",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            App Info
+          </Typography>
+          <Box sx={{ width: 80 }} /> {/* Spacer for center alignment */}
+        </Box>
+      </Box>
+
+      {/* Main Content Card */}
+      <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+        <Card
+          sx={{
+            width: "100%",
+            borderRadius: "20px",
+            boxShadow: "0 4px 20px rgba(139, 92, 246, 0.08)",
+            border: "1px solid rgba(139, 92, 246, 0.06)",
+            overflow: "hidden",
+            bgcolor: "#FFFFFF",
+          }}
+        >
+          <Box sx={{ p: 3, pb: 1 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontSize: "18px",
+                fontWeight: 600,
+                color: "#1F2937",
+                mb: 1,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Application Information
             </Typography>
           </Box>
-        </Box>
-        <Divider />
-        <ListItem
-          sx={{
-            px: 4,
-            cursor: "pointer",
-            minHeight: 56,
-            borderRadius: 2,
-            "&:hover": { bgcolor: "#f3f4f6" },
-            transition: "background 0.2s",
-          }}
-          component="li"
-          disablePadding
-        >
-          <ListItemText
-            primary={`Version ${version}`}
-            primaryTypographyProps={{
-              sx: { fontSize: "1rem", fontWeight: 500, py: 1 },
+
+          <List sx={{ p: 0, pb: 1 }}>
+            {appInfoItems.map((item, index) => (
+              <React.Fragment key={item.id}>
+                <ListItem
+                  sx={{
+                    px: 0,
+                    py: 2,
+                    borderRadius: "12px",
+                    mx: 2,
+                    mb: 1,
+                  }}
+                  component="li"
+                  disablePadding
+                >
+                  <ListItemIcon
+                    sx={{
+                      color: "#8B5CF6",
+                      minWidth: 48,
+                      ml: 2,
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.label}
+                    secondary={item.value}
+                    primaryTypographyProps={{
+                      sx: {
+                        fontSize: "16px",
+                        fontWeight: 500,
+                        color: "#1F2937",
+                        letterSpacing: "-0.01em",
+                        mb: 0.5,
+                      },
+                    }}
+                    secondaryTypographyProps={{
+                      sx: {
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        color: "#6B7280",
+                        fontFamily: "monospace",
+                        wordBreak: "break-all",
+                        lineHeight: 1.4,
+                      },
+                    }}
+                  />
+                </ListItem>
+                {index < appInfoItems.length - 1 && (
+                  <Divider
+                    sx={{
+                      mx: 6,
+                      borderColor: "rgba(139, 92, 246, 0.08)",
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          </List>
+
+          <Divider sx={{ borderColor: "rgba(139, 92, 246, 0.08)", mt: 2 }} />
+
+          {/* Footer Note */}
+          <Box
+            sx={{
+              p: 3,
+              textAlign: "center",
             }}
-          />
-        </ListItem>
-        <Divider />
-        <ListItem
-          sx={{
-            px: 4,
-            cursor: "pointer",
-            minHeight: 56,
-            borderRadius: 2,
-            "&:hover": { bgcolor: "#f3f4f6" },
-            transition: "background 0.2s",
-          }}
-          component="li"
-          disablePadding
-        >
-          <ListItemText
-            primary={installationId}
-            primaryTypographyProps={{
-              sx: { fontSize: "0.9rem", fontWeight: 500, py: 1 },
-            }}
-          />
-        </ListItem>
-      </Card>
+          >
+            <Typography
+              variant="body2"
+              sx={{
+                fontSize: "12px",
+                color: "#9CA3AF",
+                lineHeight: 1.5,
+              }}
+            >
+              This information helps with support and debugging
+            </Typography>
+          </Box>
+        </Card>
+      </Box>
     </Box>
   );
 }
