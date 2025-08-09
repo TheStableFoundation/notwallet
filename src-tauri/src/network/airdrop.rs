@@ -1,3 +1,4 @@
+use crate::constants::network::API_BASE_URL;
 use serde::Serialize;
 
 #[derive(Serialize)]
@@ -13,8 +14,9 @@ pub async fn airdrop(pubkey: String, signature: String) -> Result<String, String
         signature: &signature,
     };
 
+    let url = format!("{}/api/v1/airdrop", API_BASE_URL);
     let resp = client
-        .post("https://api.musik88.com/api/v1/airdrop")
+        .post(&url)
         .json(&req_body)
         .send()
         .await

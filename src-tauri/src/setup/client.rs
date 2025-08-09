@@ -1,4 +1,4 @@
-use crate::constants::store::store;
+use crate::constants::{network::API_BASE_URL, store::store};
 use crate::model::client::{ClientApp, ClientInfoPayload, RegisterClientResponse};
 use log::{error, info};
 use reqwest::Client as HttpClient;
@@ -111,7 +111,7 @@ async fn send_client_info(
     let client = HttpClient::new();
 
     // API endpoint
-    let url = "https://api.musik88.com/api/v1/setup-client";
+    let url = format!("{}/api/v1/setup-client", API_BASE_URL);
 
     let response = client
         .post(url)

@@ -1,3 +1,4 @@
+use crate::constants::network::API_BASE_URL;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -9,8 +10,8 @@ pub struct CheckPubkeyResponse {
 
 pub async fn check_pubkey(pubkey: &str) -> Result<CheckPubkeyResponse, String> {
     let url = format!(
-        "https://api.musik88.com/api/v1/onboarding/check-pubkey?pubkey={}",
-        pubkey
+        "{}/api/v1/onboarding/check-pubkey?pubkey={}",
+        API_BASE_URL, pubkey
     );
     let resp = reqwest::get(&url)
         .await
