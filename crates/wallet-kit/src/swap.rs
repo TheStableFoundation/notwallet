@@ -2,6 +2,7 @@ use crate::constants::{
     FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS,
 };
 use crate::models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse};
+use log::debug;
 use reqwest::header::CONTENT_TYPE;
 
 pub async fn get_jupiter_swap_quote(
@@ -27,10 +28,14 @@ pub async fn get_jupiter_swap_quote(
         Err(err) => return Err(err.to_string()),
     };
 
-    match response.json().await {
+    debug!("Jupiter swap quote response: {:?}", response.text().await);
+
+    let json = match response.json::<SwapQuoteResponse>().await {
         Ok(json) => json,
         Err(err) => return Err(err.to_string()),
-    }
+    };
+
+    Ok(json)
 }
 
 pub async fn build_swap_transaction(
