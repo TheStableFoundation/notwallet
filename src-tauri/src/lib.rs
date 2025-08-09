@@ -3,11 +3,13 @@ mod model;
 mod network;
 mod onramp;
 mod setup;
+mod swap;
 mod wallet;
 
 use crate::{
     onramp::commands::onramp_session,
     setup::{commands::get_installation_id, setup},
+    swap::commands::{build_swap_transaction, get_swap_quote},
     wallet::{
         check_pubkey::check_pubkey,
         commands::{
@@ -57,6 +59,8 @@ pub fn run() {
             send_token,
             get_treasury_bach_balance,
             get_treasury_sol_balance,
+            get_swap_quote,
+            build_swap_transaction,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

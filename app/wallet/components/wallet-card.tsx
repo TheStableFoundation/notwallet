@@ -10,7 +10,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import { SolanaWallet } from "@/lib/crate/generated";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
-
+import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,7 @@ import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
 import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@/lib/commands";
 import SendModal from "./send-modal";
+import SwapModal from "./swap-modal";
 import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
 
 interface WalletCardProps {
@@ -38,6 +39,7 @@ export default function WalletCard({
   const [bachBalance, setBachBalance] = React.useState<string>("-");
   const [solBalance, setSolBalance] = React.useState<string>("-");
   const [sendModalOpen, setSendModalOpen] = React.useState<boolean>(false);
+  const [swapModalOpen, setSwapModalOpen] = React.useState<boolean>(false);
   const [availableKeypairs, setAvailableKeypairs] = React.useState<
     SolanaWallet[]
   >([]);
@@ -60,9 +62,28 @@ export default function WalletCard({
     setSendModalOpen(true);
   };
 
+  const handleSwap = async () => {
+    await selectionFeedback();
+    // Get all available keypairs for the dropdown
+    try {
+      const keypairs = await invoke<SolanaWallet[]>("get_all_keypairs");
+      setAvailableKeypairs(keypairs || []);
+    } catch (error) {
+      console.error("Error fetching keypairs:", error);
+      setAvailableKeypairs([]);
+    }
+    setSwapModalOpen(true);
+  };
+
   const handleCloseSendModal = () => {
     setSendModalOpen(false);
     // Refresh balances after sending
+    init();
+  };
+
+  const handleCloseSwapModal = () => {
+    setSwapModalOpen(false);
+    // Refresh balances after swapping
     init();
   };
 
@@ -253,7 +274,13 @@ export default function WalletCard({
         Balance
       </Typography>
       {/* BACH Balance with Token Icon */}
-      <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
+      <Stack
+        direction="row"
+        alignItems="start"
+        justifyContent="space-between"
+        spacing={2}
+        sx={{ mb: 2 }}
+      >
         <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1 }}>
           <Box
             sx={{
@@ -282,20 +309,41 @@ export default function WalletCard({
             {bachBalance}
           </Typography>
         </Stack>
-        <Tooltip title="Send">
-          <IconButton
-            sx={{
-              color: "#9932CC",
-              bgcolor: "#f5f6fa",
-              "&:hover": { bgcolor: "#EDE7F6" },
-              borderRadius: 2,
-            }}
-            onClick={handleSend}
-            size="small"
-          >
-            <SendIcon />
-          </IconButton>
-        </Tooltip>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={1}
+          sx={{ flex: 1, justifyContent: "flex-end" }}
+        >
+          <Tooltip title="Send">
+            <IconButton
+              sx={{
+                color: "#9932CC",
+                bgcolor: "#f5f6fa",
+                "&:hover": { bgcolor: "#EDE7F6" },
+                borderRadius: 2,
+              }}
+              onClick={handleSend}
+              size="small"
+            >
+              <SendIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Swap">
+            <IconButton
+              sx={{
+                color: "#9932CC",
+                bgcolor: "#f5f6fa",
+                "&:hover": { bgcolor: "#EDE7F6" },
+                borderRadius: 2,
+              }}
+              onClick={handleSwap}
+              size="small"
+            >
+              <SwapHorizIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Stack>
       {/* SOL Balance with Solana Icon */}
       <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
@@ -369,6 +417,16 @@ export default function WalletCard({
       <SendModal
         open={sendModalOpen}
         onClose={handleCloseSendModal}
+        senderAddress={wallet.pubkey}
+        availableKeypairs={availableKeypairs}
+        bachBalance={bachBalance}
+        solBalance={solBalance}
+      />
+
+      {/* Swap Modal */}
+      <SwapModal
+        open={swapModalOpen}
+        onClose={handleCloseSwapModal}
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
         bachBalance={bachBalance}

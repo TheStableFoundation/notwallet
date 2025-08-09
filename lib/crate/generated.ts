@@ -1,5 +1,8 @@
 /* This file is generated and managed by tsync */
 
+/** Solana */
+export const SOLANA_MINT_ACCOUNT = "So11111111111111111111111111111111111111112";
+
 export const STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key";
 
 /**
@@ -103,3 +106,79 @@ export interface OnboardingCreateWallet {
 export const THE_STABLE_FOUNDATION_ADDRESS = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW27rLDtfU8y5";
 
 export const THE_STABLE_FOUNDATION_TREASURY_ADDRESS = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
+
+export interface SwapInfo {
+  amm_key: string;
+  label: string;
+  input_mint: string;
+  output_mint: string;
+  in_amount: string;
+  out_amount: string;
+  fee_amount: string;
+  fee_mint: string;
+}
+
+export interface RoutePlan {
+  swap_info: SwapInfo;
+  percent: number;
+}
+
+export interface SwapQuoteResponse {
+  input_mint: string;
+  in_amount: string;
+  output_mint: string;
+  out_amount: string;
+  other_amount_threshold: string;
+  swap_mode: string;
+  slippage_bps: number;
+  platform_fee?: string;
+  price_impact_pct: string;
+  route_plan: Array<RoutePlan>;
+  context_slot: number;
+  time_taken: number;
+}
+
+export interface PriorityLevelWithMaxLamports {
+  max_lamports: number;
+  priority_level: string;
+}
+
+export interface PrioritizationFeeLamports {
+  priority_level_with_max_lamports: PriorityLevelWithMaxLamports;
+}
+
+export interface SwapTransactionPayload {
+  quote_response: SwapQuoteResponse;
+  user_public_key: string;
+  dynamic_compute_unit_limit: boolean;
+  dynamic_slippage: boolean;
+  prioritization_fee_lamports: PrioritizationFeeLamports;
+}
+
+export interface ComputeBudget {
+  micro_lamports: number;
+  estimated_micro_lamports: number;
+}
+
+export interface PrioritizationType {
+  compute_budget: ComputeBudget;
+}
+
+export interface DynamicSlippageReport {
+  slippage_bps: number;
+  other_amount: number;
+  simulated_incurred_slippage_bps: number;
+  amplification_ratio: string;
+  category_name: string;
+  heuristic_max_slippage_bps: number;
+}
+
+export interface SwapTransactionResponse {
+  swap_transaction: string;
+  last_valid_block_height: number;
+  prioritization_fee_lamports: number;
+  compute_unit_limit: number;
+  prioritization_type: PrioritizationType;
+  dynamic_slippage_report: DynamicSlippageReport;
+  simulation_error?: string;
+}

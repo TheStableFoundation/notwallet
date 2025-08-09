@@ -268,6 +268,7 @@ mod tests {
 }
 
 /// Helper function to demonstrate fee calculation for various scenarios
+#[allow(dead_code)]
 fn demonstrate_fee_scenarios() {
     println!("💡 Fee Calculation Scenarios");
     println!("============================");
@@ -298,6 +299,7 @@ fn demonstrate_fee_scenarios() {
 }
 
 /// Demonstrates the treasury fee instruction creation
+#[allow(dead_code)]
 fn demonstrate_instruction_creation() {
     println!("🔧 Transaction Instruction Creation");
     println!("===================================");

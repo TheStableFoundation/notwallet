@@ -297,6 +297,7 @@ impl FeeConfig {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::constants::SEMITONE_PER_BACH;
 
     #[test]
     fn test_fee_breakdown_creation() {
