@@ -20,7 +20,7 @@ export default function ActivityCard({}: ActivityCardProps) {
   const loadActivities = async () => {
     setTimeout(() => {
       setState(State.Loaded);
-    }, 2000); // 2 seconds delay
+    }, 1500); // 1.5 seconds delay
   };
 
   React.useEffect(() => {
