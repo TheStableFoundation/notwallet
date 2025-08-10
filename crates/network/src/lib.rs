@@ -18,7 +18,7 @@ pub async fn parse_error_response<T: DeserializeOwned>(
         Err(e) => {
             error!("Failed to get response body: {:?}", e);
             return Err(ErrorResponse::Error {
-                error_code: ErrorCode::NetworkError,
+                code: ErrorCode::NetworkError,
                 message: format!("Error getting response body: {}", e),
             });
         }
@@ -33,7 +33,7 @@ pub async fn parse_error_response<T: DeserializeOwned>(
         Err(e) => {
             error!("Failed to parse error response: {:?}", e);
             return Err(ErrorResponse::Error {
-                error_code: ErrorCode::ParseError,
+                code: ErrorCode::ParseError,
                 message: format!("Error parsing response: {}", e),
             });
         }
@@ -49,7 +49,7 @@ pub async fn request<R: DeserializeOwned>(builder: RequestBuilder) -> Result<R, 
         Err(e) => {
             error!("Failed to get response: {:?}", e);
             return Err(ErrorResponse::Error {
-                error_code: ErrorCode::NetworkError,
+                code: ErrorCode::NetworkError,
                 message: format!("Error getting response: {}", e),
             });
         }
@@ -67,7 +67,7 @@ pub async fn request<R: DeserializeOwned>(builder: RequestBuilder) -> Result<R, 
         Err(e) => {
             error!("Failed to get response body: {:?}", e);
             return Err(ErrorResponse::Error {
-                error_code: ErrorCode::NetworkError,
+                code: ErrorCode::NetworkError,
                 message: format!("Error getting response body: {}", e),
             });
         }
@@ -82,7 +82,7 @@ pub async fn request<R: DeserializeOwned>(builder: RequestBuilder) -> Result<R, 
         Err(e) => {
             error!("Failed to parse response: {:?}", e);
             return Err(ErrorResponse::Error {
-                error_code: ErrorCode::ParseError,
+                code: ErrorCode::ParseError,
                 message: e.to_string(),
             });
         }

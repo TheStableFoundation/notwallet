@@ -12,10 +12,7 @@ use tsync::tsync;
 #[serde(untagged)]
 #[tsync]
 pub enum ErrorResponse {
-    Error {
-        error_code: ErrorCode,
-        message: String,
-    },
+    Error { code: ErrorCode, message: String },
 }
 
 impl Error for ErrorResponse {}
@@ -31,8 +28,8 @@ impl Display for ErrorResponse {
 #[tsync]
 pub enum ErrorCode {
     Unknown = 0,
-    ParseError = 2,
-    NetworkError = 3,
+    ParseError = 1,
+    NetworkError = 2,
 }
 
 impl Display for ErrorCode {
