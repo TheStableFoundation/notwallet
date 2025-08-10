@@ -3,8 +3,15 @@ use crate::constants::{
     JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS, SOLANA_MINT_ACCOUNT, SOL_DECIMALS,
 };
 use crate::models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse};
+use base64::{engine::general_purpose, Engine as _};
+use bincode;
 use network::{model::ErrorResponse, request};
 use reqwest::{header::CONTENT_TYPE, Client};
+use solana_client::rpc_client::RpcClient;
+use solana_sdk::signature::{Keypair, Signature};
+use solana_sdk::signer::Signer;
+
+use solana_sdk::transaction::VersionedTransaction;
 
 /// Get a swap quote from Jupiter for exchanging tokens.
 ///
@@ -119,4 +126,77 @@ pub async fn build_swap_transaction(
         .header(CONTENT_TYPE, "application/json")
         .json(&payload);
     request(builder).await
+}
+
+/// Send a Jupiter swap transaction to the Solana network
+///
+/// This function takes a base64 encoded transaction from Jupiter's swap API,
+/// deserializes it, signs it with the provided keypair, and submits it to the Solana network.
+///
+/// # Arguments
+///
+/// * `rpc_url` - The Solana RPC endpoint URL
+/// * `swap_transaction` - The base64 encoded transaction from Jupiter
+/// * `keypair` - The keypair to sign the transaction with
+///
+/// # Returns
+///
+/// A `Result` containing the transaction signature or an error
+///
+/// # Examples
+///
+/// ```rust
+/// use wallet_kit::swap::send_jupiter_swap_transaction;
+/// use solana_sdk::signature::Keypair;
+///
+/// let signature = send_jupiter_swap_transaction(
+///     "https://api.mainnet-beta.solana.com".to_string(),
+///     base64_transaction,
+///     keypair
+/// ).await?;
+/// ```
+pub async fn send_jupiter_swap_transaction(
+    rpc_url: String,
+    swap_transaction: String,
+    keypair: Keypair,
+) -> Result<Signature, ErrorResponse> {
+    // Decode the base64 transaction
+    let transaction_bytes = general_purpose::STANDARD
+        .decode(&swap_transaction)
+        .map_err(|e| ErrorResponse::Error {
+            code: network::model::ErrorCode::ParseError,
+            message: format!("Failed to decode base64 transaction: {}", e),
+        })?;
+
+    // Deserialize the transaction
+    let mut transaction: VersionedTransaction =
+        bincode::deserialize(&transaction_bytes).map_err(|e| ErrorResponse::Error {
+            code: network::model::ErrorCode::ParseError,
+            message: format!("Failed to deserialize transaction: {}", e),
+        })?;
+
+    // Get the message hash for signing
+    let message_hash = transaction.message.hash();
+
+    // Sign the message hash with the keypair
+    let signature = keypair.sign_message(&message_hash.as_ref());
+
+    // Add the signature to the transaction
+    // Note: We assume the first signature slot is for this keypair
+    if !transaction.signatures.is_empty() {
+        transaction.signatures[0] = signature;
+    } else {
+        transaction.signatures.push(signature);
+    }
+
+    // Create RPC client and send the transaction
+    let rpc_client = RpcClient::new(rpc_url);
+    let signature = rpc_client
+        .send_and_confirm_transaction(&transaction)
+        .map_err(|e| ErrorResponse::Error {
+            code: network::model::ErrorCode::NetworkError,
+            message: format!("Failed to send transaction: {}", e),
+        })?;
+
+    Ok(signature)
 }

@@ -30,7 +30,7 @@ import SwapVertIcon from "@mui/icons-material/SwapVert";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
-import { info } from "@tauri-apps/plugin-log";
+import { info, debug } from "@tauri-apps/plugin-log";
 
 interface SwapModalProps {
   open: boolean;
@@ -201,21 +201,14 @@ export default function SwapModal({
 
       // If transaction is already built, execute it
       if (transactionResponse) {
-        // TODO: Sign and submit the transaction
-        // This would involve:
-        // 1. Deserializing the transaction
-        // 2. Signing it with the user's keypair
-        // 3. Submitting it to the network
-        // 4. Monitoring for confirmation
-
         info(
           `Executing swap transaction: ${transactionResponse.swapTransaction}`,
         );
+        const signature = await invoke("send_swap_transaction", {
+          swapTransaction: transactionResponse.swapTransaction,
+        });
+        debug(`Transaction executed successfully: ${signature}`);
 
-        setSuccess(true);
-        setTimeout(() => {
-          handleClose();
-        }, 2000);
         return;
       }
 

@@ -10137,6 +10137,8 @@ dependencies = [
 name = "wallet_kit"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
+ "bincode",
  "bip39",
  "bs58",
  "env_logger 0.10.2",
