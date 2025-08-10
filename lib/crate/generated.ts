@@ -31,6 +31,11 @@ export const STORE_WALLET = "wallet.json";
  */
 export const WALLET_0 = "wallet_0";
 
+export interface CheckPubkeyResponse {
+  exists: boolean;
+  user_id?: number;
+}
+
 export interface SolanaWallet {
   /**
    * The unique identifier for the wallet, typically a UUID.

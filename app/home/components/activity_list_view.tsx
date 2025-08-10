@@ -9,6 +9,8 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { debug as tauriDebug } from "@tauri-apps/plugin-log";
 import OnboardingCard from "./onboarding_card";
+import { CHECK_PUBKEY } from "@/lib/commands";
+import { CheckPubkeyResponse } from "@/lib/crate/generated";
 
 enum ActivityState {
   Loading,
@@ -34,9 +36,11 @@ export default function ActivityListView({
 
   async function checkOnboarding() {
     try {
-      const exists = await invoke<boolean>("check_pubkey", { pubkey });
-      tauriDebug(`check_pubkey exists: ${exists}, pubkey: ${pubkey}`);
-      setShowOnboardingCard(!exists);
+      const res = await invoke<CheckPubkeyResponse>(CHECK_PUBKEY, {
+        pubkey,
+      });
+      tauriDebug(`check_pubkey exists: ${res.exists}, pubkey: ${pubkey}`);
+      setShowOnboardingCard(!res.exists);
     } catch (err) {
       tauriDebug(`check_pubkey error: ${err}`);
     }

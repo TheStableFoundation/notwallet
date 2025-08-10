@@ -1,34 +1,16 @@
-use serde::Serialize;
+use crate::constants::network::API_BASE_URL;
+use crate::model::airdrop::{AirdropRequest, AirdropResponse};
+use network::{model::ErrorResponse, request};
+use reqwest::Client;
 
-#[derive(Serialize)]
-struct AirdropRequest<'a> {
-    pubkey: &'a str,
-    signature: &'a str,
-}
-
-pub async fn airdrop(pubkey: String, signature: String) -> Result<String, String> {
-    let client = reqwest::Client::new();
+pub async fn airdrop(pubkey: String, signature: String) -> Result<AirdropResponse, ErrorResponse> {
     let req_body = AirdropRequest {
         pubkey: &pubkey,
         signature: &signature,
     };
 
-    let resp = client
-        .post("https://api.musik88.com/api/v1/airdrop")
-        .json(&req_body)
-        .send()
-        .await
-        .map_err(|e| format!("Network error: {:?}", e))?;
-
-    let status = resp.status();
-    let text = resp
-        .text()
-        .await
-        .map_err(|e| format!("Read error: {:?}", e))?;
-
-    if status.is_success() {
-        Ok(text)
-    } else {
-        Err(format!("Airdrop failed: {} - {}", status, text))
-    }
+    let url = format!("{}/api/v1/airdrop", API_BASE_URL);
+    let client = Client::new();
+    let builder = client.post(&url).json(&req_body);
+    request(builder).await
 }
