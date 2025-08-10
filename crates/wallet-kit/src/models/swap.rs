@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use tsync::tsync;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -47,7 +48,7 @@ pub struct SwapQuoteResponse {
     #[serde(rename = "slippageBps")]
     pub slippage_bps: u64,
     #[serde(rename = "platformFee")]
-    pub platform_fee: Option<String>,
+    pub platform_fee: Option<PlatformFee>,
     #[serde(rename = "priceImpactPct")]
     pub price_impact_pct: String,
     #[serde(rename = "routePlan")]
@@ -56,6 +57,24 @@ pub struct SwapQuoteResponse {
     pub context_slot: u64,
     #[serde(rename = "timeTaken")]
     pub time_taken: f64,
+    #[serde(rename = "swapUsdValue")]
+    pub swap_usd_value: Option<String>,
+    #[serde(rename = "simplerRouteUsed")]
+    pub simpler_route_used: Option<bool>,
+    #[serde(rename = "mostReliableAmmsQuoteReport")]
+    pub most_reliable_amms_quote_report: Option<MostReliableAmmsQuoteReportInfo>,
+    #[serde(rename = "useIncurredSlippageForQuoting")]
+    pub use_incurred_slippage_for_quoting: Option<bool>,
+    #[serde(rename = "otherRoutePlans")]
+    pub other_route_plans: Option<Vec<RoutePlan>>,
+    #[serde(rename = "aggregatorVersion")]
+    pub aggregator_version: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[tsync]
+pub struct MostReliableAmmsQuoteReportInfo {
+    pub info: HashMap<String, String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -65,6 +84,14 @@ pub struct PriorityLevelWithMaxLamports {
     pub max_lamports: u64,
     #[serde(rename = "priorityLevel")]
     pub priority_level: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[tsync]
+pub struct PlatformFee {
+    pub amount: String,
+    #[serde(rename = "feeBps")]
+    pub fee_bps: i32,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
