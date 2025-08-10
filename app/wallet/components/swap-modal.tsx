@@ -30,6 +30,7 @@ import SwapVertIcon from "@mui/icons-material/SwapVert";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
+import { info } from "@tauri-apps/plugin-log";
 
 interface SwapModalProps {
   open: boolean;
@@ -207,9 +208,8 @@ export default function SwapModal({
         // 3. Submitting it to the network
         // 4. Monitoring for confirmation
 
-        console.log(
-          "Executing swap transaction:",
-          transactionResponse.swapTransaction,
+        info(
+          `Executing swap transaction: ${transactionResponse.swapTransaction}`,
         );
 
         setSuccess(true);

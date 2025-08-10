@@ -17,6 +17,6 @@ pub async fn get_swap_quote(
 #[tauri::command]
 pub async fn build_swap_transaction(
     payload: SwapTransactionPayload,
-) -> Result<SwapTransactionResponse, String> {
+) -> Result<SwapTransactionResponse, ErrorResponse> {
     build_swap_tx(payload).await
 }
