@@ -88,6 +88,7 @@ function DetailContent() {
         router.replace("/wallet");
       }
     }, 100);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (

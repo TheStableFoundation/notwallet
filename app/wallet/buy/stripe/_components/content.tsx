@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { error as logError, debug } from "@tauri-apps/plugin-log";
 
 enum State {
   Loading,
@@ -38,10 +39,11 @@ export default function Content() {
       const result = await invoke<OnrampSession>(ONRAMP_SESSION, {
         solanaAddress: address,
       });
-      console.log(result);
+      debug(`result: ${JSON.stringify(result)}`);
       setClientSecret(result.client_secret);
       setState(State.Loaded);
     } catch (error) {
+      logError(`error: ${JSON.stringify(error)}`);
       setState(State.Error);
     }
   };
@@ -64,7 +66,13 @@ export default function Content() {
   }, []);
 
   return (
-    <>
+    <Box
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        height: "unset",
+      }}
+    >
       {state === State.Loading && <LoadingCard />}
       {state === State.Error && <ErrorCard />}
       {state === State.Loaded && clientSecret && (
@@ -74,14 +82,7 @@ export default function Content() {
         />
       )}
       {state === State.PurchaseComplete && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
+        <>
           <Confetti width={dimensions.width} height={dimensions.height} />
           <Typography variant="h4" color="primary">
             Thank you for your purchase!
@@ -90,8 +91,8 @@ export default function Content() {
             Your purchase has been successfully completed. You will be
             redirected to your wallet shortly.
           </Typography>
-        </Box>
+        </>
       )}
-    </>
+    </Box>
   );
 }

@@ -13,11 +13,10 @@ import AddIcon from "@mui/icons-material/Add";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import WalletSettingsSeedPhraseModal from "../components/wallet-settings-seed-phrase-modal";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 export default function WalletSettingsPage() {
   const router = useRouter();
@@ -34,11 +33,6 @@ export default function WalletSettingsPage() {
     } else if (type === "importSeedPhrase") {
       router.push("/wallet/import");
     }
-  };
-
-  const handleBack = async () => {
-    await selectionFeedback();
-    router.back();
   };
 
   const walletItems = [
@@ -155,57 +149,7 @@ export default function WalletSettingsPage() {
         pb: 8,
       }}
     >
-      {/* Header */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 420,
-          px: 2,
-          mb: 3,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            py: 2,
-          }}
-        >
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={handleBack}
-            sx={{
-              minWidth: 0,
-              px: 2,
-              py: 1,
-              fontSize: "16px",
-              fontWeight: 500,
-              color: "#8B5CF6",
-              borderRadius: "12px",
-              textTransform: "none",
-              "&:hover": {
-                bgcolor: "rgba(139, 92, 246, 0.08)",
-              },
-            }}
-          >
-            Back
-          </Button>
-          <Typography
-            variant="h5"
-            sx={{
-              fontSize: "20px",
-              fontWeight: 600,
-              color: "#1F2937",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Wallet Settings
-          </Typography>
-          <Box sx={{ width: 80 }} /> {/* Spacer for center alignment */}
-        </Box>
-      </Box>
-
+      <PageChildrenTitleBar title="Wallet Settings" />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         {/* Wallet Management Section */}
         <Card

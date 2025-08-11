@@ -137,6 +137,7 @@ export default function ActivityListView({
   React.useEffect(() => {
     checkOnboarding();
     loadActivities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pubkey]);
 
   return (

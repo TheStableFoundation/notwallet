@@ -2,6 +2,10 @@
 
 export const STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key";
 
+export const ONRAMPER_KEY = "your_onramper_key";
+
+export const ONRAMPER_SIGNER_KEY = "your_onramper_signer_key";
+
 /**
  * Generate:
  * tsync -i src-tauri/src/ crates/wallet-kit/src/ -o lib/crate/generated.ts
@@ -196,9 +200,13 @@ export interface DynamicSlippageReport {
   slippageBps: number;
   otherAmount: number;
   simulatedIncurredSlippageBps: number;
-  amplificationRatio: string;
+  amplificationRatio?: string;
   categoryName: string;
-  heuristicMaxSlippageBps: number;
+  heuristicMaxSlippageBps?: number;
+  rtseSlippageBps?: number;
+  failedTxnEstSlippage?: number;
+  emaEstSlippage?: number;
+  useIncurredSlippageForQuoting?: boolean;
 }
 
 export interface SwapTransactionResponse {
@@ -207,6 +215,8 @@ export interface SwapTransactionResponse {
   prioritizationFeeLamports: number;
   computeUnitLimit: number;
   prioritizationType: PrioritizationType;
+  simulationSlot?: number;
   dynamicSlippageReport: DynamicSlippageReport;
   simulationError?: string;
+  addressesByLookupTableAddress?: Array<string>;
 }

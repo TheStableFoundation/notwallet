@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 import Content from "./_components/content";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 export default function Page() {
   return (
@@ -20,7 +20,9 @@ export default function Page() {
         }}
       >
         <PageChildrenTitleBar title="Buy Crypto" />
-        <Content />
+        <Box sx={{ width: "100%", maxWidth: 480, alignItems: "center" }}>
+          <Content />
+        </Box>
       </Box>
     </React.Suspense>
   );
