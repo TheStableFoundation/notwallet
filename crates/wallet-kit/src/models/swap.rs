@@ -110,9 +110,13 @@ pub struct DynamicSlippageReport {
     pub slippageBps: u64,
     pub otherAmount: u64,
     pub simulatedIncurredSlippageBps: i64,
-    pub amplificationRatio: String,
+    pub amplificationRatio: Option<String>,
     pub categoryName: String,
-    pub heuristicMaxSlippageBps: u64,
+    pub heuristicMaxSlippageBps: Option<u64>,
+    pub rtseSlippageBps: Option<u64>,
+    pub failedTxnEstSlippage: Option<u64>,
+    pub emaEstSlippage: Option<u64>,
+    pub useIncurredSlippageForQuoting: Option<bool>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -124,6 +128,8 @@ pub struct SwapTransactionResponse {
     pub prioritizationFeeLamports: u64,
     pub computeUnitLimit: u64,
     pub prioritizationType: PrioritizationType,
+    pub simulationSlot: Option<u64>,
     pub dynamicSlippageReport: DynamicSlippageReport,
     pub simulationError: Option<String>,
+    pub addressesByLookupTableAddress: Option<Vec<String>>,
 }
