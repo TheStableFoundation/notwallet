@@ -330,94 +330,103 @@ export default function SwapModal({
           </Alert>
         )}
 
-        <Stack spacing={3}>
-          {/* From Token Section */}
+        <Stack spacing={2}>
           <Box
             sx={{
-              p: 3,
+              p: 2,
               border: "1px solid #E0E0E0",
               borderRadius: 2,
               bgcolor: "#FAFAFA",
             }}
           >
-            <Typography variant="subtitle2" sx={{ mb: 2, color: "#666" }}>
-              From
-            </Typography>
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                {getTokenIcon(fromToken)}
-                <Typography variant="h6" fontWeight="bold">
-                  {fromToken}
-                </Typography>
-              </Box>
-              <TextField
-                value={inputAmount}
-                onChange={handleInputAmountChange}
-                placeholder="0.0"
-                variant="outlined"
-                sx={{ flex: 1 }}
-                InputProps={{
-                  sx: { fontSize: "1.2rem", fontWeight: "bold" },
-                }}
-                disabled={isSwapping}
-              />
-            </Stack>
-            <Typography variant="caption" sx={{ color: "#666", mt: 1 }}>
-              Available: {fromToken === "SOL" ? solBalance : bachBalance}{" "}
-              {fromToken}
-            </Typography>
-          </Box>
-
-          {/* Swap Button */}
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Tooltip title="Swap tokens">
-              <IconButton
-                onClick={handleSwapTokens}
-                disabled={isSwapping}
-                sx={{
-                  bgcolor: "#9932CC",
-                  color: "#fff",
-                  "&:hover": { bgcolor: "#7B2599" },
-                  "&:disabled": { bgcolor: "#E0E0E0" },
-                }}
-              >
-                <SwapVertIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
-
-          {/* To Token Section */}
-          <Box
-            sx={{
-              p: 3,
-              border: "1px solid #E0E0E0",
-              borderRadius: 2,
-              bgcolor: "#FAFAFA",
-            }}
-          >
-            <Typography variant="subtitle2" sx={{ mb: 2, color: "#666" }}>
-              To
-            </Typography>
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                {getTokenIcon(toToken)}
-                <Typography variant="h6" fontWeight="bold">
-                  {toToken}
-                </Typography>
-              </Box>
-              <Box sx={{ flex: 1, textAlign: "right" }}>
-                {isLoadingQuote ? (
-                  <CircularProgress size={20} />
-                ) : (
-                  <Typography
-                    variant="h6"
-                    fontWeight="bold"
-                    sx={{ color: "#333" }}
-                  >
-                    {quote ? getOutputAmount() : "0.0"}
+            <Stack spacing={1.5}>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={1}
+                  sx={{ minWidth: 80 }}
+                >
+                  <Typography variant="subtitle2" sx={{ color: "#666" }}>
+                    From
                   </Typography>
-                )}
-              </Box>
+                  {getTokenIcon(fromToken)}
+                  <Typography variant="body1" fontWeight="bold">
+                    {fromToken}
+                  </Typography>
+                </Stack>
+                <TextField
+                  value={inputAmount}
+                  onChange={handleInputAmountChange}
+                  placeholder="0.0"
+                  variant="outlined"
+                  size="small"
+                  sx={{ flex: 1 }}
+                  InputProps={{
+                    sx: { fontSize: "1.1rem", fontWeight: "bold" },
+                  }}
+                  disabled={isSwapping}
+                />
+              </Stack>
+
+              <Typography variant="caption" sx={{ color: "#666", ml: 9 }}>
+                Available: {fromToken === "SOL" ? solBalance : bachBalance}{" "}
+                {fromToken}
+              </Typography>
+
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={1}
+                  sx={{ minWidth: 80 }}
+                >
+                  <Typography variant="subtitle2" sx={{ color: "#666" }}>
+                    To
+                  </Typography>
+                  {getTokenIcon(toToken)}
+                  <Typography variant="body1" fontWeight="bold">
+                    {toToken}
+                  </Typography>
+                </Stack>
+                <Box
+                  sx={{
+                    flex: 1,
+                    textAlign: "right",
+                    pr: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  {isLoadingQuote ? (
+                    <CircularProgress size={20} />
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      sx={{ color: "#333" }}
+                    >
+                      {quote ? getOutputAmount() : "0.0"}
+                    </Typography>
+                  )}
+                </Box>
+                <Tooltip title="Swap tokens">
+                  <IconButton
+                    onClick={handleSwapTokens}
+                    disabled={isSwapping}
+                    size="small"
+                    sx={{
+                      bgcolor: "#9932CC",
+                      color: "#fff",
+                      "&:hover": { bgcolor: "#7B2599" },
+                      "&:disabled": { bgcolor: "#E0E0E0" },
+                    }}
+                  >
+                    <SwapVertIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Stack>
             </Stack>
           </Box>
 
@@ -574,7 +583,7 @@ export default function SwapModal({
           </FormControl>
         </Stack>
 
-        <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
+        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
           <Button
             variant="outlined"
             onClick={handleClose}
