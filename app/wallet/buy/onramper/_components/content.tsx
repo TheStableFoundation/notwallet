@@ -17,7 +17,7 @@ export default function Content() {
       const onramperParams: Record<string, string> = {
         apiKey: ONRAMPER_KEY,
         redirectAtCheckout: "true",
-        onlyCryptos: "solana",
+        onlyCryptos: "SOL",
         mode: "buy",
         hideTopBar: "true",
         themeName: "light",
