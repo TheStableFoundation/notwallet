@@ -6,24 +6,16 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LanguageIcon from "@mui/icons-material/Language";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { openUrl } from "@tauri-apps/plugin-opener";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 export default function AboutPage() {
-  const router = useRouter();
-
   const handleExternal = async (url: string) => {
     await selectionFeedback();
     await openUrl(url);
-  };
-
-  const handleBack = async () => {
-    await selectionFeedback();
-    router.back();
   };
 
   return (
@@ -38,58 +30,7 @@ export default function AboutPage() {
         py: 4,
       }}
     >
-      {/* Header */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 420,
-          px: 2,
-          mb: 3,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            py: 2,
-          }}
-        >
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={handleBack}
-            sx={{
-              minWidth: 0,
-              px: 2,
-              py: 1,
-              fontSize: "16px",
-              fontWeight: 500,
-              color: "#8B5CF6",
-              borderRadius: "12px",
-              textTransform: "none",
-              "&:hover": {
-                bgcolor: "rgba(139, 92, 246, 0.08)",
-              },
-            }}
-          >
-            Back
-          </Button>
-          <Typography
-            variant="h5"
-            sx={{
-              fontSize: "20px",
-              fontWeight: 600,
-              color: "#1F2937",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            About
-          </Typography>
-          <Box sx={{ width: 80 }} /> {/* Spacer for center alignment */}
-        </Box>
-      </Box>
-
-      {/* Main Content Card */}
+      <PageChildrenTitleBar title="About" />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         <Card
           sx={{

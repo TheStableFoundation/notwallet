@@ -10,7 +10,6 @@ use network::{model::ErrorResponse, request};
 use reqwest::{header::CONTENT_TYPE, Client};
 use solana_client::rpc_client::RpcClient;
 use solana_sdk::signature::{Keypair, Signature};
-use solana_sdk::signer::Signer;
 use solana_sdk::transaction::VersionedTransaction;
 
 /// Get a swap quote from Jupiter for exchanging tokens.

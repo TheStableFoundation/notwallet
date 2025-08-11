@@ -5,9 +5,6 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
@@ -18,15 +15,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import { useColorScheme } from "@mui/material/styles";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 export default function AppPreferences() {
-  const router = useRouter();
   const { mode, setMode } = useColorScheme();
-
-  const handleBack = async () => {
-    await selectionFeedback();
-    router.back();
-  };
 
   const handleThemeChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -65,56 +57,7 @@ export default function AppPreferences() {
         py: 4,
       }}
     >
-      {/* Header */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 420,
-          px: 2,
-          mb: 3,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            py: 2,
-          }}
-        >
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={handleBack}
-            sx={{
-              minWidth: 0,
-              px: 2,
-              py: 1,
-              fontSize: "16px",
-              fontWeight: 500,
-              color: "#8B5CF6",
-              borderRadius: "12px",
-              textTransform: "none",
-              "&:hover": {
-                bgcolor: "rgba(139, 92, 246, 0.08)",
-              },
-            }}
-          >
-            Back
-          </Button>
-          <Typography
-            variant="h5"
-            sx={{
-              fontSize: "20px",
-              fontWeight: 600,
-              color: "#1F2937",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Preferences
-          </Typography>
-          <Box sx={{ width: 80 }} /> {/* Spacer for center alignment */}
-        </Box>
-      </Box>
+      <PageChildrenTitleBar title="Appearance" />
 
       {/* Main Content Card */}
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>

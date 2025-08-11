@@ -5,10 +5,6 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/navigation";
-import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -17,9 +13,9 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 export default function AppInfoPage() {
-  const router = useRouter();
   const [version, setVersion] = React.useState<string | null>(null);
   const [installationId, setInstallationId] = React.useState<string | null>(
     null,
@@ -40,11 +36,6 @@ export default function AppInfoPage() {
     };
     Promise.all([fetchVersion(), fetchInstallationId()]);
   }, []);
-
-  const handleBack = async () => {
-    await selectionFeedback();
-    router.back();
-  };
 
   const appInfoItems = [
     {
@@ -73,56 +64,7 @@ export default function AppInfoPage() {
         py: 4,
       }}
     >
-      {/* Header */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 420,
-          px: 2,
-          mb: 3,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            py: 2,
-          }}
-        >
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={handleBack}
-            sx={{
-              minWidth: 0,
-              px: 2,
-              py: 1,
-              fontSize: "16px",
-              fontWeight: 500,
-              color: "#8B5CF6",
-              borderRadius: "12px",
-              textTransform: "none",
-              "&:hover": {
-                bgcolor: "rgba(139, 92, 246, 0.08)",
-              },
-            }}
-          >
-            Back
-          </Button>
-          <Typography
-            variant="h5"
-            sx={{
-              fontSize: "20px",
-              fontWeight: 600,
-              color: "#1F2937",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            App Info
-          </Typography>
-          <Box sx={{ width: 80 }} /> {/* Spacer for center alignment */}
-        </Box>
-      </Box>
+      <PageChildrenTitleBar title="App Info" />
 
       {/* Main Content Card */}
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
