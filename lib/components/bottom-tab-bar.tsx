@@ -35,7 +35,8 @@ export default function BottomTabBar() {
   else if (
     pathname === "/home" ||
     pathname.startsWith("/activity") ||
-    pathname.startsWith("/dao")
+    pathname.startsWith("/home/dao") ||
+    pathname.startsWith("/home/learn")
   )
     value = 0;
 

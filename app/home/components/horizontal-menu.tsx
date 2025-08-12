@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import SchoolIcon from "@mui/icons-material/School";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 
@@ -64,7 +65,12 @@ export default function HorizontalMenu() {
 
   const handleDAO = async () => {
     await selectionFeedback();
-    router.push("/dao");
+    router.push("/home/dao");
+  };
+
+  const handleLearn = async () => {
+    await selectionFeedback();
+    router.push("/home/learn");
   };
 
   const menuItems = [
@@ -72,6 +78,11 @@ export default function HorizontalMenu() {
       icon: <AccountBalanceIcon fontSize="medium" />,
       label: "DAO",
       onClick: handleDAO,
+    },
+    {
+      icon: <SchoolIcon fontSize="medium" />,
+      label: "Learn",
+      onClick: handleLearn,
     },
     // Add more menu items here as needed
   ];
