@@ -9,6 +9,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
@@ -20,9 +22,30 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import PageTitleBar from "@/lib/components/page-title-bar";
+import Confetti from "react-confetti";
 
 export default function SettingsPage() {
   const router = useRouter();
+  const [footerClickCount, setFooterClickCount] = React.useState(0);
+  const [showModal, setShowModal] = React.useState(false);
+  const [showConfetti, setShowConfetti] = React.useState(false);
+  const [windowDimensions, setWindowDimensions] = React.useState({
+    width: 0,
+    height: 0,
+  });
+
+  React.useEffect(() => {
+    const updateDimensions = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
 
   // Centralized click handler for all links
   const handleClick = async (
@@ -45,12 +68,25 @@ export default function SettingsPage() {
     } else if (type === "openSource") {
       openUrl("https://github.com/TheStableFoundation/not");
     } else if (type === "footer") {
-      openUrl("https://bach.money/");
+      const newCount = footerClickCount + 1;
+      setFooterClickCount(newCount);
+      if (newCount === 3) {
+        setShowConfetti(true);
+        setShowModal(true);
+        setTimeout(() => {
+          setShowConfetti(false);
+        }, 5000);
+      }
     } else if (type === "appInfo") {
       router.push("/settings/app-info");
     } else if (type === "appPreferences") {
       router.push("/settings/app-preferences");
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setFooterClickCount(0); // Reset counter after showing modal
   };
 
   const settingsItems = [
@@ -273,6 +309,89 @@ export default function SettingsPage() {
           </Typography>
         </Box>
       </Box>
+
+      {/* Confetti */}
+      {showConfetti && (
+        <Confetti
+          width={windowDimensions.width}
+          height={windowDimensions.height}
+          numberOfPieces={200}
+          recycle={false}
+          gravity={0.3}
+        />
+      )}
+
+      {/* Congratulations Modal */}
+      <Modal
+        open={showModal}
+        onClose={handleCloseModal}
+        aria-labelledby="congratulations-modal-title"
+        aria-describedby="congratulations-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "90%", sm: 400 },
+            bgcolor: "background.paper",
+            borderRadius: "20px",
+            boxShadow: "0 8px 32px rgba(139, 92, 246, 0.2)",
+            p: 4,
+            border: "1px solid rgba(139, 92, 246, 0.1)",
+          }}
+        >
+          <Typography
+            id="congratulations-modal-title"
+            variant="h5"
+            component="h2"
+            sx={{
+              mb: 2,
+              fontWeight: 700,
+              color: "#1F2937",
+              textAlign: "center",
+              fontSize: { xs: "1.3rem", sm: "1.5rem" },
+            }}
+          >
+            🎉 Congratulations! 🎉
+          </Typography>
+          <Typography
+            id="congratulations-modal-description"
+            sx={{
+              mb: 3,
+              color: "#6B7280",
+              lineHeight: 1.6,
+              textAlign: "center",
+            }}
+          >
+            You just found one of many ways to get the BACH Token airdrop. Send
+            an email to{" "}
+            <strong style={{ color: "#8B5CF6" }}>info@bach.money</strong> with
+            subject{" "}
+            <strong style={{ color: "#8B5CF6" }}>SETTINGS_EASTER_EGG</strong>{" "}
+            and your wallet address in the email body.
+          </Typography>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={handleCloseModal}
+            sx={{
+              mt: 2,
+              py: 1.5,
+              borderRadius: "12px",
+              bgcolor: "#8B5CF6",
+              "&:hover": {
+                bgcolor: "#7C3AED",
+              },
+              textTransform: "none",
+              fontWeight: 600,
+            }}
+          >
+            Got it!
+          </Button>
+        </Box>
+      </Modal>
     </Box>
   );
 }
