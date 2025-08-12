@@ -8,9 +8,38 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LanguageIcon from "@mui/icons-material/Language";
+import ForumIcon from "@mui/icons-material/Forum";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+
+const links = [
+  {
+    title: "GitHub",
+    icon: <GitHubIcon />,
+    url: "https://github.com/TheStableFoundation",
+  },
+  {
+    title: "Discord",
+    icon: <ForumIcon />,
+    url: "https://discord.gg/TaqewTFBmb",
+  },
+  {
+    title: "X",
+    icon: <LanguageIcon />,
+    url: "https://x.com/STBLfoundation",
+  },
+  {
+    title: "Website",
+    icon: <LanguageIcon />,
+    url: "https://bach.money",
+  },
+  {
+    title: "Telegram",
+    icon: <ForumIcon />,
+    url: "https://t.me/thestablefoundation",
+  },
+];
 
 export default function AboutPage() {
   const handleExternal = async (url: string) => {
@@ -127,7 +156,7 @@ export default function AboutPage() {
               Developed and maintained by The Stable Foundation.
             </Typography>
 
-            {/* Action Buttons */}
+            {/* Social Links */}
             <Box
               sx={{
                 display: "flex",
@@ -136,50 +165,34 @@ export default function AboutPage() {
                 flexWrap: "wrap",
               }}
             >
-              <Button
-                variant="contained"
-                startIcon={<LanguageIcon />}
-                onClick={() => handleExternal("https://bach.money")}
-                sx={{
-                  px: 3,
-                  py: 1.5,
-                  borderRadius: "12px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  fontSize: "15px",
-                  bgcolor: "#8B5CF6",
-                  boxShadow: "0 4px 16px rgba(139, 92, 246, 0.3)",
-                  "&:hover": {
-                    bgcolor: "#7C3AED",
-                    boxShadow: "0 6px 20px rgba(139, 92, 246, 0.4)",
-                  },
-                }}
-              >
-                Website
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<GitHubIcon />}
-                onClick={() =>
-                  handleExternal("https://github.com/TheStableFoundation/not")
-                }
-                sx={{
-                  px: 3,
-                  py: 1.5,
-                  borderRadius: "12px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  fontSize: "15px",
-                  color: "#8B5CF6",
-                  borderColor: "#8B5CF6",
-                  "&:hover": {
-                    bgcolor: "rgba(139, 92, 246, 0.08)",
-                    borderColor: "#7C3AED",
-                  },
-                }}
-              >
-                GitHub
-              </Button>
+              {links.map((link, index) => (
+                <Button
+                  key={index}
+                  onClick={() => handleExternal(link.url)}
+                  sx={{
+                    minWidth: 48,
+                    width: 48,
+                    height: 48,
+                    borderRadius: "50%",
+                    p: 0,
+                    bgcolor: "#FFFFFF",
+                    border: "2px solid #E5E7EB",
+                    boxShadow: "0 2px 8px rgba(139, 92, 246, 0.1)",
+                    color: "#6B7280",
+                    "&:hover": {
+                      bgcolor: "#8B5CF6",
+                      borderColor: "#8B5CF6",
+                      color: "#FFFFFF",
+                      boxShadow: "0 4px 12px rgba(139, 92, 246, 0.3)",
+                      transform: "translateY(-2px)",
+                    },
+                    transition: "all 0.2s ease-in-out",
+                  }}
+                  aria-label={link.title}
+                >
+                  {link.icon}
+                </Button>
+              ))}
             </Box>
           </Box>
 
