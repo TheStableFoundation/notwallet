@@ -15,6 +15,10 @@ import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import WarningIcon from "@mui/icons-material/Warning";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { invoke } from "@tauri-apps/api/core";
+import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@/lib/commands";
+import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@/lib/crate/generated";
+import { store } from "@/lib/store/store";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 interface MemeToken {
@@ -74,7 +78,9 @@ export default function MemePage() {
   const [tokenName, setTokenName] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
-  const [bachBalance] = useState("1,337"); // Mock BACH balance
+  const [bachBalance, setBachBalance] = useState<string>("-");
+  const [solBalance, setSolBalance] = useState<string>("-");
+  const [, setUserWallet] = useState<SolanaWallet | null>(null);
   const [displayedTokens, setDisplayedTokens] = useState<MemeToken[]>(
     mockTokens.slice(0, 3),
   );
@@ -151,6 +157,37 @@ export default function MemePage() {
     }
   };
 
+  const loadWalletAndBalances = async () => {
+    try {
+      // Get the active wallet
+      const wallet = await store().get<SolanaWallet>(STORE_ACTIVE_KEYPAIR);
+      if (!wallet?.pubkey) {
+        console.error("No active wallet found");
+        return;
+      }
+
+      setUserWallet(wallet);
+
+      // Fetch BACH balance
+      const bachBal = await invoke<string>(GET_BACH_BALANCE, {
+        pubkey: wallet.pubkey,
+      });
+      setBachBalance(bachBal);
+
+      // Fetch SOL balance
+      const solBal = await invoke<string>(GET_SOL_BALANCE, {
+        pubkey: wallet.pubkey,
+      });
+      setSolBalance(solBal);
+    } catch (error) {
+      console.error("Error fetching wallet and balances:", error);
+    }
+  };
+
+  React.useEffect(() => {
+    loadWalletAndBalances();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -190,7 +227,7 @@ export default function MemePage() {
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <AttachMoneyIcon sx={{ fontSize: 18 }} />
               <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                BACH Balance: {bachBalance}
+                BACH: {bachBalance} | SOL: {solBalance}
               </Typography>
             </Box>
           </CardContent>
