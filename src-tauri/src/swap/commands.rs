@@ -1,12 +1,11 @@
 use crate::constants::{
-    store::{store, STORE_ACTIVE_KEYPAIR},
     rpc::rpc_url,
+    store::{store, STORE_ACTIVE_KEYPAIR},
 };
-use crate::model::{airdrop::AirdropResponse, keypair::SolanaWallet};
-use crate::network::airdrop::airdrop;
+use crate::model::keypair::SolanaWallet;
 use bs58;
 use network::model::{ErrorCode, ErrorResponse};
-use solana_sdk::signature::{Keypair, Signature, Signer};
+use solana_sdk::signature::{Keypair, Signature};
 use tauri::{command, AppHandle};
 use wallet_kit::{
     models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
@@ -16,7 +15,7 @@ use wallet_kit::{
     },
 };
 
-#[tauri::command]
+#[command]
 pub async fn get_swap_quote(
     from_token: &str,
     to_token: &str,
@@ -26,14 +25,14 @@ pub async fn get_swap_quote(
     get_jupiter_swap_quote(from_token, to_token, amount, slippage_bps).await
 }
 
-#[tauri::command]
+#[command]
 pub async fn build_swap_transaction(
     payload: SwapTransactionPayload,
 ) -> Result<SwapTransactionResponse, ErrorResponse> {
     build_swap_tx(payload).await
 }
 
-#[tauri::command]
+#[command]
 pub async fn send_swap_transaction(
     app: AppHandle,
     swap_transaction: String,

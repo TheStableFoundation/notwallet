@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 
 import LoadingCard from "@/lib/components/loading-card";
-import HomeView from "./components/home-view";
+import HomeView from "./_components/home-view";
 import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@/lib/crate/generated";
 import { store } from "@/lib/store/store";
 import PageTitleBar from "@/lib/components/page-title-bar";

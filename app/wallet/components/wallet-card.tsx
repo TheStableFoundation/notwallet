@@ -17,7 +17,11 @@ import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
-import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@/lib/commands";
+import {
+  GET_BACH_BALANCE,
+  GET_SOL_BALANCE,
+  GET_ALL_KEYPAIRS,
+} from "@/lib/commands";
 import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
@@ -53,7 +57,7 @@ export default function WalletCard({
     await selectionFeedback();
     // Get all available keypairs for the dropdown
     try {
-      const keypairs = await invoke<SolanaWallet[]>("get_all_keypairs");
+      const keypairs = await invoke<SolanaWallet[]>(GET_ALL_KEYPAIRS);
       setAvailableKeypairs(keypairs || []);
     } catch (error) {
       console.error("Error fetching keypairs:", error);
@@ -66,7 +70,7 @@ export default function WalletCard({
     await selectionFeedback();
     // Get all available keypairs for the dropdown
     try {
-      const keypairs = await invoke<SolanaWallet[]>("get_all_keypairs");
+      const keypairs = await invoke<SolanaWallet[]>(GET_ALL_KEYPAIRS);
       setAvailableKeypairs(keypairs || []);
     } catch (error) {
       console.error("Error fetching keypairs:", error);

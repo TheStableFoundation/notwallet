@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SchoolIcon from "@mui/icons-material/School";
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 
@@ -73,6 +74,11 @@ export default function HorizontalMenu() {
     router.push("/home/learn");
   };
 
+  const handleM3m3 = async () => {
+    await selectionFeedback();
+    router.push("/home/meme");
+  };
+
   const menuItems = [
     {
       icon: <AccountBalanceIcon fontSize="medium" />,
@@ -83,6 +89,11 @@ export default function HorizontalMenu() {
       icon: <SchoolIcon fontSize="medium" />,
       label: "Learn",
       onClick: handleLearn,
+    },
+    {
+      icon: <RocketLaunchIcon fontSize="medium" />,
+      label: "m3m3",
+      onClick: handleM3m3,
     },
     // Add more menu items here as needed
   ];
