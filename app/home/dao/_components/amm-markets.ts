@@ -1,0 +1,98 @@
+export const markets = [
+  {
+    id: "CwrELqpzvWAsSAk3fts9yb5f1bYftG1EtFtfxQ3knvw9",
+    base: "BACH",
+    quote: "USDC",
+    platform: "raydium",
+  },
+  {
+    id: "8W6J22ofY81SJ91dRBqTngYpju3c8av6bttUhvYTWatJ",
+    base: "PYUSD",
+    quote: "BACH",
+    platform: "raydium",
+  },
+  {
+    id: "D5Weg2nviwkjG17x2eWqoHrMG1egKMgJhpqy2gq65vqB",
+    base: "WSOL",
+    quote: "BACH",
+    platform: "raydium",
+  },
+  {
+    id: "4F4EXw2WfeatPLQG2GRbudA28dgF4fMChfJr8fmi3gDD",
+    base: "BACH",
+    quote: "EURC",
+    platform: "raydium",
+  },
+  {
+    id: "BFhqsyx4mHVz874J4bnXoX1u7ECMAbWKbod4zLPLKmaY",
+    base: "BACH",
+    quote: "USDT",
+    platform: "raydium",
+  },
+  {
+    id: "CNwdLzMpV2FJJ3nKHZLgmaoYynYmL3fBUPQsvZW7enQQ",
+    base: "BACH",
+    quote: "JUP",
+    platform: "meteora",
+  },
+  {
+    id: "f9sXQZQBbidHFpmPcKXChHvXew9PHZsTdqJDjUfmAYK",
+    base: "BACH",
+    quote: "MEW",
+    platform: "meteora",
+  },
+  {
+    id: "9r7AD1aLGKPBuCkfaz4464FaW8zRo3ixKHB8WQhwxxYt",
+    base: "BACH",
+    quote: "WSOL",
+    platform: "meteora",
+  },
+  {
+    id: "ELFAu9jvjuntNnPfoV7yuycV8jsbWnKWmEBNuRHscTSC",
+    base: "BACH",
+    quote: "TRUMP",
+    platform: "meteora",
+  },
+  {
+    id: "tYkwniHE5g3qZWgJCjEr5KCiJxrWzzDYWNsExxS4hHP",
+    base: "BACH",
+    quote: "EURC",
+    platform: "meteora",
+  },
+  {
+    id: "DTY7j26gHoUo3iRSVHaHoifNhyt7fo1CEABQ931fnjrs",
+    base: "BACH",
+    quote: "cbBTC",
+    platform: "meteora",
+  },
+  {
+    id: "CAfYJeciR7YmngztPPAG3pPPnxeUKS5sVvisLuDR5ApE",
+    base: "BACH",
+    quote: "Bonk",
+    platform: "meteora",
+  },
+  {
+    id: "9MeQ7nrM1PJnubCGKVDMEzZ4geoQk1K53pZtUuDuQ9zz",
+    base: "BACH",
+    quote: "MELANIA",
+    platform: "meteora",
+  },
+  {
+    id: "ER3hN9evtZUaezvwG2dTvzZDe4Nz5rMUw5c9jJjAw3Hv",
+    base: "BACH",
+    quote: "USDS",
+    platform: "meteora",
+  },
+  {
+    id: "BVxWJ3z68DTtiEWFdovVMGYgsSB31odsvh51g9EL6LcT",
+    base: "BACH",
+    quote: "JitoSOL",
+    platform: "meteora",
+  },
+  {
+    id: "3uWHo1cNeBGTheehydisaUXSoiMC1TFDDf9R3ujxMAVJ",
+    base: "USDG",
+    quote: "BACH",
+    platform: "orca",
+  },
+];
