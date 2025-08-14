@@ -1,23 +1,25 @@
-use crate::constants::{
-    address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL},
-    rpc::{rpc_url, USE_LOCAL_RPC},
-    store::{store, STORE_KEYPAIRS, STORE_SEEDS},
-};
-use crate::model::keypair::SolanaWallet;
-use crate::model::seed::{Seed, SeedType};
-use crate::model::wallet::OnboardingCreateWallet;
-use bip39::{Language, Mnemonic};
-use chrono::Utc;
-use log::{debug, error, info};
-use solana_sdk::signature::Signer;
-use tauri::{command, AppHandle};
-use uuid::Uuid;
-use wallet_kit::{
-    balance::{bach_balance, sol_balance},
-    constants::SPL_TOKEN_PROGRAM_ID,
-    derive_keypair::derive_keypair_default,
-    token_info::token_info,
-    transactions::{create_token_transfer_ix, create_transfer_ix},
+use {
+    crate::constants::{
+        address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL},
+        rpc::{rpc_url, USE_LOCAL_RPC},
+        store::{store, STORE_KEYPAIRS, STORE_SEEDS},
+    },
+    crate::model::keypair::SolanaWallet,
+    crate::model::seed::{Seed, SeedType},
+    crate::model::wallet::OnboardingCreateWallet,
+    bip39::{Language, Mnemonic},
+    chrono::Utc,
+    log::{debug, error, info},
+    solana_sdk::signature::Signer,
+    tauri::{command, AppHandle},
+    uuid::Uuid,
+    wallet_kit::{
+        balance::{sol_balance, spl_balance},
+        constants::SPL_TOKEN_PROGRAM_ID,
+        derive_keypair::derive_keypair_default,
+        token_info::token_info,
+        transactions::{create_token_transfer_ix, create_transfer_ix},
+    },
 };
 
 #[command]
@@ -153,7 +155,7 @@ pub fn get_bach_balance(pubkey: String) -> String {
     } else {
         BACH_TOKEN_ADDRESS.to_string()
     };
-    bach_balance(
+    spl_balance(
         rpc_url(),
         pubkey,
         SPL_TOKEN_PROGRAM_ID.to_string(),
@@ -258,7 +260,7 @@ pub fn get_treasury_bach_balance() -> String {
     } else {
         BACH_TOKEN_ADDRESS.to_string()
     };
-    bach_balance(
+    spl_balance(
         rpc_url(),
         treasury_address.to_string(),
         SPL_TOKEN_PROGRAM_ID.to_string(),

@@ -6,7 +6,7 @@ use solana_client::{rpc_client::RpcClient, rpc_request::TokenAccountsFilter};
 use solana_program::pubkey::Pubkey;
 use std::str::FromStr;
 
-pub fn bach_balance(
+pub fn spl_balance(
     rpc_url: String,
     pubkey: String,
     spl_token_program_id: String,
@@ -48,16 +48,10 @@ pub fn bach_balance(
         "Bach balance: {}",
         bach_account[0].token_amount.ui_amount_string
     );
-    // Rounded to 2 decimal places
-    let amount = bach_account[0]
+
+    format!("{} BACH", bach_account[0]
         .token_amount
-        .amount
-        .parse::<u128>()
-        .unwrap_or(0);
-    let decimals = bach_account[0].token_amount.decimals as u32;
-    let whole_part = amount / 10u128.pow(decimals);
-    let decimal_part = ((amount % 10u128.pow(decimals)) * 100) / 10u128.pow(decimals);
-    format!("{}.{:02} BACH", whole_part, decimal_part)
+        .ui_amount_string)
 }
 
 pub fn sol_balance(rpc_url: String, pubkey: String) -> String {
@@ -79,7 +73,7 @@ pub fn sol_balance(rpc_url: String, pubkey: String) -> String {
     let pretty_balance = balance / LAMPORTS_PER_SOL;
     println!("{:#?} SOL", pretty_balance);
     // Display SOL balance
-    format!("{:.2} SOL", pretty_balance)
+    format!("{:.9} SOL", pretty_balance)
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
