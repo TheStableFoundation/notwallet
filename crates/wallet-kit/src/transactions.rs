@@ -433,7 +433,6 @@ pub struct TransactionCostEstimate {
 
 /// Estimates the total cost of a SOL transaction including fees
 pub async fn estimate_sol_transaction_cost(
-    rpc_url: String,
     amount: f64,
 ) -> Result<TransactionCostEstimate, TransactionError> {
     // Calculate fee breakdown
