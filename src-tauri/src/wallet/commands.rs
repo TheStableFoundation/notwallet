@@ -299,14 +299,18 @@ pub async fn update_username(
             code: ErrorCode::ParseError,
             message: "Failed to parse wallet".to_string(),
         })?;
-    // Sanity check
-    if active_wallet.id != uid {
+    // Sanity check - parse the uid string to Uuid
+    let wallet_id: Uuid = Uuid::parse_str(&uid).map_err(|_| ErrorResponse::Error {
+        code: ErrorCode::ParseError,
+        message: "Invalid UUID format".to_string(),
+    })?;
+    if active_wallet.id != wallet_id {
         return Err(ErrorResponse::Error {
-            code: ErrorCode::InvalidInput,
+            code: ErrorCode::ParseError,
             message: "Invalid wallet ID".to_string(),
         });
     }
-    active_wallet.username = Some(username);
+    active_wallet.username = Some(username.clone());
     // Update the active wallet in the store
     store.set(STORE_ACTIVE_KEYPAIR, serde_json::json!(&active_wallet));
     // Load existing keypairs, update the wallet with uuid
@@ -314,16 +318,12 @@ pub async fn update_username(
         Some(value) => serde_json::from_value(value).unwrap_or_default(),
         None => Vec::new(),
     };
-    // Find the wallet with the same uuid as the active wallet
-    let mut found_wallet = None;
+    // Find the wallet with the same uuid as the active wallet and update it
     for wallet in &mut keypairs {
         if wallet.id == active_wallet.id {
-            found_wallet = Some(wallet);
+            wallet.username = Some(username.clone());
             break;
         }
-    }
-    if let Some(wallet) = found_wallet {
-        wallet.username = Some(username);
     }
     store.set(STORE_KEYPAIRS, serde_json::json!(keypairs));
     store.save().map_err(|_| ErrorResponse::Error {

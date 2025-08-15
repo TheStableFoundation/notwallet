@@ -29,14 +29,12 @@ import EditKeyPairModal from "./edit-keypair-modal";
 import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
 
 interface WalletCardProps {
-  userName: string;
   wallet: SolanaWallet;
   onLock: () => void;
   onSwitchKeypair: () => void;
 }
 
 export default function WalletCard({
-  userName,
   wallet,
   onLock,
   onSwitchKeypair,
@@ -44,6 +42,9 @@ export default function WalletCard({
   const router = useRouter();
   const [bachBalance, setBachBalance] = React.useState<string>("-");
   const [solBalance, setSolBalance] = React.useState<string>("-");
+  const [walletUsername, setWalletUsername] = React.useState<string>(
+    wallet.username || "NowhereMan",
+  );
   const [sendModalOpen, setSendModalOpen] = React.useState<boolean>(false);
   const [swapModalOpen, setSwapModalOpen] = React.useState<boolean>(false);
   const [editKeyPairModalOpen, setEditKeyPairModalOpen] =
@@ -51,6 +52,11 @@ export default function WalletCard({
   const [availableKeypairs, setAvailableKeypairs] = React.useState<
     SolanaWallet[]
   >([]);
+
+  // Update walletUsername when wallet.username changes
+  React.useEffect(() => {
+    setWalletUsername(wallet.username || "NowhereMan");
+  }, [wallet.username]);
 
   const handleWalletSettings = async () => {
     await selectionFeedback();
@@ -95,10 +101,11 @@ export default function WalletCard({
     init();
   };
 
-  const handleCloseEditKeyPairModal = () => {
+  const handleCloseEditKeyPairModal = (updatedUsername: string) => {
     setEditKeyPairModalOpen(false);
-    // Refresh username
-    init();
+    if (updatedUsername && updatedUsername !== walletUsername) {
+      setWalletUsername(updatedUsername);
+    }
   };
 
   const onBuySol = React.useCallback(async () => {
@@ -158,7 +165,7 @@ export default function WalletCard({
             color="#fff"
             sx={{ fontSize: 16 }}
           >
-            {userName}
+            {walletUsername}
           </Typography>
           <IconButton
             size="small"
@@ -212,8 +219,8 @@ export default function WalletCard({
       <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
         <Avatar sx={{ width: 56, height: 56, bgcolor: "#fff" }}>
           <Typography variant="h5" color="#9932CC">
-            {userName[0]}
-            {userName[1]}
+            {walletUsername[0]}
+            {walletUsername[1]}
           </Typography>
         </Avatar>
         <Box sx={{ flex: 1 }}>

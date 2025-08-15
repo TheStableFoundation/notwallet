@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Link from "@mui/material/Link";
 import ActivityComponent, { ActivityItem } from "./activity_component";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";

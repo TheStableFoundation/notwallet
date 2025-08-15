@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import { SolanaWallet } from "@/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
@@ -16,7 +15,7 @@ import Alert from "@mui/material/Alert";
 
 interface EditKeyPairModalProps {
   open: boolean;
-  onClose: () => void;
+  onClose: (username: string) => void;
   wallet: SolanaWallet;
 }
 
@@ -25,7 +24,9 @@ export default function EditKeyPairModal({
   onClose,
   wallet,
 }: EditKeyPairModalProps) {
-  const [username, setUsername] = React.useState<string>(wallet.username);
+  const [username, setUsername] = React.useState<string>(
+    wallet.username || "NowhereMan",
+  );
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<boolean>(false);
@@ -33,23 +34,27 @@ export default function EditKeyPairModal({
   // Reset form when modal opens/closes
   React.useEffect(() => {
     if (open) {
-      setUsername("");
+      setUsername(wallet.username || "");
       setError(null);
       setSuccess(false);
     }
-  }, [open]);
+  }, [open, wallet.username]);
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRecipient(event.target.value);
+    setUsername(event.target.value);
   };
 
-  const handleSend = async () => {
+  const handleUpdateUsername = async () => {
     try {
       setError(null);
       setIsLoading(true);
       await selectionFeedback();
       if (!username) {
-        setError("Please select a recipient");
+        setError("Please select a username");
+        return;
+      }
+      if (username.length > 6) {
+        setError("Username must be 6 characters or less");
         return;
       }
 
@@ -78,7 +83,7 @@ export default function EditKeyPairModal({
 
   const handleClose = async () => {
     await selectionFeedback();
-    onClose();
+    onClose(username);
   };
 
   return (
@@ -128,20 +133,20 @@ export default function EditKeyPairModal({
 
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            Transaction completed successfully!
+            Success!
           </Alert>
         )}
 
         <Stack spacing={3}>
           <FormControl fullWidth>
-            <InputLabel id="token-type-label">Username</InputLabel>
             <TextField
               label="Username"
               fullWidth
               value={username}
               onChange={handleUsernameChange}
               disabled={isLoading}
-              helperText={wallet.name}
+              helperText={`${wallet.name} (max 6 characters)`}
+              inputProps={{ maxLength: 6 }}
             />
           </FormControl>
         </Stack>
@@ -166,7 +171,7 @@ export default function EditKeyPairModal({
           </Button>
           <Button
             variant="contained"
-            onClick={handleSend}
+            onClick={handleUpdateUsername}
             disabled={isLoading || success}
             sx={{
               flex: 1,

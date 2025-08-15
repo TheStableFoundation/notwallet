@@ -27,8 +27,6 @@ enum State {
 }
 
 export default function WalletHome() {
-  // Placeholder data
-  const [userName, setUserName] = React.useState<string>("Nowhere Man");
   const { lock } = useAppLock();
   const router = useRouter();
   const [wallet, setWallet] = React.useState<SolanaWallet | undefined>(
@@ -51,11 +49,6 @@ export default function WalletHome() {
       }
       debug(`wallet: ${wallet?.pubkey}`);
       setWallet(wallet);
-      // Load username
-      const username = await store().get<string>("username");
-      if (username !== undefined) {
-        setUserName(username);
-      }
       setState(State.Loaded);
     } catch {
       setState(State.Error);
@@ -112,7 +105,6 @@ export default function WalletHome() {
         <>
           <Box sx={{ width: "100%", maxWidth: 480 }}>
             <WalletCard
-              userName={userName}
               wallet={wallet}
               onLock={async () => {
                 await selectionFeedback();
