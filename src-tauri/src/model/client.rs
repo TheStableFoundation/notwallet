@@ -32,7 +32,7 @@ pub enum ClientApp {
 #[derive(Debug, Deserialize)]
 #[allow(dead_code)]
 pub struct RegisterClientResponse {
-    pub code: bool,
+    pub code: i32,
     pub message: Option<String>,
     pub client_info: Option<ClientInfo>,
 }
