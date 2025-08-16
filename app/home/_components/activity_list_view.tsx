@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import ActivityComponent, { ActivityItem } from "./activity_component";
+import { ActivityItem } from "./activity_component";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { debug as tauriDebug } from "@tauri-apps/plugin-log";
@@ -65,7 +65,7 @@ export default function ActivityListView({
     }
   }
 
-  async function loadMore() {
+  /*async function loadMore() {
     if (!hasMore || state === ActivityState.LoadingMore) return;
 
     try {
@@ -135,7 +135,7 @@ export default function ActivityListView({
       console.error("Error loading more activities:", error);
       setState(ActivityState.Loaded);
     }
-  }
+  } */
 
   React.useEffect(() => {
     checkOnboarding();
