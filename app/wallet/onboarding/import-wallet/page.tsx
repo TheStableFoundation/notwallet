@@ -11,7 +11,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { invoke } from "@tauri-apps/api/core";
 import { debug } from "@tauri-apps/plugin-log";
 import { useRouter } from "next/navigation";
-import { SolanaWallet, IMPORT_SOLANA_WALLET } from "@/lib/crate/generated";
+import { SolanaWallet } from "@/lib/crate/generated";
+import { IMPORT_SOLANA_WALLET } from "@/lib/commands";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
