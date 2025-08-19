@@ -363,7 +363,7 @@ export default function CreateNewWalletPage() {
           onClick={async () => {
             await selectionFeedback();
             if (selectedSeed === CREATE_NEW_ID) {
-              router.push("/onboarding/create-wallet");
+              router.push("/wallet/onboarding/create-wallet");
             } else {
               const seed = existingSeeds.find((s) => s.id === selectedSeed);
               if (seed) {

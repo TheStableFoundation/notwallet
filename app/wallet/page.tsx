@@ -19,6 +19,7 @@ import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ActiveKeypairSelectionModal from "./components/active-keypair-selection";
 import { SET_ACTIVE_KEYPAIR } from "@/lib/commands";
 import PageTitleBar from "@/lib/components/page-title-bar";
+import { redirect } from "next/navigation";
 
 enum State {
   Loading,
@@ -85,6 +86,10 @@ export default function WalletHome() {
     }
     fetchKeypairs();
   }, []);
+
+  if (!wallet) {
+    return redirect("/wallet/onboarding");
+  }
 
   return (
     <Box

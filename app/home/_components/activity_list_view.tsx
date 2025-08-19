@@ -14,6 +14,7 @@ import { CHECK_PUBKEY } from "@/lib/commands";
 import { CheckPubkeyResponse } from "@/lib/crate/generated";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { feed } from "./feed";
 
 enum ActivityState {
   Loading,
@@ -22,23 +23,27 @@ enum ActivityState {
   Error,
 }
 
-// Define the props type
-interface ActivityListViewProps {
-  feed: ActivityItem[];
-  pubkey: string;
-}
-
-export default function ActivityListView({
-  feed: initialFeed,
-  pubkey,
-}: ActivityListViewProps) {
+export default function ActivityListView() {
   const [state, setState] = useState<ActivityState>(ActivityState.Loading);
   const [showOnboardingCard, setShowOnboardingCard] = useState(false);
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const [pubkey, setPubkey] = useState<string | undefined>(undefined);
+
+  async function loadWallet() {
+    const wallet = await store().get<SolanaWallet>(STORE_ACTIVE_KEYPAIR);
+    if (!wallet?.pubkey) {
+      setState(State.Error);
+      return;
+    }
+
+    setPubkey(wallet.pubkey);
+    setState(State.Loaded);
+  }
 
   async function checkOnboarding() {
     try {
+      // Move this call to backend
       const res = await invoke<CheckPubkeyResponse>(CHECK_PUBKEY, {
         pubkey,
       });
@@ -57,7 +62,7 @@ export default function ActivityListView({
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Use the initial feed data
-      setActivities(initialFeed);
+      setActivities(feed);
       setState(ActivityState.Loaded);
     } catch (error) {
       console.error("Error loading activities:", error);
@@ -141,7 +146,7 @@ export default function ActivityListView({
     checkOnboarding();
     loadActivities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pubkey]);
+  }, []);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 480, px: 2 }}>

@@ -83,7 +83,7 @@ function DetailContent() {
     // Use setTimeout to ensure dialog closes before navigation
     setTimeout(() => {
       if (isOnboarding) {
-        router.replace("/onboarding/create-password");
+        router.replace("/wallet/onboarding/create-password");
       } else {
         router.replace("/wallet");
       }

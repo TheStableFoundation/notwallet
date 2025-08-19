@@ -47,7 +47,7 @@ export default function CreateOrImportWalletView() {
             NotWallet
           </Typography>
           <Typography variant="body2" color="text.secondary" align="center">
-            Crypto Dollar Wallet: Secure & easy USD stablecoin wallet
+            A Solana non-custodial crypto wallet and more.
           </Typography>
         </CardContent>
         <CardActions sx={{ flexDirection: "column", gap: 2, pb: 2 }}>
@@ -65,7 +65,7 @@ export default function CreateOrImportWalletView() {
             }}
             onClick={async () => {
               await selectionFeedback();
-              router.push("/onboarding/import-wallet");
+              router.push("/wallet/onboarding/import-wallet");
             }}
           >
             Import Seed Phrase
@@ -83,7 +83,7 @@ export default function CreateOrImportWalletView() {
             }}
             onClick={async () => {
               await selectionFeedback();
-              router.push("/onboarding/create-wallet-disclaimer");
+              router.push("/wallet/onboarding/create-wallet-disclaimer");
             }}
           >
             Create New Wallet

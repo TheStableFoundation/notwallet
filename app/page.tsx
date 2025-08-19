@@ -115,7 +115,7 @@ function MainPageContent() {
   if (state == State.Loaded && seeds?.length > 0) {
     // If user has seeds but no password, redirect to password creation page
     if (!hasPassword) {
-      return redirect("/onboarding/create-password");
+      return redirect("/wallet/onboarding/create-password");
     }
 
     // If user has seeds and password and is locked, show unlock screen
@@ -133,9 +133,11 @@ function MainPageContent() {
     return redirect("/home");
   }
 
-  return <CreateOrImportWalletView />;
+  // If user has no seeds, redirect to wallet onboarding page
+  return redirect("/wallet/onboarding");
 }
 
 export default function Page() {
+  // This root path (/) is just a dummy path to resolve to the one of three main pages.
   return <MainPageContent />;
 }

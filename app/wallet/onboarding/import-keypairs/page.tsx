@@ -113,7 +113,7 @@ export default function ImportKeypairsPage() {
             variant="text"
             color="primary"
             sx={{ mb: 0 }}
-            onClick={() => router.push("/onboarding/import-wallet")}
+            onClick={() => router.push("/wallet/onboarding/import-wallet")}
           >
             Back
           </Button>
@@ -174,7 +174,7 @@ export default function ImportKeypairsPage() {
               }}
               onClick={async () => {
                 await selectionFeedback();
-                router.replace("/onboarding/create-password");
+                router.replace("/wallet/onboarding/create-password");
               }}
             >
               Continue

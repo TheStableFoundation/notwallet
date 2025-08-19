@@ -101,7 +101,7 @@ export default function CreateWalletDisclaimerPage() {
           }}
           onClick={async () => {
             await selectionFeedback();
-            router.push("/onboarding/create-wallet?onboarding=1");
+            router.push("/wallet/onboarding/create-wallet?onboarding=1");
           }}
         >
           I Understand, Continue

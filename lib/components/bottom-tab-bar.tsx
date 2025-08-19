@@ -22,7 +22,8 @@ export default function BottomTabBar() {
     pathname === "/wallet/buy/onramper" ||
     pathname === "/wallet/buy/stripe" ||
     pathname === "/wallet/create-new-wallet" ||
-    pathname === "/wallet/import"
+    pathname === "/wallet/import" ||
+    pathname.startsWith("/wallet/onboarding")
   )
     value = 1;
   else if (

@@ -35,7 +35,7 @@ export default function ImportWalletPage() {
       debug(`import_solana_wallet result: ${JSON.stringify(result)}`);
       setPubkey(result.pubkey);
       // Redirect to import-keypairs page after successful import, passing wallet in state
-      router.replace("/onboarding/import-keypairs");
+      router.replace("/wallet/onboarding/import-keypairs");
     } catch (e: any) {
       debug(`import_solana_wallet error: ${e?.toString()}`);
       setError(e?.toString() || "Failed to import wallet.");
