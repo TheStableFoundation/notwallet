@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use tsync::tsync;
 use uuid::Uuid;
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[tsync]
 pub(crate) struct SolanaWallet {
     /// The unique identifier for the wallet, typically a UUID.

@@ -11,7 +11,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { invoke } from "@tauri-apps/api/core";
 import { debug } from "@tauri-apps/plugin-log";
 import { useRouter } from "next/navigation";
-import { SolanaWallet } from "../../../lib/crate/generated";
+import { SolanaWallet, IMPORT_SOLANA_WALLET } from "@/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
@@ -30,7 +30,7 @@ export default function ImportWalletPage() {
     setError("");
     try {
       debug(`Invoking import_solana_wallet with seed: ${seed}`);
-      const result = await invoke<SolanaWallet>("import_solana_wallet", {
+      const result = await invoke<SolanaWallet>(IMPORT_SOLANA_WALLET, {
         mnemonicPhrase: seed,
       });
       debug(`import_solana_wallet result: ${JSON.stringify(result)}`);

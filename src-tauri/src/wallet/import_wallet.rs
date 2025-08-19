@@ -40,11 +40,31 @@ pub fn import_solana_wallet(
             return Err("Failed to load store".to_string());
         }
     };
-    // Load existing seeds, append, and save
+    // Load existing seeds and check for duplicates
     let mut seeds: Vec<Seed> = match store.get(STORE_SEEDS) {
         Some(value) => serde_json::from_value(value).unwrap_or_default(),
         None => Vec::new(),
     };
+
+    // Check if a seed with the same mnemonic phrase already exists
+    if let Some(existing_seed) = seeds.iter().find(|seed| seed.phrase == mnemonic_phrase) {
+        // Check if there are existing wallets for this seed
+        let keypairs: Vec<SolanaWallet> = match store.get(STORE_KEYPAIRS) {
+            Some(value) => serde_json::from_value(value).unwrap_or_default(),
+            None => Vec::new(),
+        };
+
+        let existing_wallets_count = keypairs
+            .iter()
+            .filter(|wallet| wallet.seed_id == existing_seed.id)
+            .count();
+
+        return Err(format!(
+            "This seed phrase has already been imported and has {} existing wallet(s). Use the derive function to create additional accounts.",
+            existing_wallets_count
+        ));
+    }
+
     seeds.push(seed_struct);
     store.set(STORE_SEEDS, json!(seeds));
     store.save().ok();
@@ -105,14 +125,67 @@ pub fn derive_new_keypair(
         seed_id: seed_uuid,
     };
 
-    // Optionally, you can save this new keypair to the store as well
+    // Load existing keypairs and check for duplicates
     let mut keypairs: Vec<SolanaWallet> = match store.get(STORE_KEYPAIRS) {
         Some(value) => serde_json::from_value(value).unwrap_or_default(),
         None => Vec::new(),
     };
+
+    // Check if a wallet with the same seed_id and account already exists
+    if let Some(existing_wallet) = keypairs
+        .iter()
+        .find(|w| w.seed_id == seed_uuid && w.account == account)
+    {
+        return Err(format!(
+            "Account {} already exists for this seed phrase. Existing wallet ID: {}",
+            account, existing_wallet.id
+        ));
+    }
+
     keypairs.push(wallet.clone());
     store.set(STORE_KEYPAIRS, json!(keypairs));
     store.save().ok();
 
     Ok(wallet)
+}
+
+// Add a command to list existing seeds and their associated wallets
+#[command]
+pub fn list_seeds_and_wallets(app: AppHandle) -> Result<Vec<SeedWithWallets>, String> {
+    let store = store(&app).map_err(|_| "Failed to load store".to_string())?;
+
+    // Load seeds
+    let seeds: Vec<Seed> = match store.get(STORE_SEEDS) {
+        Some(value) => serde_json::from_value(value).unwrap_or_default(),
+        None => Vec::new(),
+    };
+
+    // Load keypairs
+    let keypairs: Vec<SolanaWallet> = match store.get(STORE_KEYPAIRS) {
+        Some(value) => serde_json::from_value(value).unwrap_or_default(),
+        None => Vec::new(),
+    };
+
+    // Build the result
+    let mut result = Vec::new();
+    for seed in seeds {
+        let associated_wallets: Vec<SolanaWallet> = keypairs
+            .iter()
+            .filter(|wallet| wallet.seed_id == seed.id)
+            .cloned()
+            .collect();
+
+        result.push(SeedWithWallets {
+            seed,
+            wallets: associated_wallets,
+        });
+    }
+
+    Ok(result)
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct SeedWithWallets {
+    pub seed: Seed,
+    pub wallets: Vec<SolanaWallet>,
 }
