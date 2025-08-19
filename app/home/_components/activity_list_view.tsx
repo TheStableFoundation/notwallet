@@ -8,13 +8,18 @@ import CardContent from "@mui/material/CardContent";
 import { ActivityItem } from "./activity_component";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { debug as tauriDebug } from "@tauri-apps/plugin-log";
 import OnboardingCard from "./onboarding_card";
 import { CHECK_PUBKEY } from "@/lib/commands";
-import { CheckPubkeyResponse } from "@/lib/crate/generated";
+import {
+  SolanaWallet,
+  CheckPubkeyResponse,
+  STORE_ACTIVE_KEYPAIR,
+} from "@/lib/crate/generated";
+import { store } from "@/lib/store/store";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { feed } from "./feed";
+import { debug, error as logError } from "@tauri-apps/plugin-log";
 
 enum ActivityState {
   Loading,
@@ -29,30 +34,6 @@ export default function ActivityListView() {
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [pubkey, setPubkey] = useState<string | undefined>(undefined);
-
-  async function loadWallet() {
-    const wallet = await store().get<SolanaWallet>(STORE_ACTIVE_KEYPAIR);
-    if (!wallet?.pubkey) {
-      setState(State.Error);
-      return;
-    }
-
-    setPubkey(wallet.pubkey);
-    setState(State.Loaded);
-  }
-
-  async function checkOnboarding() {
-    try {
-      // Move this call to backend
-      const res = await invoke<CheckPubkeyResponse>(CHECK_PUBKEY, {
-        pubkey,
-      });
-      tauriDebug(`check_pubkey exists: ${res.exists}, pubkey: ${pubkey}`);
-      setShowOnboardingCard(!res.exists);
-    } catch (err) {
-      tauriDebug(`check_pubkey error: ${err}`);
-    }
-  }
 
   async function loadActivities() {
     try {
@@ -69,6 +50,27 @@ export default function ActivityListView() {
       setState(ActivityState.Error);
     }
   }
+
+  const init = async () => {
+    try {
+      // Load wallet
+      const wallet = await store().get<SolanaWallet>(STORE_ACTIVE_KEYPAIR);
+      if (!wallet?.pubkey) {
+        setState(ActivityState.Error);
+        return;
+      }
+      setPubkey(wallet.pubkey);
+      // Check onboarding
+      // Move this call to backend
+      const res = await invoke<CheckPubkeyResponse>(CHECK_PUBKEY, {
+        pubkey: wallet.pubkey,
+      });
+      debug(`check_pubkey exists: ${res.exists}, pubkey: ${pubkey}`);
+      setShowOnboardingCard(!res.exists);
+    } catch (error) {
+      logError(`Error initializing: ${error}`);
+    }
+  };
 
   /*async function loadMore() {
     if (!hasMore || state === ActivityState.LoadingMore) return;
@@ -143,8 +145,7 @@ export default function ActivityListView() {
   } */
 
   React.useEffect(() => {
-    checkOnboarding();
-    loadActivities();
+    init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
