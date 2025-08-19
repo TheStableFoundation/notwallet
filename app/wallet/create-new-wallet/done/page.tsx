@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Confetti from "react-confetti";
+import Card from "@mui/material/Card";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 // Move the main content to a separate component
 function DoneContent() {
@@ -29,59 +31,91 @@ function DoneContent() {
     <Box
       sx={{
         minHeight: "100vh",
-        bgcolor: "#f5f6fa",
+        bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
         position: "relative",
-        p: 2,
+        pb: 8,
       }}
     >
       <Confetti width={dimensions.width} height={dimensions.height} />
-      <Box
-        sx={{
-          maxWidth: 420,
-          width: "100%",
-          p: 4,
-          boxShadow: 4,
-          borderRadius: 3,
-          background: "#fff",
-          textAlign: "center",
-        }}
-      >
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          sx={{ mb: 2, color: "#AD5AD7" }}
-        >
-          🎉 New Address Created!
-        </Typography>
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>
-          Your new public key:
-        </Typography>
-        <Typography
-          variant="body1"
+      <PageChildrenTitleBar title="Wallet Created" />
+      <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+        <Card
           sx={{
-            fontFamily: "monospace",
-            fontSize: "1.2rem",
-            wordBreak: "break-all",
-            bgcolor: "#f3f4f6",
-            borderRadius: 2,
-            p: 2,
-            mb: 3,
-            color: "#333",
+            width: "100%",
+            borderRadius: "20px",
+            boxShadow: "0 4px 20px rgba(139, 92, 246, 0.08)",
+            border: "1px solid rgba(139, 92, 246, 0.06)",
+            overflow: "hidden",
+            bgcolor: "#FFFFFF",
+            textAlign: "center",
+            p: 4,
           }}
         >
-          {pubkey}
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => router.push("/wallet")}
-        >
-          Go to Wallet
-        </Button>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            sx={{
+              mb: 3,
+              color: "#8B5CF6",
+              fontSize: "24px",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            🎉 New Address Created!
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              mb: 3,
+              fontSize: "16px",
+              color: "#6B7280",
+              fontWeight: 500,
+            }}
+          >
+            Your new public key:
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              fontFamily: "monospace",
+              fontSize: "14px",
+              wordBreak: "break-all",
+              bgcolor: "rgba(139, 92, 246, 0.04)",
+              border: "1px solid rgba(139, 92, 246, 0.08)",
+              borderRadius: "12px",
+              p: 3,
+              mb: 4,
+              color: "#1F2937",
+              lineHeight: 1.6,
+            }}
+          >
+            {pubkey}
+          </Typography>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              py: 1.75,
+              borderRadius: "12px",
+              fontSize: "16px",
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: "0 4px 12px rgba(139, 92, 246, 0.3)",
+              background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)",
+                boxShadow: "0 6px 16px rgba(139, 92, 246, 0.4)",
+              },
+            }}
+            onClick={() => router.push("/wallet")}
+          >
+            Go to Wallet
+          </Button>
+        </Card>
       </Box>
     </Box>
   );
