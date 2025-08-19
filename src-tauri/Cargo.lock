@@ -8952,7 +8952,8 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-android-tv-check"
 version = "1.1.0"
-source = "git+https://github.com/smbcloudXYZ/tauri-plugin-android-tv-check.git#7019e34b73d1e62889928c0885d8613f696a4c14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3ad653513e3511466442c0b18a12ae400ceff69c57eb8ac871cbea9cf59bac52"
 dependencies = [
  "serde",
  "tauri",

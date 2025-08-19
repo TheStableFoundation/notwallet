@@ -3,7 +3,7 @@ import { Container } from "@mui/material";
 import BottomTabBar from "@/lib/components/create-or-import-wallet-view";
 import { useAppLock } from "@/lib/context/app-lock-context";
 import React from "react";
-import { check } from "tauri-plugin-android-tv-check-api";
+import { check } from "@smbcloud/tauri-plugin-android-tv-check-api";
 import { info } from "@tauri-apps/plugin-log";
 
 export default function LayoutWithBottomBar({
