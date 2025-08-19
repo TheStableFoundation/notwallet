@@ -3,10 +3,9 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import ActivityComponent, { ActivityItem } from "./activity_component";
+import { ActivityItem } from "./activity_component";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { debug as tauriDebug } from "@tauri-apps/plugin-log";
@@ -66,7 +65,7 @@ export default function ActivityListView({
     }
   }
 
-  async function loadMore() {
+  /*async function loadMore() {
     if (!hasMore || state === ActivityState.LoadingMore) return;
 
     try {
@@ -136,7 +135,7 @@ export default function ActivityListView({
       console.error("Error loading more activities:", error);
       setState(ActivityState.Loaded);
     }
-  }
+  } */
 
   React.useEffect(() => {
     checkOnboarding();
@@ -226,71 +225,6 @@ export default function ActivityListView({
           </Button>
         </CardContent>
       </Card>
-
-      {state === ActivityState.Loading && (
-        <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-          <CircularProgress size={24} sx={{ color: "#9932CC" }} />
-        </Box>
-      )}
-
-      {(state === ActivityState.Loaded ||
-        state === ActivityState.LoadingMore) && (
-        <>
-          {activities.map((item) => (
-            <ActivityComponent key={item.id} item={item} />
-          ))}
-
-          {hasMore && (
-            <Box
-              sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 2 }}
-            >
-              <Button
-                variant="outlined"
-                onClick={loadMore}
-                disabled={state === ActivityState.LoadingMore}
-                sx={{
-                  borderColor: "#9932CC",
-                  color: "#9932CC",
-                  "&:hover": {
-                    borderColor: "#7B1FA2",
-                    bgcolor: "rgba(153, 50, 204, 0.04)",
-                  },
-                  borderRadius: 2,
-                  px: 4,
-                  py: 1,
-                }}
-              >
-                {state === ActivityState.LoadingMore ? (
-                  <>
-                    <CircularProgress
-                      size={16}
-                      sx={{ color: "#9932CC", mr: 1 }}
-                    />
-                    Loading...
-                  </>
-                ) : (
-                  "Load More"
-                )}
-              </Button>
-            </Box>
-          )}
-        </>
-      )}
-
-      {state === ActivityState.Error && (
-        <Box sx={{ textAlign: "center", py: 4 }}>
-          <Typography variant="body2" color="error">
-            Failed to load activities
-          </Typography>
-          <Button
-            variant="text"
-            onClick={loadActivities}
-            sx={{ mt: 1, color: "#9932CC" }}
-          >
-            Retry
-          </Button>
-        </Box>
-      )}
     </Box>
   );
 }

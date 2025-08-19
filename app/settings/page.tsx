@@ -98,13 +98,6 @@ export default function SettingsPage() {
       hasChevron: true,
     },
     {
-      id: "appPreferences",
-      label: "App Preferences",
-      icon: <TuneOutlinedIcon />,
-      action: () => handleClick("appPreferences"),
-      hasChevron: true,
-    },
-    {
       id: "appInfo",
       label: "App Info",
       icon: <PhoneAndroidOutlinedIcon />,
