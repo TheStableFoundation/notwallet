@@ -3872,6 +3872,7 @@ dependencies = [
  "solana-sdk",
  "tauri",
  "tauri-build",
+ "tauri-plugin-android-tv-check",
  "tauri-plugin-clipboard-manager",
  "tauri-plugin-haptics",
  "tauri-plugin-log",
@@ -8946,6 +8947,17 @@ dependencies = [
  "tauri-utils",
  "toml 0.8.23",
  "walkdir",
+]
+
+[[package]]
+name = "tauri-plugin-android-tv-check"
+version = "1.1.0"
+source = "git+https://github.com/smbcloudXYZ/tauri-plugin-android-tv-check.git#7019e34b73d1e62889928c0885d8613f696a4c14"
+dependencies = [
+ "serde",
+ "tauri",
+ "tauri-plugin",
+ "thiserror 2.0.12",
 ]
 
 [[package]]

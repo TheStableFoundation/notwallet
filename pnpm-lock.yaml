@@ -83,6 +83,9 @@ importers:
       react-dom:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
+      tauri-plugin-android-tv-check-api:
+        specifier: https://github.com/smbcloudXYZ/tauri-plugin-android-tv-check
+        version: https://codeload.github.com/smbcloudXYZ/tauri-plugin-android-tv-check/tar.gz/7019e34b73d1e62889928c0885d8613f696a4c14
     devDependencies:
       '@tauri-apps/cli':
         specifier: ^2.7.1
@@ -2537,6 +2540,10 @@ packages:
 
   tailwindcss@4.0.14:
     resolution: {integrity: sha512-92YT2dpt671tFiHH/e1ok9D987N9fHD5VWoly1CdPD/Cd1HMglvZwP3nx2yTj2lbXDAHt8QssZkxTLCCTNL+xw==}
+
+  tauri-plugin-android-tv-check-api@https://codeload.github.com/smbcloudXYZ/tauri-plugin-android-tv-check/tar.gz/7019e34b73d1e62889928c0885d8613f696a4c14:
+    resolution: {tarball: https://codeload.github.com/smbcloudXYZ/tauri-plugin-android-tv-check/tar.gz/7019e34b73d1e62889928c0885d8613f696a4c14}
+    version: 1.1.0
 
   tinyglobby@0.2.14:
     resolution: {integrity: sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==}
@@ -5187,6 +5194,10 @@ snapshots:
   supports-preserve-symlinks-flag@1.0.0: {}
 
   tailwindcss@4.0.14: {}
+
+  tauri-plugin-android-tv-check-api@https://codeload.github.com/smbcloudXYZ/tauri-plugin-android-tv-check/tar.gz/7019e34b73d1e62889928c0885d8613f696a4c14:
+    dependencies:
+      '@tauri-apps/api': 2.7.0
 
   tinyglobby@0.2.14:
     dependencies:

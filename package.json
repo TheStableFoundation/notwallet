@@ -30,6 +30,7 @@
     "@tauri-apps/plugin-opener": "~2.2.7",
     "@tauri-apps/plugin-shell": "^2.3.0",
     "@tauri-apps/plugin-store": "~2.2.1",
+    "tauri-plugin-android-tv-check-api": "https://github.com/smbcloudXYZ/tauri-plugin-android-tv-check",
     "bcryptjs": "^3.0.2",
     "chart.js": "^4.5.0",
     "crypto": "^1.0.1",
