@@ -27,7 +27,7 @@ export default function WalletSettingsPage() {
   ) => {
     await selectionFeedback();
     if (type === "addWallet") {
-      router.push("/create-new-wallet");
+      router.push("/wallet/create-new-wallet");
     } else if (type === "showSeedPhrase") {
       setShowSeedPhraseModal(true);
     } else if (type === "importSeedPhrase") {

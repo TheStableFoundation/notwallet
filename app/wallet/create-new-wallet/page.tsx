@@ -15,11 +15,11 @@ import FormControl from "@mui/material/FormControl";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { store } from "../../lib/store/store";
+import { store } from "@/lib/store/store";
 import { useEffect } from "react";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { Seed, STORE_SEEDS } from "../../lib/crate/generated";
-import { DERIVE_NEXT_KEYPAIR } from "../../lib/commands";
+import { Seed, STORE_SEEDS } from "@/lib/crate/generated";
+import { DERIVE_NEXT_KEYPAIR } from "@/lib/commands";
 import { invoke } from "@tauri-apps/api/core";
 
 // Fetch all seed phrases from the tauri store
@@ -62,7 +62,7 @@ export default function CreateNewWalletPage() {
       const result = await invoke<any>(DERIVE_NEXT_KEYPAIR, { seedUuid });
       // Navigate to done page with pubkey in search params
       router.replace(
-        `/create-new-wallet/done?pubkey=${encodeURIComponent(result.pubkey)}`,
+        `/wallet/create-new-wallet/done?pubkey=${encodeURIComponent(result.pubkey)}`,
       );
     } catch (e: any) {
       setErrorMsg(e?.toString() || "Failed to derive keypair.");
@@ -116,7 +116,7 @@ export default function CreateNewWalletPage() {
             fontWeight="bold"
             sx={{ textAlign: "right", color: "#fff" }}
           >
-            Create New Wallet
+            Create Wallet
           </Typography>
         </Stack>
         <Typography sx={{ mb: 3, color: "#fff" }}>
