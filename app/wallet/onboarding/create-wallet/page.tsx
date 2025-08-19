@@ -24,6 +24,7 @@ import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
 import { store } from "@/lib/store/store";
 import { Suspense } from "react";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 // Add State enum
 enum State {
@@ -94,84 +95,177 @@ function DetailContent() {
   return (
     <Box
       sx={{
+        minHeight: "100vh",
+        bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        bgcolor: "#f5f6fa",
+        pb: 8,
       }}
     >
       {/* Show confetti when wallet is created */}
       {state === State.Created && <Confetti />}
-      <Card sx={{ maxWidth: 480, width: "100%", boxShadow: 3 }}>
-        <CardContent>
-          <Typography
-            variant="h4"
-            component="h1"
-            align="center"
-            fontWeight="bold"
-            gutterBottom
-          >
-            Create Wallet
-          </Typography>
-          {state === State.Created && (
-            <WalletCreated
-              mnemonic={mnemonic}
-              pubkey={pubkey}
-              privkey={privkey}
-            />
-          )}
-          {state === State.Error && (
-            <Typography color="error" align="center" sx={{ mb: 2 }}>
-              Failed to create wallet. Please try again.
-            </Typography>
-          )}
-        </CardContent>
-        <CardActions sx={{ justifyContent: "center", pb: 2 }}>
-          {(state === State.Idle || state == State.Creating) && (
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={() => {
-                const cancelledRef = { current: false };
-                createWalletHandler(cancelledRef);
-              }}
-              disabled={state === State.Creating}
-            >
-              {state === State.Creating ? "Creating..." : "Create my wallet"}
-            </Button>
-          )}
-          {state === State.Created && (
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={() => setOpen(true)}
-            >
-              I have saved my seed phrase
-            </Button>
-          )}
-        </CardActions>
-      </Card>
+      <PageChildrenTitleBar title="Create Wallet" />
+      <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+        <Card
+          sx={{
+            width: "100%",
+            borderRadius: "20px",
+            boxShadow: "0 4px 20px rgba(139, 92, 246, 0.08)",
+            border: "1px solid rgba(139, 92, 246, 0.06)",
+            overflow: "hidden",
+            bgcolor: "#FFFFFF",
+          }}
+        >
+          <CardContent sx={{ p: 4 }}>
+            {state === State.Created && (
+              <WalletCreated
+                mnemonic={mnemonic}
+                pubkey={pubkey}
+                privkey={privkey}
+              />
+            )}
+            {state === State.Error && (
+              <Box
+                sx={{
+                  textAlign: "center",
+                  mb: 3,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    color: "#EF4444",
+                    lineHeight: 1.6,
+                    bgcolor: "rgba(239, 68, 68, 0.04)",
+                    border: "1px solid rgba(239, 68, 68, 0.08)",
+                    borderRadius: "12px",
+                    p: 3,
+                  }}
+                >
+                  Failed to create wallet. Please try again.
+                </Typography>
+              </Box>
+            )}
+          </CardContent>
+          <CardActions sx={{ justifyContent: "center", p: 4, pt: 0 }}>
+            {(state === State.Idle || state == State.Creating) && (
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  py: 1.75,
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+                  background:
+                    "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+                  "&:hover": {
+                    background:
+                      "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+                    boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+                  },
+                  "&:disabled": {
+                    background: "#E5E7EB",
+                    color: "#9CA3AF",
+                    boxShadow: "none",
+                  },
+                }}
+                onClick={() => {
+                  const cancelledRef = { current: false };
+                  createWalletHandler(cancelledRef);
+                }}
+                disabled={state === State.Creating}
+              >
+                {state === State.Creating ? "Creating..." : "Create my wallet"}
+              </Button>
+            )}
+            {state === State.Created && (
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  py: 1.75,
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+                  background:
+                    "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+                  "&:hover": {
+                    background:
+                      "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+                    boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+                  },
+                }}
+                onClick={() => setOpen(true)}
+              >
+                I have saved my seed phrase
+              </Button>
+            )}
+          </CardActions>
+        </Card>
+      </Box>
       <Dialog
         open={open}
         onClose={async () => {
           await selectionFeedback();
           setOpen(false);
         }}
+        PaperProps={{
+          sx: {
+            borderRadius: "16px",
+            boxShadow: "0 8px 32px rgba(139, 92, 246, 0.12)",
+          },
+        }}
       >
-        <DialogTitle>Important!</DialogTitle>
+        <DialogTitle
+          sx={{
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "#1F2937",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Important!
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Your seed phrase is the <b>only</b> way to recover your wallet. If
-            you lose it, you will lose access to your funds forever. Make sure
-            you have securely saved your seed phrase before continuing.
+          <DialogContentText
+            sx={{
+              fontSize: "16px",
+              color: "#6B7280",
+              lineHeight: 1.6,
+            }}
+          >
+            Your seed phrase is the <strong>only</strong> way to recover your
+            wallet. If you lose it, you will lose access to your funds forever.
+            Make sure you have securely saved your seed phrase before
+            continuing.
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose} color="primary" autoFocus>
+        <DialogActions sx={{ p: 3, pt: 1 }}>
+          <Button
+            onClick={handleDialogClose}
+            autoFocus
+            fullWidth
+            sx={{
+              py: 1.5,
+              borderRadius: "12px",
+              fontSize: "16px",
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+              background: "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+                boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+              },
+            }}
+          >
             I understand
           </Button>
         </DialogActions>

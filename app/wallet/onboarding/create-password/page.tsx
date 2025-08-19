@@ -18,6 +18,7 @@ import { store } from "@/lib/store/store";
 import { STORE_PASSWORD } from "@/lib/crate/generated";
 import bcrypt from "bcryptjs";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import PageTitleBar from "@/lib/components/page-title-bar";
 
 enum State {
   Loading,
@@ -89,15 +90,16 @@ export default function CreatePasswordPage() {
     return (
       <Box
         sx={{
+          minHeight: "100vh",
+          bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+          background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
-          bgcolor: "#f5f6fa",
         }}
       >
-        <CircularProgress />
+        <CircularProgress sx={{ color: "#A78BFA" }} />
       </Box>
     );
   }
@@ -110,21 +112,57 @@ export default function CreatePasswordPage() {
           await selectionFeedback();
           setShowDialog(false);
         }}
+        PaperProps={{
+          sx: {
+            borderRadius: "16px",
+            boxShadow: "0 8px 32px rgba(139, 92, 246, 0.12)",
+          },
+        }}
       >
-        <DialogTitle>Password Found</DialogTitle>
+        <DialogTitle
+          sx={{
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "#1F2937",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Password Found
+        </DialogTitle>
         <DialogContent>
-          A password already exists for this wallet. Would you like to use the
-          existing password or create a new one?
+          <Typography
+            sx={{
+              fontSize: "16px",
+              color: "#6B7280",
+              lineHeight: 1.6,
+            }}
+          >
+            A password already exists for this wallet. Would you like to use the
+            existing password or create a new one?
+          </Typography>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ p: 3, pt: 1, flexDirection: "column", gap: 2 }}>
           <Button
             onClick={async () => {
               await selectionFeedback();
               setShowDialog(false);
               router.replace("/wallet");
             }}
-            color="primary"
             variant="contained"
+            fullWidth
+            sx={{
+              py: 1.5,
+              borderRadius: "12px",
+              fontSize: "16px",
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+              background: "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+                boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+              },
+            }}
           >
             Use Existing Password
           </Button>
@@ -139,12 +177,21 @@ export default function CreatePasswordPage() {
               // Optionally clear the stored password if you want to force new creation
               // await store().delete("password");
             }}
-            color="secondary"
             variant="outlined"
+            fullWidth
             sx={{
-              borderColor: "#AD5AD7",
-              color: "#AD5AD7",
-              "&:hover": { background: "#F5F6FA", borderColor: "#C792EA" },
+              py: 1.5,
+              borderRadius: "12px",
+              fontSize: "16px",
+              fontWeight: 600,
+              textTransform: "none",
+              borderColor: "#A78BFA",
+              color: "#A78BFA",
+              "&:hover": {
+                background: "rgba(167, 139, 250, 0.04)",
+                borderColor: "#8B5CF6",
+                color: "#8B5CF6",
+              },
             }}
           >
             Create New Password
@@ -153,78 +200,183 @@ export default function CreatePasswordPage() {
       </Dialog>
       <Box
         sx={{
+          minHeight: "100vh",
+          bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+          background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          minHeight: "60vh",
-          bgcolor: "#f5f6fa",
+          pb: 8,
         }}
       >
-        <Card sx={{ maxWidth: 480, width: "100%", boxShadow: 3 }}>
-          <CardContent>
-            <Typography
-              variant="h4"
-              component="h1"
-              align="center"
-              fontWeight="bold"
-              gutterBottom
+        <PageTitleBar title="Create Password" />
+        <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+          <Typography
+            sx={{
+              fontSize: "16px",
+              color: "#6B7280",
+              mb: 3,
+              textAlign: "center",
+              lineHeight: 1.5,
+            }}
+          >
+            Set a strong password to protect your wallet.
+          </Typography>
+          <Card
+            sx={{
+              width: "100%",
+              borderRadius: "20px",
+              boxShadow: "0 4px 20px rgba(139, 92, 246, 0.08)",
+              border: "1px solid rgba(139, 92, 246, 0.06)",
+              overflow: "hidden",
+              bgcolor: "#FFFFFF",
+            }}
+          >
+            <CardContent sx={{ p: 4 }}>
+              <TextField
+                label="Password"
+                type="password"
+                fullWidth
+                sx={{
+                  mb: 3,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
+                    backgroundColor: "rgba(139, 92, 246, 0.02)",
+                    border: "1px solid rgba(139, 92, 246, 0.08)",
+                    "&:hover": {
+                      border: "1px solid rgba(139, 92, 246, 0.2)",
+                    },
+                    "&.Mui-focused": {
+                      backgroundColor: "rgba(139, 92, 246, 0.04)",
+                    },
+                    "& fieldset": {
+                      border: "none",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#6B7280",
+                    "&.Mui-focused": {
+                      color: "#8B5CF6",
+                    },
+                  },
+                }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="new-password"
+              />
+              <TextField
+                label="Confirm Password"
+                type="password"
+                fullWidth
+                sx={{
+                  mb: 3,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "12px",
+                    backgroundColor: "rgba(139, 92, 246, 0.02)",
+                    border: "1px solid rgba(139, 92, 246, 0.08)",
+                    "&:hover": {
+                      border: "1px solid rgba(139, 92, 246, 0.2)",
+                    },
+                    "&.Mui-focused": {
+                      backgroundColor: "rgba(139, 92, 246, 0.04)",
+                    },
+                    "& fieldset": {
+                      border: "none",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#6B7280",
+                    "&.Mui-focused": {
+                      color: "#8B5CF6",
+                    },
+                  },
+                }}
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
+                autoComplete="new-password"
+                error={!!error}
+                helperText={error}
+              />
+            </CardContent>
+          </Card>
+
+          {error && (
+            <Box
+              sx={{
+                textAlign: "center",
+                mt: 3,
+                mb: 3,
+              }}
             >
-              Create Password
-            </Typography>
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                  color: "#EF4444",
+                  lineHeight: 1.6,
+                  bgcolor: "rgba(239, 68, 68, 0.04)",
+                  border: "1px solid rgba(239, 68, 68, 0.08)",
+                  borderRadius: "12px",
+                  p: 3,
+                }}
+              >
+                {error}
+              </Typography>
+            </Box>
+          )}
+
+          <Box
+            sx={{
+              textAlign: "center",
+              mt: 3,
+              mb: 3,
+            }}
+          >
             <Typography
-              variant="subtitle1"
-              align="center"
-              fontWeight="medium"
-              sx={{ mb: 2 }}
+              sx={{
+                fontSize: "14px",
+                color: "#6B7280",
+                lineHeight: 1.6,
+                bgcolor: "rgba(139, 92, 246, 0.04)",
+                border: "1px solid rgba(139, 92, 246, 0.08)",
+                borderRadius: "12px",
+                p: 3,
+              }}
             >
-              Set a strong password to protect your wallet.
-            </Typography>
-            <TextField
-              label="Password"
-              type="password"
-              fullWidth
-              sx={{ mb: 2, bgcolor: "#f3f4f6", borderRadius: 2 }}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="new-password"
-            />
-            <TextField
-              label="Confirm Password"
-              type="password"
-              fullWidth
-              sx={{ mb: 2, bgcolor: "#f3f4f6", borderRadius: 2 }}
-              value={confirm}
-              onChange={(e) => setConfirm(e.target.value)}
-              autoComplete="new-password"
-              error={!!error}
-              helperText={error}
-            />
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              align="center"
-              sx={{ mb: 1 }}
-            >
-              This password will be required to access your wallet on this
+              🔒 This password will be required to access your wallet on this
               device.
             </Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: "center", pb: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={handleContinue}
-              disabled={!password || !confirm || loading}
-              startIcon={
-                loading ? <CircularProgress size={22} color="inherit" /> : null
-              }
-            >
-              {loading ? "Processing..." : "Continue"}
-            </Button>
-          </CardActions>
-        </Card>
+          </Box>
+
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              py: 1.75,
+              borderRadius: "12px",
+              fontSize: "16px",
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+              background: "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+                boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+              },
+              "&:disabled": {
+                background: "#E5E7EB",
+                color: "#9CA3AF",
+                boxShadow: "none",
+              },
+            }}
+            onClick={handleContinue}
+            disabled={!password || !confirm || loading}
+            startIcon={
+              loading ? <CircularProgress size={22} color="inherit" /> : null
+            }
+          >
+            {loading ? "Processing..." : "Continue"}
+          </Button>
+        </Box>
       </Box>
     </>
   );

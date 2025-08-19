@@ -9,14 +9,15 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { SolanaWallet, STORE_KEYPAIRS } from "../../../lib/crate/generated";
+import { SolanaWallet, STORE_KEYPAIRS } from "@/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
-import { store } from "../../../lib/store/store";
+import { store } from "@/lib/store/store";
 import { error } from "@tauri-apps/plugin-log";
 import { useRouter } from "next/navigation";
-import { DERIVE_NEW_KEYPAIR } from "../../../lib/commands";
+import { DERIVE_NEW_KEYPAIR } from "@/lib/commands";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import CircularProgress from "@mui/material/CircularProgress";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 export default function ImportKeypairsPage() {
   const [keypairs, setKeypairs] = React.useState<SolanaWallet[]>([]);
@@ -65,15 +66,16 @@ export default function ImportKeypairsPage() {
     return (
       <Box
         sx={{
-          bgcolor: "#f5f6fa",
+          minHeight: "100vh",
+          bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+          background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh",
         }}
       >
-        <CircularProgress />
+        <CircularProgress sx={{ color: "#A78BFA" }} />
       </Box>
     );
   }
@@ -81,106 +83,174 @@ export default function ImportKeypairsPage() {
   return (
     <Box
       sx={{
-        bgcolor: "#f5f6fa",
+        minHeight: "100vh",
+        bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        height: "60vh",
+        pb: 8,
       }}
     >
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 480,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Box
+      <PageChildrenTitleBar title="Imported Keypairs" />
+      <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+        <Card
           sx={{
             width: "100%",
-            mb: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            borderRadius: "20px",
+            boxShadow: "0 4px 20px rgba(139, 92, 246, 0.08)",
+            border: "1px solid rgba(139, 92, 246, 0.06)",
+            mb: 3,
+            overflow: "hidden",
+            bgcolor: "#FFFFFF",
           }}
         >
-          <Button
-            startIcon={<ArrowBackIcon />}
-            variant="text"
-            color="primary"
-            sx={{ mb: 0 }}
-            onClick={() => router.push("/wallet/onboarding/import-wallet")}
-          >
-            Back
-          </Button>
-          <Typography
-            variant="body1"
-            fontWeight="bold"
-            sx={{ ml: 2, flex: 1, textAlign: "right" }}
-          >
-            Imported Keypairs
-          </Typography>
-        </Box>
-        <Card sx={{ maxWidth: 480, width: "100%", boxShadow: 3 }}>
-          <CardContent>
-            {/* Remove the title here, as it's now in the header */}
-            <List>
-              {keypairs.length === 0 && (
-                <ListItem>
-                  <ListItemText primary="No keypairs found." />
-                </ListItem>
-              )}
-              {keypairs.map((wallet) => (
-                <ListItem key={wallet.pubkey} divider>
-                  <ListItemText
-                    primary={`Account ${wallet.account}`}
-                    secondary={
-                      <span style={{ fontFamily: "monospace" }}>
-                        {wallet.pubkey.length > 6
-                          ? `${wallet.pubkey.slice(
-                              0,
-                              3,
-                            )}...${wallet.pubkey.slice(-3)}`
-                          : wallet.pubkey}
-                      </span>
-                    }
-                  />
-                </ListItem>
-              ))}
-            </List>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 2 }}
-              onClick={handleGenerateNew}
-              disabled={keypairs.length >= 5}
-            >
-              Generate New Address
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              fullWidth
+          <Box sx={{ p: 3, pb: 1 }}>
+            <Typography
+              variant="h6"
               sx={{
-                mt: 2,
-                color: "#AD5AD7",
-                borderColor: "#AD5AD7",
-                "&:hover": { background: "#F5F6FA", borderColor: "#C792EA" },
-              }}
-              onClick={async () => {
-                await selectionFeedback();
-                router.replace("/wallet/onboarding/create-password");
+                fontSize: "18px",
+                fontWeight: 600,
+                color: "#1F2937",
+                mb: 1,
+                letterSpacing: "-0.02em",
               }}
             >
-              Continue
-            </Button>
-          </CardContent>
+              Your Wallet Addresses
+            </Typography>
+          </Box>
+          <List sx={{ p: 0, pb: 1 }}>
+            {keypairs.length === 0 && (
+              <ListItem
+                sx={{
+                  px: 0,
+                  py: 2,
+                  borderRadius: "12px",
+                  mx: 2,
+                  mb: 1,
+                }}
+              >
+                <ListItemText
+                  primary="No keypairs found."
+                  primaryTypographyProps={{
+                    sx: {
+                      fontSize: "16px",
+                      fontWeight: 500,
+                      color: "#6B7280",
+                      textAlign: "center",
+                    },
+                  }}
+                />
+              </ListItem>
+            )}
+            {keypairs.map((wallet, index) => (
+              <React.Fragment key={wallet.pubkey}>
+                <ListItem
+                  sx={{
+                    px: 0,
+                    py: 2,
+                    borderRadius: "12px",
+                    mx: 2,
+                    mb: 1,
+                    transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                    "&:hover": {
+                      bgcolor: "rgba(139, 92, 246, 0.04)",
+                      transform: "scale(1.01)",
+                    },
+                  }}
+                >
+                  <Box sx={{ ml: 2, flex: 1 }}>
+                    <ListItemText
+                      primary={`Account ${wallet.account}`}
+                      secondary={
+                        wallet.pubkey.length > 6
+                          ? `${wallet.pubkey.slice(0, 6)}...${wallet.pubkey.slice(-6)}`
+                          : wallet.pubkey
+                      }
+                      primaryTypographyProps={{
+                        sx: {
+                          fontSize: "16px",
+                          fontWeight: 500,
+                          color: "#1F2937",
+                          letterSpacing: "-0.01em",
+                          mb: 0.25,
+                        },
+                      }}
+                      secondaryTypographyProps={{
+                        sx: {
+                          fontSize: "14px",
+                          color: "#6B7280",
+                          fontFamily: "monospace",
+                        },
+                      }}
+                    />
+                  </Box>
+                </ListItem>
+                {index < keypairs.length - 1 && (
+                  <Box
+                    sx={{
+                      height: "1px",
+                      bgcolor: "rgba(139, 92, 246, 0.08)",
+                      mx: 6,
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          </List>
         </Card>
+
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            py: 1.75,
+            borderRadius: "12px",
+            fontSize: "16px",
+            fontWeight: 600,
+            textTransform: "none",
+            boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+            background: "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+            "&:hover": {
+              background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+              boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+            },
+            "&:disabled": {
+              background: "#E5E7EB",
+              color: "#9CA3AF",
+              boxShadow: "none",
+            },
+            mb: 2,
+          }}
+          onClick={handleGenerateNew}
+          disabled={keypairs.length >= 5}
+        >
+          Generate New Address
+        </Button>
+        <Button
+          variant="outlined"
+          fullWidth
+          sx={{
+            py: 1.75,
+            borderRadius: "12px",
+            fontSize: "16px",
+            fontWeight: 600,
+            textTransform: "none",
+            borderColor: "#A78BFA",
+            color: "#A78BFA",
+            "&:hover": {
+              background: "rgba(167, 139, 250, 0.04)",
+              borderColor: "#8B5CF6",
+              color: "#8B5CF6",
+            },
+          }}
+          onClick={async () => {
+            await selectionFeedback();
+            router.replace("/wallet/onboarding/create-password");
+          }}
+        >
+          Continue
+        </Button>
       </Box>
     </Box>
   );

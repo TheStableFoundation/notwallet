@@ -15,19 +15,28 @@ export default function CreateOrImportWalletView() {
   return (
     <Box
       sx={{
-        minHeight: "unset",
-        bgcolor: "#f5f6fa",
-        pb: 10,
-        pt: 10,
+        minHeight: "100vh",
+        bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
+        pb: 8,
       }}
     >
       <Card
-        sx={{ maxWidth: 400, width: "100%", boxShadow: 3, bgcolor: "#fff" }}
+        sx={{
+          maxWidth: 420,
+          width: "100%",
+          borderRadius: "20px",
+          boxShadow: "0 4px 20px rgba(139, 92, 246, 0.08)",
+          border: "1px solid rgba(139, 92, 246, 0.06)",
+          overflow: "hidden",
+          bgcolor: "#FFFFFF",
+        }}
       >
-        <Box sx={{ p: 3, bgcolor: "#fff" }}>
+        <Box sx={{ p: 4, bgcolor: "#fff" }}>
           <CardMedia
             component="img"
             height="120"
@@ -38,30 +47,46 @@ export default function CreateOrImportWalletView() {
         </Box>
         <CardContent>
           <Typography
-            gutterBottom
             variant="h3"
             component="h1"
-            fontWeight="bold"
-            align="center"
+            sx={{
+              fontSize: "28px",
+              fontWeight: 700,
+              color: "#1F2937",
+              textAlign: "center",
+              mb: 2,
+              letterSpacing: "-0.02em",
+            }}
           >
             NotWallet
           </Typography>
-          <Typography variant="body2" color="text.secondary" align="center">
+          <Typography
+            sx={{
+              fontSize: "16px",
+              color: "#6B7280",
+              textAlign: "center",
+              lineHeight: 1.5,
+            }}
+          >
             A Solana non-custodial crypto wallet and more.
           </Typography>
         </CardContent>
-        <CardActions sx={{ flexDirection: "column", gap: 2, pb: 2 }}>
+        <CardActions sx={{ flexDirection: "column", gap: 2, p: 4, pt: 2 }}>
           <Button
             variant="contained"
-            color="primary"
             fullWidth
             sx={{
-              background: "linear-gradient(90deg, #9932CC 0%, #AD5AD7 100%)",
-              color: "#fff",
-              fontWeight: "bold",
-              borderRadius: 2,
-              boxShadow: "0 1px 6px #9932CC22",
-              "&:hover": { background: "#AD5AD7" },
+              py: 1.75,
+              borderRadius: "12px",
+              fontSize: "16px",
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+              background: "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+                boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+              },
             }}
             onClick={async () => {
               await selectionFeedback();
@@ -72,14 +97,20 @@ export default function CreateOrImportWalletView() {
           </Button>
           <Button
             variant="outlined"
-            color="primary"
             fullWidth
             sx={{
-              borderColor: "#AD5AD7",
-              color: "#AD5AD7",
-              fontWeight: "bold",
-              borderRadius: 2,
-              "&:hover": { background: "#F5F6FA", borderColor: "#C792EA" },
+              py: 1.75,
+              borderRadius: "12px",
+              fontSize: "16px",
+              fontWeight: 600,
+              textTransform: "none",
+              borderColor: "#A78BFA",
+              color: "#A78BFA",
+              "&:hover": {
+                background: "rgba(167, 139, 250, 0.04)",
+                borderColor: "#8B5CF6",
+                color: "#8B5CF6",
+              },
             }}
             onClick={async () => {
               await selectionFeedback();

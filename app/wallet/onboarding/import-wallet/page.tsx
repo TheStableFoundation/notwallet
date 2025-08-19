@@ -13,6 +13,7 @@ import { debug } from "@tauri-apps/plugin-log";
 import { useRouter } from "next/navigation";
 import { SolanaWallet } from "../../../lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 export default function ImportWalletPage() {
   const [seed, setSeed] = React.useState("");
@@ -46,113 +47,168 @@ export default function ImportWalletPage() {
   return (
     <Box
       sx={{
-        minHeight: "60vh",
-        bgcolor: "#f5f6fa",
+        minHeight: "100vh",
+        bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
+        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
-        position: "relative",
+        pb: 8,
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "auto",
-          width: "100%",
-          maxWidth: 480,
-        }}
-      >
-        <Box
+      <PageChildrenTitleBar title="Import Wallet" />
+      <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+        <Typography
           sx={{
-            width: "100%",
-            mb: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            fontSize: "16px",
+            color: "#6B7280",
+            mb: 3,
+            textAlign: "center",
+            lineHeight: 1.5,
           }}
         >
-          <Button
-            startIcon={<ArrowBackIcon />}
-            variant="text"
-            color="primary"
-            sx={{ mb: 0 }}
-            onClick={async () => {
-              await selectionFeedback();
-              router.push("/");
-            }}
-          >
-            Back
-          </Button>
-          <Typography
-            variant="body1"
-            fontWeight="bold"
-            sx={{ ml: 2, flex: 1, textAlign: "right" }}
-          >
-            Import Wallet
-          </Typography>
-        </Box>
-        <Card sx={{ maxWidth: 480, width: "100%", boxShadow: 3 }}>
-          <CardContent>
+          Enter your 12 or 24-word seed phrase below to import your wallet.
+        </Typography>
+
+        <Card
+          sx={{
+            width: "100%",
+            borderRadius: "20px",
+            boxShadow: "0 4px 20px rgba(139, 92, 246, 0.08)",
+            border: "1px solid rgba(139, 92, 246, 0.06)",
+            mb: 3,
+            overflow: "hidden",
+            bgcolor: "#FFFFFF",
+          }}
+        >
+          <Box sx={{ p: 3 }}>
             <Typography
-              variant="subtitle1"
-              align="center"
-              fontWeight="medium"
-              sx={{ mb: 2 }}
+              variant="h6"
+              sx={{
+                fontSize: "18px",
+                fontWeight: 600,
+                color: "#1F2937",
+                mb: 3,
+                letterSpacing: "-0.02em",
+              }}
             >
-              Enter your seed phrase:
+              Seed Phrase
             </Typography>
             <TextField
+              label="Enter your seed phrase"
               multiline
-              minRows={3}
+              minRows={4}
               maxRows={6}
               fullWidth
               placeholder="Enter your 12 or 24 word seed phrase"
               value={seed}
               onChange={(e) => setSeed(e.target.value)}
               error={!!error}
-              helperText={error}
-              sx={{ mb: 2, bgcolor: "#f3f4f6", borderRadius: 2 }}
+              helperText={error || "Words separated by spaces"}
               inputProps={{
-                style: { fontFamily: "monospace", fontSize: "1.1rem" },
+                style: {
+                  fontFamily: "monospace",
+                  fontSize: "14px",
+                  lineHeight: 1.6,
+                  color: "#1F2937",
+                },
               }}
             />
             {pubkey && (
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                align="center"
-                sx={{ mb: 1 }}
+              <Box
+                sx={{
+                  mb: 3,
+                  p: 3,
+                  bgcolor: "rgba(34, 197, 94, 0.04)",
+                  border: "1px solid rgba(34, 197, 94, 0.08)",
+                  borderRadius: "12px",
+                }}
               >
-                Public Key:{" "}
-                <span style={{ fontFamily: "monospace" }}>{pubkey}</span>
-              </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    color: "#059669",
+                    fontWeight: 500,
+                    mb: 1,
+                  }}
+                >
+                  Import Successful!
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    color: "#6B7280",
+                    mb: 1,
+                  }}
+                >
+                  Public Key:
+                </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: "monospace",
+                    fontSize: "12px",
+                    wordBreak: "break-all",
+                    color: "#1F2937",
+                    bgcolor: "rgba(34, 197, 94, 0.08)",
+                    borderRadius: "8px",
+                    p: 2,
+                  }}
+                >
+                  {pubkey}
+                </Typography>
+              </Box>
             )}
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              align="center"
-              sx={{ mb: 1 }}
-            >
-              Make sure no one is watching your screen. Never share your seed
-              phrase with anyone.
-            </Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: "center", pb: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={handleImport}
-              disabled={seed.trim().length === 0}
-            >
-              Import Wallet
-            </Button>
-          </CardActions>
+          </Box>
         </Card>
-        {/* <BottomTabBar /> */}
+
+        <Box
+          sx={{
+            textAlign: "center",
+            mb: 3,
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "14px",
+              color: "#6B7280",
+              lineHeight: 1.6,
+              bgcolor: "rgba(239, 68, 68, 0.04)",
+              border: "1px solid rgba(239, 68, 68, 0.08)",
+              borderRadius: "12px",
+              p: 3,
+            }}
+          >
+            🔒 Make sure no one is watching your screen. Never share your seed
+            phrase with anyone.
+          </Typography>
+        </Box>
+
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            py: 1.75,
+            borderRadius: "12px",
+            fontSize: "16px",
+            fontWeight: 600,
+            textTransform: "none",
+            boxShadow: "0 4px 12px rgba(167, 139, 250, 0.3)",
+            background: "linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%)",
+            "&:hover": {
+              background: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)",
+              boxShadow: "0 6px 16px rgba(167, 139, 250, 0.4)",
+            },
+            "&:disabled": {
+              background: "#E5E7EB",
+              color: "#9CA3AF",
+              boxShadow: "none",
+            },
+          }}
+          onClick={handleImport}
+          disabled={seed.trim().length === 0}
+        >
+          Import Wallet
+        </Button>
       </Box>
     </Box>
   );

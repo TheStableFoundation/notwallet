@@ -3,15 +3,16 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import LoadingCard from "@/lib/components/loading-card";
 import ErrorCard from "@/lib/components/error-card";
-import { store } from "../../lib/store/store";
+import { store } from "@/lib/store/store";
 import {
   SolanaWallet,
   STORE_ACTIVE_KEYPAIR,
   STORE_KEYPAIRS,
-} from "../../lib/crate/generated";
+  STORE_PASSWORD,
+} from "@/lib/crate/generated";
 import { debug } from "@tauri-apps/plugin-log";
 import { useRouter } from "next/navigation";
-import { useAppLock } from "../../lib/context/app-lock-context";
+import { useAppLock } from "@/lib/context/app-lock-context";
 import WalletCard from "./components/wallet-card";
 import ActivityCard from "./components/activity_card";
 import { invoke } from "@tauri-apps/api/core";
@@ -36,10 +37,25 @@ export default function WalletHome() {
   const [state, setState] = React.useState(State.Loading);
   const [showSwitchModal, setShowSwitchModal] = React.useState(false);
   const [allKeypairs, setAllKeypairs] = React.useState<SolanaWallet[]>([]);
+  const [shouldOnboardUser, setShouldOnboardUser] = React.useState(false);
+  const [hasPassword, setHasPassword] = React.useState(true);
 
-  const loadWallet = async () => {
+  const init = async () => {
     try {
+      // Decide if we should redirect to onboarding
       const keypairs = await store().get<SolanaWallet[]>(STORE_KEYPAIRS);
+      if (!keypairs || keypairs.length === 0) {
+        setShouldOnboardUser(true);
+        return;
+      }
+
+      // Check if we should redirect to create password onboarding
+      const passwordCheck = await store().get<string>(STORE_PASSWORD);
+      if (!passwordCheck) {
+        setHasPassword(false);
+        return;
+      }
+
       let walletActive: SolanaWallet | undefined;
       walletActive = await store().get<SolanaWallet>(STORE_ACTIVE_KEYPAIR);
       let wallet: SolanaWallet | undefined = walletActive;
@@ -71,7 +87,7 @@ export default function WalletHome() {
   };
 
   React.useEffect(() => {
-    loadWallet();
+    init();
   }, []);
 
   // Fetch all keypairs for switch modal
@@ -87,8 +103,12 @@ export default function WalletHome() {
     fetchKeypairs();
   }, []);
 
-  if (!wallet) {
+  if (shouldOnboardUser) {
     return redirect("/wallet/onboarding");
+  }
+
+  if (!hasPassword) {
+    return redirect("/wallet/onboarding/create-password");
   }
 
   return (
