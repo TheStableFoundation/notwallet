@@ -31,7 +31,7 @@ export default function CreateOrImportWalletView() {
           <CardMedia
             component="img"
             height="120"
-            image="/images/app-icon-v2.png"
+            image="/images/app-icon-v4.svg"
             alt="Stablecoin Wallet"
             sx={{ objectFit: "contain", bgcolor: "#fff" }}
           />
