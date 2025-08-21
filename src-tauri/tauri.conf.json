@@ -46,7 +46,7 @@
     ],
     "android": {
       "minSdkVersion": 24,
-      "versionCode": 3016
+      "versionCode": 3017
     },
     "iOS": {
       "minimumSystemVersion": "13.0",
