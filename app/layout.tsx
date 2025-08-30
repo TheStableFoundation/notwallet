@@ -3,7 +3,7 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { AppLockProvider } from "@/lib/context/app-lock-context";
 import React from "react";
-import LayoutWithBottomBar from "./_components/layout-with-bottom-bar";
+import LayoutWithMenuBar from "./_components/layout-with-menu-bar";
 import {
   ThemeProvider,
   createTheme,
@@ -78,7 +78,7 @@ export default function RootLayout({
           <CssBaseline />
           <AppRouterCacheProvider>
             <AppLockProvider>
-              <LayoutWithBottomBar>{children}</LayoutWithBottomBar>
+              <LayoutWithMenuBar>{children}</LayoutWithMenuBar>
             </AppLockProvider>
           </AppRouterCacheProvider>
         </ThemeProvider>

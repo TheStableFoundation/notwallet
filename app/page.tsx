@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import { useAppLock } from "@/lib/context/app-lock-context";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
 import LockedWalletView from "@/lib/components/locked-wallet-view";
-import CreateOrImportWalletView from "@/lib/components/create-or-import-wallet-view";
 import { Seed, STORE_KEYPAIRS, STORE_PASSWORD } from "@/lib/crate/generated";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
@@ -134,7 +133,7 @@ function MainPageContent() {
   }
 
   // If user has no seeds, redirect to wallet onboarding page
-  return redirect("/wallet/onboarding");
+  //return redirect("/wallet/onboarding");
 }
 
 export default function Page() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Container } from "@mui/material";
-import BottomTabBar from "@/lib/components/create-or-import-wallet-view";
+import BottomTabBar from "@/lib/components/bottom-tab-bar";
 import { useAppLock } from "@/lib/context/app-lock-context";
 import React from "react";
 import { check } from "@smbcloud/tauri-plugin-android-tv-check-api";
@@ -14,7 +14,7 @@ enum State {
   INITIALIZED,
 }
 
-export default function LayoutWithBottomBar({
+export default function LayoutWithMenuBar({
   children,
 }: {
   children: React.ReactNode;
@@ -31,7 +31,7 @@ export default function LayoutWithBottomBar({
 
     const checkResult = await check();
     info(`Android TV: ${JSON.stringify(checkResult)}`);
-    setIsAndroidTv(checkResult.isAndroidTv);
+    setIsAndroidTv(true);
     setState(State.INITIALIZED);
   };
 
@@ -53,11 +53,7 @@ export default function LayoutWithBottomBar({
             flex: "none",
           }}
         >
-          {isAndroidTv ? (
-            <AndroidTvLayout>{children}</AndroidTvLayout>
-          ) : (
-            children
-          )}
+          {isAndroidTv ? <AndroidTvLayout children={children} /> : children}
         </Container>
         {initialized && !locked && !isAndroidTv && <BottomTabBar />}
       </>
