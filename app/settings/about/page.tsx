@@ -15,29 +15,9 @@ import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 
 const links = [
   {
-    title: "GitHub",
-    icon: <GitHubIcon />,
-    url: "https://github.com/TheStableFoundation",
-  },
-  {
-    title: "Discord",
-    icon: <ForumIcon />,
-    url: "https://discord.gg/TaqewTFBmb",
-  },
-  {
-    title: "X",
+    title: "The Stable Foundation",
     icon: <LanguageIcon />,
-    url: "https://x.com/STBLfoundation",
-  },
-  {
-    title: "Website",
-    icon: <LanguageIcon />,
-    url: "https://bach.money",
-  },
-  {
-    title: "Telegram",
-    icon: <ForumIcon />,
-    url: "https://t.me/thestablefoundation",
+    url: "https://thestablefoundation.org/",
   },
 ];
 
@@ -110,18 +90,7 @@ export default function AboutPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              NotWallet
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                color: "#8B5CF6",
-                mb: 3,
-              }}
-            >
-              A Solana non-custodial crypto wallet and more.
+              NotWallet Crypto
             </Typography>
           </Box>
 
