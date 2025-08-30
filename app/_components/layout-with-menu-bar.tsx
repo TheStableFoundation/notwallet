@@ -41,7 +41,7 @@ export default function LayoutWithMenuBar({
           flex: "none",
         }}
       >
-        {isAndroidTv ? <AndroidTvLayout children={children} /> : children}
+        {isAndroidTv ? <AndroidTvLayout>{children}</AndroidTvLayout> : children}
       </Container>
       {initialized && !locked && !isAndroidTv && <BottomTabBar />}
     </>
