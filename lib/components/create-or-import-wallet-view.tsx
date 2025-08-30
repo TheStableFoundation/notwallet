@@ -58,17 +58,7 @@ export default function CreateOrImportWalletView() {
               letterSpacing: "-0.02em",
             }}
           >
-            NotWallet
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              color: "#6B7280",
-              textAlign: "center",
-              lineHeight: 1.5,
-            }}
-          >
-            A Solana non-custodial crypto wallet and more.
+            NotWallet Crypto
           </Typography>
         </CardContent>
         <CardActions sx={{ flexDirection: "column", gap: 2, p: 4, pt: 2 }}>
