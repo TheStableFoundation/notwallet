@@ -8976,14 +8976,14 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-android-tv-check"
-version = "1.1.0"
+version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3ad653513e3511466442c0b18a12ae400ceff69c57eb8ac871cbea9cf59bac52"
+checksum = "124cb8ae441fbe20cac5e1af4679c4f10e323bf47675e41534523dbb174f60fb"
 dependencies = [
  "serde",
  "tauri",
  "tauri-plugin",
- "thiserror 2.0.12",
+ "thiserror 2.0.16",
 ]
 
 [[package]]
