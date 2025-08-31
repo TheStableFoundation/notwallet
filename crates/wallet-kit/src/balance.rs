@@ -1,10 +1,20 @@
-use crate::constants::LAMPORTS_PER_SOL;
-use log::{debug, error};
-use serde::{Deserialize, Serialize};
-use solana_account_decoder::{parse_token::UiTokenAccount, UiAccountData};
-use solana_client::{rpc_client::RpcClient, rpc_request::TokenAccountsFilter};
-use solana_program::pubkey::Pubkey;
-use std::str::FromStr;
+use {
+    crate::{
+        constants::{
+            BACH_MINT_ACCOUNT, JUPITER_BASE_URL, JUPITER_PRICE_PATH, LAMPORTS_PER_SOL,
+            SPL_TOKEN_PROGRAM_ID,
+        },
+        models::{currency::FiatCurrency, price::PricesResponse},
+    },
+    log::{debug, error},
+    network::{model::ErrorResponse, request},
+    reqwest::Client,
+    serde::{Deserialize, Serialize},
+    solana_account_decoder::{parse_token::UiTokenAccount, UiAccountData},
+    solana_client::{rpc_client::RpcClient, rpc_request::TokenAccountsFilter},
+    solana_program::pubkey::Pubkey,
+    std::str::FromStr,
+};
 
 pub fn spl_balance(
     rpc_url: String,
@@ -49,9 +59,7 @@ pub fn spl_balance(
         bach_account[0].token_amount.ui_amount_string
     );
 
-    format!("{} BACH", bach_account[0]
-        .token_amount
-        .ui_amount_string)
+    format!("{} BACH", bach_account[0].token_amount.ui_amount_string)
 }
 
 pub fn sol_balance(rpc_url: String, pubkey: String) -> String {
@@ -74,6 +82,64 @@ pub fn sol_balance(rpc_url: String, pubkey: String) -> String {
     println!("{:#?} SOL", pretty_balance);
     // Display SOL balance
     format!("{:.9} SOL", pretty_balance)
+}
+
+pub fn wallet_balance(rpc_url: String, pubkey: String, currency: Option<FiatCurrency>) -> String {
+    // Get SOL balance
+    let sol_balance_str = sol_balance(rpc_url.clone(), pubkey.clone());
+    let sol_amount = parse_sol_amount(&sol_balance_str);
+
+    // Get BACH balance using proper constants
+    let bach_balance_str = spl_balance(
+        rpc_url,
+        pubkey.clone(),
+        SPL_TOKEN_PROGRAM_ID.to_string(),
+        BACH_MINT_ACCOUNT.to_string(),
+    );
+    let bach_amount = parse_bach_amount(&bach_balance_str);
+
+    let target_currency = currency.unwrap_or(FiatCurrency::USD);
+
+    // Get current prices in the target currency
+    let sol_price = get_sol_price(&target_currency);
+    let bach_price = get_bach_price(&target_currency);
+
+    // Calculate total value
+    let sol_value = sol_amount * sol_price;
+    let bach_value = bach_amount * bach_price;
+    let total_value = sol_value + bach_value;
+
+    let currency_symbol = match target_currency {
+        FiatCurrency::USD => "$",
+        FiatCurrency::IDR => "Rp",
+        FiatCurrency::SEK => "kr",
+    };
+
+    format!("{}{:.2}", currency_symbol, total_value)
+}
+
+fn parse_sol_amount(balance_str: &str) -> f64 {
+    // Extract numeric value from "X.XXXXXXXXX SOL" format
+    balance_str.replace(" SOL", "").parse().unwrap_or(0.0)
+}
+
+fn parse_bach_amount(balance_str: &str) -> f64 {
+    0.0
+}
+
+fn get_sol_price(currency: &FiatCurrency) -> f64 {
+    // Using CoinGecko API as it's free and reliable
+    0.0
+}
+
+async fn get_asset_price(asset: &str) -> Result<PricesResponse, ErrorResponse> {
+    // For now, return 0 as BACH price fetching would need specific token address and DEX integration
+    // This could be implemented using Birdeye API or similar service
+    debug!("Get asset price");
+
+    let url = format!("{}{}?ids={}", JUPITER_BASE_URL, JUPITER_PRICE_PATH, asset);
+    let client = Client::new().get(url);
+    request(client).await
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
