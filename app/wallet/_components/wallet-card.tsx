@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -365,7 +367,7 @@ export default function WalletCard({
           </Tooltip>
         </Stack>
       </Stack>
-      {/* BACH Balance with Token Icon */}
+      {/* Balance in USD */}
       <Stack
         direction="row"
         alignItems="start"
@@ -374,20 +376,6 @@ export default function WalletCard({
         sx={{ mb: 2 }}
       >
         <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1 }}>
-          <Box
-            sx={{
-              width: 32,
-              height: 32,
-              borderRadius: "50%",
-              bgcolor: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <BachIcon size={20} />
-          </Box>
           <Typography
             variant="h3"
             fontWeight="bold"
@@ -412,35 +400,6 @@ export default function WalletCard({
             <OpenInNewIcon />
           </IconButton>
         </Stack>
-      </Stack>
-      {/* SOL Balance with Solana Icon */}
-      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-        <Box
-          sx={{
-            width: 32,
-            height: 32,
-            borderRadius: "50%",
-            bgcolor: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-          }}
-        >
-          <SolanaIcon size={20} />
-        </Box>
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          sx={{
-            color: "#fff",
-            textShadow: "0 2px 12px #9932CC55",
-            fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-            fontSize: 16,
-          }}
-        >
-          {solBalance}
-        </Typography>
       </Stack>
       <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
         <Button

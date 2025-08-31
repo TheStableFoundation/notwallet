@@ -1,22 +1,51 @@
+"use client";
+
 import * as React from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import { SolanaWallet } from "@/lib/crate/generated";
-import { openUrl } from "@tauri-apps/plugin-opener";
-import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import AssetsView from "./assets_view";
+import ActivityView from "./activity_view";
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel({ children, value, index, ...other }: TabPanelProps) {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`wallet-tabpanel-${index}`}
+      aria-labelledby={`wallet-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `wallet-tab-${index}`,
+    "aria-controls": `wallet-tabpanel-${index}`,
+  };
+}
 
 interface ActivityCardProps {
   wallet: SolanaWallet;
 }
 
 export default function ActivityCard({ wallet }: ActivityCardProps) {
-  const handleOpenSolscan = async () => {
-    await selectionFeedback();
-    const solscanUrl = `https://solscan.io/account/${wallet.pubkey}`;
-    await openUrl(solscanUrl);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
   };
 
   return (
@@ -27,41 +56,40 @@ export default function ActivityCard({ wallet }: ActivityCardProps) {
         boxShadow: 2,
         background: "linear-gradient(135deg, #f5f6fa 60%, #e3f2fd 100%)",
         overflow: "hidden",
-        p: 2,
       }}
     >
-      <Typography
-        variant="h6"
-        fontWeight="bold"
-        sx={{ mb: 2, color: "#212529" }}
-      >
-        Activity
-      </Typography>
-
-      <Box sx={{ textAlign: "center" }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          View your wallet activity and transaction history on Solscan
-        </Typography>
-
-        <Button
-          variant="outlined"
-          startIcon={<OpenInNewIcon />}
-          onClick={handleOpenSolscan}
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="wallet tabs"
           sx={{
-            borderRadius: 2,
-            textTransform: "none",
-            fontWeight: 600,
-            borderColor: "#9932CC",
-            color: "#9932CC",
-            "&:hover": {
-              borderColor: "#7B2CBF",
-              backgroundColor: "rgba(153, 50, 204, 0.04)",
+            px: 2,
+            "& .MuiTab-root": {
+              textTransform: "none",
+              fontWeight: 600,
+              minHeight: 48,
+              color: "#666",
+            },
+            "& .Mui-selected": {
+              color: "#9932CC",
+            },
+            "& .MuiTabs-indicator": {
+              backgroundColor: "#9932CC",
             },
           }}
         >
-          Open in Solscan
-        </Button>
+          <Tab label="Assets" {...a11yProps(0)} />
+          <Tab label="Activity" {...a11yProps(1)} />
+        </Tabs>
       </Box>
+
+      <TabPanel value={value} index={0}>
+        <AssetsView wallet={wallet} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <ActivityView wallet={wallet} />
+      </TabPanel>
     </Card>
   );
 }
