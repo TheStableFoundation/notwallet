@@ -172,6 +172,43 @@ export default function WalletSettingsPage() {
     >
       <PageChildrenTitleBar title="Wallet Settings" />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+        {/* Security Notice */}
+        <Box
+          sx={{
+            textAlign: "center",
+            mb: 4,
+            px: 2,
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{
+              fontSize: "14px",
+              color: "#6B7280",
+              lineHeight: 1.6,
+              bgcolor: "rgba(139, 92, 246, 0.04)",
+              border: "1px solid rgba(139, 92, 246, 0.08)",
+              borderRadius: "12px",
+              p: 3,
+            }}
+          >
+            🔒 Your seed phrase is the key to your wallet. Keep it secure and
+            never share it with anyone.
+            <br />
+            <Box
+              component="span"
+              sx={{
+                color: "#8B5CF6",
+                fontWeight: 500,
+                mt: 1,
+                display: "block",
+              }}
+            >
+              Store it safely offline
+            </Box>
+          </Typography>
+        </Box>
+
         {/* Wallet Management Section */}
         <Card
           sx={{
@@ -238,43 +275,6 @@ export default function WalletSettingsPage() {
           </List>
         </Card>
 
-        {/* Security Notice */}
-        <Box
-          sx={{
-            textAlign: "center",
-            mt: 4,
-            px: 2,
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: "14px",
-              color: "#6B7280",
-              lineHeight: 1.6,
-              bgcolor: "rgba(139, 92, 246, 0.04)",
-              border: "1px solid rgba(139, 92, 246, 0.08)",
-              borderRadius: "12px",
-              p: 3,
-            }}
-          >
-            🔒 Your seed phrase is the key to your wallet. Keep it secure and
-            never share it with anyone.
-            <br />
-            <Box
-              component="span"
-              sx={{
-                color: "#8B5CF6",
-                fontWeight: 500,
-                mt: 1,
-                display: "block",
-              }}
-            >
-              Store it safely offline
-            </Box>
-          </Typography>
-        </Box>
-
         {/* Danger Zone Section */}
         <Card
           sx={{
@@ -282,6 +282,7 @@ export default function WalletSettingsPage() {
             borderRadius: "20px",
             boxShadow: "0 4px 20px rgba(220, 38, 38, 0.08)",
             border: "1px solid rgba(220, 38, 38, 0.12)",
+            mt: 4,
             mb: 4,
             overflow: "hidden",
             bgcolor: "#FFFFFF",
