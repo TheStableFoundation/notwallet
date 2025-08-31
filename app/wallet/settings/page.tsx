@@ -330,7 +330,7 @@ export default function WalletSettingsPage() {
         onClose={() => setShowDestroyModal(false)}
         onSuccess={() => {
           // Optionally redirect to onboarding or show success message
-          router.push("/");
+          router.push("/home");
         }}
       />
     </Box>
