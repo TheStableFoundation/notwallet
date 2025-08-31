@@ -312,23 +312,104 @@ export default function WalletCard({
       </Stack>
       <Stack
         direction="row"
-        alignItems="start"
+        alignItems="center"
         justifyContent="space-between"
         spacing={2}
-        sx={{ mb: 2 }}
+        sx={{
+          mb: 3,
+          px: 2,
+          position: "relative",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: -8,
+            left: 0,
+            right: 0,
+            bottom: -8,
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+            borderRadius: 3,
+            backdropFilter: "blur(10px)",
+            zIndex: 0,
+          },
+        }}
       >
-        <Typography
-          variant="h6"
-          fontWeight="bold"
-          sx={{ mb: 2, color: "#212529" }}
-        >
-          Balance
-        </Typography>
+        <Box sx={{ position: "relative", zIndex: 1 }}>
+          <Typography
+            variant="h2"
+            fontWeight="900"
+            sx={{
+              color: "#fff",
+              textShadow: `
+                0 0 20px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 4px 20px rgba(153, 50, 204, 0.4)
+              `,
+              fontFamily: '"Inter", "Helvetica Neue", "Arial", sans-serif',
+              fontSize: {
+                xs: "2.5rem",
+                sm: "3rem",
+                md: "3.5rem",
+              },
+              letterSpacing: "-0.02em",
+              background:
+                "linear-gradient(135deg, #fff 0%, #f8f9ff 50%, #fff 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              filter: "drop-shadow(0 2px 8px rgba(153, 50, 204, 0.3))",
+              animation: "glow 2s ease-in-out infinite alternate",
+              "@keyframes glow": {
+                "0%": {
+                  textShadow: `
+                    0 0 20px rgba(255, 255, 255, 0.8),
+                    0 0 40px rgba(255, 255, 255, 0.6),
+                    0 4px 20px rgba(153, 50, 204, 0.4)
+                  `,
+                },
+                "100%": {
+                  textShadow: `
+                    0 0 30px rgba(255, 255, 255, 1),
+                    0 0 50px rgba(255, 255, 255, 0.8),
+                    0 6px 25px rgba(153, 50, 204, 0.6)
+                  `,
+                },
+              },
+            }}
+          >
+            {walletBalance}
+          </Typography>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "120%",
+              height: "120%",
+              background:
+                "radial-gradient(ellipse, rgba(255,255,255,0.1) 0%, transparent 70%)",
+              borderRadius: "50%",
+              zIndex: -1,
+              animation: "pulse 3s ease-in-out infinite",
+              "@keyframes pulse": {
+                "0%, 100%": {
+                  opacity: 0.5,
+                  transform: "translate(-50%, -50%) scale(1)",
+                },
+                "50%": {
+                  opacity: 0.8,
+                  transform: "translate(-50%, -50%) scale(1.1)",
+                },
+              },
+            }}
+          />
+        </Box>
         <Stack
-          direction="row"
+          direction="column"
           alignItems="center"
           spacing={1}
-          sx={{ flex: 1, justifyContent: "flex-end" }}
+          sx={{ position: "relative", zIndex: 1 }}
         >
           <Tooltip title="Send">
             <IconButton
@@ -358,29 +439,6 @@ export default function WalletCard({
               <SwapHorizIcon />
             </IconButton>
           </Tooltip>
-        </Stack>
-      </Stack>
-      {/* Balance in USD */}
-      <Stack
-        direction="row"
-        alignItems="start"
-        justifyContent="space-between"
-        spacing={2}
-        sx={{ mb: 2 }}
-      >
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1 }}>
-          <Typography
-            variant="h3"
-            fontWeight="bold"
-            sx={{
-              color: "#fff",
-              textShadow: "0 2px 12px #9932CC55",
-              fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-              fontSize: 24,
-            }}
-          >
-            {walletBalance}
-          </Typography>
         </Stack>
       </Stack>
       <Stack direction="row" spacing={2} sx={{ mb: 1 }}>

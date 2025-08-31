@@ -70,6 +70,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
             logo: <SolanaIcon size={20} />,
             symbol: "SOL",
             balance: `${parseFloat(solAmount).toFixed(4)} SOL`,
+            usdValue: "~$" + (parseFloat(solAmount) * 100).toFixed(2), // Mock USD value
           });
         }
 
@@ -80,6 +81,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
             logo: <BachIcon size={20} />,
             symbol: "BACH",
             balance: `${parseFloat(bachAmount).toFixed(4)} BACH`,
+            usdValue: "~$" + (parseFloat(bachAmount) * 0.01).toFixed(2), // Mock USD value
           });
         }
 
@@ -138,10 +140,10 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
               <ListItem
                 sx={{
                   px: 0,
-                  py: 1.5,
+                  py: 2,
                   "&:hover": {
                     backgroundColor: "rgba(153, 50, 204, 0.04)",
-                    borderRadius: 1,
+                    borderRadius: 2,
                   },
                 }}
               >
@@ -163,18 +165,29 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
                     {asset.balance}
                   </Typography>
                   {asset.usdValue && (
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "#9932CC",
+                        fontWeight: 700,
+                        fontSize: "0.9rem",
+                        textShadow: "0 1px 2px rgba(153, 50, 204, 0.1)",
+                      }}
+                    >
                       {asset.usdValue}
                     </Typography>
                   )}
                 </Box>
                 <IconButton
-                  onClick={() => handleOpenTokenInformation("BACH")}
+                  onClick={() =>
+                    handleOpenTokenInformation(asset.symbol as "BACH" | "SOL")
+                  }
                   sx={{
-                    color: "#fff",
-                    textShadow: "0 2px 12px #9932CC55",
-                    fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-                    fontSize: 16,
+                    color: "#9932CC",
+                    ml: 1,
+                    "&:hover": {
+                      backgroundColor: "rgba(153, 50, 204, 0.1)",
+                    },
                   }}
                 >
                   <OpenInNewIcon />
