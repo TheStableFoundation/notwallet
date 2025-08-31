@@ -2,7 +2,7 @@ use {
     crate::{
         constants::{
             BACH_MINT_ACCOUNT, JUPITER_BASE_URL, JUPITER_PRICE_PATH, LAMPORTS_PER_SOL,
-            SPL_TOKEN_PROGRAM_ID,
+            SOLANA_MINT_ACCOUNT, SPL_TOKEN_PROGRAM_ID,
         },
         models::{currency::FiatCurrency, price::PricesResponse},
     },
@@ -125,7 +125,7 @@ pub async fn wallet_balance(
     let target_currency = currency.unwrap_or(FiatCurrency::USD);
 
     // Get current prices in the target currency
-    let sol_price = get_sol_price(&target_currency);
+    let sol_price = get_sol_price().await?;
     let bach_price = get_bach_price().await?;
 
     // Calculate total value
@@ -151,13 +151,23 @@ fn parse_bach_amount(balance_str: &str) -> f64 {
     0.0
 }
 
-fn get_sol_price(currency: &FiatCurrency) -> f64 {
-    // Using CoinGecko API as it's free and reliable
-    0.0
+async fn get_sol_price() -> f64 {
+    match get_asset_price(SOLANA_MINT_ACCOUNT).await {
+        Ok(price) => {
+            if price.prices.contains_key(SOLANA_MINT_ACCOUNT) {
+                Ok(price.prices[SOLANA_MINT_ACCOUNT].usd_price)
+            } else {
+                Err(ErrorResponse::Error {
+                    code: BalanceError,
+                    message: "No price data available".to_string(),
+                })
+            }
+        }
+        Err(err) => Err(err),
+    }
 }
 
 async fn get_bach_price() -> Result<f64, ErrorResponse> {
-    // Using CoinGecko API as it's free and reliable
     match get_asset_price(BACH_MINT_ACCOUNT).await {
         Ok(price) => {
             if price.prices.contains_key(BACH_MINT_ACCOUNT) {
