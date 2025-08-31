@@ -15,3 +15,4 @@ export const GET_TREASURY_SOL_BALANCE = "get_treasury_sol_balance";
 export const GET_SWAP_QUOTE = "get_swap_quote";
 export const BUILD_SWAP_TRANSACTION = "build_swap_transaction";
 export const CHECK_PUBKEY = "check_pubkey";
+export const GET_WALLET_BALANCE = "get_wallet_balance";

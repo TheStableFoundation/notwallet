@@ -1,16 +1,17 @@
-use crate::constants::store::store;
-use crate::constants::store::STORE_KEYPAIRS;
-use crate::constants::store::STORE_SEEDS;
-use crate::model::keypair::SolanaWallet;
-use crate::model::seed::Seed;
-use crate::model::seed::SeedType;
-use chrono::Utc;
-use serde_json::json;
-use solana_sdk::signer::Signer;
-use tauri::command;
-use tauri::AppHandle;
-use uuid::Uuid;
-use wallet_kit::derive_keypair::derive_keypair_default;
+use {
+    crate::constants::store::{store, STORE_KEYPAIRS, STORE_SEEDS},
+    crate::model::{
+        keypair::SolanaWallet,
+        seed::{Seed, SeedType},
+    },
+    chrono::Utc,
+    serde_json::json,
+    solana_sdk::signer::Signer,
+    tauri::command,
+    tauri::AppHandle,
+    uuid::Uuid,
+    wallet_kit::derive_keypair::derive_keypair_default,
+};
 
 #[command]
 pub fn import_solana_wallet(

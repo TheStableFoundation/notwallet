@@ -10,7 +10,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import WalletSettingsSeedPhraseModal from "../components/wallet-settings-seed-phrase-modal";
+import WalletSettingsSeedPhraseModal from "./_components/wallet-settings-seed-phrase-modal";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 import SettingListItem from "./_components/setting-list-item";
 import DestroyWalletsCard from "./_components/destroy-wallets-card";

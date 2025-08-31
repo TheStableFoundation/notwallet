@@ -30,6 +30,7 @@ pub enum ErrorCode {
     Unknown = 0,
     ParseError = 1,
     NetworkError = 2,
+    BalanceError = 1000, // Move this to wallet-kit
 }
 
 impl Display for ErrorCode {

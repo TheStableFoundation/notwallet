@@ -1,7 +1,14 @@
-use crate::constants::store::{store, STORE_ACTIVE_KEYPAIR};
-use crate::model::keypair::SolanaWallet;
-use serde_json::json;
-use tauri::{command, AppHandle};
+use {
+    crate::{
+        constants::store::{store, STORE_ACTIVE_KEYPAIR},
+        model::{
+            keypair::SolanaWallet,
+            seed::{Seed, SeedType},
+        },
+    },
+    serde_json::json,
+    tauri::{command, AppHandle},
+};
 
 #[command]
 pub fn set_active_keypair(app: AppHandle, keypair: SolanaWallet) -> Result<(), String> {

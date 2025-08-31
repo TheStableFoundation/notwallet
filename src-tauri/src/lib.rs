@@ -13,6 +13,7 @@ use {
         swap::commands::{build_swap_transaction, get_swap_quote, send_swap_transaction},
         wallet::{
             check_pubkey::check_pubkey,
+            command_balance::get_wallet_balance,
             commands::{
                 derive_next_keypair, destroy_all_wallets, get_all_keypairs, get_bach_balance,
                 get_sol_balance, get_token_info, get_treasury_bach_balance,
@@ -57,6 +58,7 @@ pub fn run() {
             get_installation_id,
             get_bach_balance,
             get_sol_balance,
+            get_wallet_balance,
             get_token_info,
             onramp_session,
             get_all_keypairs,

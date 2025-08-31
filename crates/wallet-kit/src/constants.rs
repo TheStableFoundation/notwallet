@@ -29,3 +29,4 @@ pub const SPL_TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ
 pub const JUPITER_BASE_URL: &str = "https://lite-api.jup.ag/";
 pub const JUPITER_SWAP_QUOTE_PATH: &str = "swap/v1/quote";
 pub const JUPITER_SWAP_PATH: &str = "swap/v1/swap";
+pub const JUPITER_PRICE_PATH: &str = "price/v3";
