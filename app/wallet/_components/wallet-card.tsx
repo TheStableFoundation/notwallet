@@ -29,9 +29,6 @@ import {
 import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import EditKeyPairModal from "./edit-keypair-modal";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { openUrl } from "@tauri-apps/plugin-opener";
-import { BACH_MINT_ACCOUNT } from "@/lib/crate/generated";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -122,15 +119,6 @@ export default function WalletCard({
   const onEditKeypair = async () => {
     await selectionFeedback();
     setEditKeyPairModalOpen(true);
-  };
-
-  const handleOpenTokenInformation = async (token: "BACH" | "SOL") => {
-    await selectionFeedback();
-    const url =
-      token === "BACH"
-        ? `https://birdeye.so/token/${BACH_MINT_ACCOUNT}?chain=solana`
-        : "https://solana.org";
-    openUrl(url);
   };
 
   const init = async () => {
@@ -393,17 +381,6 @@ export default function WalletCard({
           >
             {walletBalance}
           </Typography>
-          <IconButton
-            onClick={() => handleOpenTokenInformation("BACH")}
-            sx={{
-              color: "#fff",
-              textShadow: "0 2px 12px #9932CC55",
-              fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-              fontSize: 16,
-            }}
-          >
-            <OpenInNewIcon />
-          </IconButton>
         </Stack>
       </Stack>
       <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
