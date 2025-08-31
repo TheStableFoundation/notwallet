@@ -116,18 +116,6 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
 
   return (
     <Box sx={{ p: 2 }}>
-      {/* Total Balance */}
-      <Box sx={{ textAlign: "center", mb: 3 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          Total Balance
-        </Typography>
-        <Typography variant="h4" fontWeight="bold" sx={{ color: "#212529" }}>
-          {totalBalance}
-        </Typography>
-      </Box>
-
-      <Divider sx={{ mb: 2 }} />
-
       {/* Assets List */}
       {assets.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 4 }}>

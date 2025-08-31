@@ -87,25 +87,29 @@ pub fn aggregate_spl_token_balance(
 }
 
 pub fn sol_balance(rpc_url: String, pubkey: String) -> String {
+    let balance = _sol_balance(rpc_url, pubkey.to_string());
+    let pretty_balance = balance / LAMPORTS_PER_SOL;
+    println!("{:#?} SOL", pretty_balance);
+    // Display SOL balance
+    format!("{:.9} SOL", pretty_balance)
+}
+
+fn _sol_balance(rpc_url: String, pubkey: String) -> f64 {
     let connection = RpcClient::new(rpc_url);
     let pubkey = match Pubkey::from_str(&pubkey) {
         Ok(pubkey) => pubkey,
         Err(e) => {
             println!("Error parsing pubkey: {}", e);
-            return "0".to_string();
+            return 0.0;
         }
     };
-    let balance = match connection.get_balance(&pubkey) {
+    match connection.get_balance(&pubkey) {
         Ok(balance) => balance as f64,
         Err(e) => {
             println!("Error getting balance: {}", e);
-            return "0".to_string();
+            return 0.0;
         }
-    };
-    let pretty_balance = balance / LAMPORTS_PER_SOL;
-    println!("{:#?} SOL", pretty_balance);
-    // Display SOL balance
-    format!("{:.9} SOL", pretty_balance)
+    }
 }
 
 pub async fn wallet_balance(
@@ -117,16 +121,12 @@ pub async fn wallet_balance(
     let sol_balance_str = sol_balance(rpc_url.clone(), pubkey.clone());
     let sol_amount = parse_sol_amount(&sol_balance_str);
 
-    // Get BACH balance using proper constants
-    let bach_balance_str = spl_balance(
+    let bach_amount = aggregate_spl_token_balance(
         rpc_url,
-        pubkey.clone(),
+        pubkey,
         SPL_TOKEN_PROGRAM_ID.to_string(),
         BACH_MINT_ACCOUNT.to_string(),
     );
-    let bach_amount = parse_bach_amount(&bach_balance_str);
-
-    let target_currency = currency.unwrap_or(FiatCurrency::USD);
 
     // Get current prices in the target currency
     let sol_price = get_sol_price().await?;
@@ -137,7 +137,7 @@ pub async fn wallet_balance(
     let bach_value = bach_amount * bach_price;
     let total_value = sol_value + bach_value;
 
-    let currency_symbol = match target_currency {
+    let currency_symbol = match currency.unwrap_or(FiatCurrency::USD) {
         FiatCurrency::USD => "$",
         FiatCurrency::IDR => "Rp",
         FiatCurrency::SEK => "kr",
@@ -151,11 +151,7 @@ fn parse_sol_amount(balance_str: &str) -> f64 {
     balance_str.replace(" SOL", "").parse().unwrap_or(0.0)
 }
 
-fn parse_bach_amount(balance_str: &str) -> f64 {
-    0.0
-}
-
-async fn get_sol_price() -> f64 {
+async fn get_sol_price() -> Result<f64, ErrorResponse> {
     match get_asset_price(SOLANA_MINT_ACCOUNT).await {
         Ok(price) => {
             if price.prices.contains_key(SOLANA_MINT_ACCOUNT) {
