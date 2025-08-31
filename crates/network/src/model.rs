@@ -1,12 +1,14 @@
-use core::fmt;
-use serde::{Deserialize, Serialize};
-use serde_repr::{Deserialize_repr, Serialize_repr};
-use std::{
-    error::Error,
-    fmt::{Display, Formatter},
+use {
+    core::fmt,
+    serde::{Deserialize, Serialize},
+    serde_repr::{Deserialize_repr, Serialize_repr},
+    std::{
+        error::Error,
+        fmt::{Display, Formatter},
+    },
+    strum_macros::EnumIter,
+    tsync::tsync,
 };
-use strum_macros::EnumIter;
-use tsync::tsync;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(untagged)]

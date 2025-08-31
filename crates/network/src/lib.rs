@@ -1,7 +1,9 @@
-use crate::model::{ErrorCode, ErrorResponse};
-use log::{debug, error};
-use reqwest::{RequestBuilder, Response};
-use serde::de::DeserializeOwned;
+use {
+    crate::model::{ErrorCode, ErrorResponse},
+    log::{debug, error},
+    reqwest::{RequestBuilder, Response},
+    serde::de::DeserializeOwned,
+};
 
 pub mod model;
 
