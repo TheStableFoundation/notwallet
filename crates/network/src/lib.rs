@@ -1,6 +1,5 @@
 use {
     crate::model::{ErrorCode, ErrorResponse},
-    crate::wallet_kit::model::BalanceError,
     log::{debug, error},
     reqwest::{RequestBuilder, Response},
     serde::de::DeserializeOwned,
