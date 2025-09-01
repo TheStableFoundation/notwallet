@@ -17,7 +17,7 @@ export default function LayoutWithMenuBar({
   const { locked } = useAppLock();
   const [initialized, setInitialized] = React.useState(false);
   const [isAndroidTv, setIsAndroidTv] = React.useState(false);
-  const paddingTop = ["ios", "android"].includes(platform()) ? 6 : 0;
+  const [isMobile, setIsMobile] = React.useState(false);
 
   const init = async () => {
     setInitialized(true);
@@ -27,6 +27,11 @@ export default function LayoutWithMenuBar({
     const checkResult = await check();
     info(`Android TV: ${JSON.stringify(checkResult)}`);
     setIsAndroidTv(checkResult.isAndroidTv);
+    // Check if this is an iOS or Android mobile
+    if (!isAndroidTv) {
+      const platformName = platform();
+      setIsMobile(platformName === "ios" || platformName === "android");
+    }
   };
 
   React.useEffect(() => {
@@ -37,7 +42,7 @@ export default function LayoutWithMenuBar({
     <>
       <Container
         sx={{
-          paddingTop: paddingTop,
+          paddingTop: isMobile ? 6 : 0,
           height: "auto",
           minHeight: "unset",
           display: "block",
@@ -46,7 +51,9 @@ export default function LayoutWithMenuBar({
       >
         {isAndroidTv ? <AndroidTvLayout>{children}</AndroidTvLayout> : children}
       </Container>
-      {initialized && !locked && !isAndroidTv && <BottomTabBar />}
+      {initialized && !locked && !isAndroidTv && (
+        <BottomTabBar isMobile={isMobile} />
+      )}
     </>
   );
 }
