@@ -11,7 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { platform } from "@tauri-apps/plugin-os";
 
-export default function BottomTabBar() {
+export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
   const pathname = usePathname();
   const router = useRouter();
   let value = 0;
@@ -55,13 +55,11 @@ export default function BottomTabBar() {
     }
   };
 
-  const bottom = ["ios", "android"].includes(platform()) ? 46 : 0;
-
   return (
     <Paper
       sx={{
         position: "fixed",
-        bottom: bottom,
+        bottom: isMobile ? 46 : 0,
         left: 0,
         width: "100vw",
         zIndex: 100,
