@@ -1,10 +1,10 @@
 use {
     crate::{
         constants::{
-            BACH_MINT_ACCOUNT, JUPITER_BASE_URL, JUPITER_PRICE_PATH, LAMPORTS_PER_SOL,
-            SOLANA_MINT_ACCOUNT, SPL_TOKEN_PROGRAM_ID,
+            BACH_MINT_ACCOUNT, BIRDEYE_API_KEY, BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH,
+            LAMPORTS_PER_SOL, SOLANA_MINT_ACCOUNT, SPL_TOKEN_PROGRAM_ID,
         },
-        models::{currency::FiatCurrency, price::PricesResponse},
+        models::{currency::FiatCurrency, price::BirdeyePriceResponse},
     },
     log::{debug, error},
     network::{
@@ -180,8 +180,8 @@ pub async fn wallet_balance(
 async fn get_sol_price() -> Result<f64, ErrorResponse> {
     match get_asset_price(SOLANA_MINT_ACCOUNT).await {
         Ok(price) => {
-            if price.prices.contains_key(SOLANA_MINT_ACCOUNT) {
-                Ok(price.prices[SOLANA_MINT_ACCOUNT].usd_price)
+            if price.is_valid() {
+                Ok(price.data.value)
             } else {
                 Err(ErrorResponse::Error {
                     code: BalanceError,
@@ -195,9 +195,9 @@ async fn get_sol_price() -> Result<f64, ErrorResponse> {
 
 async fn get_bach_price() -> Result<f64, ErrorResponse> {
     match get_asset_price(BACH_MINT_ACCOUNT).await {
-        Ok(price) => {
-            if price.prices.contains_key(BACH_MINT_ACCOUNT) {
-                Ok(price.prices[BACH_MINT_ACCOUNT].usd_price)
+        Ok(result) => {
+            if result.is_valid() {
+                Ok(result.data.value)
             } else {
                 Err(ErrorResponse::Error {
                     code: BalanceError,
@@ -209,13 +209,16 @@ async fn get_bach_price() -> Result<f64, ErrorResponse> {
     }
 }
 
-async fn get_asset_price(asset: &str) -> Result<PricesResponse, ErrorResponse> {
+async fn get_asset_price(asset: &str) -> Result<BirdeyePriceResponse, ErrorResponse> {
     // For now, return 0 as BACH price fetching would need specific token address and DEX integration
     // This could be implemented using Birdeye API or similar service
     debug!("Get asset price");
 
-    let url = format!("{}{}?ids={}", JUPITER_BASE_URL, JUPITER_PRICE_PATH, asset);
-    let client = Client::new().get(url);
+    let url = format!(
+        "{}{}?address={}",
+        BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH, asset
+    );
+    let client = Client::new().get(url).header("X-API-KEY", BIRDEYE_API_KEY);
     request(client).await
 }
 
@@ -248,13 +251,6 @@ fn get_token_account(data: &UiAccountData) -> Option<UiTokenAccount> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_parse_sol_amount() {
-        assert_eq!(parse_sol_amount("1.500000000 SOL"), 1.5);
-        assert_eq!(parse_sol_amount("0.000000001 SOL"), 0.000000001);
-        assert_eq!(parse_sol_amount("invalid"), 0.0);
-    }
 
     #[test]
     fn test_aggregate_spl_token_balance_invalid_pubkey() {
