@@ -35,6 +35,7 @@ export default function LayoutWithMenuBar({
     <>
       <Container
         sx={{
+          paddingTop: 6,
           height: "auto",
           minHeight: "unset",
           display: "block",
