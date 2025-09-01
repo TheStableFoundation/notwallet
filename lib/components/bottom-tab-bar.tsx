@@ -9,6 +9,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { usePathname, useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { platform } from "@tauri-apps/plugin-os";
 
 export default function BottomTabBar() {
   const pathname = usePathname();
@@ -54,11 +55,13 @@ export default function BottomTabBar() {
     }
   };
 
+  const bottom = ["ios", "android"].includes(platform()) ? 46 : 0;
+
   return (
     <Paper
       sx={{
         position: "fixed",
-        bottom: 46,
+        bottom: bottom,
         left: 0,
         width: "100vw",
         zIndex: 100,

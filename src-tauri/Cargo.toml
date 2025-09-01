@@ -34,13 +34,14 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 solana-sdk = "2.3.1"
 tauri = { version = "2.0.0", features = [] }
+tauri-plugin-android-tv-check = "1"
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-haptics = "2"
 tauri-plugin-log = { version = "2", features = ["colored"] }
 tauri-plugin-opener = "2"
+tauri-plugin-os = "2"
 tauri-plugin-shell = "2.0.0"
 tauri-plugin-store = "2"
-tauri-plugin-android-tv-check = "1"
 thiserror = "1.0"
 tsync = "2"
 uuid = { version = "1", features = ["v4"] }
