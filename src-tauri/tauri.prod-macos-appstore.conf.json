@@ -4,11 +4,12 @@
   "app": {
     "windows": [
       {
-        "title": "NotWallet"
+        "title": "NotWallet Crypto"
       }
     ]
   },
   "bundle": {
+    "icon": ["icons/icon.icns"],
     "macOS": {
       "entitlements": "./Entitlements.plist",
       "signingIdentity": "your_signing_identity_here",
