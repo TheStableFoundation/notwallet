@@ -36,6 +36,7 @@ export default function SendModal({
 }: SendModalProps) {
   const [amount, setAmount] = React.useState<string>("");
   const [recipient, setRecipient] = React.useState<string>("");
+  const [customAddress, setCustomAddress] = React.useState<string>("");
   const [tokenType, setTokenType] = React.useState<"BACH" | "SOL">("BACH");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -46,6 +47,7 @@ export default function SendModal({
     if (open) {
       setAmount("");
       setRecipient("");
+      setCustomAddress("");
       setTokenType("BACH");
       setError(null);
       setSuccess(false);
@@ -84,7 +86,7 @@ export default function SendModal({
         return;
       }
 
-      if (!recipient) {
+      if (!recipient || (recipient === "custom" && !customAddress)) {
         setError("Please select a recipient");
         return;
       }
@@ -101,9 +103,10 @@ export default function SendModal({
 
       // Here you would invoke the Tauri command to send tokens
       // This is a placeholder - implement the actual invoke call
+      const actualRecipient = recipient === "custom" ? customAddress : recipient;
       await invoke(SEND_TOKEN, {
         from: senderAddress,
-        to: recipient,
+        to: actualRecipient,
         amount: parseFloat(amount),
         tokenType: tokenType,
       });
@@ -250,8 +253,8 @@ export default function SendModal({
             <TextField
               label="Custom Address"
               fullWidth
-              value=""
-              onChange={(e) => setRecipient(e.target.value)}
+              value={customAddress}
+              onChange={(e) => setCustomAddress(e.target.value)}
               disabled={isLoading}
               placeholder="Enter recipient's public key"
             />
