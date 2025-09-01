@@ -7,6 +7,7 @@ import React from "react";
 import { check } from "@smbcloud/tauri-plugin-android-tv-check-api";
 import { info } from "@tauri-apps/plugin-log";
 import AndroidTvLayout from "./android-tv-layout";
+import { platform } from "@tauri-apps/plugin-os";
 
 export default function LayoutWithMenuBar({
   children,
@@ -16,6 +17,7 @@ export default function LayoutWithMenuBar({
   const { locked } = useAppLock();
   const [initialized, setInitialized] = React.useState(false);
   const [isAndroidTv, setIsAndroidTv] = React.useState(false);
+  const paddingTop = ["ios", "android"].includes(platform()) ? 6 : 0;
 
   const init = async () => {
     setInitialized(true);
@@ -35,7 +37,7 @@ export default function LayoutWithMenuBar({
     <>
       <Container
         sx={{
-          paddingTop: 6,
+          paddingTop: paddingTop,
           height: "auto",
           minHeight: "unset",
           display: "block",
