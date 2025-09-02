@@ -20,16 +20,11 @@ import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
-import {
-  GET_BACH_BALANCE,
-  GET_SOL_BALANCE,
-  GET_ALL_KEYPAIRS,
-  GET_WALLET_BALANCE,
-} from "@/lib/commands";
+import { GET_ALL_KEYPAIRS, GET_WALLET_BALANCE } from "@/lib/commands";
 import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import EditKeyPairModal from "./edit-keypair-modal";
-import { error, debug } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -43,8 +38,6 @@ export default function WalletCard({
   onSwitchKeypair,
 }: WalletCardProps) {
   const router = useRouter();
-  const [bachBalance, setBachBalance] = React.useState<string>("-");
-  const [solBalance, setSolBalance] = React.useState<string>("-");
   const [walletBalance, setWalletBalance] = React.useState<string>("-");
   const [walletUsername, setWalletUsername] = React.useState<string>(
     wallet.username || "NowhereMan",
@@ -124,14 +117,6 @@ export default function WalletCard({
 
   const init = async () => {
     try {
-      const balance = await invoke<string>(GET_BACH_BALANCE, {
-        pubkey: wallet.pubkey,
-      });
-      setBachBalance(`${balance}`);
-      const solBalance = await invoke<string>(GET_SOL_BALANCE, {
-        pubkey: wallet.pubkey,
-      });
-      setSolBalance(`${solBalance}`);
       const walletBalance = await invoke<string>(GET_WALLET_BALANCE, {
         pubkey: wallet.pubkey,
       });
@@ -487,8 +472,6 @@ export default function WalletCard({
         onClose={handleCloseSendModal}
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
-        bachBalance={bachBalance}
-        solBalance={solBalance}
       />
 
       {/* Swap Modal */}
@@ -497,8 +480,6 @@ export default function WalletCard({
         onClose={handleCloseSwapModal}
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
-        bachBalance={bachBalance}
-        solBalance={solBalance}
       />
       <EditKeyPairModal
         open={editKeyPairModalOpen}

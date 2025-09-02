@@ -37,16 +37,12 @@ interface SwapModalProps {
   onClose: () => void;
   senderAddress: string;
   availableKeypairs: SolanaWallet[];
-  bachBalance: string;
-  solBalance: string;
 }
 
 export default function SwapModal({
   open,
   onClose,
   senderAddress,
-  bachBalance,
-  solBalance,
 }: SwapModalProps) {
   const [inputAmount, setInputAmount] = React.useState<string>("");
   const [fromToken, setFromToken] = React.useState<"SOL" | "BACH">("SOL");
@@ -59,6 +55,8 @@ export default function SwapModal({
   const [transactionResponse, setTransactionResponse] =
     React.useState<SwapTransactionResponse | null>(null);
   const [slippage, setSlippage] = React.useState<number>(50); // 0.5% default slippage
+  const [bachBalance, setBachBalance] = React.useState<string>("-");
+  const [solBalance, setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {

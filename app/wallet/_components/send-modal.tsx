@@ -22,8 +22,6 @@ interface SendModalProps {
   onClose: () => void;
   senderAddress: string;
   availableKeypairs: SolanaWallet[];
-  bachBalance: string;
-  solBalance: string;
 }
 
 export default function SendModal({
@@ -31,8 +29,6 @@ export default function SendModal({
   onClose,
   senderAddress,
   availableKeypairs,
-  bachBalance,
-  solBalance,
 }: SendModalProps) {
   const [amount, setAmount] = React.useState<string>("");
   const [recipient, setRecipient] = React.useState<string>("");
@@ -41,6 +37,8 @@ export default function SendModal({
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<boolean>(false);
+  const [bachBalance, setBachBalance] = React.useState<string>("-");
+  const [solBalance, setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {
