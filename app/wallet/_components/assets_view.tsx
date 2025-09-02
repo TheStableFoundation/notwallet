@@ -59,7 +59,6 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
             logo: <SolanaIcon size={20} />,
             symbol: "SOL",
             balance: `${parseFloat(solAmount).toFixed(4)} SOL`,
-            usdValue: "~$" + (parseFloat(solAmount) * 100).toFixed(2), // Mock USD value
           });
         }
 
@@ -70,7 +69,6 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
             logo: <BachIcon size={20} />,
             symbol: "BACH",
             balance: `${parseFloat(bachAmount).toFixed(4)} BACH`,
-            usdValue: "~$" + (parseFloat(bachAmount) * 0.01).toFixed(2), // Mock USD value
           });
         }
 
