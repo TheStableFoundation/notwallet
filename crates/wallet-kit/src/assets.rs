@@ -1,9 +1,13 @@
-use {crate::models::asset::Asset, tsync::tsync};
+use tsync::tsync;
 
 #[tsync]
 pub const SOLANA: &str = "So11111111111111111111111111111111111111112";
 #[tsync]
+pub const SOL_DECIMALS: i32 = 9;
+#[tsync]
 pub const BACH_TOKEN: &str = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
+#[tsync]
+pub const BACH_DECIMALS: i32 = 12;
 #[tsync]
 pub const USDC: &str = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 #[tsync]
@@ -34,26 +38,3 @@ pub const JITO_STAKED_SOL: &str = "J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"
 pub const ZBTC: &str = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
 #[tsync]
 pub const USD1: &str = "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB";
-
-#[tsync]
-pub const VERIFIED_ASSETS: &[&str] = &[
-    SOLANA,
-    BACH_TOKEN,
-    USDC,
-    USDT,
-    USDG,
-    EURC,
-    JUPITER,
-    MEW,
-    PAYPAY_USD,
-    BONK,
-    USDS,
-    OFFICIAL_TRUMP,
-    COINBASE_WRAPPED_BTC,
-    MELANIA_MEME,
-    JITO_STAKED_SOL,
-    ZBTC,
-];
-
-#[tsync]
-pub const USD: &[&str] = &[USD1, USDC, USDT, USDG, USDS];

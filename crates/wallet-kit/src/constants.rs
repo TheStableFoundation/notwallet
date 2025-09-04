@@ -11,17 +11,6 @@ pub const THE_STABLE_FOUNDATION_TREASURY_ADDRESS: &str =
     "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
 pub const PLATFORM_FEE_BPS: u16 = 10;
 pub const FEE_ACCOUNT: &str = THE_STABLE_FOUNDATION_TREASURY_ADDRESS;
-
-#[tsync]
-pub const BACH_MINT_ACCOUNT: &str = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
-#[tsync]
-pub const BACH_DECIMALS: i32 = 12;
-
-/// Solana
-#[tsync]
-pub const SOLANA_MINT_ACCOUNT: &str = "So11111111111111111111111111111111111111112";
-#[tsync]
-pub const SOL_DECIMALS: i32 = 9;
 #[tsync]
 pub const SPL_TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 

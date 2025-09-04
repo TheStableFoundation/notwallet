@@ -1,8 +1,9 @@
 use {
     crate::{
+        assets::{BACH_TOKEN, SOLANA},
         constants::{
-            BACH_MINT_ACCOUNT, BIRDEYE_API_KEY, BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH,
-            LAMPORTS_PER_SOL, SOLANA_MINT_ACCOUNT, SPL_TOKEN_PROGRAM_ID, USER_AGENT,
+            BIRDEYE_API_KEY, BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH, LAMPORTS_PER_SOL,
+            SPL_TOKEN_PROGRAM_ID, USER_AGENT,
         },
         models::{currency::FiatCurrency, price::BirdeyePriceResponse},
         spl_token::{spl_token_accounts, spl_token_accounts_for},
@@ -90,7 +91,7 @@ pub async fn wallet_balance(
         rpc_url,
         pubkey,
         SPL_TOKEN_PROGRAM_ID.to_string(),
-        BACH_MINT_ACCOUNT.to_string(),
+        BACH_TOKEN.to_string(),
     );
 
     // Get current prices in the target currency
@@ -165,7 +166,7 @@ fn _sol_balance(rpc_url: String, pubkey: String) -> f64 {
 }
 
 async fn get_sol_price() -> Result<f64, ErrorResponse> {
-    match get_asset_price(SOLANA_MINT_ACCOUNT).await {
+    match get_asset_price(SOLANA).await {
         Ok(price) => {
             if price.is_valid() {
                 Ok(price.data.value)
@@ -181,7 +182,7 @@ async fn get_sol_price() -> Result<f64, ErrorResponse> {
 }
 
 async fn get_bach_price() -> Result<f64, ErrorResponse> {
-    match get_asset_price(BACH_MINT_ACCOUNT).await {
+    match get_asset_price(BACH_TOKEN).await {
         Ok(result) => {
             if result.is_valid() {
                 Ok(result.data.value)
@@ -223,7 +224,7 @@ mod tests {
             "https://api.mainnet-beta.solana.com".to_string(),
             "invalid_pubkey".to_string(),
             SPL_TOKEN_PROGRAM_ID.to_string(),
-            BACH_MINT_ACCOUNT.to_string(),
+            BACH_TOKEN.to_string(),
         );
         // Should return 0.0 for invalid pubkey instead of panicking
         assert_eq!(balance, 0.0);
@@ -235,7 +236,7 @@ mod tests {
             "https://api.mainnet-beta.solana.com".to_string(),
             "invalid_pubkey".to_string(),
             SPL_TOKEN_PROGRAM_ID.to_string(),
-            BACH_MINT_ACCOUNT.to_string(),
+            BACH_TOKEN.to_string(),
         );
         // Should return "0 BACH" instead of panicking
         assert_eq!(result, "0 BACH");

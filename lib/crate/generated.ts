@@ -112,7 +112,11 @@ export interface OnboardingCreateWallet {
 
 export const SOLANA = "So11111111111111111111111111111111111111112";
 
+export const SOL_DECIMALS = 9;
+
 export const BACH_TOKEN = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
+
+export const BACH_DECIMALS = 12;
 
 export const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 
@@ -148,15 +152,6 @@ export const USD1 = "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB";
 export const THE_STABLE_FOUNDATION_ADDRESS = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW27rLDtfU8y5";
 
 export const THE_STABLE_FOUNDATION_TREASURY_ADDRESS = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
-
-export const BACH_MINT_ACCOUNT = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
-
-export const BACH_DECIMALS = 12;
-
-/** Solana */
-export const SOLANA_MINT_ACCOUNT = "So11111111111111111111111111111111111111112";
-
-export const SOL_DECIMALS = 9;
 
 export const SPL_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
