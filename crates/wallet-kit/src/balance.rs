@@ -6,7 +6,7 @@ use {
             SPL_TOKEN_PROGRAM_ID, USER_AGENT,
         },
         models::{asset::AssetBalance, currency::FiatCurrency, price::BirdeyePriceResponse},
-        spl_token::{spl_token_accounts, spl_token_accounts_for},
+        spl_token::{spl_token_accounts, spl_token_accounts_for, spl_token_accounts_with_balance},
     },
     log::{debug, error},
     network::{
@@ -34,42 +34,6 @@ pub fn spl_balance(
     format!("{} BACH", balance)
 }
 
-pub fn aggregate_spl_token_balance(
-    rpc_url: String,
-    pubkey: String,
-    spl_token_program_id: String,
-    token_address: String,
-) -> f64 {
-    // Get token accounts for the given public key and token address
-    let target_spl_token_accounts =
-        match spl_token_accounts_for(rpc_url, pubkey, spl_token_program_id, token_address) {
-            Ok(accounts) => accounts,
-            Err(err) => {
-                error!("Failed to fetch token accounts: {}", err);
-                return 0.0;
-            }
-        };
-
-    debug!(
-        "Number of target token accounts: {}",
-        target_spl_token_accounts.len()
-    );
-
-    if target_spl_token_accounts.is_empty() {
-        return 0.0;
-    }
-
-    // Get aggregated amount
-    let mut aggregated_amount = 0.0;
-    for account in target_spl_token_accounts {
-        if let Some(ui_amount) = account.token_amount.ui_amount {
-            aggregated_amount += ui_amount;
-        }
-    }
-
-    aggregated_amount
-}
-
 pub fn sol_balance(rpc_url: String, pubkey: String) -> String {
     let balance = _sol_balance(rpc_url, pubkey.to_string());
     let pretty_balance = balance / LAMPORTS_PER_SOL;
@@ -86,14 +50,6 @@ pub async fn wallet_balance(
     // Get SOL balance
     let sol_amount = _sol_balance(rpc_url.clone(), pubkey.clone()) / LAMPORTS_PER_SOL;
 
-    // Try to get BACH balance, but handle errors gracefully
-    let bach_amount = aggregate_spl_token_balance(
-        rpc_url,
-        pubkey,
-        SPL_TOKEN_PROGRAM_ID.to_string(),
-        BACH_TOKEN.to_string(),
-    );
-
     // Get current prices in the target currency
     // If SOL balance is less than 0.000000001 SOL, we don't query the price.
     let sol_price = if sol_amount >= 0.000000001 {
@@ -102,23 +58,42 @@ pub async fn wallet_balance(
         0.0
     };
 
-    // Try to get BACH price, but handle errors gracefully
-    let bach_price = if bach_amount >= 0.000000000001 {
-        match get_bach_price().await {
-            Ok(price) => price,
-            Err(err) => {
-                error!("Failed to get BACH price, using 0: {:?}", err);
-                0.0
-            }
-        }
-    } else {
-        0.0
-    };
-
     // Calculate total value
     let sol_value = sol_amount * sol_price;
-    let bach_value = bach_amount * bach_price;
-    let total_value = sol_value + bach_value;
+
+    // Try to get BACH price, but handle errors gracefully
+    let spl_tokens = match spl_token_accounts_with_balance(
+        rpc_url.clone(),
+        pubkey.clone(),
+        SPL_TOKEN_PROGRAM_ID.to_string(),
+    ) {
+        Ok(tokens) => tokens,
+        Err(err) => {
+            error!("Failed to get SPL token accounts: {:?}", err);
+            Vec::new()
+        }
+    };
+
+    let mut spl_value = 0.0;
+    for token in spl_tokens {
+        let token_price = match get_asset_price(&token.mint).await {
+            Ok(price) => price.data.value,
+            Err(err) => {
+                error!("Failed to get price for token {}: {:?}", token.mint, err);
+                0.0
+            }
+        };
+        let token_amount = match token.token_amount.ui_amount {
+            Some(amount) => amount,
+            None => {
+                error!("Token amount is None for token {}", token.mint);
+                0.0
+            }
+        };
+        spl_value += token_amount * token_price;
+    }
+
+    let total_value = sol_value + spl_value;
 
     let currency_symbol = match currency.unwrap_or(FiatCurrency::USD) {
         FiatCurrency::USD => "$",
@@ -183,6 +158,42 @@ pub async fn other_assets_balance(
 }
 
 // Private or crate level access.
+
+fn aggregate_spl_token_balance(
+    rpc_url: String,
+    pubkey: String,
+    spl_token_program_id: String,
+    token_address: String,
+) -> f64 {
+    // Get token accounts for the given public key and token address
+    let target_spl_token_accounts =
+        match spl_token_accounts_for(rpc_url, pubkey, spl_token_program_id, token_address) {
+            Ok(accounts) => accounts,
+            Err(err) => {
+                error!("Failed to fetch token accounts: {}", err);
+                return 0.0;
+            }
+        };
+
+    debug!(
+        "Number of target token accounts: {}",
+        target_spl_token_accounts.len()
+    );
+
+    if target_spl_token_accounts.is_empty() {
+        return 0.0;
+    }
+
+    // Get aggregated amount
+    let mut aggregated_amount = 0.0;
+    for account in target_spl_token_accounts {
+        if let Some(ui_amount) = account.token_amount.ui_amount {
+            aggregated_amount += ui_amount;
+        }
+    }
+
+    aggregated_amount
+}
 
 fn _sol_balance(rpc_url: String, pubkey: String) -> f64 {
     let connection = RpcClient::new(rpc_url);
