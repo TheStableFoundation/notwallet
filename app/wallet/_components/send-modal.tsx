@@ -22,8 +22,6 @@ interface SendModalProps {
   onClose: () => void;
   senderAddress: string;
   availableKeypairs: SolanaWallet[];
-  bachBalance: string;
-  solBalance: string;
 }
 
 export default function SendModal({
@@ -31,21 +29,23 @@ export default function SendModal({
   onClose,
   senderAddress,
   availableKeypairs,
-  bachBalance,
-  solBalance,
 }: SendModalProps) {
   const [amount, setAmount] = React.useState<string>("");
   const [recipient, setRecipient] = React.useState<string>("");
+  const [customAddress, setCustomAddress] = React.useState<string>("");
   const [tokenType, setTokenType] = React.useState<"BACH" | "SOL">("BACH");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<boolean>(false);
+  const [bachBalance, setBachBalance] = React.useState<string>("-");
+  const [solBalance, setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {
     if (open) {
       setAmount("");
       setRecipient("");
+      setCustomAddress("");
       setTokenType("BACH");
       setError(null);
       setSuccess(false);
@@ -84,7 +84,8 @@ export default function SendModal({
         return;
       }
 
-      if (!recipient) {
+      const finalRecipient = recipient === "custom" ? customAddress : recipient;
+      if (!finalRecipient) {
         setError("Please select a recipient");
         return;
       }
@@ -103,7 +104,7 @@ export default function SendModal({
       // This is a placeholder - implement the actual invoke call
       await invoke(SEND_TOKEN, {
         from: senderAddress,
-        to: recipient,
+        to: finalRecipient,
         amount: parseFloat(amount),
         tokenType: tokenType,
       });
@@ -250,8 +251,8 @@ export default function SendModal({
             <TextField
               label="Custom Address"
               fullWidth
-              value=""
-              onChange={(e) => setRecipient(e.target.value)}
+              value={customAddress}
+              onChange={(e) => setCustomAddress(e.target.value)}
               disabled={isLoading}
               placeholder="Enter recipient's public key"
             />

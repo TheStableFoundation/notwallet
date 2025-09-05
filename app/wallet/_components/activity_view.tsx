@@ -1,18 +1,19 @@
+"use client";
+
 import * as React from "react";
-import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { SolanaWallet } from "@/lib/crate/generated";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 
-interface ActivityCardProps {
+interface ActivityViewProps {
   wallet: SolanaWallet;
 }
 
-export default function ActivityCard({ wallet }: ActivityCardProps) {
+export default function ActivityView({ wallet }: ActivityViewProps) {
   const handleOpenSolscan = async () => {
     await selectionFeedback();
     const solscanUrl = `https://solscan.io/account/${wallet.pubkey}`;
@@ -20,22 +21,13 @@ export default function ActivityCard({ wallet }: ActivityCardProps) {
   };
 
   return (
-    <Card
-      sx={{
-        mb: 2,
-        borderRadius: 2,
-        boxShadow: 2,
-        background: "linear-gradient(135deg, #f5f6fa 60%, #e3f2fd 100%)",
-        overflow: "hidden",
-        p: 2,
-      }}
-    >
+    <Box sx={{ p: 2 }}>
       <Typography
         variant="h6"
         fontWeight="bold"
         sx={{ mb: 2, color: "#212529" }}
       >
-        Activity
+        Transaction History
       </Typography>
 
       <Box sx={{ textAlign: "center" }}>
@@ -62,6 +54,6 @@ export default function ActivityCard({ wallet }: ActivityCardProps) {
           Open in Solscan
         </Button>
       </Box>
-    </Card>
+    </Box>
   );
 }

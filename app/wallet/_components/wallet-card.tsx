@@ -1,10 +1,14 @@
+"use client";
+
 import * as React from "react";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
+import PaidIcon from "@mui/icons-material/Paid";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
+import SellIcon from "@mui/icons-material/Sell";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LockIcon from "@mui/icons-material/Lock";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
@@ -18,18 +22,11 @@ import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
-import {
-  GET_BACH_BALANCE,
-  GET_SOL_BALANCE,
-  GET_ALL_KEYPAIRS,
-} from "@/lib/commands";
+import { GET_ALL_KEYPAIRS, GET_WALLET_BALANCE } from "@/lib/commands";
 import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import EditKeyPairModal from "./edit-keypair-modal";
-import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { openUrl } from "@tauri-apps/plugin-opener";
-import { BACH_MINT_ACCOUNT } from "@/lib/crate/generated";
+import { error } from "@tauri-apps/plugin-log";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -43,8 +40,7 @@ export default function WalletCard({
   onSwitchKeypair,
 }: WalletCardProps) {
   const router = useRouter();
-  const [bachBalance, setBachBalance] = React.useState<string>("-");
-  const [solBalance, setSolBalance] = React.useState<string>("-");
+  const [walletBalance, setWalletBalance] = React.useState<string>("-");
   const [walletUsername, setWalletUsername] = React.useState<string>(
     wallet.username || "NowhereMan",
   );
@@ -72,8 +68,8 @@ export default function WalletCard({
     try {
       const keypairs = await invoke<SolanaWallet[]>(GET_ALL_KEYPAIRS);
       setAvailableKeypairs(keypairs || []);
-    } catch (error) {
-      console.error("Error fetching keypairs:", error);
+    } catch (err) {
+      error(`Error fetching keypairs: ${JSON.stringify(err)}`);
       setAvailableKeypairs([]);
     }
     setSendModalOpen(true);
@@ -85,8 +81,8 @@ export default function WalletCard({
     try {
       const keypairs = await invoke<SolanaWallet[]>(GET_ALL_KEYPAIRS);
       setAvailableKeypairs(keypairs || []);
-    } catch (error) {
-      console.error("Error fetching keypairs:", error);
+    } catch (err) {
+      error(`Error fetching keypairs: ${JSON.stringify(err)}`);
       setAvailableKeypairs([]);
     }
     setSwapModalOpen(true);
@@ -116,32 +112,24 @@ export default function WalletCard({
     router.push("/wallet/buy?address=" + wallet.pubkey);
   }, [router, wallet]);
 
+  const onSellCrypto = React.useCallback(async () => {
+    await selectionFeedback();
+    router.push("/wallet/sell?address=" + wallet.pubkey);
+  }, [router, wallet]);
+
   const onEditKeypair = async () => {
     await selectionFeedback();
     setEditKeyPairModalOpen(true);
   };
 
-  const handleOpenTokenInformation = async (token: "BACH" | "SOL") => {
-    await selectionFeedback();
-    const url =
-      token === "BACH"
-        ? `https://birdeye.so/token/${BACH_MINT_ACCOUNT}?chain=solana`
-        : "https://solana.org";
-    openUrl(url);
-  };
-
   const init = async () => {
     try {
-      const balance = await invoke<string>(GET_BACH_BALANCE, {
+      const walletBalance = await invoke<string>(GET_WALLET_BALANCE, {
         pubkey: wallet.pubkey,
       });
-      setBachBalance(`${balance}`);
-      const solBalance = await invoke<string>(GET_SOL_BALANCE, {
-        pubkey: wallet.pubkey,
-      });
-      setSolBalance(`${solBalance}`);
-    } catch (error) {
-      console.error("Error fetching balance:", error);
+      setWalletBalance(`${walletBalance}`);
+    } catch (err) {
+      error(`Error fetching balance: ${JSON.stringify(err)}`);
     }
   };
 
@@ -317,23 +305,104 @@ export default function WalletCard({
       </Stack>
       <Stack
         direction="row"
-        alignItems="start"
+        alignItems="center"
         justifyContent="space-between"
         spacing={2}
-        sx={{ mb: 2 }}
+        sx={{
+          mb: 3,
+          px: 2,
+          position: "relative",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: -8,
+            left: 0,
+            right: 0,
+            bottom: -8,
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+            borderRadius: 3,
+            backdropFilter: "blur(10px)",
+            zIndex: 0,
+          },
+        }}
       >
-        <Typography
-          variant="h6"
-          fontWeight="bold"
-          sx={{ mb: 2, color: "#212529" }}
-        >
-          Balance
-        </Typography>
+        <Box sx={{ position: "relative", zIndex: 1 }}>
+          <Typography
+            variant="h2"
+            fontWeight="900"
+            sx={{
+              color: "#fff",
+              textShadow: `
+                0 0 20px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 4px 20px rgba(153, 50, 204, 0.4)
+              `,
+              fontFamily: '"Inter", "Helvetica Neue", "Arial", sans-serif',
+              fontSize: {
+                xs: "2.5rem",
+                sm: "3rem",
+                md: "3.5rem",
+              },
+              letterSpacing: "-0.02em",
+              background:
+                "linear-gradient(135deg, #fff 0%, #f8f9ff 50%, #fff 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              filter: "drop-shadow(0 2px 8px rgba(153, 50, 204, 0.3))",
+              animation: "glow 2s ease-in-out infinite alternate",
+              "@keyframes glow": {
+                "0%": {
+                  textShadow: `
+                    0 0 20px rgba(255, 255, 255, 0.8),
+                    0 0 40px rgba(255, 255, 255, 0.6),
+                    0 4px 20px rgba(153, 50, 204, 0.4)
+                  `,
+                },
+                "100%": {
+                  textShadow: `
+                    0 0 30px rgba(255, 255, 255, 1),
+                    0 0 50px rgba(255, 255, 255, 0.8),
+                    0 6px 25px rgba(153, 50, 204, 0.6)
+                  `,
+                },
+              },
+            }}
+          >
+            {walletBalance}
+          </Typography>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "120%",
+              height: "120%",
+              background:
+                "radial-gradient(ellipse, rgba(255,255,255,0.1) 0%, transparent 70%)",
+              borderRadius: "50%",
+              zIndex: -1,
+              animation: "pulse 3s ease-in-out infinite",
+              "@keyframes pulse": {
+                "0%, 100%": {
+                  opacity: 0.5,
+                  transform: "translate(-50%, -50%) scale(1)",
+                },
+                "50%": {
+                  opacity: 0.8,
+                  transform: "translate(-50%, -50%) scale(1.1)",
+                },
+              },
+            }}
+          />
+        </Box>
         <Stack
-          direction="row"
+          direction="column"
           alignItems="center"
           spacing={1}
-          sx={{ flex: 1, justifyContent: "flex-end" }}
+          sx={{ position: "relative", zIndex: 1 }}
         >
           <Tooltip title="Send">
             <IconButton
@@ -364,83 +433,6 @@ export default function WalletCard({
             </IconButton>
           </Tooltip>
         </Stack>
-      </Stack>
-      {/* BACH Balance with Token Icon */}
-      <Stack
-        direction="row"
-        alignItems="start"
-        justifyContent="space-between"
-        spacing={2}
-        sx={{ mb: 2 }}
-      >
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ flex: 1 }}>
-          <Box
-            sx={{
-              width: 32,
-              height: 32,
-              borderRadius: "50%",
-              bgcolor: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <BachIcon size={20} />
-          </Box>
-          <Typography
-            variant="h3"
-            fontWeight="bold"
-            sx={{
-              color: "#fff",
-              textShadow: "0 2px 12px #9932CC55",
-              fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-              fontSize: 24,
-            }}
-          >
-            {bachBalance}
-          </Typography>
-          <IconButton
-            onClick={() => handleOpenTokenInformation("BACH")}
-            sx={{
-              color: "#fff",
-              textShadow: "0 2px 12px #9932CC55",
-              fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-              fontSize: 16,
-            }}
-          >
-            <OpenInNewIcon />
-          </IconButton>
-        </Stack>
-      </Stack>
-      {/* SOL Balance with Solana Icon */}
-      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-        <Box
-          sx={{
-            width: 32,
-            height: 32,
-            borderRadius: "50%",
-            bgcolor: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-          }}
-        >
-          <SolanaIcon size={20} />
-        </Box>
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          sx={{
-            color: "#fff",
-            textShadow: "0 2px 12px #9932CC55",
-            fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-            fontSize: 16,
-          }}
-        >
-          {solBalance}
-        </Typography>
       </Stack>
       <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
         <Button
@@ -479,6 +471,42 @@ export default function WalletCard({
         >
           Buy SOL
         </Button>
+        <Button
+          variant="contained"
+          startIcon={<PaidIcon />}
+          sx={{
+            background:
+              "linear-gradient(90deg, rgba(153, 50, 204, 0.9) 0%, rgba(166, 77, 255, 0.85) 100%)",
+            color: "#fff",
+            fontWeight: "bold",
+            borderRadius: 2,
+            boxShadow: "0 2px 10px rgba(153, 50, 204, 0.3)",
+            backdropFilter: "blur(8px)",
+            transition: "all 0.3s ease",
+            position: "relative",
+            overflow: "hidden",
+            "&:before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "40%",
+              background:
+                "linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent)",
+              borderRadius: "2px 2px 0 0",
+            },
+            "&:hover": {
+              background:
+                "linear-gradient(90deg, rgba(166, 77, 255, 0.9) 0%, rgba(153, 50, 204, 0.85) 100%)",
+              boxShadow: "0 4px 15px rgba(153, 50, 204, 0.4)",
+            },
+          }}
+          fullWidth
+          onClick={onSellCrypto}
+        >
+          Sell
+        </Button>
       </Stack>
 
       {/* Send Modal */}
@@ -487,8 +515,6 @@ export default function WalletCard({
         onClose={handleCloseSendModal}
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
-        bachBalance={bachBalance}
-        solBalance={solBalance}
       />
 
       {/* Swap Modal */}
@@ -497,8 +523,6 @@ export default function WalletCard({
         onClose={handleCloseSwapModal}
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
-        bachBalance={bachBalance}
-        solBalance={solBalance}
       />
       <EditKeyPairModal
         open={editKeyPairModalOpen}

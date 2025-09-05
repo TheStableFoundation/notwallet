@@ -1,8 +1,10 @@
-use crate::constants::{
-    BACH_DECIMALS, BACH_MINT_ACCOUNT, FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH,
-    JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS, SOLANA_MINT_ACCOUNT, SOL_DECIMALS,
+use crate::{
+    assets::{BACH_DECIMALS, SOLANA, SOL_DECIMALS},
+    constants::{
+        FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS,
+    },
+    models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
 };
-use crate::models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse};
 use base64::{engine::general_purpose, Engine as _};
 use bincode;
 use log::debug;
@@ -37,12 +39,12 @@ use solana_sdk::transaction::VersionedTransaction;
 ///
 /// ```rust
 /// use wallet_kit::swap::get_jupiter_swap_quote;
-/// use wallet_kit::constants::{SOLANA_MINT_ACCOUNT, BACH_MINT_ACCOUNT};
+/// use wallet_kit::assets::{SOLANA, BACH_TOKEN};
 ///
 /// // Get quote for swapping 1 SOL to BACH with 1% slippage
 /// let quote = get_jupiter_swap_quote(
-///     SOLANA_MINT_ACCOUNT,
-///     BACH_MINT_ACCOUNT,
+///     SOLANA,
+///     BACH_TOKEN,
 ///     1, // 1 SOL
 ///     100 // 1% slippage
 /// ).await?;
@@ -53,9 +55,9 @@ pub async fn get_jupiter_swap_quote(
     amount: f64,
     slippage_bps: u64,
 ) -> Result<SwapQuoteResponse, ErrorResponse> {
-    let amount_denomination = if from_token == SOLANA_MINT_ACCOUNT {
+    let amount_denomination = if from_token == SOLANA {
         (amount * 10f64.powi(SOL_DECIMALS)) as i64
-    } else if from_token == BACH_MINT_ACCOUNT {
+    } else if from_token == SOLANA {
         (amount * 10f64.powi(BACH_DECIMALS)) as i64
     } else {
         panic!("Only support BACH and SOL swap for now.")

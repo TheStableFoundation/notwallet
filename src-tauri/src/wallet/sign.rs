@@ -1,11 +1,14 @@
-use crate::constants::store::{store, STORE_ACTIVE_KEYPAIR};
-use crate::model::airdrop::AirdropResponse;
-use crate::model::keypair::SolanaWallet;
-use crate::network::airdrop::airdrop;
-use bs58;
-use network::model::{ErrorCode, ErrorResponse};
-use solana_sdk::signature::{Keypair, Signer};
-use tauri::{command, AppHandle};
+use {
+    crate::{
+        constants::store::{store, STORE_ACTIVE_KEYPAIR},
+        model::{airdrop::AirdropResponse, keypair::SolanaWallet},
+        network::airdrop::airdrop,
+    },
+    bs58,
+    network::model::{ErrorCode, ErrorResponse},
+    solana_sdk::signature::{Keypair, Signer},
+    tauri::{command, AppHandle},
+};
 
 #[command]
 pub async fn sign_message(

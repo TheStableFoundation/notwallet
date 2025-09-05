@@ -5,8 +5,8 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
-import WalletHeader from "@/app/wallet/components/wallet-header";
-import WalletTokenContent from "../components/wallet-token-content";
+import WalletHeader from "@/app/wallet/_components/wallet-header";
+import WalletTokenContent from "@/app/wallet/_components/wallet-token-content";
 import * as log from "@tauri-apps/plugin-log";
 import { Suspense } from "react";
 

@@ -6,29 +6,35 @@ mod setup;
 mod swap;
 mod wallet;
 
-use crate::{
-    onramp::commands::onramp_session,
-    setup::{commands::get_installation_id, setup},
-    swap::commands::{build_swap_transaction, get_swap_quote, send_swap_transaction},
-    wallet::{
-        check_pubkey::check_pubkey,
-        commands::{
-            derive_next_keypair, get_all_keypairs, get_bach_balance, get_sol_balance,
-            get_token_info, get_treasury_bach_balance, get_treasury_sol_balance,
-            onboarding_create_wallet, send_token, update_username,
+use {
+    crate::{
+        onramp::commands::onramp_session,
+        setup::{commands::get_installation_id, setup},
+        swap::commands::{build_swap_transaction, get_swap_quote, send_swap_transaction},
+        wallet::{
+            check_pubkey::check_pubkey,
+            command_balance::get_wallet_balance,
+            command_other_assets_balance::get_other_assets_balance,
+            commands::{
+                derive_next_keypair, destroy_all_wallets, get_all_keypairs, get_bach_balance,
+                get_sol_balance, get_token_info, get_treasury_bach_balance,
+                get_treasury_sol_balance, onboarding_create_wallet, send_token, update_username,
+            },
+            import_wallet::{derive_new_keypair, import_solana_wallet},
+            set_active_keypair::set_active_keypair,
+            sign::sign_message,
         },
-        import_wallet::{derive_new_keypair, import_solana_wallet},
-        set_active_keypair::set_active_keypair,
-        sign::sign_message,
     },
+    tauri_plugin_log::fern::colors::{Color, ColoredLevelConfig},
 };
-use tauri_plugin_log::fern::colors::{Color, ColoredLevelConfig};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_android_tv_check::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(
             tauri_plugin_log::Builder::default()
@@ -47,12 +53,14 @@ pub fn run() {
             import_solana_wallet,
             derive_new_keypair,
             derive_next_keypair,
+            destroy_all_wallets,
             sign_message,
             check_pubkey,
             set_active_keypair,
             get_installation_id,
             get_bach_balance,
             get_sol_balance,
+            get_wallet_balance,
             get_token_info,
             onramp_session,
             get_all_keypairs,
@@ -61,6 +69,7 @@ pub fn run() {
             get_treasury_bach_balance,
             get_treasury_sol_balance,
             get_swap_quote,
+            get_other_assets_balance,
             build_swap_transaction,
             send_swap_transaction,
         ])

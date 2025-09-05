@@ -16,10 +16,10 @@ import {
   SwapTransactionResponse,
   PriorityLevelWithMaxLamports,
   PrioritizationFeeLamports,
-  SOLANA_MINT_ACCOUNT,
-  BACH_MINT_ACCOUNT,
+  SOLANA,
   SOL_DECIMALS,
   BACH_DECIMALS,
+  BACH_TOKEN,
 } from "@/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
@@ -29,7 +29,7 @@ import Alert from "@mui/material/Alert";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
+import { AssetIcon } from "@/lib/components/token-icons";
 import { info, debug } from "@tauri-apps/plugin-log";
 
 interface SwapModalProps {
@@ -37,16 +37,12 @@ interface SwapModalProps {
   onClose: () => void;
   senderAddress: string;
   availableKeypairs: SolanaWallet[];
-  bachBalance: string;
-  solBalance: string;
 }
 
 export default function SwapModal({
   open,
   onClose,
   senderAddress,
-  bachBalance,
-  solBalance,
 }: SwapModalProps) {
   const [inputAmount, setInputAmount] = React.useState<string>("");
   const [fromToken, setFromToken] = React.useState<"SOL" | "BACH">("SOL");
@@ -59,6 +55,8 @@ export default function SwapModal({
   const [transactionResponse, setTransactionResponse] =
     React.useState<SwapTransactionResponse | null>(null);
   const [slippage, setSlippage] = React.useState<number>(50); // 0.5% default slippage
+  const [bachBalance, setBachBalance] = React.useState<string>("-");
+  const [solBalance, setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {
@@ -86,10 +84,8 @@ export default function SwapModal({
         setIsLoadingQuote(true);
         setError(null);
 
-        const fromMint =
-          fromToken === "SOL" ? SOLANA_MINT_ACCOUNT : BACH_MINT_ACCOUNT;
-        const toMint =
-          toToken === "SOL" ? SOLANA_MINT_ACCOUNT : BACH_MINT_ACCOUNT;
+        const fromMint = fromToken === "SOL" ? SOLANA : BACH_TOKEN;
+        const toMint = toToken === "SOL" ? SOLANA : BACH_TOKEN;
 
         const amount = parseFloat(inputAmount);
         const quoteResult = await invoke<SwapQuoteResponse>(GET_SWAP_QUOTE, {
@@ -152,15 +148,14 @@ export default function SwapModal({
     if (!quote || !quote.routePlan[0]) return "0";
     const feeAmount = parseInt(quote.routePlan[0].swapInfo.feeAmount);
     const feeMint = quote.routePlan[0].swapInfo.feeMint;
-    const decimals =
-      feeMint === SOLANA_MINT_ACCOUNT ? SOL_DECIMALS : BACH_DECIMALS;
+    const decimals = feeMint === SOLANA ? SOL_DECIMALS : BACH_DECIMALS;
     return (feeAmount / Math.pow(10, decimals)).toFixed(6);
   };
 
   const getFeeMintSymbol = () => {
     if (!quote || !quote.routePlan[0]) return "";
     const feeMint = quote.routePlan[0].swapInfo.feeMint;
-    return feeMint === SOLANA_MINT_ACCOUNT ? "SOL" : "BACH";
+    return feeMint === SOLANA ? "SOL" : "BACH";
   };
 
   const createOptimalSwapTransactionPayload = (
@@ -276,7 +271,8 @@ export default function SwapModal({
   };
 
   const getTokenIcon = (token: "SOL" | "BACH") => {
-    return token === "SOL" ? <SolanaIcon size={20} /> : <BachIcon size={20} />;
+    const id = token === "SOL" ? SOLANA : BACH_TOKEN;
+    return <AssetIcon id={id} size={20} />;
   };
 
   return (

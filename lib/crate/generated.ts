@@ -110,21 +110,63 @@ export interface OnboardingCreateWallet {
   keypair: SolanaWallet;
 }
 
+export const SOLANA = "So11111111111111111111111111111111111111112";
+
+export const SOL_DECIMALS = 9;
+
+export const BACH_TOKEN = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
+
+export const BACH_DECIMALS = 12;
+
+export const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+
+export const USDT = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
+
+export const USDG = "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH";
+
+export const EURC = "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr";
+
+export const JUPITER = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
+
+export const MEW = "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5";
+
+export const PAYPAY_USD = "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo";
+
+export const BONK = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
+
+export const USDS = "USDSwr9ApdHk5bvJKMjzff41FfuX8bSxdKcR81vTwcA";
+
+export const OFFICIAL_TRUMP = "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN";
+
+export const COINBASE_WRAPPED_BTC = "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij";
+
+export const MELANIA_MEME = "FUAfBo2jgks6gB4Z4LfZkqSZgzNucisEHqnNebaRxM1P";
+
+export const JITO_STAKED_SOL = "J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn";
+
+export const ZBTC = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
+
+export const USD1 = "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB";
+
 /** The Stable Foundation */
 export const THE_STABLE_FOUNDATION_ADDRESS = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW27rLDtfU8y5";
 
 export const THE_STABLE_FOUNDATION_TREASURY_ADDRESS = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
 
-export const BACH_MINT_ACCOUNT = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
-
-export const BACH_DECIMALS = 12;
-
-/** Solana */
-export const SOLANA_MINT_ACCOUNT = "So11111111111111111111111111111111111111112";
-
-export const SOL_DECIMALS = 9;
-
 export const SPL_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+
+export interface Asset {
+  id: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  logo_url: string;
+}
+
+export interface AssetBalance {
+  id: string;
+  balance: number;
+}
 
 export interface SwapInfo {
   ammKey: string;

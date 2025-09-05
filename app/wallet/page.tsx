@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import LoadingCard from "@/lib/components/loading-card";
@@ -13,11 +14,11 @@ import {
 import { debug } from "@tauri-apps/plugin-log";
 import { useRouter } from "next/navigation";
 import { useAppLock } from "@/lib/context/app-lock-context";
-import WalletCard from "./components/wallet-card";
-import ActivityCard from "./components/activity_card";
+import WalletCard from "./_components/wallet-card";
+import ActivityCard from "./_components/activity_card";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import ActiveKeypairSelectionModal from "./components/active-keypair-selection";
+import ActiveKeypairSelectionModal from "./_components/active-keypair-selection";
 import { SET_ACTIVE_KEYPAIR } from "@/lib/commands";
 import PageTitleBar from "@/lib/components/page-title-bar";
 import { redirect } from "next/navigation";

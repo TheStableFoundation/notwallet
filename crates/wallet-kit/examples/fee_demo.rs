@@ -175,7 +175,7 @@ async fn demo_cost_estimation() {
 
     // SOL transaction cost estimation
     println!("SOL Transaction Cost Estimation:");
-    match estimate_sol_transaction_cost(rpc_url.clone(), 10.0).await {
+    match estimate_sol_transaction_cost(10.0).await {
         Ok(estimate) => {
             println!("  Transaction: 10.0 SOL");
             println!("  Fee Amount: {} SOL", estimate.fee_amount);

@@ -1,12 +1,14 @@
-use core::fmt;
-use serde::{Deserialize, Serialize};
-use serde_repr::{Deserialize_repr, Serialize_repr};
-use std::{
-    error::Error,
-    fmt::{Display, Formatter},
+use {
+    core::fmt,
+    serde::{Deserialize, Serialize},
+    serde_repr::{Deserialize_repr, Serialize_repr},
+    std::{
+        error::Error,
+        fmt::{Display, Formatter},
+    },
+    strum_macros::EnumIter,
+    tsync::tsync,
 };
-use strum_macros::EnumIter;
-use tsync::tsync;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(untagged)]
@@ -30,6 +32,9 @@ pub enum ErrorCode {
     Unknown = 0,
     ParseError = 1,
     NetworkError = 2,
+    // Move these to wallet-kit.
+    BalanceError = 1000,
+    InvalidPubkey = 1001,
 }
 
 impl Display for ErrorCode {

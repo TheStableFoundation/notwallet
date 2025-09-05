@@ -11,9 +11,12 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { invoke } from "@tauri-apps/api/core";
 import { GET_BACH_BALANCE } from "@/lib/commands";
 import { debug } from "@tauri-apps/plugin-log";
-import { THE_STABLE_FOUNDATION_ADDRESS } from "@/lib/crate/generated";
+import {
+  BACH_TOKEN,
+  THE_STABLE_FOUNDATION_ADDRESS,
+} from "@/lib/crate/generated";
 import { openExplorer } from "@/lib/helper";
-import { BachIcon } from "@/lib/components/token-icons";
+import { AssetIcon } from "@/lib/components/token-icons";
 
 enum LoadingState {
   Loading,
@@ -172,7 +175,7 @@ export default function DAOInfoCard() {
               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
             }}
           >
-            <BachIcon size={28} />
+            <AssetIcon id={BACH_TOKEN} size={28} />
           </Box>
           <Box sx={{ textAlign: "center" }}>
             <Typography

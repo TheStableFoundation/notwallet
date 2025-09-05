@@ -1,4 +1,6 @@
 pub(crate) mod check_pubkey;
+pub(crate) mod command_balance;
+pub(crate) mod command_other_assets_balance;
 pub(crate) mod commands;
 pub(crate) mod import_wallet;
 pub(crate) mod set_active_keypair;

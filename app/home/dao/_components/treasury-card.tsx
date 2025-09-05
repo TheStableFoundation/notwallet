@@ -14,9 +14,13 @@ import {
   GET_TREASURY_SOL_BALANCE,
 } from "@/lib/commands";
 import { debug } from "@tauri-apps/plugin-log";
-import { THE_STABLE_FOUNDATION_TREASURY_ADDRESS } from "@/lib/crate/generated";
+import {
+  BACH_TOKEN,
+  SOLANA,
+  THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
+} from "@/lib/crate/generated";
 import { openExplorer } from "@/lib/helper";
-import { SolanaIcon, BachIcon } from "@/lib/components/token-icons";
+import { AssetIcon } from "@/lib/components/token-icons";
 
 enum LoadingState {
   Loading,
@@ -183,7 +187,7 @@ export default function TreasuryCard() {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
               }}
             >
-              <BachIcon size={28} />
+              <AssetIcon id={BACH_TOKEN} size={28} />
             </Box>
             <Box sx={{ textAlign: "center" }}>
               <Typography
@@ -220,7 +224,7 @@ export default function TreasuryCard() {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
               }}
             >
-              <SolanaIcon size={28} />
+              <AssetIcon id={SOLANA} size={28} />
             </Box>
             <Box sx={{ textAlign: "center" }}>
               <Typography

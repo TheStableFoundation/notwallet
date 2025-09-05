@@ -6,38 +6,17 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import LanguageIcon from "@mui/icons-material/Language";
-import ForumIcon from "@mui/icons-material/Forum";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import Image from "next/image";
 
 const links = [
   {
-    title: "GitHub",
-    icon: <GitHubIcon />,
-    url: "https://github.com/TheStableFoundation",
-  },
-  {
-    title: "Discord",
-    icon: <ForumIcon />,
-    url: "https://discord.gg/TaqewTFBmb",
-  },
-  {
-    title: "X",
+    title: "The Stable Foundation",
     icon: <LanguageIcon />,
-    url: "https://x.com/STBLfoundation",
-  },
-  {
-    title: "Website",
-    icon: <LanguageIcon />,
-    url: "https://bach.money",
-  },
-  {
-    title: "Telegram",
-    icon: <ForumIcon />,
-    url: "https://t.me/thestablefoundation",
+    url: "https://thestablefoundation.org/",
   },
 ];
 
@@ -90,7 +69,7 @@ export default function AboutPage() {
                 overflow: "hidden",
               }}
             >
-              <img
+              <Image
                 src="/images/app-icon-v4.svg"
                 alt="NotWallet App Icon"
                 style={{
@@ -110,18 +89,7 @@ export default function AboutPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              NotWallet
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 500,
-                color: "#8B5CF6",
-                mb: 3,
-              }}
-            >
-              A Solana non-custodial crypto wallet and more.
+              NotWallet Crypto
             </Typography>
           </Box>
 

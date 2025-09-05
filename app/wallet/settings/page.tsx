@@ -4,26 +4,27 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import WalletSettingsSeedPhraseModal from "../components/wallet-settings-seed-phrase-modal";
+import WalletSettingsSeedPhraseModal from "./_components/wallet-settings-seed-phrase-modal";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import SettingListItem from "./_components/setting-list-item";
+import DestroyWalletsCard from "./_components/destroy-wallets-card";
 
 export default function WalletSettingsPage() {
   const router = useRouter();
   const [showSeedPhraseModal, setShowSeedPhraseModal] = React.useState(false);
 
   const handleClick = async (
-    type: "addWallet" | "showSeedPhrase" | "importSeedPhrase",
+    type:
+      | "addWallet"
+      | "showSeedPhrase"
+      | "importSeedPhrase"
+      | "destroyWallets",
   ) => {
     await selectionFeedback();
     if (type === "addWallet") {
@@ -65,78 +66,6 @@ export default function WalletSettingsPage() {
     },
   ];
 
-  const renderListItem = (item: any, isLast: boolean = false) => (
-    <React.Fragment key={item.id}>
-      <ListItem
-        sx={{
-          px: 0,
-          py: 2,
-          cursor: "pointer",
-          borderRadius: "12px",
-          mx: 2,
-          mb: 1,
-          transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-          "&:hover": {
-            bgcolor: "rgba(139, 92, 246, 0.04)",
-            transform: "scale(1.01)",
-          },
-          "&:active": {
-            transform: "scale(0.99)",
-          },
-        }}
-        onClick={item.action}
-        component="li"
-        disablePadding
-      >
-        <ListItemIcon
-          sx={{
-            color: "#8B5CF6",
-            minWidth: 48,
-            ml: 2,
-          }}
-        >
-          {item.icon}
-        </ListItemIcon>
-        <ListItemText
-          primary={item.label}
-          secondary={item.description}
-          primaryTypographyProps={{
-            sx: {
-              fontSize: "16px",
-              fontWeight: 500,
-              color: "#1F2937",
-              letterSpacing: "-0.01em",
-              mb: 0.25,
-            },
-          }}
-          secondaryTypographyProps={{
-            sx: {
-              fontSize: "14px",
-              color: "#6B7280",
-            },
-          }}
-        />
-        {item.hasChevron && (
-          <ChevronRightIcon
-            sx={{
-              color: "#9CA3AF",
-              mr: 4,
-              fontSize: "20px",
-            }}
-          />
-        )}
-      </ListItem>
-      {!isLast && (
-        <Divider
-          sx={{
-            mx: 6,
-            borderColor: "rgba(139, 92, 246, 0.08)",
-          }}
-        />
-      )}
-    </React.Fragment>
-  );
-
   return (
     <Box
       sx={{
@@ -151,6 +80,43 @@ export default function WalletSettingsPage() {
     >
       <PageChildrenTitleBar title="Wallet Settings" />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
+        {/* Security Notice */}
+        <Box
+          sx={{
+            textAlign: "center",
+            mb: 4,
+            px: 2,
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{
+              fontSize: "14px",
+              color: "#6B7280",
+              lineHeight: 1.6,
+              bgcolor: "rgba(139, 92, 246, 0.04)",
+              border: "1px solid rgba(139, 92, 246, 0.08)",
+              borderRadius: "12px",
+              p: 3,
+            }}
+          >
+            🔒 Your seed phrase is the key to your wallet. Keep it secure and
+            never share it with anyone.
+            <br />
+            <Box
+              component="span"
+              sx={{
+                color: "#8B5CF6",
+                fontWeight: 500,
+                mt: 1,
+                display: "block",
+              }}
+            >
+              Store it safely offline
+            </Box>
+          </Typography>
+        </Box>
+
         {/* Wallet Management Section */}
         <Card
           sx={{
@@ -179,7 +145,7 @@ export default function WalletSettingsPage() {
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
             {walletItems.map((item, index) =>
-              renderListItem(item, index === walletItems.length - 1),
+              SettingListItem(item, index === walletItems.length - 1),
             )}
           </List>
         </Card>
@@ -212,49 +178,12 @@ export default function WalletSettingsPage() {
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
             {importItems.map((item, index) =>
-              renderListItem(item, index === importItems.length - 1),
+              SettingListItem(item, index === importItems.length - 1),
             )}
           </List>
         </Card>
-
-        {/* Security Notice */}
-        <Box
-          sx={{
-            textAlign: "center",
-            mt: 4,
-            px: 2,
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: "14px",
-              color: "#6B7280",
-              lineHeight: 1.6,
-              bgcolor: "rgba(139, 92, 246, 0.04)",
-              border: "1px solid rgba(139, 92, 246, 0.08)",
-              borderRadius: "12px",
-              p: 3,
-            }}
-          >
-            🔒 Your seed phrase is the key to your wallet. Keep it secure and
-            never share it with anyone.
-            <br />
-            <Box
-              component="span"
-              sx={{
-                color: "#8B5CF6",
-                fontWeight: 500,
-                mt: 1,
-                display: "block",
-              }}
-            >
-              Store it safely offline
-            </Box>
-          </Typography>
-        </Box>
+        <DestroyWalletsCard />
       </Box>
-
       <WalletSettingsSeedPhraseModal
         open={showSeedPhraseModal}
         onClose={() => setShowSeedPhraseModal(false)}

@@ -1,6 +1,8 @@
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use tsync::tsync;
+use {
+    serde::{Deserialize, Serialize},
+    std::collections::HashMap,
+    tsync::tsync,
+};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[tsync]
