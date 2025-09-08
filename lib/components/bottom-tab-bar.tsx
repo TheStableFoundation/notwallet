@@ -9,38 +9,52 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { usePathname, useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { platform } from "@tauri-apps/plugin-os";
+import { useI18n } from "@/lib/i18n/provider";
 
 export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
   const pathname = usePathname();
   const router = useRouter();
-  let value = 0;
-  if (
-    pathname === "/wallet" ||
-    pathname === "/wallet/token" ||
-    pathname === "/wallet/settings" ||
-    pathname === "/wallet/buy" ||
-    pathname === "/wallet/buy/onramper" ||
-    pathname === "/wallet/buy/stripe" ||
-    pathname === "/wallet/create-new-wallet" ||
-    pathname === "/wallet/import" ||
-    pathname.startsWith("/wallet/onboarding")
-  )
-    value = 1;
-  else if (
-    pathname === "/settings" ||
-    pathname === "/settings/about" ||
-    pathname === "/settings/app-info" ||
-    pathname === "/settings/app-preferences"
-  )
-    value = 2;
-  else if (
-    pathname === "/home" ||
-    pathname.startsWith("/home/activity") ||
-    pathname.startsWith("/home/dao") ||
-    pathname.startsWith("/home/learn")
-  )
-    value = 0;
+  const { t } = useI18n();
+
+  // Determine active tab based on pathname
+  const getActiveTab = () => {
+    if (
+      pathname === "/wallet" ||
+      pathname === "/wallet/token" ||
+      pathname === "/wallet/settings" ||
+      pathname === "/wallet/buy" ||
+      pathname === "/wallet/buy/onramper" ||
+      pathname === "/wallet/buy/stripe" ||
+      pathname === "/wallet/create-new-wallet" ||
+      pathname === "/wallet/import" ||
+      pathname.startsWith("/wallet/onboarding") ||
+      pathname.startsWith("/wallet/")
+    ) {
+      return 1; // Wallet tab
+    } else if (
+      pathname === "/settings" ||
+      pathname === "/settings/about" ||
+      pathname === "/settings/app-info" ||
+      pathname === "/settings/app-preferences" ||
+      pathname.startsWith("/settings/")
+    ) {
+      return 2; // Settings tab
+    } else if (
+      pathname === "/home" ||
+      pathname.startsWith("/home/activity") ||
+      pathname.startsWith("/home/dao") ||
+      pathname.startsWith("/home/learn") ||
+      pathname.startsWith("/home/meme") ||
+      pathname.startsWith("/home/")
+    ) {
+      return 0; // Home tab
+    } else {
+      // Default to home for any unmatched paths
+      return 0;
+    }
+  };
+
+  const value = getActiveTab();
 
   const handleChange = async (_: React.SyntheticEvent, newValue: number) => {
     try {
@@ -79,7 +93,7 @@ export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
         }}
       >
         <BottomNavigationAction
-          label="Home"
+          label={t("home.title")}
           icon={<HomeIcon />}
           sx={{
             color: value === 0 ? "#AD5AD7" : undefined,
@@ -87,7 +101,7 @@ export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
           }}
         />
         <BottomNavigationAction
-          label="Wallet"
+          label={t("wallet.title")}
           icon={<AccountBalanceWalletIcon />}
           sx={{
             color: value === 1 ? "#AD5AD7" : undefined,
@@ -95,7 +109,7 @@ export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
           }}
         />
         <BottomNavigationAction
-          label="Settings"
+          label={t("common.settings")}
           icon={<SettingsIcon />}
           sx={{
             color: value === 2 ? "#AD5AD7" : undefined,
