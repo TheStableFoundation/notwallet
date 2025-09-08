@@ -110,13 +110,6 @@ export default function SettingsPage() {
       action: () => handleClick("appInfo"),
       hasChevron: true,
     },
-    {
-      id: "languagePreferences",
-      label: t("language.language"),
-      icon: <LanguageIcon />,
-      action: () => handleClick("languagePreferences"),
-      hasChevron: true,
-    },
   ];
 
   const legalItems = [
