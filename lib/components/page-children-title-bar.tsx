@@ -8,9 +8,11 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useI18n } from "@/lib/i18n/provider";
 
 export default function PageChildrenTitleBar({ title }: { title: string }) {
   const router = useRouter();
+  const { t } = useI18n();
   const handleBack = async () => {
     await selectionFeedback();
     router.back();
@@ -50,7 +52,7 @@ export default function PageChildrenTitleBar({ title }: { title: string }) {
             },
           }}
         >
-          Back
+          {t("common.back")}
         </Button>
         <Typography
           variant="h5"

@@ -14,17 +14,28 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
+import LanguageIcon from "@mui/icons-material/Language";
 import { useColorScheme } from "@mui/material/styles";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import { useI18n } from "@/lib/i18n/provider";
+import type { Language } from "@/lib/i18n/provider";
 
 export default function AppPreferences() {
   const { mode, setMode } = useColorScheme();
+  const { t, language, setLanguage } = useI18n();
 
   const handleThemeChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     await selectionFeedback();
     setMode(event.target.value as "system" | "light" | "dark");
+  };
+
+  const handleLanguageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    await selectionFeedback();
+    await setLanguage(event.target.value as Language);
   };
 
   if (!mode) {
@@ -39,7 +50,7 @@ export default function AppPreferences() {
         }}
       >
         <Typography sx={{ color: "#6B7280" }}>
-          Loading preferences...
+          {t("common.loading")}...
         </Typography>
       </Box>
     );
@@ -57,7 +68,7 @@ export default function AppPreferences() {
         py: 4,
       }}
     >
-      <PageChildrenTitleBar title="Appearance" />
+      <PageChildrenTitleBar title={t("common.preferences")} />
 
       {/* Main Content Card */}
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
@@ -82,7 +93,7 @@ export default function AppPreferences() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Appearance
+              {t("common.preferences")}
             </Typography>
           </Box>
 
@@ -127,7 +138,7 @@ export default function AppPreferences() {
                       mb: 0.5,
                     }}
                   >
-                    Theme
+                    {t("common.theme")}
                   </Typography>
                   <Typography
                     sx={{
@@ -135,7 +146,7 @@ export default function AppPreferences() {
                       color: "#6B7280",
                     }}
                   >
-                    Choose your preferred appearance
+                    {t("common.chooseAppearance")}
                   </Typography>
                 </Box>
               </Box>
@@ -176,7 +187,7 @@ export default function AppPreferences() {
                               color: "#1F2937",
                             }}
                           >
-                            System
+                            {t("common.system")}
                           </Typography>
                           <Typography
                             sx={{
@@ -185,7 +196,7 @@ export default function AppPreferences() {
                               mt: 0.25,
                             }}
                           >
-                            Match your device settings
+                            {t("common.matchDevice")}
                           </Typography>
                         </Box>
                       }
@@ -226,7 +237,7 @@ export default function AppPreferences() {
                               color: "#1F2937",
                             }}
                           >
-                            Light
+                            {t("common.light")}
                           </Typography>
                           <Typography
                             sx={{
@@ -235,7 +246,7 @@ export default function AppPreferences() {
                               mt: 0.25,
                             }}
                           >
-                            Clean and bright interface
+                            {t("common.cleanBright")}
                           </Typography>
                         </Box>
                       }
@@ -276,7 +287,7 @@ export default function AppPreferences() {
                               color: "#1F2937",
                             }}
                           >
-                            Dark
+                            {t("common.dark")}
                           </Typography>
                           <Typography
                             sx={{
@@ -285,8 +296,200 @@ export default function AppPreferences() {
                               mt: 0.25,
                             }}
                           >
-                            Easy on the eyes
+                            {t("common.easyEyes")}
                           </Typography>
+                        </Box>
+                      }
+                      sx={{
+                        mx: 0,
+                        py: 1.5,
+                        px: 2,
+                        borderRadius: "12px",
+                        border: "1px solid transparent",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "rgba(139, 92, 246, 0.04)",
+                          border: "1px solid rgba(139, 92, 246, 0.1)",
+                        },
+                        "& .MuiFormControlLabel-label": {
+                          flex: 1,
+                        },
+                      }}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            </ListItem>
+
+            {/* Language Selection */}
+            <ListItem
+              sx={{
+                px: 0,
+                py: 3,
+                borderRadius: "12px",
+                mx: 2,
+                mb: 1,
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+              component="li"
+              disablePadding
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  mb: 2,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    color: "#8B5CF6",
+                    minWidth: 48,
+                    ml: 2,
+                  }}
+                >
+                  <LanguageIcon />
+                </ListItemIcon>
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 500,
+                      color: "#1F2937",
+                      letterSpacing: "-0.01em",
+                      mb: 0.5,
+                    }}
+                  >
+                    {t("language.language")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      color: "#6B7280",
+                    }}
+                  >
+                    {t("language.selectLanguage")}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  width: "100%",
+                  pl: 6,
+                  pr: 2,
+                }}
+              >
+                <FormControl component="fieldset" sx={{ width: "100%" }}>
+                  <RadioGroup
+                    aria-labelledby="language-selection"
+                    name="language-selection"
+                    value={language}
+                    onChange={handleLanguageChange}
+                    sx={{ gap: 1 }}
+                  >
+                    <FormControlLabel
+                      value="en"
+                      control={
+                        <Radio
+                          sx={{
+                            color: "#D1D5DB",
+                            "&.Mui-checked": {
+                              color: "#8B5CF6",
+                            },
+                          }}
+                        />
+                      }
+                      label={
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1.5,
+                          }}
+                        >
+                          <span style={{ fontSize: "16px" }}>🇺🇸</span>
+                          <Box>
+                            <Typography
+                              sx={{
+                                fontSize: "15px",
+                                fontWeight: 500,
+                                color: "#1F2937",
+                              }}
+                            >
+                              {t("language.english")}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: "13px",
+                                color: "#6B7280",
+                                mt: 0.25,
+                              }}
+                            >
+                              English
+                            </Typography>
+                          </Box>
+                        </Box>
+                      }
+                      sx={{
+                        mx: 0,
+                        py: 1.5,
+                        px: 2,
+                        borderRadius: "12px",
+                        border: "1px solid transparent",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "rgba(139, 92, 246, 0.04)",
+                          border: "1px solid rgba(139, 92, 246, 0.1)",
+                        },
+                        "& .MuiFormControlLabel-label": {
+                          flex: 1,
+                        },
+                      }}
+                    />
+                    <FormControlLabel
+                      value="id"
+                      control={
+                        <Radio
+                          sx={{
+                            color: "#D1D5DB",
+                            "&.Mui-checked": {
+                              color: "#8B5CF6",
+                            },
+                          }}
+                        />
+                      }
+                      label={
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1.5,
+                          }}
+                        >
+                          <span style={{ fontSize: "16px" }}>🇮🇩</span>
+                          <Box>
+                            <Typography
+                              sx={{
+                                fontSize: "15px",
+                                fontWeight: 500,
+                                color: "#1F2937",
+                              }}
+                            >
+                              {t("language.indonesian")}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: "13px",
+                                color: "#6B7280",
+                                mt: 0.25,
+                              }}
+                            >
+                              Bahasa Indonesia
+                            </Typography>
+                          </Box>
                         </Box>
                       }
                       sx={{
@@ -328,7 +531,7 @@ export default function AppPreferences() {
                 lineHeight: 1.5,
               }}
             >
-              Theme changes will apply immediately
+              {t("common.changesApplyImmediately")}
             </Typography>
           </Box>
         </Card>

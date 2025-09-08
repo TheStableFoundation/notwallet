@@ -14,8 +14,10 @@ import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import { useI18n } from "@/lib/i18n/provider";
 
 export default function AppInfoPage() {
+  const { t } = useI18n();
   const [version, setVersion] = React.useState<string | null>(null);
   const [installationId, setInstallationId] = React.useState<string | null>(
     null,
@@ -40,14 +42,14 @@ export default function AppInfoPage() {
   const appInfoItems = [
     {
       id: "version",
-      label: "Version",
-      value: version ? `${version}` : "Loading...",
+      label: t("appInfo.version"),
+      value: version ? `${version}` : t("appInfo.loading"),
       icon: <InfoOutlinedIcon />,
     },
     {
       id: "installationId",
-      label: "Installation ID",
-      value: installationId || "Loading...",
+      label: t("appInfo.installationId"),
+      value: installationId || t("appInfo.loading"),
       icon: <FingerprintIcon />,
     },
   ];
@@ -64,7 +66,7 @@ export default function AppInfoPage() {
         py: 4,
       }}
     >
-      <PageChildrenTitleBar title="App Info" />
+      <PageChildrenTitleBar title={t("appInfo.title")} />
 
       {/* Main Content Card */}
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
@@ -89,7 +91,7 @@ export default function AppInfoPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Application Information
+              {t("appInfo.applicationInformation")}
             </Typography>
           </Box>
 
@@ -169,7 +171,7 @@ export default function AppInfoPage() {
                 lineHeight: 1.5,
               }}
             >
-              This information helps with support and debugging
+              {t("appInfo.supportNote")}
             </Typography>
           </Box>
         </Card>

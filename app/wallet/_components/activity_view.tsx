@@ -8,12 +8,14 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { SolanaWallet } from "@/lib/crate/generated";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useI18n } from "@/lib/i18n/provider";
 
 interface ActivityViewProps {
   wallet: SolanaWallet;
 }
 
 export default function ActivityView({ wallet }: ActivityViewProps) {
+  const { t } = useI18n();
   const handleOpenSolscan = async () => {
     await selectionFeedback();
     const solscanUrl = `https://solscan.io/account/${wallet.pubkey}`;
@@ -27,12 +29,12 @@ export default function ActivityView({ wallet }: ActivityViewProps) {
         fontWeight="bold"
         sx={{ mb: 2, color: "#212529" }}
       >
-        Transaction History
+        {t("wallet.transactionHistory")}
       </Typography>
 
       <Box sx={{ textAlign: "center" }}>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          View your wallet activity and transaction history on Solscan
+          {t("wallet.viewWalletActivity")}
         </Typography>
 
         <Button
@@ -51,7 +53,7 @@ export default function ActivityView({ wallet }: ActivityViewProps) {
             },
           }}
         >
-          Open in Solscan
+          {t("wallet.openInSolscan")}
         </Button>
       </Box>
     </Box>

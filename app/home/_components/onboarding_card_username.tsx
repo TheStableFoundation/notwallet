@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { store } from "@/lib/store/store";
+import { useI18n } from "@/lib/i18n/provider";
 
 type OnboardingCardUsernameProps = {
   open: boolean;
@@ -18,6 +19,7 @@ export default function OnboardingCardUsername({
   open,
   onClose,
 }: OnboardingCardUsernameProps) {
+  const { t } = useI18n();
   const [username, setUsername] = React.useState("");
   const [usernameSaved, setUsernameSaved] = React.useState(false);
 
@@ -77,7 +79,7 @@ export default function OnboardingCardUsername({
             letterSpacing: 1,
           }}
         >
-          👤 Set Your Username
+          {t("home.setYourUsername")}
         </Typography>
         <Typography
           variant="subtitle1"
@@ -88,12 +90,12 @@ export default function OnboardingCardUsername({
             fontSize: "1.1rem",
           }}
         >
-          Choose a username to personalize your wallet.
+          {t("home.chooseUsernamePersonalize")}
         </Typography>
         <TextField
           fullWidth
           variant="outlined"
-          placeholder="Enter your username"
+          placeholder={t("home.enterYourUsername")}
           value={username}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setUsername(e.target.value)
@@ -150,7 +152,7 @@ export default function OnboardingCardUsername({
           onClick={handleSaveUsername}
           disabled={!username || usernameSaved}
         >
-          {usernameSaved ? "Saved!" : "Save Username"}
+          {usernameSaved ? t("home.saved") : t("home.saveUsername")}
         </Button>
         {usernameSaved && (
           <Typography
@@ -161,7 +163,7 @@ export default function OnboardingCardUsername({
               fontWeight: 500,
             }}
           >
-            Username saved successfully!
+            {t("home.usernameSavedSuccessfully")}
           </Typography>
         )}
       </Box>

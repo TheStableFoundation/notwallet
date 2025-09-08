@@ -2,6 +2,7 @@
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { AppLockProvider } from "@/lib/context/app-lock-context";
+import { I18nProvider } from "@/lib/i18n/provider";
 import React from "react";
 import LayoutWithMenuBar from "./_components/layout-with-menu-bar";
 import {
@@ -76,11 +77,13 @@ export default function RootLayout({
       <body>
         <ThemeProvider theme={nordicTheme} defaultMode="light">
           <CssBaseline />
-          <AppRouterCacheProvider>
-            <AppLockProvider>
-              <LayoutWithMenuBar>{children}</LayoutWithMenuBar>
-            </AppLockProvider>
-          </AppRouterCacheProvider>
+          <I18nProvider>
+            <AppRouterCacheProvider>
+              <AppLockProvider>
+                <LayoutWithMenuBar>{children}</LayoutWithMenuBar>
+              </AppLockProvider>
+            </AppRouterCacheProvider>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -11,16 +11,19 @@ import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 import Image from "next/image";
-
-const links = [
-  {
-    title: "The Stable Foundation",
-    icon: <LanguageIcon />,
-    url: "https://thestablefoundation.org/",
-  },
-];
+import { useI18n } from "@/lib/i18n/provider";
 
 export default function AboutPage() {
+  const { t } = useI18n();
+
+  const links = [
+    {
+      title: t("about.stableFoundation"),
+      icon: <LanguageIcon />,
+      url: "https://thestablefoundation.org/",
+    },
+  ];
+
   const handleExternal = async (url: string) => {
     await selectionFeedback();
     await openUrl(url);
@@ -38,7 +41,7 @@ export default function AboutPage() {
         py: 4,
       }}
     >
-      <PageChildrenTitleBar title="About" />
+      <PageChildrenTitleBar title={t("about.title")} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         <Card
           sx={{
@@ -72,11 +75,8 @@ export default function AboutPage() {
               <Image
                 src="/images/app-icon-v4.svg"
                 alt="NotWallet App Icon"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
+                width={80}
+                height={80}
               />
             </Box>
             <Typography
@@ -89,7 +89,7 @@ export default function AboutPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              NotWallet Crypto
+              {t("about.appName")}
             </Typography>
           </Box>
 
@@ -107,8 +107,7 @@ export default function AboutPage() {
                 textAlign: "center",
               }}
             >
-              A modern, community-owned, non-custodial open-source Solana wallet
-              app built for privacy, simplicity, and security.
+              {t("about.description")}
             </Typography>
 
             <Typography
@@ -120,7 +119,7 @@ export default function AboutPage() {
                 mb: 4,
               }}
             >
-              Developed and maintained by The Stable Foundation.
+              {t("about.developedBy")}
             </Typography>
 
             {/* Social Links */}
@@ -180,7 +179,7 @@ export default function AboutPage() {
                 fontWeight: 500,
               }}
             >
-              © {new Date().getFullYear()} The Stable Foundation
+              {t("about.copyright", { year: new Date().getFullYear() })}
             </Typography>
           </Box>
         </Card>

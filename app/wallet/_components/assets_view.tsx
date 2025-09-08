@@ -15,6 +15,7 @@ import { AssetIcon } from "@/lib/components/token-icons";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconButton from "@mui/material/IconButton";
 import { openUrl } from "@tauri-apps/plugin-opener";
+import { useI18n } from "@/lib/i18n/provider";
 
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import {
@@ -41,6 +42,7 @@ interface AssetsViewProps {
 }
 
 export default function AssetsView({ wallet }: AssetsViewProps) {
+  const { t } = useI18n();
   const [assets, setAssets] = React.useState<Asset[]>([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -144,7 +146,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
       {assets.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 4 }}>
           <Typography variant="body2" color="text.secondary">
-            No assets found in this wallet
+            {t("wallet.noAssetsFound")}
           </Typography>
         </Box>
       ) : (

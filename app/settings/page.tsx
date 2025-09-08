@@ -17,15 +17,18 @@ import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
+import LanguageIcon from "@mui/icons-material/Language";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import PageTitleBar from "@/lib/components/page-title-bar";
 import Confetti from "react-confetti";
+import { useI18n } from "@/lib/i18n/provider";
 
 export default function SettingsPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [footerClickCount, setFooterClickCount] = React.useState(0);
   const [showModal, setShowModal] = React.useState(false);
   const [showConfetti, setShowConfetti] = React.useState(false);
@@ -56,7 +59,8 @@ export default function SettingsPage() {
       | "privacyPolicy"
       | "termsOfService"
       | "appInfo"
-      | "appPreferences",
+      | "appPreferences"
+      | "languagePreferences",
   ) => {
     await selectionFeedback();
     if (type === "about") {
@@ -81,6 +85,8 @@ export default function SettingsPage() {
       router.push("/settings/app-info");
     } else if (type === "appPreferences") {
       router.push("/settings/app-preferences");
+    } else if (type === "languagePreferences") {
+      router.push("/settings/app-preferences");
     }
   };
 
@@ -92,16 +98,23 @@ export default function SettingsPage() {
   const settingsItems = [
     {
       id: "about",
-      label: "About",
+      label: t("common.about"),
       icon: <InfoOutlinedIcon />,
       action: () => handleClick("about"),
       hasChevron: true,
     },
     {
       id: "appInfo",
-      label: "App Info",
+      label: t("common.appInfo"),
       icon: <PhoneAndroidOutlinedIcon />,
       action: () => handleClick("appInfo"),
+      hasChevron: true,
+    },
+    {
+      id: "languagePreferences",
+      label: t("language.language"),
+      icon: <LanguageIcon />,
+      action: () => handleClick("languagePreferences"),
       hasChevron: true,
     },
   ];
@@ -109,21 +122,21 @@ export default function SettingsPage() {
   const legalItems = [
     {
       id: "termsOfService",
-      label: "Terms of Service",
+      label: t("common.termsOfService"),
       icon: <DescriptionOutlinedIcon />,
       action: () => handleClick("termsOfService"),
       hasChevron: true,
     },
     {
       id: "privacyPolicy",
-      label: "Privacy Policy",
+      label: t("common.privacyPolicy"),
       icon: <PrivacyTipOutlinedIcon />,
       action: () => handleClick("privacyPolicy"),
       hasChevron: true,
     },
     {
       id: "openSource",
-      label: "Open Source",
+      label: t("common.openSource"),
       icon: <CodeOutlinedIcon />,
       action: () => handleClick("openSource"),
       hasChevron: true,
@@ -206,7 +219,7 @@ export default function SettingsPage() {
         pb: 8,
       }}
     >
-      <PageTitleBar title="Settings" />
+      <PageTitleBar title={t("common.settings")} />
 
       <Box sx={{ width: "100%", maxWidth: 420, px: 2, mt: 2 }}>
         {/* App Settings Section */}
@@ -232,7 +245,7 @@ export default function SettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              App
+              {t("common.app")}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -265,7 +278,7 @@ export default function SettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Legal & Support
+              {t("common.legalSupport")}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>

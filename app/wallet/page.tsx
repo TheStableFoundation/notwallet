@@ -22,6 +22,7 @@ import ActiveKeypairSelectionModal from "./_components/active-keypair-selection"
 import { SET_ACTIVE_KEYPAIR } from "@/lib/commands";
 import PageTitleBar from "@/lib/components/page-title-bar";
 import { redirect } from "next/navigation";
+import { useI18n } from "@/lib/i18n/provider";
 
 enum State {
   Loading,
@@ -32,6 +33,7 @@ enum State {
 export default function WalletHome() {
   const { lock } = useAppLock();
   const router = useRouter();
+  const { t } = useI18n();
   const [wallet, setWallet] = React.useState<SolanaWallet | undefined>(
     undefined,
   );
@@ -124,7 +126,7 @@ export default function WalletHome() {
         alignItems: "center",
       }}
     >
-      <PageTitleBar title="Wallet" />
+      <PageTitleBar title={t("wallet.title")} />
       {state === State.Loading && <LoadingCard />}
       {state === State.Error && <ErrorCard />}
       {state === State.Loaded && wallet && (

@@ -14,9 +14,11 @@ import WalletSettingsSeedPhraseModal from "./_components/wallet-settings-seed-ph
 import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
 import SettingListItem from "./_components/setting-list-item";
 import DestroyWalletsCard from "./_components/destroy-wallets-card";
+import { useI18n } from "@/lib/i18n/provider";
 
 export default function WalletSettingsPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [showSeedPhraseModal, setShowSeedPhraseModal] = React.useState(false);
 
   const handleClick = async (
@@ -39,16 +41,16 @@ export default function WalletSettingsPage() {
   const walletItems = [
     {
       id: "addWallet",
-      label: "Add Wallet",
-      description: "Create a new wallet",
+      label: t("wallet.addWallet"),
+      description: t("wallet.createNew"),
       icon: <AddIcon />,
       action: () => handleClick("addWallet"),
       hasChevron: true,
     },
     {
       id: "showSeedPhrase",
-      label: "Show Seed Phrase",
-      description: "View your recovery phrase",
+      label: t("wallet.showSeedPhrase"),
+      description: t("wallet.viewRecoveryPhrase"),
       icon: <VisibilityOutlinedIcon />,
       action: () => handleClick("showSeedPhrase"),
       hasChevron: true,
@@ -58,8 +60,8 @@ export default function WalletSettingsPage() {
   const importItems = [
     {
       id: "importSeedPhrase",
-      label: "Import Seed Phrase",
-      description: "Import an existing wallet",
+      label: t("wallet.importSeedPhrase"),
+      description: t("wallet.importExisting"),
       icon: <FileDownloadOutlinedIcon />,
       action: () => handleClick("importSeedPhrase"),
       hasChevron: true,
@@ -78,7 +80,7 @@ export default function WalletSettingsPage() {
         pb: 8,
       }}
     >
-      <PageChildrenTitleBar title="Wallet Settings" />
+      <PageChildrenTitleBar title={t("wallet.settings")} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         {/* Security Notice */}
         <Box
@@ -100,8 +102,7 @@ export default function WalletSettingsPage() {
               p: 3,
             }}
           >
-            🔒 Your seed phrase is the key to your wallet. Keep it secure and
-            never share it with anyone.
+            {t("security.securityNotice")}
             <br />
             <Box
               component="span"
@@ -112,7 +113,7 @@ export default function WalletSettingsPage() {
                 display: "block",
               }}
             >
-              Store it safely offline
+              {t("security.storeOffline")}
             </Box>
           </Typography>
         </Box>
@@ -140,7 +141,7 @@ export default function WalletSettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Wallet Management
+              {t("wallet.management")}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -173,7 +174,7 @@ export default function WalletSettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Import & Recovery
+              {t("wallet.importRecovery")}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>

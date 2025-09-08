@@ -10,9 +10,11 @@ import { useRouter } from "next/navigation";
 import DestroyWalletsModal from "./destroy-wallets-modal";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import SettingListItem from "./setting-list-item";
+import { useI18n } from "@/lib/i18n/provider";
 
 export default function DestroyWalletsCard() {
   const router = useRouter();
+  const { t } = useI18n();
   const [showDestroyModal, setShowDestroyModal] = React.useState(false);
   const handleClick = async () => {
     await selectionFeedback();
@@ -22,8 +24,8 @@ export default function DestroyWalletsCard() {
   const dangerItems = [
     {
       id: "destroyWallets",
-      label: "Destroy All Wallets",
-      description: "Permanently delete all wallet data",
+      label: t("wallet.destroyWallets"),
+      description: t("wallet.destroyAllData"),
       icon: <DeleteForeverIcon />,
       action: () => handleClick(),
       hasChevron: true,
@@ -57,7 +59,7 @@ export default function DestroyWalletsCard() {
               letterSpacing: "-0.02em",
             }}
           >
-            Danger Zone
+            {t("common.dangerZone")}
           </Typography>
           <Typography
             variant="body2"
@@ -67,7 +69,7 @@ export default function DestroyWalletsCard() {
               mb: 1,
             }}
           >
-            Irreversible actions that will permanently delete your data
+            {t("common.irreversibleActions")}
           </Typography>
         </Box>
         <List sx={{ p: 0, pb: 1 }}>

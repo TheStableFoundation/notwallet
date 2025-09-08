@@ -27,6 +27,7 @@ import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import EditKeyPairModal from "./edit-keypair-modal";
 import { error } from "@tauri-apps/plugin-log";
+import { useI18n } from "@/lib/i18n/provider";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -40,9 +41,10 @@ export default function WalletCard({
   onSwitchKeypair,
 }: WalletCardProps) {
   const router = useRouter();
+  const { t } = useI18n();
   const [walletBalance, setWalletBalance] = React.useState<string>("-");
   const [walletUsername, setWalletUsername] = React.useState<string>(
-    wallet.username || "NowhereMan",
+    wallet.username || t("wallet.defaultUsername"),
   );
   const [sendModalOpen, setSendModalOpen] = React.useState<boolean>(false);
   const [swapModalOpen, setSwapModalOpen] = React.useState<boolean>(false);
@@ -54,8 +56,8 @@ export default function WalletCard({
 
   // Update walletUsername when wallet.username changes
   React.useEffect(() => {
-    setWalletUsername(wallet.username || "NowhereMan");
-  }, [wallet.username]);
+    setWalletUsername(wallet.username || t("wallet.defaultUsername"));
+  }, [wallet.username, t]);
 
   const handleWalletSettings = async () => {
     await selectionFeedback();
@@ -182,7 +184,7 @@ export default function WalletCard({
           </IconButton>
         </Stack>
         <Stack direction="row" spacing={1}>
-          <Tooltip title="Toggle Lock Wallet" arrow>
+          <Tooltip title={t("wallet.toggleLockWallet")} arrow>
             <IconButton
               size="small"
               sx={{
@@ -200,7 +202,7 @@ export default function WalletCard({
               <LockIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Wallet settings" arrow>
+          <Tooltip title={t("wallet.walletSettings")} arrow>
             <IconButton
               sx={{
                 color: "#9932CC",
@@ -238,7 +240,7 @@ export default function WalletCard({
               boxShadow: "0 1px 4px #9932CC11",
             }}
           >
-            <Tooltip title="Copy pubkey" arrow>
+            <Tooltip title={t("wallet.copyPubkey")} arrow>
               <Typography
                 variant="body2"
                 sx={{
@@ -263,7 +265,7 @@ export default function WalletCard({
                   : ""}
               </Typography>
             </Tooltip>
-            <Tooltip title="Switch keypair" arrow>
+            <Tooltip title={t("wallet.switchKeypair")} arrow>
               <IconButton
                 sx={{
                   color: "#9932CC",
@@ -404,7 +406,7 @@ export default function WalletCard({
           spacing={1}
           sx={{ position: "relative", zIndex: 1 }}
         >
-          <Tooltip title="Send">
+          <Tooltip title={t("finance.send")}>
             <IconButton
               sx={{
                 color: "#9932CC",
@@ -418,7 +420,7 @@ export default function WalletCard({
               <SendIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Swap">
+          <Tooltip title={t("finance.swap")}>
             <IconButton
               sx={{
                 color: "#9932CC",
@@ -469,7 +471,7 @@ export default function WalletCard({
           fullWidth
           onClick={onBuySol}
         >
-          Buy SOL
+          {t("wallet.buySol")}
         </Button>
         <Button
           variant="contained"
@@ -505,7 +507,7 @@ export default function WalletCard({
           fullWidth
           onClick={onSellCrypto}
         >
-          Sell
+          {t("wallet.sell")}
         </Button>
       </Stack>
 
