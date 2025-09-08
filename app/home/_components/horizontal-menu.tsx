@@ -8,6 +8,7 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SchoolIcon from "@mui/icons-material/School";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useI18n } from "@/lib/i18n/provider";
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -62,6 +63,7 @@ const MenuItem = ({ icon, label, onClick }: MenuItemProps) => (
 
 export default function HorizontalMenu() {
   const router = useRouter();
+  const { t } = useI18n();
 
   const handleDAO = async () => {
     await selectionFeedback();
@@ -81,12 +83,12 @@ export default function HorizontalMenu() {
   const menuItems = [
     {
       icon: <AccountBalanceIcon fontSize="medium" />,
-      label: "DAO",
+      label: t("home.dao"),
       onClick: handleDAO,
     },
     {
       icon: <SchoolIcon fontSize="medium" />,
-      label: "Learn",
+      label: t("home.learn"),
       onClick: handleLearn,
     },
     // Add more menu items here as needed
@@ -119,7 +121,7 @@ export default function HorizontalMenu() {
             textAlign: "center",
           }}
         >
-          Quick Actions
+          {t("home.quickActions")}
         </Typography>
         <Box
           sx={{

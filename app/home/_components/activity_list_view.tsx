@@ -20,6 +20,7 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { feed } from "./feed";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
+import { useI18n } from "@/lib/i18n/provider";
 
 enum ActivityState {
   Loading,
@@ -29,6 +30,7 @@ enum ActivityState {
 }
 
 export default function ActivityListView() {
+  const { t } = useI18n();
   const [state, setState] = useState<ActivityState>(ActivityState.Loading);
   const [showOnboardingCard, setShowOnboardingCard] = useState(false);
   const [activities, setActivities] = useState<ActivityItem[]>([]);
@@ -166,7 +168,7 @@ export default function ActivityListView() {
           fontSize: "1.1rem",
         }}
       >
-        Activity Feed
+        {t("home.activityFeed")}
       </Typography>
 
       {/* BACH Airdrop Banner */}
@@ -189,7 +191,7 @@ export default function ActivityListView() {
                 mr: 1,
               }}
             >
-              🪂 BACH Airdrop Live!
+              {t("home.bachAirdropLive")}
             </Typography>
           </Box>
           <Typography
@@ -200,8 +202,7 @@ export default function ActivityListView() {
               lineHeight: 1.5,
             }}
           >
-            Multiple ways to earn your BACH tokens! Complete tasks, contribute
-            to the music database, and participate in the ecosystem.
+            {t("home.airdropDescription")}
           </Typography>
           <Button
             onClick={async () => {
@@ -227,7 +228,7 @@ export default function ActivityListView() {
               },
             }}
           >
-            Claim Your Airdrop →
+            {t("home.claimYourAirdrop")}
           </Button>
         </CardContent>
       </Card>
