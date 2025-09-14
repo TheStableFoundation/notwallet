@@ -34,7 +34,6 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 solana-sdk = "2.3.1"
 tauri = { version = "2.0.0", features = [] }
-tauri-plugin-android-tv-check = "1"
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-haptics = "2"
 tauri-plugin-log = { version = "2", features = ["colored"] }
@@ -48,6 +47,9 @@ uuid = { version = "1", features = ["v4"] }
 
 # Local crates
 wallet_kit = { path = "./../crates/wallet-kit" }
+
+[target.'cfg(any(target_os = "android"))'.dependencies]
+tauri-plugin-android-tv-check = "1"
 
 [build-dependencies]
 tauri-build = { version = "2.0.0", features = [] }

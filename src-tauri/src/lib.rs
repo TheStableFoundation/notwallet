@@ -34,7 +34,6 @@ pub fn run() {
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_android_tv_check::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(
             tauri_plugin_log::Builder::default()
@@ -47,7 +46,14 @@ pub fn run() {
         )
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_haptics::init())
-        .setup(|app| setup(app))
+        .setup(|app| {
+            // Android-only plugin.
+            #[cfg(target_os = "android")]
+            {
+                app.handle().plugin(tauri_plugin_android_tv_check::init())?;
+            }
+            setup(app)
+        })
         .invoke_handler(tauri::generate_handler![
             onboarding_create_wallet,
             import_solana_wallet,

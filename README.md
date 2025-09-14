@@ -1,6 +1,21 @@
 # NotWallet
 
-Solana wallet and more. Do your own research. Use at your own risk.
+Solana non-custodial wallet and more 🔐
+
+**Under active development.**
+
+**Do your own research.**
+
+**Use at your own risk.**
+
+## Official Buils Support
+
+Below is non comprehensive list of officially supported builds. You can always build from source.
+
+- Tier 1: Android, macOS
+- Tier 2: iOS, Linux, Windows.
+- Experimental: watchOS, wearOS.
+- Planned: Garmin OS
 
 ## Recommended IDE Setup
 

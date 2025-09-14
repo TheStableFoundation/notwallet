@@ -2,9 +2,7 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": [
-    "main"
-  ],
+  "windows": ["main"],
   "permissions": [
     "core:default",
     "shell:allow-open",
@@ -17,7 +15,6 @@
     "haptics:allow-vibrate",
     "clipboard-manager:default",
     "clipboard-manager:allow-write-text",
-    "android-tv-check:default",
     "os:default"
   ]
 }
