@@ -1,17 +1,19 @@
-use crate::constants::{SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS};
-use crate::fee::TreasuryFeeManager;
-use log::{debug, info, warn};
-use solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter};
-use solana_sdk::{
-    program_pack::Pack, pubkey::Pubkey, signature::Keypair, signer::Signer, system_instruction,
-    transaction::Transaction,
+use {
+    crate::constants::{SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
+    crate::fee::TreasuryFeeManager,
+    log::{debug, info, warn},
+    solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter},
+    solana_sdk::{
+        program_pack::Pack, pubkey::Pubkey, signature::Keypair, signer::Signer, system_instruction,
+        transaction::Transaction,
+    },
+    spl_token::{
+        instruction as token_instruction,
+        state::{Account as TokenAccount, Mint},
+    },
+    std::str::FromStr,
+    thiserror::Error,
 };
-use spl_token::{
-    instruction as token_instruction,
-    state::{Account as TokenAccount, Mint},
-};
-use std::str::FromStr;
-use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum TransactionError {

@@ -1,18 +1,23 @@
-use crate::{
-    assets::{BACH_DECIMALS, SOLANA, SOL_DECIMALS},
-    constants::{
-        FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS,
+use {
+    crate::{
+        assets::{BACH_DECIMALS, SOLANA, SOL_DECIMALS},
+        constants::{
+            FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH,
+            PLATFORM_FEE_BPS,
+        },
+        models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
     },
-    models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
+    base64::{engine::general_purpose, Engine as _},
+    bincode,
+    log::debug,
+    network::{model::ErrorResponse, request},
+    reqwest::{header::CONTENT_TYPE, Client},
+    solana_client::rpc_client::RpcClient,
+    solana_sdk::{
+        signature::{Keypair, Signature},
+        transaction::VersionedTransaction,
+    },
 };
-use base64::{engine::general_purpose, Engine as _};
-use bincode;
-use log::debug;
-use network::{model::ErrorResponse, request};
-use reqwest::{header::CONTENT_TYPE, Client};
-use solana_client::rpc_client::RpcClient;
-use solana_sdk::signature::{Keypair, Signature};
-use solana_sdk::transaction::VersionedTransaction;
 
 /// Get a swap quote from Jupiter for exchanging tokens.
 ///

@@ -1,10 +1,12 @@
-use crate::constants::{LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS};
-use log::info;
-use serde::{Deserialize, Serialize};
-use solana_sdk::{pubkey::Pubkey, system_instruction};
-use spl_token::instruction as token_instruction;
-use std::str::FromStr;
-use thiserror::Error;
+use {
+    crate::constants::{LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
+    log::info,
+    serde::{Deserialize, Serialize},
+    solana_sdk::{pubkey::Pubkey, system_instruction},
+    spl_token::instruction as token_instruction,
+    std::str::FromStr,
+    thiserror::Error,
+};
 
 #[derive(Error, Debug)]
 pub enum FeeError {
