@@ -7,6 +7,7 @@ use {
         program_pack::Pack, pubkey::Pubkey, signature::Keypair, signer::Signer, system_instruction,
         transaction::Transaction,
     },
+    solana_system_interface::instruction,
     spl_token::{
         instruction as token_instruction,
         state::{Account as TokenAccount, Mint},
@@ -117,6 +118,16 @@ pub async fn create_transfer_ix(
         signature
     );
     Ok(signature.to_string())
+}
+
+/// Creates and sends a SOL transfer transaction with 0.25% fee to treasury
+pub async fn create_transfer_ix_v3(
+    rpc_url: String,
+    sender_keypair: Keypair,
+    from_pubkey: String,
+    to_pubkey: String,
+    amount: f64,
+) -> Result<String, TransactionError> {
 }
 
 /// Creates and sends an SPL token transfer transaction with 0.25% fee to treasury

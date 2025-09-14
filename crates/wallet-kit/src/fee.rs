@@ -2,7 +2,10 @@ use {
     crate::constants::{LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
     log::info,
     serde::{Deserialize, Serialize},
+    solana_address::Address,
+    solana_instruction::Instruction,
     solana_sdk::{pubkey::Pubkey, system_instruction},
+    solana_system_interface::instruction,
     spl_token::instruction as token_instruction,
     std::str::FromStr,
     thiserror::Error,
@@ -146,6 +149,16 @@ impl TreasuryFeeManager {
         })
     }
 
+    /// Get the treasury wallet public key
+    pub fn treasury_pubkey_v3() -> Result<Address, FeeError> {
+        Address::from_str(THE_STABLE_FOUNDATION_TREASURY_ADDRESS).map_err(|e| {
+            FeeError::TreasuryAddressError(format!(
+                "Invalid treasury address {}: {}",
+                THE_STABLE_FOUNDATION_TREASURY_ADDRESS, e
+            ))
+        })
+    }
+
     /// Calculate fee breakdown for a given amount
     pub fn calculate_fees(amount: f64, currency: String) -> Result<FeeBreakdown, FeeError> {
         FeeBreakdown::new(amount, currency)
@@ -160,6 +173,14 @@ impl TreasuryFeeManager {
         Ok(system_instruction::transfer(from, &treasury, fee_lamports))
     }
 
+    /// Create SOL fee transfer instruction v3
+    pub fn create_sol_fee_instruction_v3(
+        from: &Address,
+        fee_lamports: u64,
+    ) -> Result<Instruction, FeeError> {
+        let treasury = Self::treasury_pubkey_v3()?;
+        Ok(instruction::transfer(from, &treasury, fee_lamports))
+    }
     /// Create token fee transfer instruction
     pub fn create_token_fee_instruction(
         token_program: &Pubkey,
