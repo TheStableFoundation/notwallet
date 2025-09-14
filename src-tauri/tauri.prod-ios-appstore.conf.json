@@ -7,5 +7,11 @@
         "title": "NotWallet"
       }
     ]
+  },
+  "bundle": {
+    "iOS": {
+      "minimumSystemVersion": "13.0",
+      "developmentTeam": "your_team_id"
+    }
   }
 }
