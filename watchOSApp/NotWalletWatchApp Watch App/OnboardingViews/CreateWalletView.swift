@@ -18,13 +18,14 @@ struct CreateWalletView: View {
     var body: some View {
         switch viewModel.state {
         case .loading:
-            ProgressView("Crunching numbers...")
+            ProgressView("Crunching numbers")
                 .toolbar(content: {
                     /// Remove the (x) on watchOS 10
                     ToolbarItem(placement: .cancellationAction) {
-                       Button("", action: {}).opacity(0.0).disabled(true)
+                        Button("", action: {}).opacity(0.0).disabled(true)
                     }
-                 })
+                })
+                .frame(alignment: .center)
         case .idle:
             // Render a clear color and start the loading process
             // when the view first appears, which should make the
@@ -35,7 +36,7 @@ struct CreateWalletView: View {
                 }
             })
         case .failed(let error):
-            Text(error.localizedDescription)
+            Text(error.localizedDescription).frame(alignment: .center)
         case .loaded(let walletResponse):
             ScrollView {
                 VStack(spacing: 12) {
@@ -60,7 +61,9 @@ struct CreateWalletView: View {
                             viewModel.isAcceptedToc = newValue
                         }
 
-                    Button(action: { viewModel.shouldContinue = true }) {
+                    Button(action: {
+                        dismiss()
+                    }) {
                         Text("Continue")
                             .foregroundColor(.primary)
                             .padding(.vertical, 6)
@@ -78,27 +81,29 @@ struct CreateWalletView: View {
             .toolbar(content: {
                 /// Remove the (x) on watchOS 10
                 ToolbarItem(placement: .cancellationAction) {
-                   Button("", action: {}).opacity(0.0).disabled(true)
+                    Button("", action: {}).opacity(0.0).disabled(true)
                 }
-             })
+            })
         }
     }
 
     // MARK: - Private
-    
+
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject private var viewModel: ViewModel
 }
 
 extension CreateWalletView {
     final class ViewModel: ObservableObject {
-        
-        internal init(state: CreateWalletView.ViewModel.ViewState = ViewState.idle, isAcceptedToc: Bool = false, shouldContinue: Bool = false) {
+
+        internal init(
+            state: CreateWalletView.ViewModel.ViewState = ViewState.idle,
+            isAcceptedToc: Bool = false
+        ) {
             self.state = state
             self.isAcceptedToc = isAcceptedToc
-            self.shouldContinue = shouldContinue
         }
-        
-        
+
         enum ViewState {
             case idle
             case loading
@@ -108,7 +113,6 @@ extension CreateWalletView {
 
         @Published private(set) var state = ViewState.idle
         @Published var isAcceptedToc: Bool
-        @Published var shouldContinue: Bool
 
         @MainActor
         func initialize() async throws {
@@ -116,32 +120,56 @@ extension CreateWalletView {
             let wallet = try createWallet()
 
             // Append wallet
-            var keyPairs: [Wallet] =
-                if let data = userDefault.object(forKey: storage(key: .keyPairs)) as? Data,
-                    let keyPairs = try? JSONDecoder().decode([Wallet].self, from: data)
+            var keyPairs: [Wallet]
+                
+            if let data = userDefault.object(forKey: storage(key: .keyPairs)) as? Data,
+                    let _keyPairs = try? JSONDecoder().decode([Wallet].self, from: data)
                 {
-                    keyPairs
-                } else { [] }
+                    print("Found existing keyPairs: \(_keyPairs.count)")
+                    keyPairs = _keyPairs
+                } else {
+                    print("No existing keyPairs found, creating empty array")
+                    keyPairs = []
+                }
             keyPairs.append(wallet.wallet)
-            if let encoded = try? JSONEncoder().encode(keyPairs) {
+            print("Total keyPairs after append: \(keyPairs.count)")
+
+            do {
+                let encoded = try JSONEncoder().encode(keyPairs)
+                print("Successfully encoded keyPairs: \(encoded.count) bytes")
                 userDefault.set(encoded, forKey: storage(key: .keyPairs))
+                userDefault.synchronize()
+                print("Saved keyPairs to UserDefaults with key: \(storage(key: .keyPairs))")
+            } catch {
+                print("Failed to encode keyPairs: \(error)")
             }
 
             // Append seed to stored seeds
-            var seeds: [Seed] =
-                if let data = userDefault.object(forKey: storage(key: .seeds)) as? Data,
-                    let seeds = try? JSONDecoder().decode([Seed].self, from: data)
-                {
-                    seeds
-                } else { [] }
-            seeds.append(wallet.seed)
-
-            if let encoded = try? JSONEncoder().encode(seeds) {
-                userDefault.set(encoded, forKey: storage(key: .seeds))
+            var seeds: [Seed] = []
+            
+            if let data = userDefault.object(forKey: storage(key: .seeds)) as? Data,
+                let _seeds = try? JSONDecoder().decode([Seed].self, from: data)
+            {
+                seeds = _seeds
+            } else {
+                print("No existing seeds found, creating empty array")
+                seeds = []
             }
-            
+            seeds.append(wallet.seed)
+            print("Total seeds after append: \(seeds.count)")
+
+            do {
+                let encoded = try JSONEncoder().encode(seeds)
+                print("Successfully encoded seeds: \(encoded.count) bytes")
+                userDefault.set(encoded, forKey: storage(key: .seeds))
+                userDefault.synchronize()
+                print("Saved seeds to UserDefaults with key: \(storage(key: .seeds))")
+            } catch {
+                print("Failed to encode seeds: \(error)")
+            }
+
             try await Task.sleep(nanoseconds: 3_000_000_000)
-            
+
             state = .loaded(wallet)
         }
 
@@ -157,28 +185,44 @@ extension Wallet: Codable {
     }
 
     public init(from decoder: any Decoder) throws {
+        print("Will decode Wallet")
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let id = try container.decode(String.self, forKey: .id)
-        let username = try container.decode(String.self, forKey: .username)
-        let name = try container.decode(String.self, forKey: .name)
-        let account = try container.decode(UInt32.self, forKey: .account)
-        let pubkey = try container.decode(String.self, forKey: .pubkey)
-        let privkey = try container.decode(String.self, forKey: .privkey)
-        let seedId = try container.decode(String.self, forKey: .seedId)
-        self.init(
-            id: id, username: username, name: name, account: account, pubkey: pubkey,
-            privkey: privkey, seedId: seedId)
+        do {
+            let id = try container.decode(String.self, forKey: .id)
+            let username = try container.decodeIfPresent(String.self, forKey: .username)
+            let name = try container.decode(String.self, forKey: .name)
+            let account = try container.decode(UInt32.self, forKey: .account)
+            let pubkey = try container.decode(String.self, forKey: .pubkey)
+            let privkey = try container.decode(String.self, forKey: .privkey)
+            let seedId = try container.decode(String.self, forKey: .seedId)
+            print(
+                "Decoded Wallet: \(id), \(String(describing: username)), \(name), \(account), \(pubkey), \(privkey), \(seedId)"
+            )
+            self.init(
+                id: id, username: username, name: name, account: account, pubkey: pubkey,
+                privkey: privkey, seedId: seedId)
+        } catch {
+            print("Failed to decode Wallet: \(error)")
+            throw error
+        }
     }
 
     public func encode(to encoder: any Encoder) throws {
+        print("Will encode Wallet with id: \(id)")
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(username, forKey: .username)
-        try container.encode(name, forKey: .name)
-        try container.encode(account, forKey: .account)
-        try container.encode(pubkey, forKey: .pubkey)
-        try container.encode(privkey, forKey: .privkey)
-        try container.encode(seedId, forKey: .seedId)
+        do {
+            try container.encode(id, forKey: .id)
+            try container.encode(username, forKey: .username)
+            try container.encode(name, forKey: .name)
+            try container.encode(account, forKey: .account)
+            try container.encode(pubkey, forKey: .pubkey)
+            try container.encode(privkey, forKey: .privkey)
+            try container.encode(seedId, forKey: .seedId)
+            print("Successfully encoded Wallet")
+        } catch {
+            print("Failed to encode Wallet: \(error)")
+            throw error
+        }
     }
 }
 
@@ -187,17 +231,31 @@ extension Seed: Codable {
         case id, phrase, seedType
     }
     public init(from decoder: any Decoder) throws {
+        print("Will decode Seed")
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let id = try container.decode(String.self, forKey: .id)
-        let phrase = try container.decode(String.self, forKey: .phrase)
-        let seedType = try container.decode(SeedType.self, forKey: .seedType)
-        self.init(id: id, phrase: phrase, seedType: seedType)
+        do {
+            let id = try container.decode(String.self, forKey: .id)
+            let phrase = try container.decode(String.self, forKey: .phrase)
+            let seedType = try container.decode(SeedType.self, forKey: .seedType)
+            print("Decoded Seed with id: \(id)")
+            self.init(id: id, phrase: phrase, seedType: seedType)
+        } catch {
+            print("Failed to decode Seed: \(error)")
+            throw error
+        }
     }
     public func encode(to encoder: any Encoder) throws {
+        print("Will encode Seed with id: \(id)")
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(phrase, forKey: .phrase)
-        try container.encode(seedType, forKey: .seedType)
+        do {
+            try container.encode(id, forKey: .id)
+            try container.encode(phrase, forKey: .phrase)
+            try container.encode(seedType, forKey: .seedType)
+            print("Successfully encoded Seed")
+        } catch {
+            print("Failed to encode Seed: \(error)")
+            throw error
+        }
     }
 }
 

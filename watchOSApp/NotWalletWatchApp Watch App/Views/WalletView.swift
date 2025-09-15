@@ -10,6 +10,7 @@ import SwiftUI
 import WalletKitV3
 
 struct WalletView: View {
+    
     @State private var showTransactions = false
     @State private var showBachInfo = false
 
@@ -59,5 +60,5 @@ struct WalletView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(viewModel: .init())
 }
