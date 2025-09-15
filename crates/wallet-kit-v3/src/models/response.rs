@@ -1,4 +1,4 @@
-use crate::model::{Seed, Wallet};
+use crate::models::{seed::Seed, wallet::Wallet};
 
 #[derive(uniffi::Record)]
 pub struct CreateWalletResponse {

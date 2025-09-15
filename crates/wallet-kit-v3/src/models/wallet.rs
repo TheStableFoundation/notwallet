@@ -1,11 +1,3 @@
-use std::fmt::Display;
-
-#[derive(uniffi::Record)]
-pub struct KeyPair {
-    pub pubkey: String,
-    pub privkey: String,
-}
-
 #[derive(uniffi::Record)]
 pub struct Wallet {
     /// The unique identifier for the wallet, typically a UUID.
@@ -30,33 +22,4 @@ pub struct Wallet {
     pub privkey: String,
     /// The UUID of the seed that this keypair is derived from.
     pub seed_id: String,
-}
-
-#[derive(uniffi::Record)]
-pub struct Seed {
-    /// The UUID identifier of the seed.
-    pub id: String,
-    pub phrase: String,
-    pub seed_type: SeedType,
-}
-
-#[derive(uniffi::Enum)]
-pub enum SeedType {
-    Created { timestamp: String },
-    Imported { timestamp: String },
-}
-
-#[derive(uniffi::Error, Debug)]
-pub enum KeyPairError {
-    MnemonicError(String),
-    InvalidAddress(String),
-}
-
-impl Display for KeyPairError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            KeyPairError::InvalidAddress(addr) => write!(f, "Invalid address: {}", addr),
-            KeyPairError::MnemonicError(err) => write!(f, "Mnemonic error: {}", err),
-        }
-    }
 }
