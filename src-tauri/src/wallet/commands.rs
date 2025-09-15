@@ -1,25 +1,30 @@
 use {
-    crate::constants::{
-        address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL},
-        rpc::{rpc_url, USE_LOCAL_RPC},
-        store::{
-            store, STORE_ACTIVE_KEYPAIR, STORE_KEYPAIRS, STORE_PASSWORD, STORE_SEEDS, STORE_WALLET,
+    crate::{
+        constants::{
+            address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL},
+            rpc::{rpc_url, USE_LOCAL_RPC},
+            store::{
+                store, STORE_ACTIVE_KEYPAIR, STORE_KEYPAIRS, STORE_PASSWORD, STORE_SEEDS,
+                STORE_WALLET,
+            },
+        },
+        model::{
+            keypair::SolanaWallet,
+            seed::{Seed, SeedType},
+            wallet::OnboardingCreateWallet,
         },
     },
-    crate::model::keypair::SolanaWallet,
-    crate::model::seed::{Seed, SeedType},
-    crate::model::wallet::OnboardingCreateWallet,
     bip39::{Language, Mnemonic},
     chrono::Utc,
     constants::constants::SPL_TOKEN_PROGRAM_ID,
     log::{debug, error, info},
     network::model::{ErrorCode, ErrorResponse},
-    solana_sdk::signature::Signer,
+    solana_signer::Signer,
     tauri::{command, AppHandle},
     uuid::Uuid,
+    wallet_core::derive_keypair::derive_keypair_default,
     wallet_kit::{
         balance::{sol_balance, spl_balance},
-        derive_keypair::derive_keypair_default,
         token_info::token_info,
         transactions::{create_token_transfer_ix, create_transfer_ix},
     },

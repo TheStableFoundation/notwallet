@@ -45,9 +45,11 @@ tauri-plugin-store = "2"
 thiserror = "1.0"
 tsync = "2"
 uuid = { version = "1", features = ["v4"] }
+solana-signer = "3"
 
 # Local crates
 wallet_kit = { path = "./../crates/wallet-kit" }
+wallet_core = { path = "./../crates/wallet-core" }
 
 [target.'cfg(any(target_os = "android"))'.dependencies]
 tauri-plugin-android-tv-check = "1"

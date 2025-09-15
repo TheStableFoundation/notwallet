@@ -1,10 +1,8 @@
 use {
     bip39::Mnemonic,
     log::debug,
-    solana_sdk::{
-        derivation_path::DerivationPath,
-        signer::keypair::{keypair_from_seed_and_derivation_path, Keypair},
-    },
+    solana_derivation_path::DerivationPath,
+    solana_sdk::signer::keypair::{keypair_from_seed_and_derivation_path, Keypair},
     std::str::FromStr,
 };
 

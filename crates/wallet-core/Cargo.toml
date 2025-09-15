@@ -1,0 +1,16 @@
+[package]
+name = "wallet_core"
+version = "0.1.0"
+edition = "2021"
+description = "Wallet Core"
+license = "MIT"
+
+[lib]
+crate-type = ["lib", "cdylib", "staticlib"]
+name = "wallet_core"
+
+[dependencies]
+bip39 = { version = "2", features = ["rand"] }
+log = "0.4.20"
+solana-derivation-path = "3"
+solana-sdk = "3"
