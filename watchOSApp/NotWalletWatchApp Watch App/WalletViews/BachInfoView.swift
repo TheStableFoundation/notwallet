@@ -10,7 +10,7 @@ struct BachInfoView: View {
                 Text("€BACH")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.purple)
-                Text("Fixed supply: 12 million BACH")
+                Text("Fixed supply: 9.8 million BACH")
                     .font(.system(size: 12, weight: .regular, design: .rounded))
                     .foregroundColor(.secondary)
 
