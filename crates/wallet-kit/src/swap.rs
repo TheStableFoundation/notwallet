@@ -1,14 +1,13 @@
 use {
     crate::{
         assets::{BACH_DECIMALS, SOLANA, SOL_DECIMALS},
-        constants::{
-            FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH,
-            PLATFORM_FEE_BPS,
-        },
         models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
     },
     base64::{engine::general_purpose, Engine as _},
     bincode,
+    constants::constants::{
+        FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS,
+    },
     log::debug,
     network::{model::ErrorResponse, request},
     reqwest::{header::CONTENT_TYPE, Client},

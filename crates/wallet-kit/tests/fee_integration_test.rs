@@ -2,9 +2,11 @@
 //!
 //! These tests verify that the 0.25% fee system works correctly for both SOL and token transfers.
 
-use wallet_kit::{
-    constants::{LAMPORTS_PER_SOL, SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
-    fee::{FeeBreakdown, FeeConfig, TreasuryFeeManager, DEFAULT_FEE_PERCENTAGE},
+use {
+    constants::constants::{
+        LAMPORTS_PER_SOL, SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
+    },
+    wallet_kit::fee::{FeeBreakdown, FeeConfig, TreasuryFeeManager, DEFAULT_FEE_PERCENTAGE},
 };
 
 #[test]
@@ -513,15 +515,6 @@ fn test_fee_calculation_consistency_across_calls() {
 
     assert_eq!(breakdown1.fee_amount, expected_fee);
     assert_eq!(breakdown1.net_amount, expected_net);
-}
-
-#[bench]
-#[ignore] // Remove this line if you want to run benchmarks
-fn bench_fee_calculation_performance(b: &mut test::Bencher) {
-    b.iter(|| {
-        let breakdown = FeeBreakdown::new(100.0, "SOL".to_string()).unwrap();
-        test::black_box(breakdown);
-    });
 }
 
 #[test]
