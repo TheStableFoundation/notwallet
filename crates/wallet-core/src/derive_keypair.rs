@@ -11,7 +11,7 @@ use {
 pub fn derive_keypair(mnemonic_phrase: &str, account: u32, change: u32) -> Result<Keypair, String> {
     let mnemonic =
         Mnemonic::from_str(mnemonic_phrase).map_err(|e| format!("Invalid mnemonic: {:?}", e))?;
-    let seed = bip39::Mnemonic::to_seed(&mnemonic, "");
+    let seed = Mnemonic::to_seed(&mnemonic, "");
     let derivation_path = DerivationPath::new_bip44(Some(account), Some(change));
     debug!("Deriving keypair: {:?}", derivation_path);
     keypair_from_seed_and_derivation_path(&seed, Some(derivation_path))

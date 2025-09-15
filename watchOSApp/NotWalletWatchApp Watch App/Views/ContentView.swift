@@ -7,52 +7,49 @@
 
 import Combine
 import SwiftUI
+import WalletKitV3
 
 struct ContentView: View {
-    @State private var showTransactions = false
-    @State private var showBachInfo = false
+    @State private var showImport = false
+    @State private var showCreate = false
 
     var body: some View {
         VStack {
-            Text("€BACH")
+            Text("NotWallet")
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .foregroundColor(.purple)
-                .onTapGesture {
-                    showBachInfo = true
-                }
-            Text("Fixed supply: 10.8 million BACH")
-                .font(.system(size: 12, weight: .regular, design: .rounded))
-                .foregroundColor(.secondary)
-
-            PriceGraphView(prices: [])
-                .frame(height: 60)
-                .padding(.vertical, 8)
-
+            Text("Crypto")
+                .font(.system(size: 16, weight: .regular, design: .rounded))
+                .foregroundColor(.purple)
             Divider()
-            Text("Balance")
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                .foregroundColor(.secondary)
-            Button(action: { showTransactions = true }) {
-                MarqueeText(
-                    text: "10.624434723489 BACH",
-                    font: .system(size: 20, weight: .medium, design: .monospaced),
-                    leftFade: 8, rightFade: 8, startDelay: 1.5
-                )
+            Button(action: { showCreate = true }) {
+                Text("Create new")
                 .foregroundColor(.primary)
-                .padding(.bottom, 8)
+                .padding(.vertical, 8)
                 .frame(height: 28)
                 .clipShape(Rectangle())
                 .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.bordered)
             .frame(maxWidth: .infinity)
+            /*
+            Button(action: { showImport = true }) {
+                Text("Import")
+                .foregroundColor(.primary)
+                .padding(.vertical, 8)
+                .frame(height: 28)
+                .clipShape(Rectangle())
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.bordered)
+            .frame(maxWidth: .infinity)*/
         }
         .padding()
-        .sheet(isPresented: $showTransactions) {
-            TransactionListView()
+        .sheet(isPresented: $showImport) {
+            ImportWalletView()
         }
-        .sheet(isPresented: $showBachInfo) {
-            BachInfoView()
+        .sheet(isPresented: $showCreate) {
+            CreateWalletView(viewModel: .init())
         }
     }
 }
