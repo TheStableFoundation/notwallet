@@ -1,5 +1,5 @@
 use {
-    crate::constants::{LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
+    constants::constants::{LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
     log::info,
     serde::{Deserialize, Serialize},
     solana_address::Address,
