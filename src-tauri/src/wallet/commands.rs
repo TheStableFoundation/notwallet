@@ -11,6 +11,7 @@ use {
     crate::model::wallet::OnboardingCreateWallet,
     bip39::{Language, Mnemonic},
     chrono::Utc,
+    constants::constants::SPL_TOKEN_PROGRAM_ID,
     log::{debug, error, info},
     network::model::{ErrorCode, ErrorResponse},
     solana_sdk::signature::Signer,
@@ -18,7 +19,6 @@ use {
     uuid::Uuid,
     wallet_kit::{
         balance::{sol_balance, spl_balance},
-        constants::SPL_TOKEN_PROGRAM_ID,
         derive_keypair::derive_keypair_default,
         token_info::token_info,
         transactions::{create_token_transfer_ix, create_transfer_ix},

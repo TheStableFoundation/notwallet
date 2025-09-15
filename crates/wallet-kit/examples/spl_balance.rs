@@ -1,4 +1,4 @@
-use wallet_kit::{balance::spl_balance, constants::SPL_TOKEN_PROGRAM_ID};
+use {constants::constants::SPL_TOKEN_PROGRAM_ID, wallet_kit::balance::spl_balance};
 
 fn main() {
     let rpc_url = "http://localhost:8899/";

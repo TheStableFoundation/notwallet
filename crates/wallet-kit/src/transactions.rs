@@ -1,6 +1,6 @@
 use {
-    crate::constants::{SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
     crate::fee::TreasuryFeeManager,
+    constants::constants::{SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
     log::{debug, info, warn},
     solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter},
     solana_sdk::{
