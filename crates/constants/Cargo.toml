@@ -1,0 +1,13 @@
+[package]
+name = "constants"
+version = "0.1.0"
+edition = "2021"
+description = "Solana toolkit for Not Wallet"
+license = "MIT"
+
+[lib]
+crate-type = ["lib", "cdylib", "staticlib"]
+name = "constants"
+
+[dependencies]
+tsync = "2"

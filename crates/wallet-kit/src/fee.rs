@@ -1,5 +1,5 @@
 use {
-    crate::constants::{LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
+    constants::constants::{LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
     log::info,
     serde::{Deserialize, Serialize},
     solana_sdk::{pubkey::Pubkey, system_instruction},
@@ -299,7 +299,7 @@ impl FeeConfig {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::constants::SEMITONE_PER_BACH;
+    use constants::constants::SEMITONE_PER_BACH;
 
     #[test]
     fn test_fee_breakdown_creation() {
