@@ -1,7 +1,7 @@
 use {
     crate::{
         model::{KeyPair, KeyPairError, Seed, SeedType::Created, Wallet},
-        response::CreateWalletResponse,
+        models::response::CreateWalletResponse,
     },
     bs58::encode,
     chrono::Utc,
