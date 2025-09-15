@@ -1,6 +1,6 @@
 use uniffi::setup_scaffolding;
 
 pub(crate) mod commands;
-pub(crate) mod models;
+pub mod models;
 
 setup_scaffolding!();
