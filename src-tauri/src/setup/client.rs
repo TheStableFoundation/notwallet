@@ -1,7 +1,7 @@
 use {
     crate::{
-        constants::{network::API_BASE_URL, store::store},
-        model::client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
+        constants::store::store,
+        model::client::{ClientApp, ClientInfoPayload},
         network::client::send_client_info,
     },
     log::{error, info},

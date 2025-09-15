@@ -6,11 +6,11 @@ use {
     },
     chrono::Utc,
     serde_json::json,
-    solana_sdk::signer::Signer,
+    solana_signer::Signer,
     tauri::command,
     tauri::AppHandle,
     uuid::Uuid,
-    wallet_kit::derive_keypair::derive_keypair_default,
+    wallet_core::derive_keypair::derive_keypair_default,
 };
 
 #[command]
