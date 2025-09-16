@@ -199,7 +199,7 @@ extension Wallet: Codable {
             let privkey = try container.decode(String.self, forKey: .privkey)
             let seedId = try container.decode(String.self, forKey: .seedId)
             print(
-                "Decoded Wallet: \(id), \(String(describing: username)), \(name), \(account), \(pubkey), \(privkey), \(seedId)"
+                "Decoded Wallet: \(id), \(String(describing: username)), \(name), \(account), \(pubkey), \(seedId)"
             )
             self.init(
                 id: id, username: username, name: name, account: account, pubkey: pubkey,

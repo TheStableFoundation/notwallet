@@ -112,7 +112,7 @@ extension ContentView {
                             let _activeKeyPair = try JSONDecoder().decode(
                                 Wallet.self, from: activeData)
                             activeKeyPair = _activeKeyPair
-                            print("Successfully decoded active keypair: \(_activeKeyPair)")
+                            print("Successfully decoded active keypair")
                         } catch {
                             print("Failed to decode active keyPair: \(error)")
                         }
