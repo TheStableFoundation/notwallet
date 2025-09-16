@@ -43,7 +43,7 @@ struct CreateWalletView: View {
             Text(error.localizedDescription).frame(alignment: .center)
         case .loaded(let walletResponse):
             ScrollView {
-                VStack(spacing: 12) {
+                VStack(spacing: 8) {
                     Text("Seed Phrase")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(.purple)
@@ -69,7 +69,7 @@ struct CreateWalletView: View {
                         onCreateWalletDone()
                     }) {
                         Text("Continue")
-                            .foregroundColor(.primary)
+                            .foregroundColor(viewModel.isAcceptedToc ? .green : .gray)
                             .padding(.vertical, 6)
                             .frame(height: 18)
                             .clipShape(Rectangle())
@@ -80,7 +80,6 @@ struct CreateWalletView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .toggleStyle(.automatic)
-                .padding()
             }
             .toolbar(content: {
                 /// Remove the (x) on watchOS 10
@@ -172,7 +171,7 @@ extension CreateWalletView {
                 print("Failed to encode seeds: \(error)")
             }
 
-            try await Task.sleep(nanoseconds: 3_000_000_000)
+            try await Task.sleep(nanoseconds: 2_000_000_000)
 
             state = .loaded(wallet)
         }

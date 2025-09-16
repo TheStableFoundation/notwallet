@@ -6,7 +6,7 @@ struct BachInfoView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: 8) {
                 Text("€BACH")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.purple)
@@ -32,7 +32,6 @@ struct BachInfoView: View {
                 }
                 Divider()
             }
-            .padding()
         }
     }
 }

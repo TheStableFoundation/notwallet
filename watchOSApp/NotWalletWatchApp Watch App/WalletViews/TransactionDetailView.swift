@@ -16,7 +16,6 @@ struct TransactionDetailView: View {
                 .foregroundColor(.secondary)
             Spacer()
         }
-        .padding()
         .navigationTitle("Detail")
     }
 }

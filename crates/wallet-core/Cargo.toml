@@ -11,6 +11,7 @@ name = "wallet_core"
 
 [dependencies]
 bip39 = { version = "2", features = ["rand"] }
+bs58 = "0.5.0"
 log = "0.4.20"
 solana-derivation-path = "3"
 solana-sdk = "3"

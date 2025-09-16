@@ -38,21 +38,20 @@ struct OnboardingView: View {
             }
             .buttonStyle(.bordered)
             .frame(maxWidth: .infinity)
-            /*
+            
              Button(action: { viewModel.showImport = true }) {
-             Text("Import")
-             .foregroundColor(.primary)
-             .padding(.vertical, 8)
-             .frame(height: 28)
-             .clipShape(Rectangle())
-             .contentShape(Rectangle())
+                 Text("Import")
+                 .foregroundColor(.primary)
+                 .padding(.vertical, 8)
+                 .frame(height: 28)
+                 .clipShape(Rectangle())
+                 .contentShape(Rectangle())
              }
              .buttonStyle(.bordered)
-             .frame(maxWidth: .infinity)*/
+             .frame(maxWidth: .infinity)
         }
-        .padding()
         .sheet(isPresented: $viewModel.showImport) {
-            ImportWalletView()
+            ImportWalletView(viewModel: .init(onImportWalletDone: onCreateWalletDone))
         }
         .sheet(isPresented: $viewModel.showCreate) {
             CreateWalletView(viewModel: .init(), onCreateWalletDone: onCreateWalletDone)

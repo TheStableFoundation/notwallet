@@ -21,32 +21,35 @@ struct ConfirmResetWalletView: View {
 
     var body: some View {
         ScrollView {
-            Text("Are you sure?")
-                .font(.system(size: 32, weight: .bold, design: .rounded))
-                .foregroundColor(.purple)
-            Text("All your wallets and seed phrases will be removed permanently. Make sure you have backed up your wallets.")
-                .font(.system(size: 12, weight: .regular, design: .rounded))
-                .foregroundColor(.primary)
-
-         
-            Button(action: {
-                Task {
-                    try await viewModel.resetWallet()
-                    // Call the callback
-                    onResetWallet()
+            VStack(spacing: 8) {
+                Text("Are you sure?")
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.purple)
+                
+                Text("All your wallets and seed phrases will be removed permanently. Make sure you have backed up your wallets.")
+                    .font(.system(size: 12, weight: .regular, design: .rounded))
+                    .foregroundColor(.primary)
+                
+                Divider()
+                
+                Button(action: {
+                    Task {
+                        try await viewModel.resetWallet()
+                        // Call the callback
+                        onResetWallet()
+                    }
+                }) {
+                    Text("I understand")
+                        .foregroundColor(.red)
+                        .padding(.vertical, 6)
+                        .frame(height: 18)
+                        .clipShape(Rectangle())
+                        .contentShape(Rectangle())
                 }
-            }) {
-                Text("I understand")
-                    .foregroundColor(.red)
-                    .padding(.vertical, 6)
-                    .frame(height: 18)
-                    .clipShape(Rectangle())
-                    .contentShape(Rectangle())
+                .buttonStyle(.bordered)
+                .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.bordered)
-            .frame(maxWidth: .infinity)
         }
-        .padding()
     }
 
     // MARK: - Private

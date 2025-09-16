@@ -155,7 +155,6 @@ struct PriceGraphView_Previews: PreviewProvider {
 
             PriceGraphView(prices: [])
                 .frame(height: 100)
-                .padding()
         }
     }
 }

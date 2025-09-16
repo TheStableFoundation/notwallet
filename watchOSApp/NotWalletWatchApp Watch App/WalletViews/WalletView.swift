@@ -105,7 +105,6 @@ struct WalletView: View {
             .buttonStyle(.bordered)
             .frame(maxWidth: .infinity)
         }
-        .padding()
         .sheet(isPresented: $viewModel.showTransactions) {
             TransactionListView()
         }
@@ -156,6 +155,7 @@ extension WalletView {
                 let balance = try await WalletKitV3.walletBalance(network: .solanaTestnet, pubkey: activeKeyPair.pubkey)
                 state = .loaded(balance)
             } catch {
+                print(error)
                 state = .failed(error)
             }
         }
