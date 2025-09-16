@@ -22,9 +22,25 @@ struct WalletView: View {
 
     var body: some View {
         ScrollView {
-            Text(viewModel.walletBalance())
-                .font(.system(size: 32, weight: .bold, design: .rounded))
-                .foregroundColor(.purple)
+            switch viewModel.state {
+            case .loading:
+                ProgressView().frame(alignment: .center)
+            case .idle:
+                Color.clear.onAppear(perform: {
+                    Task {
+                         await viewModel.walletBalance()
+                    }
+                })
+            case .loaded(let balance):
+                Text(balance)
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.purple)
+            case .failed(_):
+                Text("N/A")
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.purple)
+            }
+            
             Text("Your active Solana wallet")
                 .font(.system(size: 12, weight: .regular, design: .rounded))
                 .foregroundColor(.secondary)
@@ -46,6 +62,7 @@ struct WalletView: View {
             .buttonStyle(.plain)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
+            
             Button(action: {
                 viewModel.showWalletInfo = true
             }) {
@@ -118,7 +135,7 @@ extension WalletView {
             case idle
             case loading
             case failed(Error)
-            case loaded(OnboardingState)
+            case loaded(String)
         }
         
         enum OnboardingState {
@@ -133,12 +150,13 @@ extension WalletView {
         @Published var confirmResetWallet = false
         
         @MainActor
-        func walletBalance() -> String {
+        func walletBalance() async {
             do {
-                let solBalance = try solBalance(network: .solanaTestnet, pubkey: activeKeyPair.pubkey)
-                return "$\(solBalance)"
+                state = .loading
+                let balance = try await WalletKitV3.walletBalance(network: .solanaTestnet, pubkey: activeKeyPair.pubkey)
+                state = .loaded(balance)
             } catch {
-                return "$0.00"
+                state = .failed(error)
             }
         }
     }
