@@ -4,17 +4,34 @@ use {
 };
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct TokenPrice {
-    #[serde(rename = "usdPrice")]
-    pub usd_price: f64,
+pub struct BirdeyePriceResponse {
+    pub data: BirdeyePriceData,
+    pub success: bool,
+}
 
-    #[serde(rename = "blockId")]
-    pub block_id: u64,
+impl BirdeyePriceResponse {
+    /// Check if the response is successful and has data
+    pub fn is_valid(&self) -> bool {
+        self.success
+    }
 
-    pub decimals: u8,
+    /// Get the USD price value if response is valid
+    pub fn get_usd_price(&self) -> Option<f64> {
+        if self.success {
+            Some(self.data.value)
+        } else {
+            None
+        }
+    }
 
-    #[serde(rename = "priceChange24h")]
-    pub price_change_24h: f64,
+    /// Convert to a Price struct
+    pub fn to_price(&self, symbol: String) -> Option<Price> {
+        if self.success {
+            Some(self.data.to_price(symbol))
+        } else {
+            None
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -35,47 +52,6 @@ pub struct BirdeyePriceData {
 
     #[serde(rename = "priceInNative")]
     pub price_in_native: f64,
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct BirdeyePriceResponse {
-    pub data: BirdeyePriceData,
-    pub success: bool,
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct PricesResponse {
-    #[serde(flatten)]
-    pub prices: HashMap<String, TokenPrice>,
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Price {
-    pub symbol: String,
-    pub price: f64,
-}
-
-impl TokenPrice {
-    /// Get the price change percentage as a formatted string
-    pub fn price_change_percentage(&self) -> String {
-        format!("{:.2}%", self.price_change_24h)
-    }
-
-    /// Check if the price has increased in the last 24 hours
-    pub fn is_price_up(&self) -> bool {
-        self.price_change_24h > 0.0
-    }
-
-    /// Get formatted USD price with appropriate decimal places
-    pub fn formatted_usd_price(&self) -> String {
-        if self.usd_price >= 1.0 {
-            format!("${:.2}", self.usd_price)
-        } else if self.usd_price >= 0.01 {
-            format!("${:.4}", self.usd_price)
-        } else {
-            format!("${:.6}", self.usd_price)
-        }
-    }
 }
 
 impl BirdeyePriceData {
@@ -109,27 +85,51 @@ impl BirdeyePriceData {
     }
 }
 
-impl BirdeyePriceResponse {
-    /// Check if the response is successful and has data
-    pub fn is_valid(&self) -> bool {
-        self.success
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Price {
+    pub symbol: String,
+    pub price: f64,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct TokenPrice {
+    #[serde(rename = "usdPrice")]
+    pub usd_price: f64,
+
+    #[serde(rename = "blockId")]
+    pub block_id: u64,
+
+    pub decimals: u8,
+
+    #[serde(rename = "priceChange24h")]
+    pub price_change_24h: f64,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PricesResponse {
+    #[serde(flatten)]
+    pub prices: HashMap<String, TokenPrice>,
+}
+
+impl TokenPrice {
+    /// Get the price change percentage as a formatted string
+    pub fn price_change_percentage(&self) -> String {
+        format!("{:.2}%", self.price_change_24h)
     }
 
-    /// Get the USD price value if response is valid
-    pub fn get_usd_price(&self) -> Option<f64> {
-        if self.success {
-            Some(self.data.value)
-        } else {
-            None
-        }
+    /// Check if the price has increased in the last 24 hours
+    pub fn is_price_up(&self) -> bool {
+        self.price_change_24h > 0.0
     }
 
-    /// Convert to a Price struct
-    pub fn to_price(&self, symbol: String) -> Option<Price> {
-        if self.success {
-            Some(self.data.to_price(symbol))
+    /// Get formatted USD price with appropriate decimal places
+    pub fn formatted_usd_price(&self) -> String {
+        if self.usd_price >= 1.0 {
+            format!("${:.2}", self.usd_price)
+        } else if self.usd_price >= 0.01 {
+            format!("${:.4}", self.usd_price)
         } else {
-            None
+            format!("${:.6}", self.usd_price)
         }
     }
 }

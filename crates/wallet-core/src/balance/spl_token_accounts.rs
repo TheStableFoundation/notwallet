@@ -1,21 +1,15 @@
 use {
-    crate::{
-        assets::{BACH_TOKEN, SOLANA},
-        models::{asset::AssetBalance, currency::FiatCurrency, price::BirdeyePriceResponse},
-        spl_token::{spl_token_accounts_for, spl_token_accounts_with_balance},
-    },
-    constants::constants::{
-        BIRDEYE_API_KEY, BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH, LAMPORTS_PER_SOL,
-        SPL_TOKEN_PROGRAM_ID, USER_AGENT,
-    },
     log::{debug, error},
-    network::{
-        model::{ErrorCode::BalanceError, ErrorResponse},
-        request,
+    network::model::{
+        ErrorCode::{InvalidPubkey, NetworkError},
+        ErrorResponse,
     },
-    reqwest::Client,
-    std::collections::HashMap,
-    wallet_core::balance::sol_balance::sol_balance as core_sol_balance,
+    serde::{Deserialize, Serialize},
+    solana_account_decoder::{parse_token::UiTokenAccount, UiAccountData},
+    solana_client::rpc_request::TokenAccountsFilter,
+    solana_rpc_client::rpc_client::RpcClient,
+    solana_sdk::pubkey::Pubkey,
+    std::str::FromStr,
 };
 
 pub(crate) fn spl_token_accounts(
@@ -83,7 +77,7 @@ struct TokenAccount {
 
 fn get_token_account(data: &UiAccountData) -> Option<UiTokenAccount> {
     let parsed_account = match data {
-        solana_account_decoder::UiAccountData::Json(parsed) => parsed,
+        UiAccountData::Json(parsed) => parsed,
         _ => {
             error!("Failed to parse account data - not in JSON format");
             return None;
