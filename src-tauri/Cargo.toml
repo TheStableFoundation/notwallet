@@ -1,6 +1,6 @@
 [package]
 name = "notwallet"
-version = "1.0.4"
+version = "1.0.5"
 description = "Solana non-custodial wallet, stable coin payment platform, and more 🔐"
 authors = ["info@bach.money"]
 edition = "2021"
@@ -48,6 +48,9 @@ uuid = { version = "1", features = ["v4"] }
 wallet_core = { path = "./../crates/wallet-core" }
 wallet_kit = { path = "./../crates/wallet-kit" }
 wallet_kit_v3 = { path = "./../crates/wallet-kit-v3" }
+
+[target.'cfg(any(target_os = "android"))'.dependencies]
+tauri-plugin-android-tv-check = "1"
 
 [target.'cfg(any(target_os = "android"))'.dependencies]
 tauri-plugin-android-tv-check = "1"
