@@ -11,7 +11,8 @@
     "tauri": "tauri",
     "publish-ios": "./scripts/publish-ios.sh \"$@\"",
     "publish-android": "./scripts/publish-android.sh",
-    "sync-types": "tsync -i src-tauri/src/ crates/wallet-kit/src/ -o lib/crate/generated.ts"
+    "sync-types": "tsync -i src-tauri/src/ crates/wallet-kit/src/ -o lib/crate/generated.ts",
+    "gim": "./scripts/generate-icon-mobile.sh"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
