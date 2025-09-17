@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import * as React from "react";
-import { check } from "@smbcloud/tauri-plugin-android-tv-check-api";
-import { info } from "@tauri-apps/plugin-log";
+import { checkIfAndroidTv } from "../helper";
 
 interface PageTitleBarProps {
   title: string;
@@ -12,9 +11,7 @@ export default function PageTitleBar({ title, leftAction }: PageTitleBarProps) {
   const [isAndroidTv, setIsAndroidTv] = React.useState(false);
 
   const init = async () => {
-    const checkResult = await check();
-    info(`Android TV: ${JSON.stringify(checkResult)}`);
-    setIsAndroidTv(checkResult.isAndroidTv);
+    setIsAndroidTv(await checkIfAndroidTv());
   };
 
   React.useEffect(() => {

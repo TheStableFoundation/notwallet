@@ -52,9 +52,6 @@ wallet_kit_v3 = { path = "./../crates/wallet-kit-v3" }
 [target.'cfg(any(target_os = "android"))'.dependencies]
 tauri-plugin-android-tv-check = "1"
 
-[target.'cfg(any(target_os = "android"))'.dependencies]
-tauri-plugin-android-tv-check = "1"
-
 [build-dependencies]
 tauri-build = { version = "2.0.0", features = [] }
 
