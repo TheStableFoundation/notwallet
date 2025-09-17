@@ -6,12 +6,25 @@ This guide covers the steps to release the [NotWallet Crypto Solana non-custodia
 
 Tauri uses Xcode to build iOS apps. Follow [Tauri guide for iOS app development](https://v2.tauri.app/start/prerequisites/#ios), [iOS app code signing](https://v2.tauri.app/distribute/sign/ios/), and [AppStore distribution guide](https://v2.tauri.app/distribute/app-store/#ios).
 
+We have two Tauri config files for debug and production apps. First step is to add your Apple developer account team ID in the `tauri.prod-ios-appstore.json` file.
+
+```json
+"bundle": {
+  "iOS": {
+    "minimumSystemVersion": "13.0",
+    "developmentTeam": "your_team_id"
+  }
+}
+```
+
+Then generate the Xcode project.
+
 ```bash
 $ rm -rf src-tauri/gen/apple
 $ cargo tauri ios init -c src-tauri/tauri.prod-ios-appstore.conf.json
 ```
 
-Then move the files in the `gen-override` folder to the `src-tauri/gen/apple` folder, if any.
+Then move the files in the `src-tauri/gen-override/apple` folder to the `src-tauri/gen/apple` folder, if any.
 
 ## Generate App Icons
 
@@ -37,27 +50,11 @@ $ cargo tauri icon assets/app-icon-v4-no-alpha.png
 
 ## Production Keys and Credentials
 
-There are several keys and credentials that you need for the app to be fully functional in the AppStore.
-
-### Apple Teams ID
-
-Apple developer account Teams ID in the `tauri.prod-ios-appstore.json` file.
-
-```json
-"bundle": {
-  "iOS": {
-    "minimumSystemVersion": "13.0",
-    "developmentTeam": "your_team_id"
-  }
-}
-```
-
-### Release Keys and Credentials
-
-Follow the [release keys and credentials for NotWallet Crypto guide](docs/release-keys-and-credentials.md).
-
+There are several keys and credentials that you need for the app to be fully functional in the AppStore. Follow the [release keys and credentials for NotWallet Crypto guide](docs/release-keys-and-credentials.md).
 
 ## Build
+
+Build the project for iOS AppStore.
 
 ```bash
 $ cargo tauri ios build --export-method app-store-connect -c src-tauri/tauri.prod-ios-appstore.conf.json
@@ -65,7 +62,7 @@ $ cargo tauri ios build --export-method app-store-connect -c src-tauri/tauri.pro
 
 ## Upload
 
-Upload using the following command:
+Upload the .ipa file using the following command:
 
 ```bash
 $ xcrun altool --upload-app --type ios --file src-tauri/gen/apple/build/arm64/NotWallet.ipa --apiKey your_api_key --apiIssuer your_api_issuer
