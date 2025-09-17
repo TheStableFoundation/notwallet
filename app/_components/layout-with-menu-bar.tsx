@@ -4,10 +4,8 @@ import { Container } from "@mui/material";
 import BottomTabBar from "@/lib/components/bottom-tab-bar";
 import { useAppLock } from "@/lib/context/app-lock-context";
 import React from "react";
-import { check } from "@smbcloud/tauri-plugin-android-tv-check-api";
-import { info } from "@tauri-apps/plugin-log";
 import AndroidTvLayout from "./android-tv-layout";
-import { platform } from "@tauri-apps/plugin-os";
+import { checkIfAndroidTv, checkIfMobileDevice } from "@/lib/helper";
 
 export default function LayoutWithMenuBar({
   children,
@@ -24,14 +22,8 @@ export default function LayoutWithMenuBar({
     // Shouldn't rely on locked status whether to show bottom tab bar
     // because we don't show it if a user need onboarding
 
-    const checkResult = await check();
-    info(`Android TV: ${JSON.stringify(checkResult)}`);
-    setIsAndroidTv(checkResult.isAndroidTv);
-    // Check if this is an iOS or Android mobile
-    if (!isAndroidTv) {
-      const platformName = platform();
-      setIsMobile(platformName === "ios" || platformName === "android");
-    }
+    setIsAndroidTv(await checkIfAndroidTv());
+    setIsMobile(await checkIfMobileDevice());
   };
 
   React.useEffect(() => {
@@ -51,9 +43,7 @@ export default function LayoutWithMenuBar({
       >
         {isAndroidTv ? <AndroidTvLayout>{children}</AndroidTvLayout> : children}
       </Container>
-      {initialized && !locked && !isAndroidTv && (
-        <BottomTabBar isMobile={isMobile} />
-      )}
+      {initialized && !locked && <BottomTabBar isMobile={isMobile} />}
     </>
   );
 }
