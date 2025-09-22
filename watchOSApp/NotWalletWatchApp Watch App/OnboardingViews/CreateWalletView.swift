@@ -44,20 +44,26 @@ struct CreateWalletView: View {
         case .loaded(let walletResponse):
             ScrollView {
                 VStack(spacing: 8) {
+                    
                     Text("Seed Phrase")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(.purple)
+                    
                     Text(walletResponse.seed.phrase)
+                        .padding(.horizontal, 8)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                         .foregroundColor(.primary)
+                        .multilineTextAlignment(.center)
 
                     Divider()
+                    
                     Text("I have written them down somewhere and fully responsible of my funds.")
-                        .font(.system(size: 12, weight: .regular, design: .rounded))
+                        .font(.system(size: 16, weight: .regular, design: .rounded))
                         .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
 
                     Toggle("I understand", isOn: $viewModel.isAcceptedToc)
-                        .font(.system(size: 12, weight: .regular, design: .rounded))
+                        .font(.system(size: 16, weight: .regular, design: .rounded))
                         .onChange(of: viewModel.isAcceptedToc) { newValue in
                             // Your action here
                             print("Toggle changed to \(newValue)")
@@ -179,123 +185,6 @@ extension CreateWalletView {
         // MARK: - Private
 
         private let userDefault = UserDefaults.standard
-    }
-}
-
-extension Wallet: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id, username, name, account, pubkey, privkey, seedId
-    }
-
-    public init(from decoder: any Decoder) throws {
-        print("Will decode Wallet")
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            let id = try container.decode(String.self, forKey: .id)
-            let username = try container.decodeIfPresent(String.self, forKey: .username)
-            let name = try container.decode(String.self, forKey: .name)
-            let account = try container.decode(UInt32.self, forKey: .account)
-            let pubkey = try container.decode(String.self, forKey: .pubkey)
-            let privkey = try container.decode(String.self, forKey: .privkey)
-            let seedId = try container.decode(String.self, forKey: .seedId)
-            print(
-                "Decoded Wallet: \(id), \(String(describing: username)), \(name), \(account), \(pubkey), \(seedId)"
-            )
-            self.init(
-                id: id, username: username, name: name, account: account, pubkey: pubkey,
-                privkey: privkey, seedId: seedId)
-        } catch {
-            print("Failed to decode Wallet: \(error)")
-            throw error
-        }
-    }
-
-    public func encode(to encoder: any Encoder) throws {
-        print("Will encode Wallet with id: \(id)")
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        do {
-            try container.encode(id, forKey: .id)
-            try container.encode(username, forKey: .username)
-            try container.encode(name, forKey: .name)
-            try container.encode(account, forKey: .account)
-            try container.encode(pubkey, forKey: .pubkey)
-            try container.encode(privkey, forKey: .privkey)
-            try container.encode(seedId, forKey: .seedId)
-            print("Successfully encoded Wallet")
-        } catch {
-            print("Failed to encode Wallet: \(error)")
-            throw error
-        }
-    }
-}
-
-extension Seed: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id, phrase, seedType
-    }
-    public init(from decoder: any Decoder) throws {
-        print("Will decode Seed")
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            let id = try container.decode(String.self, forKey: .id)
-            let phrase = try container.decode(String.self, forKey: .phrase)
-            let seedType = try container.decode(SeedType.self, forKey: .seedType)
-            print("Decoded Seed with id: \(id)")
-            self.init(id: id, phrase: phrase, seedType: seedType)
-        } catch {
-            print("Failed to decode Seed: \(error)")
-            throw error
-        }
-    }
-    public func encode(to encoder: any Encoder) throws {
-        print("Will encode Seed with id: \(id)")
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        do {
-            try container.encode(id, forKey: .id)
-            try container.encode(phrase, forKey: .phrase)
-            try container.encode(seedType, forKey: .seedType)
-            print("Successfully encoded Seed")
-        } catch {
-            print("Failed to encode Seed: \(error)")
-            throw error
-        }
-    }
-}
-
-extension SeedType: Codable {
-
-    private enum CodingKeys: String, CodingKey {
-        case type
-        case timestamp
-    }
-
-    private enum CaseType: String, Codable {
-        case created
-        case imported
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try container.decode(CaseType.self, forKey: .type)
-        let timestamp = try container.decode(String.self, forKey: .timestamp)
-        switch type {
-        case .created:
-            self = .created(timestamp: timestamp)
-        case .imported:
-            self = .imported(timestamp: timestamp)
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-        case .created(let timestamp):
-            try container.encode(CaseType.created, forKey: .type)
-            try container.encode(timestamp, forKey: .timestamp)
-        case .imported(let timestamp):
-            try container.encode(CaseType.imported, forKey: .type)
-            try container.encode(timestamp, forKey: .timestamp)
-        }
     }
 }
 

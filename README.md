@@ -25,3 +25,7 @@ Follow `*-release-*.md` in the [NotWallet Crypto documentation](docs) folder.
 
 - [AppStore](https://apps.apple.com/se/app/notwallet-crypto/id6749607570?l=en-GB)
 - [Google Play Store](https://play.google.com/store/apps/details?id=xyz.notwallet.NotWallet&hl=en-US)
+
+## License
+
+Dual license under [GPL v2](./LICENSE) and [Apache-2.0](./watchOSApp/LICENSE).

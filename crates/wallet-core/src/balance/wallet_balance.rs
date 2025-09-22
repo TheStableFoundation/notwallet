@@ -7,7 +7,6 @@ use {
         price_data::{get_asset_price::get_asset_price, get_sol_price::get_sol_price},
     },
     constants::constants::{LAMPORTS_PER_SOL, SPL_TOKEN_PROGRAM_ID},
-    log::error,
     network::model::ErrorResponse,
 };
 
@@ -37,7 +36,7 @@ pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, E
     ) {
         Ok(tokens) => tokens,
         Err(err) => {
-            error!("Failed to get SPL token accounts: {:?}", err);
+            println!("🦀🦀  Failed to get SPL token accounts: {:?}", err);
             Vec::new()
         }
     };
@@ -47,14 +46,17 @@ pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, E
         let token_price = match get_asset_price(&token.mint).await {
             Ok(price) => price.data.value,
             Err(err) => {
-                error!("Failed to get price for token {}: {:?}", token.mint, err);
+                println!(
+                    "🦀🦀  Failed to get price for token {}: {:?}",
+                    token.mint, err
+                );
                 0.0
             }
         };
         let token_amount = match token.token_amount.ui_amount {
             Some(amount) => amount,
             None => {
-                error!("Token amount is None for token {}", token.mint);
+                println!("🦀🦀  Token amount is None for token {}", token.mint);
                 0.0
             }
         };
