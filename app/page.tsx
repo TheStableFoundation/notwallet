@@ -133,7 +133,7 @@ function MainPageContent() {
   }
 
   // If user has no seeds, redirect to wallet onboarding page
-  //return redirect("/wallet/onboarding");
+  return redirect("/home");
 }
 
 export default function Page() {
