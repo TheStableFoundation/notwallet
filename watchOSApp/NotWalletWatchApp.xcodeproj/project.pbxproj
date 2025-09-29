@@ -42,6 +42,7 @@
 		8AC1B88E2E436DF10077652E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC1B88D2E436DF10077652E /* ContentView.swift */; };
 		8ACEA5592E7ECD28009A572D /* WalletSeedPhraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACEA5582E7ECD28009A572D /* WalletSeedPhraseView.swift */; };
 		8ACEA55E2E7EE3D7009A572D /* Wallet+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACEA55D2E7EE3D0009A572D /* Wallet+Extensions.swift */; };
+		8AD04F5C2E8B00AE0023EE25 /* WalletBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD04F5B2E8B00AE0023EE25 /* WalletBalanceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		8AC1B88D2E436DF10077652E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8ACEA5582E7ECD28009A572D /* WalletSeedPhraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSeedPhraseView.swift; sourceTree = "<group>"; };
 		8ACEA55D2E7EE3D0009A572D /* Wallet+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+Extensions.swift"; sourceTree = "<group>"; };
+		8AD04F5B2E8B00AE0023EE25 /* WalletBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletBalanceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				8A9369DD2E7895BA00B5A59F /* WalletInfoView.swift */,
 				8AC1B8882E436D720077652E /* TransactionDetailView.swift */,
 				8ACEA5582E7ECD28009A572D /* WalletSeedPhraseView.swift */,
+				8AD04F5B2E8B00AE0023EE25 /* WalletBalanceView.swift */,
 				8A9369E12E78A29F00B5A59F /* AssetsListView.swift */,
 				8A9369E32E78A2E800B5A59F /* AssetDetailView.swift */,
 				8AC1B8892E436D720077652E /* TransactionListView.swift */,
@@ -464,6 +467,7 @@
 				8A662A8C2E7DB79B00279A65 /* QRCodeView.swift in Sources */,
 				8A9369E42E78A2E800B5A59F /* AssetDetailView.swift in Sources */,
 				8A9369DC2E788F2800B5A59F /* OnboardingView.swift in Sources */,
+				8AD04F5C2E8B00AE0023EE25 /* WalletBalanceView.swift in Sources */,
 				8A662A992E7DD2F700279A65 /* CreateWalletAccountView.swift in Sources */,
 				8A78CDFF2E434ED60007B16F /* NotWalletWatchApp.swift in Sources */,
 				8A9369E22E78A29F00B5A59F /* AssetsListView.swift in Sources */,

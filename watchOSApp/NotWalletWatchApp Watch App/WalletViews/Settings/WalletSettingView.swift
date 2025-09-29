@@ -132,7 +132,7 @@ struct WalletSettingView: View {
                     Button(action: { viewModel.showSeedPhrase = true }) {
                         HStack {
                             Image(systemName: "eye.fill")
-                            Text("Show Seed Phrase")
+                            Text("Seed Phrase")
                             
                         }
                     }

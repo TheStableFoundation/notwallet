@@ -45,6 +45,8 @@ pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, E
         }
     };
 
+    println!("🦀🦀  SPL tokens with balance: {:?}", spl_tokens);
+
     let mut spl_value = 0.0;
     for token in spl_tokens {
         // By pass too many request error from BiredEye 😂
