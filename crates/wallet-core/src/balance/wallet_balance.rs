@@ -50,7 +50,7 @@ pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, E
     let mut spl_value = 0.0;
     for token in spl_tokens {
         // By pass too many request error from BiredEye 😂
-        sleep(Duration::from_millis(500)).await;
+        sleep(Duration::from_millis(800)).await;
         let token_price = match get_asset_price(&token.mint).await {
             Ok(price) => price.data.value,
             Err(err) => {
