@@ -33,7 +33,7 @@ struct WalletView: View {
                     })
                 case .loaded(let balance):
                     Button(action: {
-                        viewModel.confirmResetWallet = true
+                        viewModel.showWalletBalance = true
                     }) {
                         Text(balance)
                             .font(.system(size: 32, weight: .bold, design: .rounded))
@@ -136,6 +136,9 @@ struct WalletView: View {
             .sheet(isPresented: $viewModel.confirmResetWallet) {
                 ConfirmResetWalletView(onResetWallet: onResetWallet)
             }
+            .sheet(isPresented: $viewModel.showWalletBalance) {
+                WalletBalanceView(onResetWallet: onResetWallet)
+            }
             .onAppear {
                 viewModel.onAppear()
             }
@@ -171,6 +174,7 @@ extension WalletView {
 
         @Published var showQrCode = false
         @Published var showWalletInfo = false
+        @Published var showWalletBalance = false
         @Published var confirmResetWallet = false
         
         func onAppear() {

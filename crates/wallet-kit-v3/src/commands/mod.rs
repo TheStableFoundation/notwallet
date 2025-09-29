@@ -4,3 +4,4 @@ mod derive_new_account;
 mod import_wallet;
 mod sol_balance;
 mod wallet_balance;
+mod wallet_balance_aggregate;
