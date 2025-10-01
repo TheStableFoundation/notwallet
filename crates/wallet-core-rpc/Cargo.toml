@@ -1,13 +1,13 @@
 [package]
-name = "wallet_core"
+name = "wallet_core_rpc"
 version = "1.0.0"
 edition = "2021"
-description = "Wallet Core"
+description = "Wallet Core RPC"
 license = "MIT"
 
 [lib]
 crate-type = ["lib", "cdylib", "staticlib"]
-name = "wallet_core"
+name = "wallet_core_rpc"
 
 [dependencies]
 bip39 = { version = "2", features = ["rand"] }
@@ -24,7 +24,6 @@ serde_json = "1.0"
 network = { path = "../network" }
 constants = { path = "../constants" }
 wallet_core_http = { path = "../wallet-core-http" }
-wallet_core_rpc = { path = "../wallet-core-rpc" }
 wallet_core_model = { path = "../wallet-core-model" }
 reqwest = { version = "0.12", features = ["json"] }
 tokio = { version = "1.35.1", features = ["full"] }
