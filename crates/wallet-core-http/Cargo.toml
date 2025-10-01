@@ -23,6 +23,6 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 network = { path = "../network" }
 constants = { path = "../constants" }
-wallet_core = { path = "../wallet-core" }
+wallet_core_model = { path = "../wallet-core-model" }
 reqwest = { version = "0.12", features = ["json"] }
 tokio = { version = "1.35.1", features = ["full"] }

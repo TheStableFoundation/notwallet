@@ -1,13 +1,11 @@
 use {
-    crate::{
-        balance::{
-            sol_balance::sol_balance as core_sol_balance,
-            spl_token_accounts_with_balance::spl_token_accounts_with_balance,
-        },
-        models::balance::Balance,
+    crate::balance::{
+        sol_balance::sol_balance as core_sol_balance,
+        spl_token_accounts_with_balance::spl_token_accounts_with_balance,
     },
     constants::constants::{LAMPORTS_PER_SOL, SOLANA, SOL_DECIMALS, SPL_TOKEN_PROGRAM_ID},
     network::model::ErrorResponse,
+    wallet_core_model::models::balance::Balance,
 };
 
 pub async fn wallet_balance_aggregate(

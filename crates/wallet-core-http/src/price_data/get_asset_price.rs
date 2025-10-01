@@ -3,7 +3,7 @@ use {
     log::debug,
     network::{model::ErrorResponse, request},
     reqwest::Client,
-    wallet_core::models::birdeye_price_response::BirdeyePriceResponse,
+    wallet_core_model::models::birdeye_price_response::BirdeyePriceResponse,
 };
 
 pub async fn get_asset_price(asset: &str) -> Result<BirdeyePriceResponse, ErrorResponse> {
