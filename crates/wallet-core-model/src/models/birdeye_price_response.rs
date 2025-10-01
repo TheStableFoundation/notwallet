@@ -1,14 +1,16 @@
 use {
     serde::{Deserialize, Serialize},
     std::collections::HashMap,
+    uniffi::{Object, Record},
 };
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Object)]
 pub struct BirdeyePriceResponse {
     pub data: BirdeyePriceData,
     pub success: bool,
 }
 
+#[uniffi::export]
 impl BirdeyePriceResponse {
     /// Check if the response is successful and has data
     pub fn is_valid(&self) -> bool {
@@ -34,7 +36,7 @@ impl BirdeyePriceResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Object)]
 pub struct BirdeyePriceData {
     #[serde(rename = "isScaledUiToken")]
     pub is_scaled_ui_token: bool,
@@ -54,6 +56,7 @@ pub struct BirdeyePriceData {
     pub price_in_native: f64,
 }
 
+#[uniffi::export]
 impl BirdeyePriceData {
     /// Get the price change percentage as a formatted string
     pub fn price_change_percentage(&self) -> String {
@@ -85,13 +88,13 @@ impl BirdeyePriceData {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Record)]
 pub struct Price {
     pub symbol: String,
     pub price: f64,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Object)]
 pub struct TokenPrice {
     #[serde(rename = "usdPrice")]
     pub usd_price: f64,
@@ -105,12 +108,13 @@ pub struct TokenPrice {
     pub price_change_24h: f64,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Object)]
 pub struct PricesResponse {
     #[serde(flatten)]
     pub prices: HashMap<String, TokenPrice>,
 }
 
+#[uniffi::export]
 impl TokenPrice {
     /// Get the price change percentage as a formatted string
     pub fn price_change_percentage(&self) -> String {

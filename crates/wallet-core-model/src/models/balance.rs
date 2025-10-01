@@ -1,6 +1,9 @@
-use serde::{Deserialize, Serialize};
+use {
+    serde::{Deserialize, Serialize},
+    uniffi::Record,
+};
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Record)]
 pub struct Balance {
     pub mint: String,
     pub symbol: String,
