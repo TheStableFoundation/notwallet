@@ -175,9 +175,9 @@ dependencies = [
 
 [[package]]
 name = "anstyle"
-version = "1.0.11"
+version = "1.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "862ed96ca487e809f1c8e5a8447f6ee2cf102f846893800b20cebdf541fc6bbd"
+checksum = "5192cca8006f1fd4f7237516f40fa183bb07f8fbdfedaa0036de5ea9b0b45e78"
 
 [[package]]
 name = "anyhow"
@@ -4107,6 +4107,7 @@ dependencies = [
  "tsync",
  "uuid",
  "wallet_core",
+ "wallet_core_rpc",
  "wallet_kit",
  "wallet_kit_v3",
 ]
@@ -12371,6 +12372,63 @@ dependencies = [
  "solana-rpc-client 3.1.0",
  "solana-sdk 3.0.0",
  "tokio",
+ "wallet_core_http",
+ "wallet_core_model",
+ "wallet_core_rpc",
+]
+
+[[package]]
+name = "wallet_core_http"
+version = "1.0.0"
+dependencies = [
+ "bip39",
+ "bs58",
+ "constants",
+ "log",
+ "network",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "solana-account-decoder 3.1.0",
+ "solana-client 3.1.0",
+ "solana-derivation-path 3.0.0",
+ "solana-pubkey 3.0.0",
+ "solana-rpc-client 3.1.0",
+ "solana-sdk 3.0.0",
+ "tokio",
+ "wallet_core_model",
+]
+
+[[package]]
+name = "wallet_core_model"
+version = "1.0.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "uniffi",
+]
+
+[[package]]
+name = "wallet_core_rpc"
+version = "1.0.0"
+dependencies = [
+ "bip39",
+ "bs58",
+ "constants",
+ "log",
+ "network",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "solana-account-decoder 3.1.0",
+ "solana-client 3.1.0",
+ "solana-derivation-path 3.0.0",
+ "solana-pubkey 3.0.0",
+ "solana-rpc-client 3.1.0",
+ "solana-sdk 3.0.0",
+ "tokio",
+ "wallet_core_http",
+ "wallet_core_model",
 ]
 
 [[package]]
@@ -12401,6 +12459,8 @@ dependencies = [
  "tokio",
  "tsync",
  "wallet_core",
+ "wallet_core_http",
+ "wallet_core_rpc",
 ]
 
 [[package]]
@@ -12414,6 +12474,8 @@ dependencies = [
  "uniffi",
  "uuid",
  "wallet_core",
+ "wallet_core_model",
+ "wallet_core_rpc",
 ]
 
 [[package]]

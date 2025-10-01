@@ -47,7 +47,8 @@ tsync = "2"
 uuid = { version = "1", features = ["v4"] }
 wallet_core = { path = "./../crates/wallet-core" }
 wallet_kit = { path = "./../crates/wallet-kit" }
-wallet_kit_v3 = { path = "./../crates/wallet-kit-v3" }
+wallet_core_rpc = { path = "./../crates/wallet-core-rpc" }
+wallet_kit_v3 = { path = "./../crates/" }
 
 [target.'cfg(any(target_os = "android"))'.dependencies]
 tauri-plugin-android-tv-check = "1"

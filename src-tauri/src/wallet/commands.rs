@@ -16,7 +16,8 @@ use {
     solana_signer::Signer,
     tauri::{command, AppHandle},
     uuid::Uuid,
-    wallet_core::{balance::spl_balance::spl_balance, derive_keypair::derive_keypair_default},
+    wallet_core::derive_keypair::derive_keypair_default,
+    wallet_core_rpc::balance::spl_balance::spl_balance,
     wallet_kit::{
         balance::sol_balance,
         transactions::{create_token_transfer_ix, create_transfer_ix},

@@ -7,12 +7,12 @@ use {
     log::error,
     network::model::ErrorResponse,
     std::collections::HashMap,
-    wallet_core::{
-        balance::{
-            sol_balance::sol_balance as core_sol_balance, spl_token_accounts::spl_token_accounts,
-            spl_token_accounts_with_balance::spl_token_accounts_with_balance,
-        },
-        price_data::{get_asset_price::get_asset_price, get_sol_price::get_sol_price},
+    wallet_core_http::price_data::{
+        get_asset_price::get_asset_price, get_sol_price::get_sol_price,
+    },
+    wallet_core_rpc::balance::{
+        sol_balance::sol_balance as core_sol_balance, spl_token_accounts::spl_token_accounts,
+        spl_token_accounts_with_balance::spl_token_accounts_with_balance,
     },
 };
 
