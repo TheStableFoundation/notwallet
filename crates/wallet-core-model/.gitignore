@@ -42,3 +42,7 @@ perf.data.old
 # Environment variables
 .env
 .envrc
+
+# Swift Package
+WalletCoreModel/
+generated/

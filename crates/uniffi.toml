@@ -1,0 +1,4 @@
+package_name = "wallet_kit_v3"
+
+[bindings.swift]
+generate_codable_conformance = true
