@@ -1,6 +1,5 @@
 use {
     crate::model::{ErrorCode, ErrorResponse},
-    log::{debug, error},
     reqwest::{RequestBuilder, Response},
     serde::de::DeserializeOwned,
 };
@@ -18,7 +17,7 @@ pub async fn parse_error_response<T: DeserializeOwned>(
     let response_body = match response.text().await {
         Ok(body) => body,
         Err(e) => {
-            error!("Failed to get response body: {:?}", e);
+            println!("🦀‼️  Failed to get response body: {:?}", e);
             return Err(ErrorResponse::Error {
                 code: ErrorCode::NetworkError,
                 message: format!("Error getting response body: {}", e),
@@ -27,20 +26,22 @@ pub async fn parse_error_response<T: DeserializeOwned>(
     };
 
     if LOG_RESPONSE_BODY {
-        debug!("{:?}", serde_json::to_string_pretty(&response_body));
+        println!("🦀🦀  RESPONSE BODY >>>");
+        println!("🦀🦀  {:?}", serde_json::to_string_pretty(&response_body));
+        println!("🦀🦀  RESPONSE BODY >>>");
     }
 
     let e = match serde_json::from_str::<ErrorResponse>(&response_body) {
         Ok(json) => json,
         Err(e) => {
-            error!("Failed to parse error response: {:?}", e);
+            println!("🦀‼️  Failed to parse error response: {:?}", e);
             return Err(ErrorResponse::Error {
                 code: ErrorCode::ParseError,
                 message: format!("Error parsing response: {}", e),
             });
         }
     };
-    error!("Error response: {:?}", e);
+    println!("🦀🦀  Error response: {:?}", e);
     return Err(e);
 }
 
@@ -49,7 +50,7 @@ pub async fn request<R: DeserializeOwned>(builder: RequestBuilder) -> Result<R, 
     let response = match response {
         Ok(response) => response,
         Err(e) => {
-            error!("Failed to get response: {:?}", e);
+            println!("🦀‼️  Failed to get response: {:?}", e);
             return Err(ErrorResponse::Error {
                 code: ErrorCode::NetworkError,
                 message: format!("Error getting response: {}", e),
@@ -59,7 +60,7 @@ pub async fn request<R: DeserializeOwned>(builder: RequestBuilder) -> Result<R, 
     let response = match response.status() {
         reqwest::StatusCode::OK => response,
         status => {
-            error!("Failed to get response: {:?}", status);
+            println!("🦀‼️  Failed to get response: {:?}", status);
             return parse_error_response(response).await;
         }
     };
@@ -67,7 +68,7 @@ pub async fn request<R: DeserializeOwned>(builder: RequestBuilder) -> Result<R, 
     let response_body = match response.text().await {
         Ok(body) => body,
         Err(e) => {
-            error!("Failed to get response body: {:?}", e);
+            println!("🦀‼️  Failed to get response body: {:?}", e);
             return Err(ErrorResponse::Error {
                 code: ErrorCode::NetworkError,
                 message: format!("Error getting response body: {}", e),
@@ -76,13 +77,15 @@ pub async fn request<R: DeserializeOwned>(builder: RequestBuilder) -> Result<R, 
     };
 
     if LOG_RESPONSE_BODY {
-        debug!("{:?}", serde_json::to_string_pretty(&response_body));
+        println!("🦀🦀  RESPONSE BODY >>>");
+        println!("🦀🦀  {:?}", serde_json::to_string_pretty(&response_body));
+        println!("🦀🦀  RESPONSE BODY >>>");
     }
 
     let response = match serde_json::from_str::<R>(&response_body) {
         Ok(response) => response,
         Err(e) => {
-            error!("Failed to parse response: {:?}", e);
+            println!("🦀‼️  Failed to parse response: {:?}", e);
             return Err(ErrorResponse::Error {
                 code: ErrorCode::ParseError,
                 message: e.to_string(),

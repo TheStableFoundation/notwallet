@@ -5,6 +5,7 @@ pub const SEMITONE_PER_BACH: f64 = 1_000_000_000_000.0;
 
 #[tsync]
 pub const SOLANA: &str = "So11111111111111111111111111111111111111112";
+pub const SOL_DECIMALS: u8 = 9;
 
 /// The Stable Foundation
 /// #[tsync]

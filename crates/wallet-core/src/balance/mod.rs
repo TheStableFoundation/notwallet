@@ -5,3 +5,4 @@ pub mod spl_token_accounts;
 mod spl_token_accounts_for;
 pub mod spl_token_accounts_with_balance;
 pub mod wallet_balance;
+pub mod wallet_balance_aggregate;

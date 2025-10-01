@@ -13,7 +13,7 @@ pub async fn get_asset_price(asset: &str) -> Result<BirdeyePriceResponse, ErrorR
         "{}{}?address={}",
         BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH, asset
     );
-    debug!("URL: {}", url);
+    println!("🦀🦀  URL: {}", url);
     let client = Client::new()
         .get(url)
         .header("X-API-KEY", BIRDEYE_API_KEY)

@@ -22,12 +22,14 @@ struct ConfirmResetWalletView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 8) {
+                
                 Text("Are you sure?")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundColor(.purple)
                 
                 Text("All your wallets and seed phrases will be removed permanently. Make sure you have backed up your wallets.")
-                    .font(.system(size: 12, weight: .regular, design: .rounded))
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 18, weight: .regular, design: .rounded))
                     .foregroundColor(.primary)
                 
                 Divider()
@@ -108,11 +110,8 @@ extension ConfirmResetWalletView {
 }
 
 #Preview {
-    WalletView(
-        viewModel: .init(
-            activeKeyPair: .init(
-                id: "", username: nil, name: "", account: 0,
-                pubkey: "EjEYahpsv5AADKHdv32wknbq59tsqZPDZJgyMpZ5qhnV", privkey: "", seedId: "")),
+    ConfirmResetWalletView(
+        viewModel: .init(),
         onResetWallet: {}
     )
 }

@@ -7,6 +7,7 @@ use {
 pub async fn get_sol_price() -> Result<f64, ErrorResponse> {
     match get_asset_price(SOLANA).await {
         Ok(price) => {
+            println!("🦀🦀  Got SOL price data: {:?}", price);
             if price.is_valid() {
                 Ok(price.data.value)
             } else {
@@ -16,6 +17,9 @@ pub async fn get_sol_price() -> Result<f64, ErrorResponse> {
                 })
             }
         }
-        Err(err) => Err(err),
+        Err(err) => {
+            println!("🦀🦀  Failed to get SOL price: {:?}", err);
+            Err(err)
+        }
     }
 }

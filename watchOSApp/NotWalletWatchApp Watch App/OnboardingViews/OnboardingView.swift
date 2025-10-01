@@ -20,10 +20,10 @@ struct OnboardingView: View {
     var body: some View {
         VStack {
             Text("NotWallet")
-                .font(.system(size: 32, weight: .bold, design: .rounded))
+                .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundColor(.purple)
             Text("Crypto")
-                .font(.system(size: 16, weight: .regular, design: .rounded))
+                .font(.system(size: 18, weight: .regular, design: .rounded))
                 .foregroundColor(.purple)
             
             Divider().padding(.vertical, 4)
@@ -87,4 +87,8 @@ extension OnboardingView {
         @Published var showImport = false
         @Published var showCreate = false
     }
+}
+
+#Preview {
+    OnboardingView(viewModel: .init(), onCreateWalletDone: {})
 }

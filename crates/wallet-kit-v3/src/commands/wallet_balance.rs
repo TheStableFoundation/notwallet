@@ -8,6 +8,10 @@ use {
 
 #[uniffi::export(async_runtime = "tokio")]
 pub async fn wallet_balance(network: NetworkType, pubkey: String) -> Result<String, KeyPairError> {
+    println!(
+        "🦀🦀  Will load wallet balance for {} in {}",
+        pubkey, network
+    );
     match core_wallet_balance(rpc_url(network), pubkey).await {
         Ok(balance) => Ok(balance),
         Err(e) => Err(KeyPairError::InvalidAddress(e.to_string())),

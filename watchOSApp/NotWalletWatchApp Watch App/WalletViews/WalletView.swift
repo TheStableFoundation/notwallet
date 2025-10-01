@@ -9,9 +9,8 @@ import Combine
 import SwiftUI
 import WalletKitV3
 
-
 struct WalletView: View {
-    
+
     init(
         viewModel: WalletView.ViewModel,
         onResetWallet: @escaping () -> Void
@@ -21,98 +20,136 @@ struct WalletView: View {
     }
 
     var body: some View {
-        ScrollView {
-            switch viewModel.state {
-            case .loading:
-                ProgressView().frame(alignment: .center)
-            case .idle:
-                Color.clear.onAppear(perform: {
-                    Task {
-                         await viewModel.walletBalance()
+        NavigationStack {
+            ScrollView {
+                switch viewModel.state {
+                case .loading:
+                    ProgressView().frame(alignment: .center)
+                case .idle:
+                    Color.clear.onAppear(perform: {
+                        Task {
+                            await viewModel.walletBalance()
+                        }
+                    })
+                case .loaded(let balance):
+                    Button(action: {
+                        viewModel.showWalletBalance = true
+                    }) {
+                        HStack(alignment: .center) {
+                            Text(balance)
+                                .font(.system(size: 32, weight: .bold, design: .rounded))
+                                .foregroundColor(.purple)
+                            Image(systemName: "arrow.right")
+                        }
                     }
-                })
-            case .loaded(let balance):
-                Text(balance)
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundColor(.purple)
-            case .failed(_):
-                Text("N/A")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundColor(.purple)
-            }
-            
-            Text("Your active Solana wallet")
-                .font(.system(size: 12, weight: .regular, design: .rounded))
-                .foregroundColor(.secondary)
+                    .buttonStyle(.plain)
+                case .failed(_):
+                    Text("N/A")
+                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                        .foregroundColor(.purple)
+                }
 
-            Divider()
-            
-            Button(action: { viewModel.showTransactions = true }) {
-                MarqueeText(
-                    text: viewModel.activeKeyPair.pubkey,
-                    font: .system(size: 20, weight: .medium, design: .monospaced),
-                    leftFade: 8, rightFade: 8, startDelay: 1.5
+                Divider()
+
+                // Wallet Selection Section
+                VStack(spacing: 12) {
+                    Text("SELECTED WALLET")
+                        .font(.system(size: 16, weight: .regular, design: .rounded))
+                        .foregroundColor(.primary)
+                        .tracking(0.8)
+
+                    Text(viewModel.activeKeyPair.initial())
+                        .font(.system(size: 18, weight: .regular, design: .rounded))
+                        .foregroundColor(.purple)
+                        .tracking(0.8)
+
+                    Button(action: { viewModel.showQrCode = true }) {
+                        Text(viewModel.activeKeyPair.name)
+                            .font(.system(size: 18, weight: .medium, design: .rounded))
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color(.purple))
+                            )
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                Divider()
+
+                NavigationLink(
+                    destination: WalletSettingView(
+                        viewModel: .init(
+                            activeKeyPair: viewModel.activeKeyPair,
+                            onActiveKeyPairChanged: viewModel.onActiveKeyPairChanged(wallet:)
+                        )
+                    )
+                ) {
+                    HStack {
+                        Image(systemName: "gear")
+                        Text("Settings")
+                            .font(.system(size: 18, weight: .medium, design: .rounded))
+                            .foregroundColor(.primary)
+                            .frame(height: 24)
+
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color(.darkGray).opacity(0.6))
+                    )
+                }
+                .buttonStyle(.plain)
+
+                Button(action: {
+                    viewModel.confirmResetWallet = true
+                }) {
+                    HStack {
+
+                        Image(systemName: "clear.fill")
+
+                        Text("Reset Wallet")
+                            .font(.system(size: 18, weight: .medium, design: .rounded))
+                            .foregroundColor(.red)
+                            .frame(height: 24)
+
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color(.darkGray).opacity(0.6))
+                    )
+                }
+                .buttonStyle(.plain)
+            }
+            .sheet(isPresented: $viewModel.showQrCode) {
+                QRCodeView(
+                    viewModel: .init(activeKeyPair: viewModel.activeKeyPair)
                 )
-                .foregroundColor(.purple)
-                .padding(.bottom, 8)
-                .frame(height: 28)
-                .clipShape(Rectangle())
-                .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 8)
-            
-            Button(action: {
-                viewModel.showWalletInfo = true
-            }) {
-                Text("Info")
-                    .foregroundColor(.green)
-                    .padding(.vertical, 6)
-                    .frame(height: 18)
-                    .clipShape(Rectangle())
-                    .contentShape(Rectangle())
-                
-                Image(systemName: "info.circle.fill")
-                    .renderingMode(.original)
-                    .font(.caption2)
+            .sheet(isPresented: $viewModel.showWalletInfo) {
+                WalletInfoView(viewModel: .init())
             }
-            .buttonStyle(.bordered)
-            .frame(maxWidth: .infinity)
-            /*
-            Button(action: {
-                viewModel.showBachInfo = true
-            }) {
-                Text("Switch Wallet")
-                    .foregroundColor(.green)
-                    .padding(.vertical, 6)
-                    .frame(height: 18)
-                    .clipShape(Rectangle())
-                    .contentShape(Rectangle())
+            .sheet(isPresented: $viewModel.confirmResetWallet) {
+                ConfirmResetWalletView(onResetWallet: onResetWallet)
             }
-            .buttonStyle(.bordered)
-            .frame(maxWidth: .infinity)*/
-            Button(action: {
-                viewModel.confirmResetWallet = true
-            }) {
-                Text("Reset Wallet")
-                    .foregroundColor(.red)
-                    .padding(.vertical, 6)
-                    .frame(height: 18)
-                    .clipShape(Rectangle())
-                    .contentShape(Rectangle())
+            .sheet(isPresented: $viewModel.showWalletBalance) {
+                WalletBalanceView(
+                    viewModel: .init(
+                        activeKeyPair: viewModel.activeKeyPair
+                    ),
+                    onResetWallet: onResetWallet
+                )
             }
-            .buttonStyle(.bordered)
-            .frame(maxWidth: .infinity)
-        }
-        .sheet(isPresented: $viewModel.showTransactions) {
-            TransactionListView()
-        }
-        .sheet(isPresented: $viewModel.showWalletInfo) {
-            WalletInfoView(viewModel: .init())
-        }
-        .sheet(isPresented: $viewModel.confirmResetWallet) {
-            ConfirmResetWalletView(onResetWallet: onResetWallet)
+            .onAppear {
+                viewModel.onAppear()
+            }
         }
     }
 
@@ -122,48 +159,70 @@ struct WalletView: View {
     private let onResetWallet: () -> Void
 }
 
-
 extension WalletView {
     final class ViewModel: ObservableObject {
         internal init(state: ViewState = ViewState.idle, activeKeyPair: Wallet) {
             self.state = state
             self.activeKeyPair = activeKeyPair
         }
-        
+
         enum ViewState {
             case idle
             case loading
             case failed(Error)
             case loaded(String)
         }
-        
+
         enum OnboardingState {
             case done, new
         }
-        
+
         @Published private(set) var state = ViewState.idle
-        private(set) var activeKeyPair: Wallet
-        
-        @Published var showTransactions = false
+        @Published private(set) var activeKeyPair: Wallet
+
+        @Published var showQrCode = false
         @Published var showWalletInfo = false
+        @Published var showWalletBalance = false
         @Published var confirmResetWallet = false
-        
+
+        func onAppear() {
+            state = .idle
+        }
+
         @MainActor
         func walletBalance() async {
             do {
                 state = .loading
-                let balance = try await WalletKitV3.walletBalance(network: .solanaTestnet, pubkey: activeKeyPair.pubkey)
+                print("🐦🐦  Will load balance.")
+                // TODO: - CHANGE ME ON RELEASE
+                let balance = try await WalletKitV3.walletBalance(
+                    network: .solanaDevnet,
+                    pubkey: activeKeyPair.pubkey
+                )
                 state = .loaded(balance)
             } catch {
-                print(error)
                 state = .failed(error)
             }
+        }
+        func onActiveKeyPairChanged(wallet: Wallet) {
+            activeKeyPair = wallet
         }
     }
 }
 
 #Preview {
     WalletView(
-        viewModel: .init(activeKeyPair: .init(id: "", username: nil, name: "", account: 0, pubkey: "EjEYahpsv5AADKHdv32wknbq59tsqZPDZJgyMpZ5qhnV", privkey: "", seedId: "")),
-        onResetWallet: {})
+        viewModel: .init(
+            activeKeyPair: .init(
+                id: "",
+                username: nil,
+                name: "WalletName",
+                account: 0,
+                pubkey: "EjEYahpsv5AADKHdv32wknbq59tsqZPDZJgyMpZ5qhnV",
+                privkey: "",
+                seedId: ""
+            )
+        ),
+        onResetWallet: {}
+    )
 }
