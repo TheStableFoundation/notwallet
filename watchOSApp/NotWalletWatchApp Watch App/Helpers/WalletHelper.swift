@@ -79,13 +79,16 @@ func getAssetPrice(asset: String) async throws -> Double {
     /// Configure BirdEye header
     request.setValue("BIRDEYE_API_KEY", forHTTPHeaderField: "X-API-KEY")
     
+    /// Configure network
+    request.setValue("Solana", forHTTPHeaderField: "x-chain")
+    
     /// Use URLSession to fetch the data asynchronously.
     let (data, _) = try await URLSession.shared.data(for: request)
     
     /// Decode the JSON response into the PostResponse struct.
-    let decodedResponse = try JSONDecoder().decode(BirdeyePriceResponse.self, from: data)
+    let decodedResponse = try JSONDecoder().decode(AssetPriceResponse.self, from: data)
     
-    return decodedResponse.data.value
+    return decodedResponse.price
 }
 
 func getWalletPortfolio(wallet: String) async throws -> [BalanceV1] {
