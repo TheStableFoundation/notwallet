@@ -114,3 +114,30 @@ func getWalletPortfolio(wallet: String) async throws -> [BalanceV1] {
     
     return decodedResponse.data
 }
+
+func getWalletBalance(wallet: String) async throws -> String {
+    /// Configure the URL for our request.
+    let url = URL(string: "BIRDEYE_BASE_URL/v1/wallets/wallet_balance?wallet=\(wallet)&environment=Mainnet")!
+    
+    /// Create a URLRequest for the POST request.
+    var request = URLRequest(url: url)
+    
+    /// Configure the HTTP method.
+    request.httpMethod = "GET"
+
+    /// Configure the proper content-type value to JSON.
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    /// Configure BirdEye API Key
+    request.setValue("BIRDEYE_API_KEY", forHTTPHeaderField: "X-API-KEY")
+    /// Configure network
+    request.setValue("Solana", forHTTPHeaderField: "x-chain")
+    
+    /// Use URLSession to fetch the data asynchronously.
+    let (data, _) = try await URLSession.shared.data(for: request)
+    
+    /// Decode the JSON response
+    let decodedResponse = try JSONDecoder().decode(WalletBalanceResponse.self, from: data)
+    
+    return decodedResponse.value
+}

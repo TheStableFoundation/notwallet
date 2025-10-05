@@ -211,12 +211,7 @@ extension WalletView {
             do {
                 state = .loading
                 print("🐦🐦  Will load balance.")
-                // TODO: - CHANGE ME ON RELEASE
-                /**/
-                let balance = try await WalletKitV3.walletBalance(
-                    network: .solanaMainnet,
-                    pubkey: activeKeyPair.pubkey
-                )/**/
+                let balance = try await getWalletBalance(wallet: activeKeyPair.pubkey)
                 let assetPrice = try await getAssetPrice(asset: "So11111111111111111111111111111111111111112")
                 
                 state = .loaded(balance, assetPrice)
