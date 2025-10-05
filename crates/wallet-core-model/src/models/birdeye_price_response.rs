@@ -10,6 +10,7 @@ pub struct BirdeyePriceResponse {
     pub success: bool,
 }
 
+#[uniffi::export]
 impl BirdeyePriceResponse {
     /// Check if the response is successful and has data
     pub fn is_valid(&self) -> bool {
@@ -55,6 +56,7 @@ pub struct BirdeyePriceData {
     pub price_in_native: f64,
 }
 
+#[uniffi::export]
 impl BirdeyePriceData {
     /// Get the price change percentage as a formatted string
     pub fn price_change_percentage(&self) -> String {

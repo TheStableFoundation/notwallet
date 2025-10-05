@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A57513D2E8DE70800FF1480 /* WalletKitV3 in Frameworks */ = {isa = PBXBuildFile; productRef = 8A57513C2E8DE70800FF1480 /* WalletKitV3 */; };
 		8A662A8C2E7DB79B00279A65 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A662A8B2E7DB79500279A65 /* QRCodeView.swift */; };
 		8A662A8F2E7DB99E00279A65 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 8A662A8E2E7DB99E00279A65 /* QRCode */; };
 		8A662A912E7DBDA200279A65 /* WalletSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A662A902E7DBD9E00279A65 /* WalletSettingView.swift */; };
@@ -134,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A662A8F2E7DB99E00279A65 /* QRCode in Frameworks */,
+				8A57513D2E8DE70800FF1480 /* WalletKitV3 in Frameworks */,
 				8A9369D12E78313A00B5A59F /* WalletKitV3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -875,6 +877,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8A57513C2E8DE70800FF1480 /* WalletKitV3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WalletKitV3;
+		};
 		8A662A8E2E7DB99E00279A65 /* QRCode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8A662A8D2E7DB99E00279A65 /* XCRemoteSwiftPackageReference "QRCode" */;
