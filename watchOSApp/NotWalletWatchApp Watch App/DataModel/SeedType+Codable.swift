@@ -7,7 +7,7 @@
 
 import WalletKitV3
 
-extension SeedType: Codable {
+extension SeedType: @retroactive Codable {
 
     private enum CodingKeys: String, CodingKey {
         case type

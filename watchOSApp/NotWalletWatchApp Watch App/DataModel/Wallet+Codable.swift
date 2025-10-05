@@ -7,7 +7,7 @@
 
 import WalletKitV3
 
-extension Wallet: Codable {
+extension Wallet: @retroactive Codable {
     enum CodingKeys: String, CodingKey {
         case id, username, name, account, pubkey, privkey, seedId
     }
