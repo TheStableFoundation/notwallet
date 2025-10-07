@@ -1,7 +1,7 @@
 use {
     crate::balance::wallet_token_list::wallet_token_list,
     smbcloud_wallet_core_http::price_data::get_asset_price::get_asset_price,
-    smbcloud_wallet_core_network::model::ErrorResponse, std::time::Duration, tokio::time::sleep,
+    smbcloud_wallet_core_network::model::ErrorResponse,
 };
 
 pub async fn wallet_balance(
@@ -21,8 +21,6 @@ pub async fn wallet_balance(
     let mut total_asset_value = 0.0;
     for asset_balance in assets_balance {
         // Get the asset value from the current Balance.
-        // Bypass too many request error from BirdEye 😂
-        sleep(Duration::from_millis(800)).await;
         let asset_value =
             match get_asset_price(&asset_balance.meta.address, api_key, user_agent).await {
                 Ok(price) => price.data.value,

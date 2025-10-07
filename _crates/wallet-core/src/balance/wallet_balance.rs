@@ -8,8 +8,6 @@ use {
         sol_balance::sol_balance as core_sol_balance,
         spl_token_accounts_with_balance::spl_token_accounts_with_balance,
     },
-    std::time::Duration,
-    tokio::time::sleep,
 };
 
 pub async fn wallet_balance(
@@ -54,8 +52,6 @@ pub async fn wallet_balance(
 
     let mut spl_value = 0.0;
     for token in spl_tokens {
-        // By pass too many request error from BiredEye 😂
-        sleep(Duration::from_millis(800)).await;
         let token_price = match get_asset_price(&token.mint, api_key, user_agent).await {
             Ok(price) => price.data.value,
             Err(err) => {

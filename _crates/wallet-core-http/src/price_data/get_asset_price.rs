@@ -3,6 +3,8 @@ use {
     smbcloud_wallet_constants::constants::{BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH},
     smbcloud_wallet_core_model::models::birdeye_price_response::BirdeyePriceResponse,
     smbcloud_wallet_core_network::{model::ErrorResponse, request},
+    std::time::Duration,
+    tokio::time::sleep,
 };
 
 pub async fn get_asset_price(
@@ -21,5 +23,8 @@ pub async fn get_asset_price(
         .get(url)
         .header("X-API-KEY", api_key)
         .header("User-Agent", user_agent);
+
+    // Bypass too many request error from BirdEye 😂
+    sleep(Duration::from_millis(800)).await;
     request(client).await
 }
