@@ -10,6 +10,6 @@ use {
 pub fn sol_balance(network: NetworkType, pubkey: String) -> Result<f64, KeyPairError> {
     match core_sol_balance(rpc_url(network), pubkey) {
         Ok(balance) => Ok(balance.1),
-        Err(e) => Err(KeyPairError::InvalidAddress(e)),
+        Err(e) => Err(KeyPairError::InvalidAddress(e.to_string())),
     }
 }

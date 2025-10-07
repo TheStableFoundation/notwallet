@@ -32,7 +32,7 @@ pub enum ErrorCode {
     Unknown = 0,
     ParseError = 1,
     NetworkError = 2,
-    // Move these to wallet-kit.
+    // Wallet related error codes.
     BalanceError = 1000,
     InvalidPubkey = 1001,
 }

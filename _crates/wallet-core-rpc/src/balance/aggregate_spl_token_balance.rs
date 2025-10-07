@@ -1,6 +1,7 @@
 use {
     crate::balance::spl_token_accounts_for::spl_token_accounts_for,
     log::{debug, error},
+    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
     std::str::FromStr,
 };
 
@@ -13,14 +14,17 @@ pub fn aggregate_spl_token_balance(
     pubkey: String,
     spl_token_program_id: String,
     token_address: String,
-) -> (u64, f64) {
+) -> Result<(u64, f64), ErrorResponse> {
     // Get token accounts for the given public key and token address
     let target_spl_token_accounts =
         match spl_token_accounts_for(rpc_url, pubkey, spl_token_program_id, token_address) {
             Ok(accounts) => accounts,
             Err(err) => {
                 error!("Failed to fetch token accounts: {}", err);
-                return (0, 0.0);
+                return Err(ErrorResponse::Error {
+                    code: ErrorCode::BalanceError,
+                    message: ErrorCode::BalanceError.to_string(),
+                });
             }
         };
 
@@ -30,7 +34,7 @@ pub fn aggregate_spl_token_balance(
     );
 
     if target_spl_token_accounts.is_empty() {
-        return (0, 0.0);
+        return Ok((0, 0.0));
     }
 
     // Get aggregated amount
@@ -45,5 +49,5 @@ pub fn aggregate_spl_token_balance(
         }
     }
 
-    (aggregated_amount, aggregated_ui_amount)
+    Ok((aggregated_amount, aggregated_ui_amount))
 }

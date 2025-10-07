@@ -13,12 +13,12 @@ use {
     log::{debug, info},
     smbcloud_wallet_constants::constants::SPL_TOKEN_PROGRAM_ID,
     smbcloud_wallet_core::derive_keypair::derive_keypair_default,
+    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
     smbcloud_wallet_core_rpc::balance::spl_balance::spl_balance,
     smbcloud_wallet_kit::{
         balance::sol_balance,
         transactions::{create_token_transfer_ix, create_transfer_ix},
     },
-    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
     solana_signer::Signer,
     tauri::{command, AppHandle},
     uuid::Uuid,
@@ -86,12 +86,16 @@ pub fn get_bach_balance(pubkey: String) -> String {
     } else {
         BACH_TOKEN_ADDRESS.to_string()
     };
-    spl_balance(
+
+    match spl_balance(
         rpc_url(),
         pubkey,
         SPL_TOKEN_PROGRAM_ID.to_string(),
         bach_token_address,
-    )
+    ) {
+        Ok(balance) => balance,
+        Err(_) => "0.0".to_string(),
+    }
 }
 
 #[command]
@@ -185,12 +189,15 @@ pub fn get_treasury_bach_balance() -> String {
     } else {
         BACH_TOKEN_ADDRESS.to_string()
     };
-    spl_balance(
+    match spl_balance(
         rpc_url(),
         treasury_address.to_string(),
         SPL_TOKEN_PROGRAM_ID.to_string(),
         bach_token_address,
-    )
+    ) {
+        Ok(balance) => balance,
+        Err(_) => "0.0".to_string(),
+    }
 }
 
 #[command]
