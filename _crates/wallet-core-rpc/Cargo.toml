@@ -2,7 +2,7 @@
 name = "smbcloud-wallet-core-rpc"
 version = "1.0.0"
 edition = "2021"
-description = "Wallet Core RPC"
+description = "smbCloud Wallet Core RPC for NotWallet Crypto."
 license = "MIT"
 
 [lib]

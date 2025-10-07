@@ -2,7 +2,7 @@
 name = "smbcloud-wallet-network"
 version = "0.1.0"
 edition = "2021"
-description = "Network"
+description = "smbCloud Wallet Network for NotWallet Crypto."
 license = "MIT"
 
 [lib]

@@ -2,7 +2,7 @@
 name = "smbcloud-wallet-core-model"
 version = "1.0.0"
 edition = "2021"
-description = "Wallet Core Model"
+description = "smbCloud Wallet Core Model for NotWallet Crypto."
 license = "MIT"
 
 [lib]

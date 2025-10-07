@@ -4,7 +4,7 @@ workspace = { members = ["./wallet-core-model"] }
 name = "smbcloud-wallet-kit-v3"
 version = "1.0.0"
 edition = "2021"
-description = "Solana wallet toolkit for NotWallet Crypto non-custodial Solana crypto wallet."
+description = "smbCloud Wallet Kit V3 for NotWallet Crypto non-custodial Solana crypto wallet."
 authors = ["Seto Elkahfi <work@setoelkahfi.se>"]
 license = "MIT"
 homepage = "https://thestablefoundation.org/"

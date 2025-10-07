@@ -2,7 +2,7 @@
 name = "smbcloud-wallet-kit"
 version = "0.1.0"
 edition = "2021"
-description = "Solana toolkit for NotWallet Crypto"
+description = "smbCloud Wallet Kit for NotWallet Crypto."
 license = "MIT"
 [workspace]
 
