@@ -10,6 +10,9 @@ import UIKit
 
 let BIRDEYE_BASE_URL = "YOUR_BASE_URL"
 let BIRDEYE_API_KEY = "YOUR_API_KEY"
+let ENVIRONMENT = "Mainnet"
+//let ENVIRONMENT = "Testnet"
+//let ENVIRONMENT = "Local"
 
 func saveCreateWalletResponse(userDefault: UserDefaults, wallet: CreateWalletResponse) async throws {
     
@@ -68,7 +71,7 @@ func saveCreateWalletResponse(userDefault: UserDefaults, wallet: CreateWalletRes
 
 func getAssetPrice(asset: String) async throws -> Double {
     /// Configure the URL for our request.
-    let url = URL(string: "\(BIRDEYE_BASE_URL)/v1/defi/price?address=\(asset)")!
+    let url = URL(string: "\(BIRDEYE_BASE_URL)/v1/defi/price?address=\(asset)&environment=\(ENVIRONMENT)")!
     
     /// Create a URLRequest for the POST request.
     var request = URLRequest(url: url)
@@ -96,7 +99,7 @@ func getAssetPrice(asset: String) async throws -> Double {
 
 func getWalletPortfolio(wallet: String) async throws -> [BalanceV1] {
     /// Configure the URL for our request.
-    let url = URL(string: "\(BIRDEYE_BASE_URL)/v1/wallets/token_list?wallet=\(wallet)&environment=Mainnet")!
+    let url = URL(string: "\(BIRDEYE_BASE_URL)/v1/wallets/token_list?wallet=\(wallet)&environment=\(ENVIRONMENT)")!
     
     /// Create a URLRequest for the POST request.
     var request = URLRequest(url: url)
@@ -123,7 +126,7 @@ func getWalletPortfolio(wallet: String) async throws -> [BalanceV1] {
 
 func getWalletBalance(wallet: String) async throws -> String {
     /// Configure the URL for our request.
-    let url = URL(string: "\(BIRDEYE_BASE_URL)/v1/wallets/wallet_balance?wallet=\(wallet)&environment=Mainnet")!
+    let url = URL(string: "\(BIRDEYE_BASE_URL)/v1/wallets/wallet_balance?wallet=\(wallet)&environment=\(ENVIRONMENT)")!
     
     /// Create a URLRequest for the POST request.
     var request = URLRequest(url: url)
