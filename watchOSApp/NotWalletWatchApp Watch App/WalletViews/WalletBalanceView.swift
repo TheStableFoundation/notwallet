@@ -104,7 +104,7 @@ struct WalletBalanceView: View {
 
     // MARK: - Environment
 
-    @Environment(\.defaultMinListRowHeight) private var minRowHeight
+    @SwiftUI.Environment(\.defaultMinListRowHeight) private var minRowHeight
 }
 
 extension WalletBalanceView {

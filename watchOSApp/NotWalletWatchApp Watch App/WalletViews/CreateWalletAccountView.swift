@@ -81,7 +81,7 @@ struct CreateWalletAccountView: View {
 
     // MARK: - Private
     
-    @Environment(\.dismiss) private var dismiss
+    @SwiftUI.Environment(\.dismiss) private var dismiss
     @ObservedObject private var viewModel: ViewModel
 }
 

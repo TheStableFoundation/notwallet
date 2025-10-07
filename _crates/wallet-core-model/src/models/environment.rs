@@ -1,13 +1,24 @@
 use {
     serde::{Deserialize, Serialize},
     smbcloud_wallet_constants::rpc::{local_rpc_url, mainnet_rpc_url, testnet_rpc_url},
+    std::fmt::Display,
 };
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, uniffi::Enum)]
 pub enum Environment {
     Local,
     Testnet,
     Mainnet,
+}
+
+impl Display for Environment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Local => write!(f, "Local network"),
+            Self::Testnet => write!(f, "Test network"),
+            Self::Mainnet => write!(f, "Main network"),
+        }
+    }
 }
 
 impl Environment {
