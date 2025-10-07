@@ -1,7 +1,6 @@
 use {
-    crate::models::_balance::Balance,
     smbcloud_wallet_constants::constants::SPL_TOKEN_PROGRAM_ID,
-    smbcloud_wallet_core_model::models::asset_solana::SolanaAsset,
+    smbcloud_wallet_core_model::models::{asset_solana::SolanaAsset, balance_v1::BalanceV1},
     smbcloud_wallet_core_network::model::ErrorResponse,
     smbcloud_wallet_core_rpc::balance::{
         sol_balance::sol_balance, spl_token_accounts_with_balance::spl_token_accounts_with_balance,
@@ -12,15 +11,15 @@ use {
 pub async fn wallet_token_list(
     rpc_url: String,
     pubkey: String,
-) -> Result<Vec<Balance>, ErrorResponse> {
-    let mut aggregates: Vec<Balance> = Vec::new();
+) -> Result<Vec<BalanceV1>, ErrorResponse> {
+    let mut aggregates: Vec<BalanceV1> = Vec::new();
 
     // Get SOL balance
     let sol_balance = sol_balance(rpc_url.clone(), pubkey.clone()).unwrap_or((0, 0.0));
 
     println!("🦀🦀  Balance {:?} SOL", sol_balance);
     let native_asset = SolanaAsset::native();
-    aggregates.push(Balance {
+    aggregates.push(BalanceV1 {
         meta: native_asset.metadata(),
         balance: sol_balance.0,
         ui_amount: sol_balance.1,
@@ -60,7 +59,7 @@ pub async fn wallet_token_list(
                 0.0
             }
         };
-        aggregates.push(Balance {
+        aggregates.push(BalanceV1 {
             meta: asset.metadata(),
             balance: amount,
             ui_amount,
