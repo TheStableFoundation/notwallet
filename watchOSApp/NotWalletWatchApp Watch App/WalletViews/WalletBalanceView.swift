@@ -43,22 +43,32 @@ struct WalletBalanceView: View {
 
                         ForEach(balances, id: \.meta.address) { balance in
                             Button(action: { }) {
-                                VStack(alignment: .leading) {
-                                    Text("\(balance.display())")
-                                        .alignmentGuide(.trailing) { _ in
-                                            -10
+                                HStack(alignment: .top) {
+                                    AsyncImage(url: URL(string: balance.meta.logo_uri)) { image in
+                                        image.resizable()
+                                        } placeholder: {
+                                            Color.red
                                         }
-                                        .padding(.horizontal)
-                                    Text(balance.meta.address)
-                                        .font(.system(size: 12, weight: .light, design: .rounded))
-                                        .foregroundColor(.yellow)
-                                        .padding(.horizontal)
+                                        .frame(width: 24, height: 24)
+                                        .clipShape(.rect(cornerRadius: 12))
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text("\(balance.display())")
+                                            .alignmentGuide(.trailing) { _ in
+                                                -10
+                                            }
+                                            .padding(.horizontal)
+                                        Text(balance.meta.address)
+                                            .font(.system(size: 12, weight: .light, design: .rounded))
+                                            .foregroundColor(.yellow)
+                                            .padding(.horizontal)
+                                    }
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(Color(.purple))
+                                    )
+                                    .padding(.horizontal)
                                 }
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .fill(Color(.purple))
-                                )
-                                .padding()
                             }
                             .buttonStyle(.plain)
                         }
