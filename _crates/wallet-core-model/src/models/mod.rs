@@ -1,4 +1,6 @@
 pub mod asset;
+pub mod asset_metadata;
+pub mod asset_solana;
 pub mod balance;
 pub mod birdeye_price_response;
 pub mod environment;

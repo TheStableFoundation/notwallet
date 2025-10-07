@@ -3551,6 +3551,8 @@ dependencies = [
  "serde",
  "serde_json",
  "smbcloud-wallet-constants",
+ "smbcloud-wallet-core-network",
+ "smbcloud-wallet-core-rpc",
  "uniffi",
 ]
 
@@ -3583,8 +3585,6 @@ dependencies = [
  "serde",
  "serde_json",
  "smbcloud-wallet-constants",
- "smbcloud-wallet-core-http",
- "smbcloud-wallet-core-model",
  "smbcloud-wallet-core-network",
  "solana-account-decoder",
  "solana-client",
