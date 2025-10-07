@@ -4,7 +4,7 @@ use {
         model::airdrop::{AirdropRequest, AirdropResponse},
     },
     reqwest::Client,
-    smbcloud_wallet_network::{model::ErrorResponse, request},
+    smbcloud_wallet_core_network::{model::ErrorResponse, request},
 };
 
 pub async fn airdrop(pubkey: String, signature: String) -> Result<AirdropResponse, ErrorResponse> {

@@ -2,7 +2,7 @@ use {
     crate::constants::rpc::rpc_url,
     log::info,
     smbcloud_wallet_kit::{balance::other_assets_balance, models::asset::AssetBalance},
-    smbcloud_wallet_network::model::ErrorResponse,
+    smbcloud_wallet_core_network::model::ErrorResponse,
     tauri::command,
 };
 

@@ -1,11 +1,11 @@
 use {
     smbcloud_wallet_constants::constants::{SOLANA, SOL_DECIMALS, SPL_TOKEN_PROGRAM_ID},
     smbcloud_wallet_core_model::models::balance::Balance,
+    smbcloud_wallet_core_network::model::ErrorResponse,
     smbcloud_wallet_core_rpc::balance::{
         sol_balance::sol_balance as core_sol_balance,
         spl_token_accounts_with_balance::spl_token_accounts_with_balance,
     },
-    smbcloud_wallet_network::model::ErrorResponse,
 };
 
 pub async fn wallet_balance_aggregate(

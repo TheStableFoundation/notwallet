@@ -11,7 +11,7 @@ use smbcloud_wallet_kit::{
         send_jupiter_swap_transaction,
     },
 };
-use smbcloud_wallet_network::model::{ErrorCode, ErrorResponse};
+use smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse};
 use solana_sdk::signature::{Keypair, Signature};
 use tauri::{command, AppHandle};
 

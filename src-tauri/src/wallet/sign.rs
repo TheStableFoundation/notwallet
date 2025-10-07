@@ -5,7 +5,7 @@ use {
         network::airdrop::airdrop,
     },
     bs58,
-    smbcloud_wallet_network::model::{ErrorCode, ErrorResponse},
+    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
     solana_sdk::signature::{Keypair, Signer},
     tauri::{command, AppHandle},
 };

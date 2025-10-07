@@ -3511,8 +3511,8 @@ dependencies = [
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core-http",
  "smbcloud-wallet-core-model",
+ "smbcloud-wallet-core-network",
  "smbcloud-wallet-core-rpc",
- "smbcloud-wallet-network",
  "solana-account-decoder",
  "solana-client",
  "solana-derivation-path",
@@ -3534,7 +3534,7 @@ dependencies = [
  "serde_json",
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core-model",
- "smbcloud-wallet-network",
+ "smbcloud-wallet-core-network",
  "solana-account-decoder",
  "solana-client",
  "solana-derivation-path",
@@ -3554,6 +3554,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "smbcloud-wallet-core-network"
+version = "0.1.0"
+dependencies = [
+ "bs58",
+ "env_logger",
+ "log",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "strum",
+ "strum_macros",
+ "thiserror 1.0.69",
+ "tokio",
+ "tsync",
+]
+
+[[package]]
 name = "smbcloud-wallet-core-rpc"
 version = "1.0.0"
 dependencies = [
@@ -3566,7 +3584,7 @@ dependencies = [
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core-http",
  "smbcloud-wallet-core-model",
- "smbcloud-wallet-network",
+ "smbcloud-wallet-core-network",
  "solana-account-decoder",
  "solana-client",
  "solana-derivation-path",
@@ -3590,24 +3608,6 @@ dependencies = [
  "solana-sdk",
  "uniffi",
  "uuid",
-]
-
-[[package]]
-name = "smbcloud-wallet-network"
-version = "0.1.0"
-dependencies = [
- "bs58",
- "env_logger",
- "log",
- "reqwest",
- "serde",
- "serde_json",
- "serde_repr",
- "strum",
- "strum_macros",
- "thiserror 1.0.69",
- "tokio",
- "tsync",
 ]
 
 [[package]]

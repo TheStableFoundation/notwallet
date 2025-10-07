@@ -4065,10 +4065,10 @@ dependencies = [
  "serde_json",
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core",
+ "smbcloud-wallet-core-network",
  "smbcloud-wallet-core-rpc",
  "smbcloud-wallet-kit",
  "smbcloud-wallet-kit-v3",
- "smbcloud-wallet-network",
  "solana-sdk 2.3.1",
  "solana-signer 3.0.0",
  "tauri",
@@ -6400,8 +6400,8 @@ dependencies = [
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core-http",
  "smbcloud-wallet-core-model",
+ "smbcloud-wallet-core-network",
  "smbcloud-wallet-core-rpc",
- "smbcloud-wallet-network",
  "solana-account-decoder 3.1.0",
  "solana-client 3.1.0",
  "solana-derivation-path 3.0.0",
@@ -6423,7 +6423,7 @@ dependencies = [
  "serde_json",
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core-model",
- "smbcloud-wallet-network",
+ "smbcloud-wallet-core-network",
  "solana-account-decoder 3.1.0",
  "solana-client 3.1.0",
  "solana-derivation-path 3.0.0",
@@ -6443,6 +6443,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "smbcloud-wallet-core-network"
+version = "0.1.0"
+dependencies = [
+ "bs58",
+ "env_logger 0.10.2",
+ "log",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "strum",
+ "strum_macros",
+ "thiserror 1.0.69",
+ "tokio",
+ "tsync",
+]
+
+[[package]]
 name = "smbcloud-wallet-core-rpc"
 version = "1.0.0"
 dependencies = [
@@ -6455,7 +6473,7 @@ dependencies = [
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core-http",
  "smbcloud-wallet-core-model",
- "smbcloud-wallet-network",
+ "smbcloud-wallet-core-network",
  "solana-account-decoder 3.1.0",
  "solana-client 3.1.0",
  "solana-derivation-path 3.0.0",
@@ -6481,8 +6499,8 @@ dependencies = [
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core",
  "smbcloud-wallet-core-http",
+ "smbcloud-wallet-core-network",
  "smbcloud-wallet-core-rpc",
- "smbcloud-wallet-network",
  "solana-account-decoder 2.3.12",
  "solana-address",
  "solana-client 2.3.12",
@@ -6511,24 +6529,6 @@ dependencies = [
  "solana-sdk 3.0.0",
  "uniffi",
  "uuid",
-]
-
-[[package]]
-name = "smbcloud-wallet-network"
-version = "0.1.0"
-dependencies = [
- "bs58",
- "env_logger 0.10.2",
- "log",
- "reqwest",
- "serde",
- "serde_json",
- "serde_repr",
- "strum",
- "strum_macros",
- "thiserror 1.0.69",
- "tokio",
- "tsync",
 ]
 
 [[package]]

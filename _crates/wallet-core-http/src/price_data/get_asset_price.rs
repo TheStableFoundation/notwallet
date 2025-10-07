@@ -5,7 +5,7 @@ use {
         BIRDEYE_API_KEY, BIRDEYE_BASE_URL, BIRDEYE_PRICE_PATH, USER_AGENT,
     },
     smbcloud_wallet_core_model::models::birdeye_price_response::BirdeyePriceResponse,
-    smbcloud_wallet_network::{model::ErrorResponse, request},
+    smbcloud_wallet_core_network::{model::ErrorResponse, request},
 };
 
 pub async fn get_asset_price(asset: &str) -> Result<BirdeyePriceResponse, ErrorResponse> {

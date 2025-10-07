@@ -1,6 +1,6 @@
 use {
     crate::balance::spl_token_accounts::spl_token_accounts, log::debug,
-    smbcloud_wallet_network::model::ErrorResponse,
+    smbcloud_wallet_core_network::model::ErrorResponse,
     solana_account_decoder::parse_token::UiTokenAccount,
 };
 

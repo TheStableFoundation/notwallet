@@ -48,7 +48,7 @@ smbcloud-wallet-core = { path = "./../_crates/wallet-core" }
 smbcloud-wallet-core-rpc = { path = "./../_crates/wallet-core-rpc" }
 smbcloud-wallet-kit = { path = "./../_crates/wallet-kit" }
 smbcloud-wallet-kit-v3 = { path = "./../_crates/" }
-smbcloud-wallet-network = { path = "./../_crates/wallet-network" }
+smbcloud-wallet-core-network = { path = "./../_crates/wallet-core-network" }
 
 [target.'cfg(any(target_os = "android"))'.dependencies]
 tauri-plugin-android-tv-check = "1"

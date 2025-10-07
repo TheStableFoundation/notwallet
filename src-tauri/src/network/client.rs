@@ -2,7 +2,7 @@ use {
     crate::constants::network::API_BASE_URL,
     crate::model::client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
     reqwest::Client,
-    smbcloud_wallet_network::{
+    smbcloud_wallet_core_network::{
         model::{ErrorCode, ErrorResponse},
         request,
     },

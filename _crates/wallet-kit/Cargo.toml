@@ -24,7 +24,7 @@ smbcloud-wallet-constants = { path = "../wallet-constants" }
 smbcloud-wallet-core = { path = "../wallet-core" }
 smbcloud-wallet-core-http = { path = "../wallet-core-http" }
 smbcloud-wallet-core-rpc = { path = "../wallet-core-rpc" }
-smbcloud-wallet-network = { path = "../wallet-network" }
+smbcloud-wallet-core-network = { path = "../wallet-core-network" }
 solana-account-decoder = "2.3.1"
 solana-address = "1"
 solana-client = "2.3.1"

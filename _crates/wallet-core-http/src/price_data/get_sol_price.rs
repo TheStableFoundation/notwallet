@@ -1,7 +1,7 @@
 use {
     crate::price_data::get_asset_price::get_asset_price,
     smbcloud_wallet_constants::constants::SOLANA,
-    smbcloud_wallet_network::model::{ErrorCode::BalanceError, ErrorResponse},
+    smbcloud_wallet_core_network::model::{ErrorCode::BalanceError, ErrorResponse},
 };
 
 pub async fn get_sol_price() -> Result<f64, ErrorResponse> {

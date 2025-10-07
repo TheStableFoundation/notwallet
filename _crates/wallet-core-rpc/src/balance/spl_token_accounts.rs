@@ -1,7 +1,7 @@
 use {
     log::{debug, error},
     serde::{Deserialize, Serialize},
-    smbcloud_wallet_network::model::{
+    smbcloud_wallet_core_network::model::{
         ErrorCode::{InvalidPubkey, NetworkError},
         ErrorResponse,
     },

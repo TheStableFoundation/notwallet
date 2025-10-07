@@ -7,7 +7,7 @@ use {
         sol_balance::sol_balance as core_sol_balance,
         spl_token_accounts_with_balance::spl_token_accounts_with_balance,
     },
-    smbcloud_wallet_network::model::ErrorResponse,
+    smbcloud_wallet_core_network::model::ErrorResponse,
     std::time::Duration,
     tokio::time::sleep,
 };

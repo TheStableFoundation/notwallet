@@ -18,7 +18,7 @@ use {
         balance::sol_balance,
         transactions::{create_token_transfer_ix, create_transfer_ix},
     },
-    smbcloud_wallet_network::model::{ErrorCode, ErrorResponse},
+    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
     solana_signer::Signer,
     tauri::{command, AppHandle},
     uuid::Uuid,
