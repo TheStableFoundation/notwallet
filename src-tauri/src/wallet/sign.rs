@@ -5,9 +5,9 @@ use {
         network::airdrop::airdrop,
     },
     bs58,
-    network::model::{ErrorCode, ErrorResponse},
     solana_sdk::signature::{Keypair, Signer},
     tauri::{command, AppHandle},
+    wallet_network::model::{ErrorCode, ErrorResponse},
 };
 
 #[command]

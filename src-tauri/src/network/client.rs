@@ -1,11 +1,11 @@
 use {
     crate::constants::network::API_BASE_URL,
     crate::model::client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
-    network::{
+    reqwest::Client,
+    wallet_network::{
         model::{ErrorCode, ErrorResponse},
         request,
     },
-    reqwest::Client,
 };
 
 /// Send client information to the server

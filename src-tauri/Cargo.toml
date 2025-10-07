@@ -19,12 +19,10 @@ base64 = "0.21"
 bip39 = { version = "2", features = ["rand"] }
 bs58 = "0.5"
 chrono = { version = "0.4", features = ["serde"] }
-constants = { path = "./../_crates/constants" }
 
 # Transitive dependencies override.
 curve25519-dalek = "4.1.3"
 log = "0.4"
-network = { path = "./../_crates/network" }
 openssl = { version = "0.10", features = ["vendored"] }
 reqwest = { version = "0.12", default-features = false, features = [
     "json",
@@ -45,10 +43,12 @@ tauri-plugin-store = "2"
 thiserror = "1.0"
 tsync = "2"
 uuid = { version = "1", features = ["v4"] }
-wallet_core = { path = "./../_crates/wallet-core" }
-wallet_kit = { path = "./../_crates/wallet-kit" }
-wallet_core_rpc = { path = "./../_crates/wallet-core-rpc" }
-wallet_kit_v3 = { path = "./../_crates/" }
+wallet-constants = { path = "./../_crates/wallet-constants" }
+wallet-core = { path = "./../_crates/wallet-core" }
+wallet-core-rpc = { path = "./../_crates/wallet-core-rpc" }
+wallet-kit = { path = "./../_crates/wallet-kit" }
+wallet-kit-v3 = { path = "./../_crates/" }
+wallet-network = { path = "./../_crates/wallet-network" }
 
 [target.'cfg(any(target_os = "android"))'.dependencies]
 tauri-plugin-android-tv-check = "1"

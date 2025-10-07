@@ -784,13 +784,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7c74b8349d32d297c9134b8c88677813a227df8f779daa29bfc29c183fe3dca6"
 
 [[package]]
-name = "constants"
-version = "0.1.0"
-dependencies = [
- "tsync",
-]
-
-[[package]]
 name = "convert_case"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2228,24 +2221,6 @@ dependencies = [
  "security-framework 2.11.1",
  "security-framework-sys",
  "tempfile",
-]
-
-[[package]]
-name = "network"
-version = "0.1.0"
-dependencies = [
- "bs58",
- "env_logger",
- "log",
- "reqwest",
- "serde",
- "serde_json",
- "serde_repr",
- "strum",
- "strum_macros",
- "thiserror 1.0.69",
- "tokio",
- "tsync",
 ]
 
 [[package]]
@@ -6298,14 +6273,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "wallet_core"
+name = "wallet-constants"
+version = "0.1.0"
+dependencies = [
+ "tsync",
+]
+
+[[package]]
+name = "wallet-core"
 version = "1.0.0"
 dependencies = [
  "bip39",
  "bs58",
- "constants",
  "log",
- "network",
  "reqwest",
  "serde",
  "serde_json",
@@ -6316,20 +6296,20 @@ dependencies = [
  "solana-rpc-client",
  "solana-sdk",
  "tokio",
- "wallet_core_http",
- "wallet_core_model",
- "wallet_core_rpc",
+ "wallet-constants",
+ "wallet-core-http",
+ "wallet-core-model",
+ "wallet-core-rpc",
+ "wallet-network",
 ]
 
 [[package]]
-name = "wallet_core_http"
+name = "wallet-core-http"
 version = "1.0.0"
 dependencies = [
  "bip39",
  "bs58",
- "constants",
  "log",
- "network",
  "reqwest",
  "serde",
  "serde_json",
@@ -6340,11 +6320,13 @@ dependencies = [
  "solana-rpc-client",
  "solana-sdk",
  "tokio",
- "wallet_core_model",
+ "wallet-constants",
+ "wallet-core-model",
+ "wallet-network",
 ]
 
 [[package]]
-name = "wallet_core_model"
+name = "wallet-core-model"
 version = "1.0.0"
 dependencies = [
  "serde",
@@ -6353,14 +6335,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "wallet_core_rpc"
+name = "wallet-core-rpc"
 version = "1.0.0"
 dependencies = [
  "bip39",
  "bs58",
- "constants",
  "log",
- "network",
  "reqwest",
  "serde",
  "serde_json",
@@ -6371,24 +6351,44 @@ dependencies = [
  "solana-rpc-client",
  "solana-sdk",
  "tokio",
- "wallet_core_http",
- "wallet_core_model",
+ "wallet-constants",
+ "wallet-core-http",
+ "wallet-core-model",
+ "wallet-network",
 ]
 
 [[package]]
-name = "wallet_kit_v3"
+name = "wallet-kit-v3"
 version = "1.0.0"
 dependencies = [
  "bs58",
  "chrono",
- "constants",
  "solana-sdk",
  "uniffi",
  "uuid",
- "wallet_core",
- "wallet_core_http",
- "wallet_core_model",
- "wallet_core_rpc",
+ "wallet-constants",
+ "wallet-core",
+ "wallet-core-http",
+ "wallet-core-model",
+ "wallet-core-rpc",
+]
+
+[[package]]
+name = "wallet-network"
+version = "0.1.0"
+dependencies = [
+ "bs58",
+ "env_logger",
+ "log",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "strum",
+ "strum_macros",
+ "thiserror 1.0.69",
+ "tokio",
+ "tsync",
 ]
 
 [[package]]

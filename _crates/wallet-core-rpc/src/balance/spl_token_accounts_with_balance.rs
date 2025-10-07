@@ -1,6 +1,6 @@
 use {
-    crate::balance::spl_token_accounts::spl_token_accounts, network::model::ErrorResponse,
-    solana_account_decoder::parse_token::UiTokenAccount,
+    crate::balance::spl_token_accounts::spl_token_accounts,
+    solana_account_decoder::parse_token::UiTokenAccount, wallet_network::model::ErrorResponse,
 };
 
 pub fn spl_token_accounts_with_balance(

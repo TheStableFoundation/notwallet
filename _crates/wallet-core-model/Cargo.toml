@@ -1,5 +1,5 @@
 [package]
-name = "wallet_core_model"
+name = "wallet-core-model"
 version = "1.0.0"
 edition = "2021"
 description = "Wallet Core Model"

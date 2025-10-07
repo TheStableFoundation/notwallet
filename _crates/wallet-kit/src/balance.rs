@@ -3,10 +3,9 @@ use {
         assets::SOLANA,
         models::{asset::AssetBalance, currency::FiatCurrency},
     },
-    constants::constants::{BACH_TOKEN, LAMPORTS_PER_SOL, SPL_TOKEN_PROGRAM_ID},
     log::error,
-    network::model::ErrorResponse,
     std::collections::HashMap,
+    wallet_constants::constants::{BACH_TOKEN, LAMPORTS_PER_SOL, SPL_TOKEN_PROGRAM_ID},
     wallet_core_http::price_data::{
         get_asset_price::get_asset_price, get_sol_price::get_sol_price,
     },
@@ -14,6 +13,7 @@ use {
         sol_balance::sol_balance as core_sol_balance, spl_token_accounts::spl_token_accounts,
         spl_token_accounts_with_balance::spl_token_accounts_with_balance,
     },
+    wallet_network::model::ErrorResponse,
 };
 
 pub fn sol_balance(rpc_url: String, pubkey: String) -> String {

@@ -4,7 +4,6 @@ use crate::constants::{
 };
 use crate::model::keypair::SolanaWallet;
 use bs58;
-use network::model::{ErrorCode, ErrorResponse};
 use solana_sdk::signature::{Keypair, Signature};
 use tauri::{command, AppHandle};
 use wallet_kit::{
@@ -14,6 +13,7 @@ use wallet_kit::{
         send_jupiter_swap_transaction,
     },
 };
+use wallet_network::model::{ErrorCode, ErrorResponse};
 
 #[command]
 pub async fn get_swap_quote(

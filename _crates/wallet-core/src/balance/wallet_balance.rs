@@ -1,8 +1,7 @@
 use {
-    constants::constants::{LAMPORTS_PER_SOL, SPL_TOKEN_PROGRAM_ID},
-    network::model::ErrorResponse,
     std::time::Duration,
     tokio::time::sleep,
+    wallet_constants::constants::{LAMPORTS_PER_SOL, SPL_TOKEN_PROGRAM_ID},
     wallet_core_http::price_data::{
         get_asset_price::get_asset_price, get_sol_price::get_sol_price,
     },
@@ -10,6 +9,7 @@ use {
         sol_balance::sol_balance as core_sol_balance,
         spl_token_accounts_with_balance::spl_token_accounts_with_balance,
     },
+    wallet_network::model::ErrorResponse,
 };
 
 pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, ErrorResponse> {

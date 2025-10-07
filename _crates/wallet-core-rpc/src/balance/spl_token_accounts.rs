@@ -1,15 +1,15 @@
 use {
     log::{debug, error},
-    network::model::{
-        ErrorCode::{InvalidPubkey, NetworkError},
-        ErrorResponse,
-    },
     serde::{Deserialize, Serialize},
     solana_account_decoder::{parse_token::UiTokenAccount, UiAccountData},
     solana_client::rpc_request::TokenAccountsFilter,
     solana_rpc_client::rpc_client::RpcClient,
     solana_sdk::pubkey::Pubkey,
     std::str::FromStr,
+    wallet_network::model::{
+        ErrorCode::{InvalidPubkey, NetworkError},
+        ErrorResponse,
+    },
 };
 
 pub fn spl_token_accounts(

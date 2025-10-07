@@ -3,7 +3,7 @@
 //! These tests verify that the 0.25% fee system works correctly for both SOL and token transfers.
 
 use {
-    constants::constants::{
+    wallet_constants::constants::{
         LAMPORTS_PER_SOL, SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
     },
     wallet_kit::fee::{FeeBreakdown, FeeConfig, TreasuryFeeManager, DEFAULT_FEE_PERCENTAGE},

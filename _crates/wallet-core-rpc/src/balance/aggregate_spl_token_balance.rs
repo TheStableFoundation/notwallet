@@ -47,7 +47,7 @@ pub fn aggregate_spl_token_balance(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use constants::constants::{BACH_TOKEN, SPL_TOKEN_PROGRAM_ID};
+    use wallet_constants::constants::{BACH_TOKEN, SPL_TOKEN_PROGRAM_ID};
 
     #[test]
     fn test_aggregate_spl_token_balance_invalid_pubkey() {

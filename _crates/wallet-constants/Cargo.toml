@@ -1,5 +1,5 @@
 [package]
-name = "constants"
+name = "wallet-constants"
 version = "0.1.0"
 edition = "2021"
 description = "Solana toolkit for Not Wallet"
@@ -7,7 +7,7 @@ license = "MIT"
 
 [lib]
 crate-type = ["lib", "cdylib", "staticlib"]
-name = "constants"
+name = "wallet_constants"
 
 [dependencies]
 tsync = "2"

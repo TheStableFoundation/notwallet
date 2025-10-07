@@ -10,18 +10,18 @@ use {
         },
         model::{keypair::SolanaWallet, seed::Seed},
     },
-    constants::constants::SPL_TOKEN_PROGRAM_ID,
     log::{debug, info},
-    network::model::{ErrorCode, ErrorResponse},
     solana_signer::Signer,
     tauri::{command, AppHandle},
     uuid::Uuid,
+    wallet_constants::constants::SPL_TOKEN_PROGRAM_ID,
     wallet_core::derive_keypair::derive_keypair_default,
     wallet_core_rpc::balance::spl_balance::spl_balance,
     wallet_kit::{
         balance::sol_balance,
         transactions::{create_token_transfer_ix, create_transfer_ix},
     },
+    wallet_network::model::{ErrorCode, ErrorResponse},
 };
 
 #[command]
