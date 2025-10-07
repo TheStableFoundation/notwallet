@@ -27,12 +27,5 @@ pub const JUPITER_SWAP_PATH: &str = "swap/v1/swap";
 pub const JUPITER_PRICE_PATH: &str = "price/v3";
 
 /// Birdeye
-pub const BIRDEYE_API_KEY: &str = "YOUR_API_KEY_HERE";
 pub const BIRDEYE_BASE_URL: &str = "https://public-api.birdeye.so/";
 pub const BIRDEYE_PRICE_PATH: &str = "defi/price";
-
-/// Network request
-#[cfg(debug_assertions)]
-pub const USER_AGENT: &str = "NotWallet Crypto Debug";
-#[cfg(not(debug_assertions))]
-pub const USER_AGENT: &str = "NotWallet Crypto";

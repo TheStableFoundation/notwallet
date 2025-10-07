@@ -12,7 +12,12 @@ use {
     tokio::time::sleep,
 };
 
-pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, ErrorResponse> {
+pub async fn wallet_balance(
+    rpc_url: String,
+    api_key: &str,
+    user_agent: &str,
+    pubkey: String,
+) -> Result<String, ErrorResponse> {
     // Get SOL balance
     let sol_amount = match core_sol_balance(rpc_url.clone(), pubkey.clone()) {
         Ok(balance) => balance.1,
@@ -24,7 +29,7 @@ pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, E
     // Get current prices in the target currency
     // If SOL balance is less than 0.000000001 SOL, we don't query the price.
     let sol_price = if sol_amount >= 0.000000001 {
-        get_sol_price().await?
+        get_sol_price(api_key, user_agent).await?
     } else {
         0.0
     };
@@ -51,7 +56,7 @@ pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, E
     for token in spl_tokens {
         // By pass too many request error from BiredEye 😂
         sleep(Duration::from_millis(800)).await;
-        let token_price = match get_asset_price(&token.mint).await {
+        let token_price = match get_asset_price(&token.mint, api_key, user_agent).await {
             Ok(price) => price.data.value,
             Err(err) => {
                 println!(

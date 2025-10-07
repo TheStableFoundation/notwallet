@@ -28,6 +28,8 @@ pub fn sol_balance(rpc_url: String, pubkey: String) -> String {
 
 pub async fn wallet_balance(
     rpc_url: String,
+    api_key: &str,
+    user_agent: &str,
     pubkey: String,
     currency: Option<FiatCurrency>,
 ) -> Result<String, ErrorResponse> {
@@ -40,7 +42,7 @@ pub async fn wallet_balance(
     // Get current prices in the target currency
     // If SOL balance is less than 0.000000001 SOL, we don't query the price.
     let sol_price = if sol_amount >= 0.000000001 {
-        get_sol_price().await?
+        get_sol_price(api_key, user_agent).await?
     } else {
         0.0
     };
@@ -63,7 +65,7 @@ pub async fn wallet_balance(
 
     let mut spl_value = 0.0;
     for token in spl_tokens {
-        let token_price = match get_asset_price(&token.mint).await {
+        let token_price = match get_asset_price(&token.mint, api_key, user_agent).await {
             Ok(price) => price.data.value,
             Err(err) => {
                 error!("Failed to get price for token {}: {:?}", token.mint, err);
@@ -154,6 +156,8 @@ mod tests {
         // even when SPL operations fail
         let result = wallet_balance(
             "https://api.mainnet-beta.solana.com".to_string(),
+            "api-key",
+            "user-agent",
             "11111111111111111111111111111112".to_string(), // System program address (should have 0 SOL)
             Some(FiatCurrency::USD),
         )

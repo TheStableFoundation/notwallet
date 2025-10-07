@@ -4,8 +4,8 @@ use {
     smbcloud_wallet_core_network::model::{ErrorCode::BalanceError, ErrorResponse},
 };
 
-pub async fn get_sol_price() -> Result<f64, ErrorResponse> {
-    match get_asset_price(SOLANA).await {
+pub async fn get_sol_price(api_key: &str, user_agent: &str) -> Result<f64, ErrorResponse> {
+    match get_asset_price(SOLANA, api_key, user_agent).await {
         Ok(price) => {
             println!("🦀🦀  Got SOL price data: {:?}", price);
             if price.is_valid() {

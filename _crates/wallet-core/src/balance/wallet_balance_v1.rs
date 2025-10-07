@@ -4,7 +4,12 @@ use {
     smbcloud_wallet_core_network::model::ErrorResponse, std::time::Duration, tokio::time::sleep,
 };
 
-pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, ErrorResponse> {
+pub async fn wallet_balance(
+    rpc_url: String,
+    api_key: &str,
+    user_agent: &str,
+    pubkey: String,
+) -> Result<String, ErrorResponse> {
     // Get all assets for the given pubkey
     let assets_balance = match wallet_token_list(rpc_url, pubkey).await {
         Ok(list) => list,
@@ -18,10 +23,11 @@ pub async fn wallet_balance(rpc_url: String, pubkey: String) -> Result<String, E
         // Get the asset value from the current Balance.
         // Bypass too many request error from BirdEye 😂
         sleep(Duration::from_millis(800)).await;
-        let asset_value = match get_asset_price(&asset_balance.meta.address).await {
-            Ok(price) => price.data.value,
-            Err(_) => continue,
-        };
+        let asset_value =
+            match get_asset_price(&asset_balance.meta.address, api_key, user_agent).await {
+                Ok(price) => price.data.value,
+                Err(_) => continue,
+            };
         total_asset_value += asset_value;
     }
 
