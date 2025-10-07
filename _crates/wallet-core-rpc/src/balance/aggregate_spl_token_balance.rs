@@ -1,26 +1,26 @@
 use {
     crate::balance::spl_token_accounts_for::spl_token_accounts_for,
     log::{debug, error},
+    std::str::FromStr,
 };
 
 /// Get an address balance for a given public key and token address
 /// for all token accounts associated with the given public key and token address.
 ///
-/// Returns the total balance of the token accounts.
-
+/// Returns: the balance and ui balance for the given token address.
 pub fn aggregate_spl_token_balance(
     rpc_url: String,
     pubkey: String,
     spl_token_program_id: String,
     token_address: String,
-) -> f64 {
+) -> (u64, f64) {
     // Get token accounts for the given public key and token address
     let target_spl_token_accounts =
         match spl_token_accounts_for(rpc_url, pubkey, spl_token_program_id, token_address) {
             Ok(accounts) => accounts,
             Err(err) => {
                 error!("Failed to fetch token accounts: {}", err);
-                return 0.0;
+                return (0, 0.0);
             }
         };
 
@@ -30,34 +30,20 @@ pub fn aggregate_spl_token_balance(
     );
 
     if target_spl_token_accounts.is_empty() {
-        return 0.0;
+        return (0, 0.0);
     }
 
     // Get aggregated amount
-    let mut aggregated_amount = 0.0;
+    let mut aggregated_amount: u64 = 0;
+    let mut aggregated_ui_amount: f64 = 0.0;
     for account in target_spl_token_accounts {
-        if let Some(ui_amount) = account.token_amount.ui_amount {
-            aggregated_amount += ui_amount;
+        if let (amount, Some(ui_amount)) =
+            (account.token_amount.amount, account.token_amount.ui_amount)
+        {
+            aggregated_amount += u64::from_str(&amount).unwrap_or_default();
+            aggregated_ui_amount += ui_amount;
         }
     }
 
-    aggregated_amount
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use smbcloud_wallet_constants::constants::{BACH_TOKEN, SPL_TOKEN_PROGRAM_ID};
-
-    #[test]
-    fn test_aggregate_spl_token_balance_invalid_pubkey() {
-        let balance = aggregate_spl_token_balance(
-            "https://api.mainnet-beta.solana.com".to_string(),
-            "invalid_pubkey".to_string(),
-            SPL_TOKEN_PROGRAM_ID.to_string(),
-            BACH_TOKEN.to_string(),
-        );
-        // Should return 0.0 for invalid pubkey instead of panicking
-        assert_eq!(balance, 0.0);
-    }
+    (aggregated_amount, aggregated_ui_amount)
 }

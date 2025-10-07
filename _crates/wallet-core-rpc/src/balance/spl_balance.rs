@@ -12,7 +12,7 @@ pub fn spl_balance(
     );
 
     let balance = aggregate_spl_token_balance(rpc_url, pubkey, spl_token_program_id, token_address);
-    format!("{} BACH", balance)
+    format!("{} BACH", balance.1)
 }
 
 #[cfg(test)]
