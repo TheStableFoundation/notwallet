@@ -11,22 +11,21 @@ pub async fn wallet_balance(
     pubkey: String,
 ) -> Result<String, ErrorResponse> {
     // Get all assets for the given pubkey
-    let assets_balance = match wallet_token_list(rpc_url, pubkey).await {
+    let token_list = match wallet_token_list(rpc_url, pubkey).await {
         Ok(list) => list,
         Err(_) => return Ok(format!("{}{:.2}", "$", 0)),
     };
 
-    println!("🦀🦀  SPL tokens with balance: {:?}", assets_balance);
+    println!("🦀🦀  Assets with balance: {:?}", token_list);
 
     let mut total_asset_value = 0.0;
-    for asset_balance in assets_balance {
+    for token in token_list {
         // Get the asset value from the current Balance.
-        let asset_value =
-            match get_asset_price(&asset_balance.meta.address, api_key, user_agent).await {
-                Ok(price) => price.data.value,
-                Err(_) => continue,
-            };
-        total_asset_value += asset_value;
+        let asset_price = match get_asset_price(&token.meta.address, api_key, user_agent).await {
+            Ok(price) => price.data.value,
+            Err(_) => continue,
+        };
+        total_asset_value += token.ui_amount * asset_price;
     }
 
     println!("🦀🦀  Assets value is {:?} USD", total_asset_value);
