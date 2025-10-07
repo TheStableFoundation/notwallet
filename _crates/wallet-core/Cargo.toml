@@ -1,0 +1,30 @@
+[package]
+name = "smbcloud-wallet-core"
+version = "1.0.0"
+edition = "2021"
+description = "smbCloud Wallet Core for NotWallet Crypto."
+license = "MIT"
+
+[lib]
+crate-type = ["lib", "cdylib", "staticlib"]
+name = "smbcloud_wallet_core"
+
+[dependencies]
+bip39 = { version = "2", features = ["rand"] }
+bs58 = "0.5.0"
+log = "0.4.20"
+solana-derivation-path = "3"
+solana-sdk = "3"
+solana-rpc-client = { git = "https://github.com/setoelkahfi/agave", branch = "master" }
+solana-pubkey = "3"
+solana-account-decoder = { git = "https://github.com/setoelkahfi/agave", branch = "master" }
+solana-client = { git = "https://github.com/setoelkahfi/agave", branch = "master" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+smbcloud-wallet-core-network = { path = "../wallet-core-network" }
+smbcloud-wallet-constants = { path = "../wallet-constants" }
+smbcloud-wallet-core-http = { path = "../wallet-core-http" }
+smbcloud-wallet-core-rpc = { path = "../wallet-core-rpc" }
+smbcloud-wallet-core-model = { path = "../wallet-core-model" }
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1.35.1", features = ["full"] }

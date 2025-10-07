@@ -10,14 +10,14 @@ use {
     bip39::{Language, Mnemonic},
     chrono::Utc,
     log::{debug, error, info},
-    solana_signer::Signer,
-    tauri::{command, AppHandle},
-    uuid::Uuid,
-    wallet_core::derive_keypair::derive_keypair_default,
-    wallet_kit_v3::models::storage_key::{
+    smbcloud_wallet_core::derive_keypair::derive_keypair_default,
+    smbcloud_wallet_kit_v3::models::storage_key::{
         storage,
         StorageKey::{KeyPairs, Seeds},
     },
+    solana_signer::Signer,
+    tauri::{command, AppHandle},
+    uuid::Uuid,
 };
 
 #[command]

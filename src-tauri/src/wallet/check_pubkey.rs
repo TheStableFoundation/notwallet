@@ -1,7 +1,7 @@
 use {
     crate::model::airdrop::CheckPubkeyResponse,
     crate::network::check_pubkey::check_pubkey as network_check_pubkey, log::debug,
-    network::model::ErrorResponse, tauri::command,
+    smbcloud_wallet_core_network::model::ErrorResponse, tauri::command,
 };
 
 #[command]

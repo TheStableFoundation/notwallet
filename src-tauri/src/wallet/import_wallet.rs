@@ -6,11 +6,11 @@ use {
     },
     chrono::Utc,
     serde_json::json,
+    smbcloud_wallet_core::derive_keypair::derive_keypair_default,
     solana_signer::Signer,
     tauri::command,
     tauri::AppHandle,
     uuid::Uuid,
-    wallet_core::derive_keypair::derive_keypair_default,
 };
 
 #[command]

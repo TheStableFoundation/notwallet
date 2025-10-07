@@ -4,16 +4,16 @@ use crate::constants::{
 };
 use crate::model::keypair::SolanaWallet;
 use bs58;
-use network::model::{ErrorCode, ErrorResponse};
-use solana_sdk::signature::{Keypair, Signature};
-use tauri::{command, AppHandle};
-use wallet_kit::{
+use smbcloud_wallet_kit::{
     models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
     swap::{
         build_swap_transaction as build_swap_tx, get_jupiter_swap_quote,
         send_jupiter_swap_transaction,
     },
 };
+use smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse};
+use solana_sdk::signature::{Keypair, Signature};
+use tauri::{command, AppHandle};
 
 #[command]
 pub async fn get_swap_quote(

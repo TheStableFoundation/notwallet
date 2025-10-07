@@ -3,8 +3,8 @@ use {
         constants::network::API_BASE_URL,
         model::airdrop::{AirdropRequest, AirdropResponse},
     },
-    network::{model::ErrorResponse, request},
     reqwest::Client,
+    smbcloud_wallet_core_network::{model::ErrorResponse, request},
 };
 
 pub async fn airdrop(pubkey: String, signature: String) -> Result<AirdropResponse, ErrorResponse> {
