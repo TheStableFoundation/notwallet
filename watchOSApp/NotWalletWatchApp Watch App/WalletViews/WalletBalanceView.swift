@@ -75,34 +75,6 @@ struct WalletBalanceView: View {
                             .buttonStyle(.plain)
                         }
                         .frame(minHeight: minRowHeight)
-                        
-                        /*
-                        Divider()
-
-                        Button(action: {
-                            Task {
-                                // Call the callback
-                                // onResetWallet()
-                            }
-                        }) {
-                            HStack {
-                                Image(systemName: "gear")
-                                Text("Balance settings")
-                                    .font(.system(size: 18, weight: .medium, design: .rounded))
-                                    .foregroundColor(.primary)
-                                    .frame(height: 24)
-
-                                Spacer()
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color(.darkGray).opacity(0.6))
-                            )
-                        }
-                        .buttonStyle(.plain)*/
-
                     }
                 }
             }
