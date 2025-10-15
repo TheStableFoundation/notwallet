@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLang } from "../LanguageContext";
@@ -19,8 +18,8 @@ const navItems = [
     ),
   },
   {
-    path: "/lessons",
-    key: "lessons",
+    path: "/wallet",
+    key: "wallet",
     icon: (
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
         <path
@@ -70,7 +69,6 @@ export default function Navbar() {
             onChange={(e) => setLang(e.target.value)}
             aria-label="Change language"
           >
-            <option value="fa">فارسی</option>
             <option value="en">English</option>
             <option value="sv">Svenska</option>
           </select>
