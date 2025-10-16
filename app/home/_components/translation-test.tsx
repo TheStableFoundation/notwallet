@@ -1,19 +1,17 @@
 "use client";
 
-import React from "react";
 import {
   Box,
   Typography,
   Card,
-  CardContent,
   Button,
   Stack,
   Chip,
   Divider,
   Alert,
 } from "@mui/material";
-import { useI18n } from "@/lib/i18n/provider";
-import LanguageSwitcher from "@/lib/i18n/language-switcher";
+import { useI18n } from "@lib/i18n/provider";
+import LanguageSwitcher from "@lib/i18n/language-switcher";
 import { useRouter } from "next/navigation";
 
 export default function HomeTranslationTest() {

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -16,10 +17,10 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import WarningIcon from "@mui/icons-material/Warning";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
-import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@/lib/commands";
-import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@/lib/crate/generated";
-import { store } from "@/lib/store/store";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@lib/commands";
+import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@lib/crate/generated";
+import { store } from "@lib/store/store";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
 
 interface MemeToken {
   id: string;

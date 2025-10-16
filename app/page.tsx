@@ -2,10 +2,10 @@
 
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import { useAppLock } from "@/lib/context/app-lock-context";
+import { useAppLock } from "@lib/context/app-lock-context";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
-import LockedWalletView from "@/lib/components/locked-wallet-view";
-import { Seed, STORE_KEYPAIRS, STORE_PASSWORD } from "@/lib/crate/generated";
+import LockedWalletView from "@lib/components/locked-wallet-view";
+import { Seed, STORE_KEYPAIRS, STORE_PASSWORD } from "@lib/crate/generated";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
 import { store } from "../lib/store/store";

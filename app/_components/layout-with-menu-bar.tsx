@@ -1,11 +1,11 @@
 "use client";
 
 import { Container } from "@mui/material";
-import BottomTabBar from "@/lib/components/bottom-tab-bar";
-import { useAppLock } from "@/lib/context/app-lock-context";
+import BottomTabBar from "@lib/components/bottom-tab-bar";
+import { useAppLock } from "@lib/context/app-lock-context";
 import React from "react";
 import AndroidTvLayout from "./android-tv-layout";
-import { checkIfAndroidTv, checkIfMobileDevice } from "@/lib/helper";
+import { checkIfAndroidTv, checkIfMobileDevice } from "@lib/helper";
 
 export default function LayoutWithMenuBar({
   children,

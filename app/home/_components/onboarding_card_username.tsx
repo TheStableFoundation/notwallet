@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { store } from "@/lib/store/store";
-import { useI18n } from "@/lib/i18n/provider";
+import { store } from "@lib/store/store";
+import { useI18n } from "@lib/i18n/provider";
 
 type OnboardingCardUsernameProps = {
   open: boolean;

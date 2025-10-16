@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -9,14 +10,14 @@ import Tooltip from "@mui/material/Tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { invoke } from "@tauri-apps/api/core";
-import { GET_BACH_BALANCE } from "@/lib/commands";
+import { GET_BACH_BALANCE } from "@lib/commands";
 import { debug } from "@tauri-apps/plugin-log";
 import {
   BACH_TOKEN,
   THE_STABLE_FOUNDATION_ADDRESS,
-} from "@/lib/crate/generated";
-import { openExplorer } from "@/lib/helper";
-import { AssetIcon } from "@/lib/components/token-icons";
+} from "@lib/crate/generated";
+import { openExplorer } from "@lib/helper";
+import { AssetIcon } from "@lib/components/token-icons";
 
 enum LoadingState {
   Loading,

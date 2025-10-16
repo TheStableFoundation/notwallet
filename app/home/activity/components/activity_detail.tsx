@@ -1,7 +1,6 @@
 import { useSearchParams } from "next/navigation";
-import * as React from "react";
 import Box from "@mui/material/Box";
-import { feed } from "@/app/home/_components/feed";
+import { feed } from "@app/home/_components/feed";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";

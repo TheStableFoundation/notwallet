@@ -8,7 +8,7 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SchoolIcon from "@mui/icons-material/School";
 import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -75,7 +75,7 @@ export default function HorizontalMenu() {
     router.push("/home/learn");
   };
 
-  const handleM3m3 = async () => {
+  const _handleM3m3 = async () => {
     await selectionFeedback();
     router.push("/home/meme");
   };
