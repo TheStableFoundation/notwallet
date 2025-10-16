@@ -1,13 +1,13 @@
 "use client";
-import * as React from "react";
+
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useNavigate } from "react-router-dom";
 
 export type ActivityItem = {
   id: number | string;
@@ -24,12 +24,12 @@ export type ActivityItem = {
 };
 
 export default function ActivityComponent({ item }: { item: ActivityItem }) {
-  const router = useRouter();
+  const router = useNavigate();
   const handleClick = async () => {
     try {
       await selectionFeedback();
     } catch {}
-    router.push(`/home/activity?id=${item.id}`);
+    router(`/home/activity?id=${item.id}`);
   };
   return (
     <Card

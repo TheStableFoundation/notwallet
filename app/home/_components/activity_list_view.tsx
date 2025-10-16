@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { ActivityItem } from "./activity_component";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import OnboardingCard from "./onboarding_card";
@@ -19,7 +18,6 @@ import {
 import { store } from "@lib/store/store";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { feed } from "./feed";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
 import { useI18n } from "@lib/i18n/provider";
 
@@ -32,27 +30,9 @@ enum ActivityState {
 
 export default function ActivityListView() {
   const { t } = useI18n();
-  const [state, setState] = useState<ActivityState>(ActivityState.Loading);
+  const [, setState] = useState<ActivityState>(ActivityState.Loading);
   const [showOnboardingCard, setShowOnboardingCard] = useState(false);
-  const [activities, setActivities] = useState<ActivityItem[]>([]);
-  const [hasMore, setHasMore] = useState(true);
   const [pubkey, setPubkey] = useState<string | undefined>(undefined);
-
-  async function loadActivities() {
-    try {
-      setState(ActivityState.Loading);
-
-      // Simulate loading delay for initial load
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Use the initial feed data
-      setActivities(feed);
-      setState(ActivityState.Loaded);
-    } catch (error) {
-      console.error("Error loading activities:", error);
-      setState(ActivityState.Error);
-    }
-  }
 
   const init = async () => {
     try {

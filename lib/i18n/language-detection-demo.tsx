@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -34,7 +34,7 @@ interface BrowserInfo {
 }
 
 export default function LanguageDetectionDemo() {
-  const { t, language } = useI18n();
+  const { language } = useI18n();
   const [browserInfo, setBrowserInfo] = useState<BrowserInfo | null>(null);
 
   useEffect(() => {

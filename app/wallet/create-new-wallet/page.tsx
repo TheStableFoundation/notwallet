@@ -5,9 +5,6 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/navigation";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -15,17 +12,18 @@ import FormControl from "@mui/material/FormControl";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { store } from "@/lib/store/store";
+import { store } from "@lib/store/store";
 import { useEffect } from "react";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { Seed, STORE_SEEDS } from "@/lib/crate/generated";
-import { DERIVE_NEXT_KEYPAIR } from "@/lib/commands";
+import { Seed, STORE_SEEDS } from "@lib/crate/generated";
+import { DERIVE_NEXT_KEYPAIR } from "@lib/commands";
 import { invoke } from "@tauri-apps/api/core";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import AddIcon from "@mui/icons-material/Add";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useNavigate } from "react-router-dom";
 
 // Fetch all seed phrases from the tauri store
 async function fetchSeedsFromStore() {
@@ -35,7 +33,7 @@ async function fetchSeedsFromStore() {
 }
 
 export default function CreateNewWalletPage() {
-  const router = useRouter();
+  const router = useNavigate();
 
   // Add a special id for "create new"
   const CREATE_NEW_ID = "__create_new__";
@@ -66,7 +64,7 @@ export default function CreateNewWalletPage() {
     try {
       const result = await invoke<any>(DERIVE_NEXT_KEYPAIR, { seedUuid });
       // Navigate to done page with pubkey in search params
-      router.replace(
+      router(
         `/wallet/create-new-wallet/done?pubkey=${encodeURIComponent(result.pubkey)}`,
       );
     } catch (e: any) {
@@ -363,7 +361,7 @@ export default function CreateNewWalletPage() {
           onClick={async () => {
             await selectionFeedback();
             if (selectedSeed === CREATE_NEW_ID) {
-              router.push("/wallet/onboarding/create-wallet");
+              router("/wallet/onboarding/create-wallet");
             } else {
               const seed = existingSeeds.find((s) => s.id === selectedSeed);
               if (seed) {

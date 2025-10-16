@@ -12,11 +12,11 @@ import {
 } from "@mui/material";
 import { useI18n } from "@lib/i18n/provider";
 import LanguageSwitcher from "@lib/i18n/language-switcher";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeTranslationTest() {
   const { t, language } = useI18n();
-  const router = useRouter();
+  const router = useNavigate();
 
   const translationSections = [
     {
@@ -106,7 +106,7 @@ export default function HomeTranslationTest() {
             <LanguageSwitcher variant="minimal" />
             <Button
               variant="outlined"
-              onClick={() => router.push("/home")}
+              onClick={() => router("/home")}
               sx={{
                 borderRadius: "12px",
                 textTransform: "none",
@@ -259,7 +259,7 @@ export default function HomeTranslationTest() {
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               <Button
                 variant="outlined"
-                onClick={() => router.push("/home")}
+                onClick={() => router("/home")}
                 sx={{ borderRadius: "12px", textTransform: "none" }}
               >
                 Main Home Page

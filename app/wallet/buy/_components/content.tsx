@@ -10,21 +10,20 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useSearchParams } from "next/navigation";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Content() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const router = useNavigate();
+  const [searchParams] = useSearchParams();
   const address = searchParams.get("address");
 
   const handleClick = async (type: "onramper" | "stripe") => {
     await selectionFeedback();
     if (type === "onramper") {
-      router.push("/wallet/buy/onramper?address=" + address);
+      router("/wallet/buy/onramper?address=" + address);
     } else if (type === "stripe") {
-      router.push("/wallet/buy/stripe?address=" + address);
+      router("/wallet/buy/stripe?address=" + address);
     }
   };
 

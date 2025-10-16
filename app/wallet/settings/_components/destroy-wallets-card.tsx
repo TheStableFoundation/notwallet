@@ -6,14 +6,14 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { useRouter } from "next/navigation";
 import DestroyWalletsModal from "./destroy-wallets-modal";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import SettingListItem from "./setting-list-item";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
+import { useNavigate } from "react-router-dom";
 
 export default function DestroyWalletsCard() {
-  const router = useRouter();
+  const router = useNavigate();
   const { t } = useI18n();
   const [showDestroyModal, setShowDestroyModal] = React.useState(false);
   const handleClick = async () => {
@@ -83,7 +83,7 @@ export default function DestroyWalletsCard() {
         onClose={() => setShowDestroyModal(false)}
         onSuccess={() => {
           // Optionally redirect to onboarding or show success message
-          router.push("/home");
+          router("/home");
         }}
       />
     </>
