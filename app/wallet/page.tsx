@@ -108,7 +108,6 @@ export default function WalletHome() {
       sx={{
         minHeight: "unset",
         height: "auto",
-        bgcolor: "#f5f6fa",
         pb: 10,
         display: "flex",
         flexDirection: "column",

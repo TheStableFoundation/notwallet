@@ -22,6 +22,9 @@ import WalletOnboardingImportPage from "@app/wallet/onboarding/import/page";
 import WalletOnboardingImportKeypairsPage from "@app/wallet/onboarding/import-keypairs/page";
 import WalletOnboardingCreateWalletDisclaimerPage from "@app/wallet/onboarding/create-wallet-disclaimer/page";
 import WalletOnboardingImportWalletPage from "@app/wallet/onboarding/import-wallet/page";
+import WalletSellPage from "@app/wallet/sell/page";
+import WalletSettingsPage from "@app/wallet/settings/page";
+import WalletTokenPage from "@app/wallet/token/page";
 
 export default function App() {
   const location = useLocation();
@@ -158,6 +161,30 @@ export default function App() {
                 element={
                   <AnimatedPage>
                     <WalletOnboardingImportWalletPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/sell"
+                element={
+                  <AnimatedPage>
+                    <WalletSellPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/settings"
+                element={
+                  <AnimatedPage>
+                    <WalletSettingsPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/token"
+                element={
+                  <AnimatedPage>
+                    <WalletTokenPage />
                   </AnimatedPage>
                 }
               />
