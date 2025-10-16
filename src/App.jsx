@@ -71,6 +71,22 @@ export default function App() {
                 }
               />
               <Route
+                path="/wallet/onboarding/import-wallet"
+                element={
+                  <AnimatedPage>
+                    <CreatePasswordPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding/create-wallet-disclaimer"
+                element={
+                  <AnimatedPage>
+                    <CreatePasswordPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
                 path="/profile"
                 element={
                   <AnimatedPage>

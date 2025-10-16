@@ -3,7 +3,7 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { styled } from "@mui/material/styles";
 
-const VerifiedIcon = styled(CheckCircleIcon)(({ theme }) => ({
+const VerifiedIcon = styled(CheckCircleIcon)(({}) => ({
   color: "#16a34a",
   fontSize: "16px",
   filter: "drop-shadow(0 1px 2px rgba(22, 163, 74, 0.2))",

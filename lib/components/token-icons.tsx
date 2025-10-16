@@ -4,7 +4,6 @@ import { BACH_TOKEN, JUPITER, SOLANA } from "../crate/generated";
 export const AssetIcon = ({
   id,
   size = 24,
-  name,
 }: {
   id: string;
   size?: number;

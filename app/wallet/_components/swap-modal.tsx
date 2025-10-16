@@ -57,8 +57,8 @@ export default function SwapModal({
   const [transactionResponse, setTransactionResponse] =
     React.useState<SwapTransactionResponse | null>(null);
   const [slippage, setSlippage] = React.useState<number>(50); // 0.5% default slippage
-  const [bachBalance, setBachBalance] = React.useState<string>("-");
-  const [solBalance, setSolBalance] = React.useState<string>("-");
+  const [bachBalance, _setBachBalance] = React.useState<string>("-");
+  const [solBalance, _setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {

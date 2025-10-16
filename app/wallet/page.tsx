@@ -20,7 +20,6 @@ import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ActiveKeypairSelectionModal from "./_components/active-keypair-selection";
 import { SET_ACTIVE_KEYPAIR } from "@lib/commands";
 import PageTitleBar from "@lib/components/page-title-bar";
-import { redirect } from "react-router-dom";
 import { useI18n } from "@lib/i18n/provider";
 import { useNavigate } from "react-router-dom";
 
