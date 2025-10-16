@@ -10,13 +10,13 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
-import { SEND_TOKEN } from "@/lib/commands";
+import { SEND_TOKEN } from "@lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
 
 interface SendModalProps {
   open: boolean;
@@ -39,8 +39,8 @@ export default function SendModal({
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<boolean>(false);
-  const [bachBalance, setBachBalance] = React.useState<string>("-");
-  const [solBalance, setSolBalance] = React.useState<string>("-");
+  const [bachBalance, _setBachBalance] = React.useState<string>("-");
+  const [solBalance, _setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {

@@ -3,16 +3,16 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 
 export const ActivityDetailHeader = () => {
-  const router = useRouter();
+  const router = useNavigate();
 
   const handleBack = async () => {
     try {
       await selectionFeedback();
     } catch {}
-    router.back();
+    router(-1);
   };
 
   return (

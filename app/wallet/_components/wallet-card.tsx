@@ -8,26 +8,25 @@ import Avatar from "@mui/material/Avatar";
 import PaidIcon from "@mui/icons-material/Paid";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
-import SellIcon from "@mui/icons-material/Sell";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LockIcon from "@mui/icons-material/Lock";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
-import { GET_ALL_KEYPAIRS, GET_WALLET_BALANCE } from "@/lib/commands";
+import { GET_ALL_KEYPAIRS, GET_WALLET_BALANCE } from "@lib/commands";
 import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import EditKeyPairModal from "./edit-keypair-modal";
 import { error } from "@tauri-apps/plugin-log";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
+import { useNavigate } from "react-router-dom";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -40,7 +39,7 @@ export default function WalletCard({
   onLock,
   onSwitchKeypair,
 }: WalletCardProps) {
-  const router = useRouter();
+  const router = useNavigate();
   const { t } = useI18n();
   const [walletBalance, setWalletBalance] = React.useState<string>("-");
   const [walletUsername, setWalletUsername] = React.useState<string>(
@@ -61,7 +60,7 @@ export default function WalletCard({
 
   const handleWalletSettings = async () => {
     await selectionFeedback();
-    router.push("/wallet/settings");
+    router("/wallet/settings");
   };
 
   const handleSend = async () => {
@@ -111,12 +110,12 @@ export default function WalletCard({
 
   const onBuySol = React.useCallback(async () => {
     await selectionFeedback();
-    router.push("/wallet/buy?address=" + wallet.pubkey);
+    router("/wallet/buy?address=" + wallet.pubkey);
   }, [router, wallet]);
 
   const onSellCrypto = React.useCallback(async () => {
     await selectionFeedback();
-    router.push("/wallet/sell?address=" + wallet.pubkey);
+    router("/wallet/sell?address=" + wallet.pubkey);
   }, [router, wallet]);
 
   const onEditKeypair = async () => {

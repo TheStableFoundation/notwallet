@@ -1,7 +1,5 @@
-import { useSearchParams } from "next/navigation";
-import * as React from "react";
 import Box from "@mui/material/Box";
-import { feed } from "@/app/home/_components/feed";
+import { feed } from "@app/home/_components/feed";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -9,9 +7,10 @@ import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import { useSearchParams } from "react-router-dom";
 
 function ActivityDetailContent() {
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const id = Number(searchParams.get("id"));
   const activity = feed.find((item) => item.id === id);
 

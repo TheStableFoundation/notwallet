@@ -1,4 +1,3 @@
-import * as React from "react";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -6,7 +5,7 @@ import Box from "@mui/material/Box";
 import { SolanaWallet } from "../../../lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
 
 interface ActiveKeypairSelectionProps {
   open: boolean;

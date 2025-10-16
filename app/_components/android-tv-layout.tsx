@@ -13,8 +13,8 @@ import Button from "@mui/material/Button";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { usePathname, useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface Props {
   /**
@@ -42,15 +42,15 @@ function HideOnScroll(props: Props) {
 }
 
 export default function AndroidTvLayout(props: Props) {
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = useLocation().pathname;
+  const router = useNavigate();
 
   const handleNavigation = async (path: string) => {
     try {
       await selectionFeedback();
     } catch {}
     if (pathname !== path) {
-      router.push(path);
+      router(path);
     }
   };
 

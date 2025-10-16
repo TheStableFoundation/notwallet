@@ -6,14 +6,14 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
 import { invoke } from "@tauri-apps/api/core";
 import { debug } from "@tauri-apps/plugin-log";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useNavigate } from "react-router-dom";
 
 export default function WalletImportPage() {
-  const router = useRouter();
+  const router = useNavigate();
   const [seedPhrase, setSeedPhrase] = React.useState("");
   const [error, setError] = React.useState("");
   const [pubkey, setPubkey] = React.useState<string | null>(null);
@@ -35,7 +35,7 @@ export default function WalletImportPage() {
       debug(`import_solana_wallet result: ${JSON.stringify(result)}`);
       setPubkey(result.pubkey);
       // Redirect to wallet home after successful import
-      router.push("/wallet");
+      router("/wallet");
     } catch (e: any) {
       debug(`import_solana_wallet error: ${e?.toString()}`);
       setError(e?.toString() || "Failed to import wallet.");

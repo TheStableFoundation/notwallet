@@ -2,27 +2,25 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { SolanaWallet, STORE_KEYPAIRS } from "@/lib/crate/generated";
+import { SolanaWallet, STORE_KEYPAIRS } from "@lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
-import { store } from "@/lib/store/store";
+import { store } from "@lib/store/store";
 import { error } from "@tauri-apps/plugin-log";
-import { useRouter } from "next/navigation";
-import { DERIVE_NEW_KEYPAIR } from "@/lib/commands";
+import { DERIVE_NEW_KEYPAIR } from "@lib/commands";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import CircularProgress from "@mui/material/CircularProgress";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useNavigate } from "react-router-dom";
 
-export default function ImportKeypairsPage() {
+export default function WalletOnboardingImportKeypairsPage() {
   const [keypairs, setKeypairs] = React.useState<SolanaWallet[]>([]);
   const [loading, setLoading] = React.useState(true);
-  const router = useRouter();
+  const router = useNavigate();
 
   // Fetch keypairs from store on mount
   React.useEffect(() => {
@@ -246,7 +244,7 @@ export default function ImportKeypairsPage() {
           }}
           onClick={async () => {
             await selectionFeedback();
-            router.replace("/wallet/onboarding/create-password");
+            router("/wallet/onboarding/create-password");
           }}
         >
           Continue

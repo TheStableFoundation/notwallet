@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -13,18 +14,18 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ONBOARDING_CREATE_WALLET } from "@/lib/commands";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ONBOARDING_CREATE_WALLET } from "@lib/commands";
 import {
   OnboardingCreateWallet,
   STORE_ACTIVE_KEYPAIR,
-} from "@/lib/crate/generated";
+} from "@lib/crate/generated";
 import WalletCreated from "./components/wallet-created";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
-import { store } from "@/lib/store/store";
+import { store } from "@lib/store/store";
 import { Suspense } from "react";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
 
 // Add State enum
 enum State {
@@ -35,7 +36,7 @@ enum State {
 }
 
 function DetailContent() {
-  const searchParams = useSearchParams();
+  const [searchParams, _] = useSearchParams();
   const isOnboarding = Number(searchParams.get("onboarding"));
 
   const [mnemonic, setMnemonic] = React.useState("");
@@ -43,7 +44,7 @@ function DetailContent() {
   const [privkey, setPrivkey] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState<State>(State.Idle);
-  const router = useRouter();
+  const router = useNavigate();
 
   // Handler function for wallet creation
   const createWalletHandler = React.useCallback(
@@ -84,9 +85,9 @@ function DetailContent() {
     // Use setTimeout to ensure dialog closes before navigation
     setTimeout(() => {
       if (isOnboarding) {
-        router.replace("/wallet/onboarding/create-password");
+        router("/wallet/onboarding/create-password");
       } else {
-        router.replace("/wallet");
+        router("/wallet");
       }
     }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -274,7 +275,7 @@ function DetailContent() {
   );
 }
 
-export default function Page() {
+export default function WalletOnboardingCreateWalletPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <DetailContent />

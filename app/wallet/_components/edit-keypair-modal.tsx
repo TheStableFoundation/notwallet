@@ -6,13 +6,13 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
-import { UPDATE_USERNAME } from "@/lib/commands";
+import { UPDATE_USERNAME } from "@lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
 
 interface EditKeyPairModalProps {
   open: boolean;

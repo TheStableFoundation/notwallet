@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import LoadingCard from "@/lib/components/loading-card";
-import ActivityDetailContent from "@/app/home/activity/components/activity_detail";
+import LoadingCard from "@lib/components/loading-card";
+import ActivityDetailContent from "@app/home/activity/components/activity_detail";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import { Box } from "@mui/material";

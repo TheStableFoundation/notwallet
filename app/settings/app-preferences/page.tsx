@@ -16,9 +16,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useColorScheme } from "@mui/material/styles";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
-import { useI18n } from "@/lib/i18n/provider";
-import type { Language } from "@/lib/i18n/provider";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useI18n } from "@lib/i18n/provider";
+import type { Language } from "@lib/i18n/provider";
 
 export default function AppPreferences() {
   const { mode, setMode } = useColorScheme();

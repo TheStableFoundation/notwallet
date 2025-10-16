@@ -1,15 +1,14 @@
 "use client";
 
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useNavigate } from "react-router-dom";
 
 export default function WalletHeader({ token }: { token: string }) {
-  const router = useRouter();
+  const router = useNavigate();
   return (
     <Box
       sx={{
@@ -25,7 +24,7 @@ export default function WalletHeader({ token }: { token: string }) {
         startIcon={<ArrowBackIcon />}
         onClick={async () => {
           await selectionFeedback();
-          router.back();
+          router(-1);
         }}
         sx={{
           minWidth: 0,

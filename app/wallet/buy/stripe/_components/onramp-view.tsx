@@ -2,8 +2,8 @@ import { loadStripeOnramp } from "@stripe/crypto";
 import {
   CryptoElements,
   OnrampElement,
-} from "@/lib/components/stripe-crypto-elements";
-import { STRIPE_PUBLISHABLE_KEY } from "@/lib/crate/generated";
+} from "@lib/components/stripe-crypto-elements";
+import { STRIPE_PUBLISHABLE_KEY } from "@lib/crate/generated";
 
 export default function OnrampView({
   clientSecret,

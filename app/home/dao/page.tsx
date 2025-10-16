@@ -1,14 +1,14 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import LoadingCard from "@/lib/components/loading-card";
-import ErrorCard from "@/lib/components/error-card";
+import LoadingCard from "@lib/components/loading-card";
+import ErrorCard from "@lib/components/error-card";
 import DAOInfoCard from "./_components/dao-info-card";
 import AMMMarketsMenu from "./_components/amm-markets-menu";
 import TreasuryCard from "./_components/treasury-card";
 import ProposalsCard from "./_components/proposals-card";
 import InfoCard from "./_components/info-card";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
 
 enum State {
   Loading,
@@ -34,7 +34,6 @@ export default function DAOPage() {
       sx={{
         minHeight: "unset",
         height: "auto",
-        bgcolor: "#f5f6fa",
         pb: 10,
         display: "flex",
         flexDirection: "column",

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -10,15 +11,15 @@ import TextField from "@mui/material/TextField";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { invoke } from "@tauri-apps/api/core";
 import { debug } from "@tauri-apps/plugin-log";
-import { useRouter } from "next/navigation";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { useNavigate } from "react-router-dom";
+import { SolanaWallet } from "@lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 
-export default function ImportWalletPage() {
+export default function WalletOnboardingImportPage() {
   const [seed, setSeed] = React.useState("");
   const [error, setError] = React.useState("");
   const [pubkey, setPubkey] = React.useState<string | null>(null);
-  const router = useRouter();
+  const router = useNavigate();
 
   const handleImport = async () => {
     if (seed.trim().split(/\s+/).length < 12) {
@@ -35,7 +36,7 @@ export default function ImportWalletPage() {
       debug(`import_solana_wallet result: ${JSON.stringify(result)}`);
       setPubkey(result.pubkey);
       // Redirect to import-keypairs page after successful import, passing wallet in state
-      router.replace("/import/import-keypairs");
+      router("/import/import-keypairs");
     } catch (e: any) {
       debug(`import_solana_wallet error: ${e?.toString()}`);
       setError(e?.toString() || "Failed to import wallet.");
@@ -81,7 +82,7 @@ export default function ImportWalletPage() {
             sx={{ mb: 0 }}
             onClick={async () => {
               await selectionFeedback();
-              router.push("/");
+              router("/");
             }}
           >
             Back

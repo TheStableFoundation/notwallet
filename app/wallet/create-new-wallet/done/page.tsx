@@ -1,18 +1,19 @@
 "use client";
+
 import * as React from "react";
-import { useSearchParams, useRouter } from "next/navigation";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Confetti from "react-confetti";
 import Card from "@mui/material/Card";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 // Move the main content to a separate component
 function DoneContent() {
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const pubkey = searchParams.get("pubkey");
-  const router = useRouter();
+  const router = useNavigate();
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
 
   React.useEffect(() => {
@@ -32,7 +33,6 @@ function DoneContent() {
       sx={{
         minHeight: "100vh",
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -111,7 +111,7 @@ function DoneContent() {
                 boxShadow: "0 6px 16px rgba(139, 92, 246, 0.4)",
               },
             }}
-            onClick={() => router.push("/wallet")}
+            onClick={() => router("/wallet")}
           >
             Go to Wallet
           </Button>
@@ -121,7 +121,7 @@ function DoneContent() {
   );
 }
 
-export default function DonePage() {
+export default function WalletCreateNewWalletDonePage() {
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
       <DoneContent />

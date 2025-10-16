@@ -1,14 +1,13 @@
 "use client";
 
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
 
 interface ActivityViewProps {
   wallet: SolanaWallet;

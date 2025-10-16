@@ -1,22 +1,19 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateOrImportWalletView() {
-  const router = useRouter();
+  const router = useNavigate();
 
   return (
     <Box
       sx={{
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -35,15 +32,6 @@ export default function CreateOrImportWalletView() {
           bgcolor: "#FFFFFF",
         }}
       >
-        <Box sx={{ p: 4, bgcolor: "#fff" }}>
-          <CardMedia
-            component="img"
-            height="120"
-            image="/images/app-icon-v4.svg"
-            alt="Stablecoin Wallet"
-            sx={{ objectFit: "contain", bgcolor: "#fff" }}
-          />
-        </Box>
         <CardContent>
           <Typography
             variant="h3"
@@ -79,7 +67,7 @@ export default function CreateOrImportWalletView() {
             }}
             onClick={async () => {
               await selectionFeedback();
-              router.push("/wallet/onboarding/import-wallet");
+              router("/wallet/onboarding/import-wallet");
             }}
           >
             Import Seed Phrase
@@ -103,7 +91,7 @@ export default function CreateOrImportWalletView() {
             }}
             onClick={async () => {
               await selectionFeedback();
-              router.push("/wallet/onboarding/create-wallet-disclaimer");
+              router("/wallet/onboarding/create-wallet-disclaimer");
             }}
           >
             Create New Wallet

@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";

@@ -2,14 +2,13 @@
 
 import * as React from "react";
 import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import AssetsView from "./assets_view";
 import ActivityView from "./activity_view";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,7 +45,7 @@ export default function ActivityCard({ wallet }: ActivityCardProps) {
   const { t } = useI18n();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

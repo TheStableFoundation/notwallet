@@ -1,21 +1,20 @@
 "use client";
 
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
+import { useNavigate } from "react-router-dom";
 
 export default function PageChildrenTitleBar({ title }: { title: string }) {
-  const router = useRouter();
+  const router = useNavigate();
   const { t } = useI18n();
   const handleBack = async () => {
     await selectionFeedback();
-    router.back();
+    router(-1);
   };
   return (
     <Box

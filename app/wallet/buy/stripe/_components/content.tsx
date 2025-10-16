@@ -1,16 +1,15 @@
 import * as React from "react";
-import LoadingCard from "@/lib/components/loading-card";
-import ErrorCard from "@/lib/components/error-card";
-import { OnrampSession } from "@/lib/crate/generated";
+import LoadingCard from "@lib/components/loading-card";
+import ErrorCard from "@lib/components/error-card";
+import { OnrampSession } from "@lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import OnrampView from "./onramp-view";
-import { ONRAMP_SESSION } from "@/lib/commands";
+import { ONRAMP_SESSION } from "@lib/commands";
 import Confetti from "react-confetti";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { error as logError, debug } from "@tauri-apps/plugin-log";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 enum State {
   Loading,
@@ -23,14 +22,14 @@ export default function Content() {
   const [state, setState] = React.useState(State.Loading);
   const [clientSecret, setClientSecret] = React.useState<string | null>(null);
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const address = searchParams.get("address");
-  const router = useRouter();
+  const router = useNavigate();
 
   const onPurchaseComplete = () => {
     setState(State.PurchaseComplete);
     setTimeout(() => {
-      router.push("/wallet");
+      router("/wallet");
     }, 5000);
   };
 

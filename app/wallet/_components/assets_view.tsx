@@ -9,24 +9,24 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
-import { AssetIcon } from "@/lib/components/token-icons";
+import { AssetIcon } from "@lib/components/token-icons";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconButton from "@mui/material/IconButton";
 import { openUrl } from "@tauri-apps/plugin-opener";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
 
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import {
   GET_BACH_BALANCE,
   GET_SOL_BALANCE,
   GET_OTHER_ASSETS_BALANCE,
-} from "@/lib/commands";
+} from "@lib/commands";
 import { error } from "@tauri-apps/plugin-log";
 import VerifiedBadge from "./verified-badge";
 import { isAssetVerified } from "./verified-assets";
-import { BACH_TOKEN, SOLANA, AssetBalance } from "@/lib/crate/generated";
+import { BACH_TOKEN, SOLANA, AssetBalance } from "@lib/crate/generated";
 
 interface Asset {
   logo: React.ReactNode;

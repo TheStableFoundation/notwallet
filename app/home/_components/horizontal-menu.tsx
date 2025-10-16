@@ -6,9 +6,9 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SchoolIcon from "@mui/icons-material/School";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@/lib/i18n/provider";
+import { useI18n } from "@lib/i18n/provider";
+import { useNavigate } from "react-router-dom";
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -62,22 +62,17 @@ const MenuItem = ({ icon, label, onClick }: MenuItemProps) => (
 );
 
 export default function HorizontalMenu() {
-  const router = useRouter();
+  const router = useNavigate();
   const { t } = useI18n();
 
   const handleDAO = async () => {
     await selectionFeedback();
-    router.push("/home/dao");
+    router("/home/dao");
   };
 
   const handleLearn = async () => {
     await selectionFeedback();
-    router.push("/home/learn");
-  };
-
-  const handleM3m3 = async () => {
-    await selectionFeedback();
-    router.push("/home/meme");
+    router("/home/learn");
   };
 
   const menuItems = [

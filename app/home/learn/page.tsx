@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -14,8 +15,7 @@ import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import PersonIcon from "@mui/icons-material/Person";
-
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
 
 interface ChatMessage {
   id: string;
@@ -159,7 +159,6 @@ export default function LearnPage() {
       sx={{
         minHeight: "unset",
         height: "auto",
-        bgcolor: "#f5f6fa",
         pb: 10,
         display: "flex",
         flexDirection: "column",

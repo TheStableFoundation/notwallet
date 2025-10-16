@@ -1,18 +1,16 @@
 {
   "name": "notwallet",
-  "private": false,
   "version": "1.0.7",
+  "private": false,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack -p 61234",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "tauri": "tauri",
-    "publish-ios": "./scripts/publish-ios.sh \"$@\"",
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "gim": "./scripts/generate-icon-mobile.sh",
+    "preview": "vite preview",
     "publish-android": "./scripts/publish-android.sh",
-    "sync-types": "tsync -i src-tauri/src/ crates/wallet-kit/src/ -o lib/crate/generated.ts",
-    "gim": "./scripts/generate-icon-mobile.sh"
+    "publish-ios": "./scripts/publish-ios.sh \"$@\"",
+    "sync-types": "tsync -i src-tauri/src/ crates/wallet-kit/src/ -o lib/crate/generated.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -20,7 +18,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "7.1.1",
     "@mui/material": "7.1.1",
-    "@mui/material-nextjs": "7.1.1",
+    "@radix-ui/react-tooltip": "^1.0.6",
     "@rive-app/react-canvas": "^4.23.4",
     "@smbcloud/tauri-plugin-android-tv-check-api": "1.1.4",
     "@stripe/crypto": "^0.0.4",
@@ -37,13 +35,13 @@
     "chart.js": "^4.5.0",
     "crypto": "^1.0.1",
     "i18next": "^25.5.3",
-    "next": "^15.5.4",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.0",
     "react-chartjs-2": "^5.3.0",
     "react-confetti": "^6.4.0",
     "react-dom": "^19.2.0",
-    "react-i18next": "^15.7.4"
+    "react-i18next": "^15.7.4",
+    "react-router-dom": "^6.22.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.8.4",
@@ -54,9 +52,9 @@
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.10",
     "eslint": "^9.37.0",
-    "eslint-config-next": "15.3.3",
     "postcss": "^8.5.6",
-    "tailwindcss": "4.0.14",
-    "typescript": "^5.9.3"
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.0.4"
   }
 }

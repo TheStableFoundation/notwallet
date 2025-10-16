@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -26,7 +27,8 @@ const mockProposals: Proposal[] = [
   {
     id: "001",
     title: "Proposal #001: Increase Treasury Fee",
-    description: "Proposal to increase the treasury fee from 0.25% to 0.35% to fund additional development initiatives and security audits.",
+    description:
+      "Proposal to increase the treasury fee from 0.25% to 0.35% to fund additional development initiatives and security audits.",
     status: "Active",
     yesVotes: "12,500 BACH",
     noVotes: "8,200 BACH",
@@ -35,7 +37,8 @@ const mockProposals: Proposal[] = [
   {
     id: "002",
     title: "Proposal #002: New Feature Funding",
-    description: "Allocate 25,000 BACH from treasury to fund development of cross-chain swap functionality and mobile app improvements.",
+    description:
+      "Allocate 25,000 BACH from treasury to fund development of cross-chain swap functionality and mobile app improvements.",
     status: "Pending",
     yesVotes: "5,800 BACH",
     noVotes: "2,100 BACH",

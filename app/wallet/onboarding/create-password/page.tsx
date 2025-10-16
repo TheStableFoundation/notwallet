@@ -1,8 +1,8 @@
 "use client";
+
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -13,12 +13,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
-import { useRouter } from "next/navigation";
-import { store } from "@/lib/store/store";
-import { STORE_PASSWORD } from "@/lib/crate/generated";
+import { store } from "@lib/store/store";
+import { STORE_PASSWORD } from "@lib/crate/generated";
 import bcrypt from "bcryptjs";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageTitleBar from "@/lib/components/page-title-bar";
+import PageTitleBar from "@lib/components/page-title-bar";
+import { useNavigate } from "react-router-dom";
 
 enum State {
   Loading,
@@ -34,7 +34,7 @@ export default function CreatePasswordPage() {
   const [state, setState] = React.useState(State.Loading);
   const [showDialog, setShowDialog] = React.useState(false);
   const [, setStoredPassword] = React.useState<string | null>(null);
-  const router = useRouter();
+  const router = useNavigate();
 
   const handleContinue = async () => {
     await selectionFeedback();
@@ -57,7 +57,7 @@ export default function CreatePasswordPage() {
 
       debug("Password stored successfully in tauri plugin store.");
 
-      router.replace("/wallet");
+      router("/wallet");
     } catch (e: any) {
       logError(`Failed to store password securely: ${e?.toString?.() ?? e}`);
       setError("Failed to store password securely.");
@@ -92,7 +92,6 @@ export default function CreatePasswordPage() {
         sx={{
           minHeight: "100vh",
           bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-          background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -146,7 +145,7 @@ export default function CreatePasswordPage() {
             onClick={async () => {
               await selectionFeedback();
               setShowDialog(false);
-              router.replace("/wallet");
+              router("/wallet");
             }}
             variant="contained"
             fullWidth
@@ -202,7 +201,6 @@ export default function CreatePasswordPage() {
         sx={{
           minHeight: "100vh",
           bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-          background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

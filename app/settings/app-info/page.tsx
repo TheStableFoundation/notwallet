@@ -13,8 +13,8 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { getVersion } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
-import { useI18n } from "@/lib/i18n/provider";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useI18n } from "@lib/i18n/provider";
 
 export default function AppInfoPage() {
   const { t } = useI18n();
@@ -59,7 +59,6 @@ export default function AppInfoPage() {
       sx={{
         minHeight: "100vh",
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -100,7 +99,8 @@ export default function AppInfoPage() {
               <React.Fragment key={item.id}>
                 <ListItem
                   sx={{
-                    px: 0,
+                    pl: 0,
+                    pr: 8,
                     py: 2,
                     borderRadius: "12px",
                     mx: 2,

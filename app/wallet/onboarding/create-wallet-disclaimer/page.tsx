@@ -1,17 +1,15 @@
 "use client";
 
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useNavigate } from "react-router-dom";
 
-export default function CreateWalletDisclaimerPage() {
-  const router = useRouter();
+export default function WalletOnboardingCreateWalletDisclaimerPage() {
+  const router = useNavigate();
 
   return (
     <Box
@@ -151,7 +149,7 @@ export default function CreateWalletDisclaimerPage() {
           }}
           onClick={async () => {
             await selectionFeedback();
-            router.push("/wallet/onboarding/create-wallet?onboarding=1");
+            router("/wallet/onboarding/create-wallet?onboarding=1");
           }}
         >
           I Understand, Continue

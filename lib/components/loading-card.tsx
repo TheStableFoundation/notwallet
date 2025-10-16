@@ -1,7 +1,6 @@
 "use client";
 
 import Rive, { Alignment, Fit, Layout } from "@rive-app/react-canvas";
-import React from "react";
 import { Card } from "@mui/material";
 
 const LoadingCard = () => (
