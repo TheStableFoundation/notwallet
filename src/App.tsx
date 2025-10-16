@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import Navbar from "./components/Navbar";
-import AnimatedPage from "./components/AnimatedPage";
+import Navbar from "@src/components/Navbar";
+import AnimatedPage from "@src/components/AnimatedPage";
 import HomePage from "@app/home/page";
 import DAOPage from "@app/home/dao/page";
 import LearnPage from "@app/home/learn/page";
@@ -15,6 +15,7 @@ import { I18nProvider } from "@lib/i18n/provider";
 
 export default function App() {
   const location = useLocation();
+
   return (
     <I18nProvider>
       <Tooltip.Provider>

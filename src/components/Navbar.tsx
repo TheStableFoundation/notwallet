@@ -1,8 +1,16 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLang } from "../LanguageContext";
+import { SupportedLanguages } from "../i18n";
 
-const navItems = [
+interface NavItem {
+  path: string;
+  key: string;
+  icon: React.ReactElement;
+}
+
+const navItems: NavItem[] = [
   {
     path: "/",
     key: "home",
@@ -52,6 +60,12 @@ export default function Navbar() {
   const { t, lang, setLang } = useLang();
   const isRTL = lang === "fa";
 
+  const handleLanguageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setLang(event.target.value as SupportedLanguages);
+  };
+
   return (
     <>
       {/* Top bar with app name and language switcher, matching bottom bar width */}
@@ -66,7 +80,7 @@ export default function Navbar() {
           <select
             className="rounded border px-2 py-1 bg-white text-sm text-primay-light cursor-pointer shadow"
             value={lang}
-            onChange={(e) => setLang(e.target.value)}
+            onChange={handleLanguageChange}
             aria-label="Change language"
           >
             <option value="en">English</option>
@@ -92,12 +106,14 @@ export default function Navbar() {
                   style={{ minWidth: 60 }}
                 >
                   {item.icon}
-                  <span className="text-xs">{t[item.key]}</span>
+                  <span className="text-xs">
+                    {t[item.key as keyof typeof t]}
+                  </span>
                 </Link>
               </Tooltip.Trigger>
               <Tooltip.Portal>
                 <Tooltip.Content className="text-xs bg-white border px-2 py-1 rounded shadow">
-                  {t[item.key]}
+                  {t[item.key as keyof typeof t]}
                   <Tooltip.Arrow className="fill-white" />
                 </Tooltip.Content>
               </Tooltip.Portal>

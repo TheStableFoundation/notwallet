@@ -1,4 +1,30 @@
-export const translations = {
+export interface Translation {
+  appName: string;
+  home: string;
+  lessons: string;
+  wallet?: string;
+  profile: string;
+  welcome: string;
+  homeDesc: string;
+  getStarted: string;
+  startLesson: string;
+  back: string;
+  lessonCompleted: string;
+  user: string;
+  guest: string;
+  progress: string;
+  completed: string;
+  question: string;
+  of: string;
+  afterChoice: string;
+  correct: string;
+  incorrect: string;
+  startThisLesson: string;
+}
+
+export type SupportedLanguages = 'fa' | 'en' | 'sv';
+
+export const translations: Record<SupportedLanguages, Translation> = {
   fa: {
     appName: "رومی",
     home: "خانه",
