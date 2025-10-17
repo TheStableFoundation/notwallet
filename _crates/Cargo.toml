@@ -1,6 +1,6 @@
 [package]
 name = "smbcloud-wallet-kit-v3"
-version = "1.0.3"
+version = "1.0.4"
 edition = "2021"
 description = "smbCloud Wallet Kit V3 for NotWallet Crypto non-custodial Solana crypto wallet."
 authors = ["Seto Elkahfi <work@setoelkahfi.se>"]

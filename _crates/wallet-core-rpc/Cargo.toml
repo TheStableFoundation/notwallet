@@ -1,6 +1,6 @@
 [package]
 name = "smbcloud-wallet-core-rpc"
-version = "1.0.3"
+version = "1.0.4"
 edition = "2021"
 description = "smbCloud Wallet Core RPC for NotWallet Crypto."
 license = "MIT"

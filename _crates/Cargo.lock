@@ -3500,7 +3500,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "bip39",
  "bs58",
@@ -3524,7 +3524,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core-http"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "bip39",
  "bs58",
@@ -3576,7 +3576,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core-rpc"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "log",
  "serde",
@@ -3592,7 +3592,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-kit-v3"
-version = "1.0.3"
+version = "1.0.4"
 dependencies = [
  "bs58",
  "chrono",
