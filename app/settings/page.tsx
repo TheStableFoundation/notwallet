@@ -62,7 +62,7 @@ export default function SettingsPage() {
   ) => {
     await selectionFeedback();
     if (type === "about") {
-      router("/profile/about");
+      router("/settings/about");
     } else if (type === "privacyPolicy") {
       openUrl("https://bach.money/privacy-policy");
     } else if (type === "termsOfService") {
@@ -80,11 +80,11 @@ export default function SettingsPage() {
         }, 5000);
       }
     } else if (type === "appInfo") {
-      router("/profile/app-info");
+      router("/settings/app-info");
     } else if (type === "appPreferences") {
-      router("/profile/app-preferences");
+      router("/settings/app-preferences");
     } else if (type === "languagePreferences") {
-      router("/profile/app-preferences");
+      router("/settings/app-preferences");
     }
   };
 

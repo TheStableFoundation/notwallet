@@ -191,7 +191,7 @@ export default function App() {
                   }
                 />
                 <Route
-                  path="/profile"
+                  path="/settings"
                   element={
                     <AnimatedPage>
                       <SettingsPage />
@@ -199,7 +199,7 @@ export default function App() {
                   }
                 />
                 <Route
-                  path="/profile/about"
+                  path="/settings/about"
                   element={
                     <AnimatedPage>
                       <AboutPage />
@@ -207,7 +207,7 @@ export default function App() {
                   }
                 />
                 <Route
-                  path="/profile/app-info"
+                  path="/settings/app-info"
                   element={
                     <AnimatedPage>
                       <AppInfoPage />

@@ -41,13 +41,13 @@ const navItems: NavItem[] = [
     ),
   },
   {
-    path: "/profile",
-    key: "profile",
+    path: "/settings",
+    key: "settings",
     icon: (
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4" stroke="#a21caf" strokeWidth="1.5" />
+        <circle cx="12" cy="12" r="3" stroke="#a21caf" strokeWidth="1.5" />
         <path
-          d="M4 20v-1a7 7 0 0 1 14 0v1"
+          d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"
           stroke="#a21caf"
           strokeWidth="1.5"
         />
@@ -97,11 +97,11 @@ export default function Navbar() {
         location.pathname === "/wallet/token"
       );
     }
-    if (path === "/profile") {
+    if (path === "/settings") {
       return (
-        location.pathname === "/profile" ||
-        location.pathname === "/profile/about" ||
-        location.pathname === "/profile/app-info"
+        location.pathname === "/settings" ||
+        location.pathname === "/settings/about" ||
+        location.pathname === "/settings/app-info"
       );
     }
     return false;
