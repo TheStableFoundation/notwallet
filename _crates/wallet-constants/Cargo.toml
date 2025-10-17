@@ -1,6 +1,6 @@
 [package]
 name = "smbcloud-wallet-constants"
-version = "0.1.0"
+version = "1.0.1"
 edition = "2021"
 description = "smbCloud Wallet Constants for NotWallet Crypto."
 license = "MIT"

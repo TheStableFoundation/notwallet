@@ -1,6 +1,6 @@
 [package]
 name = "smbcloud-wallet-core-network"
-version = "0.1.0"
+version = "1.0.1"
 edition = "2021"
 description = "smbCloud Wallet Core Network for NotWallet Crypto."
 license = "MIT"

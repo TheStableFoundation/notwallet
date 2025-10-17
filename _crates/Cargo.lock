@@ -3493,14 +3493,14 @@ checksum = "b7c388c1b5e93756d0c740965c41e8822f866621d41acbdf6336a6a168f8840c"
 
 [[package]]
 name = "smbcloud-wallet-constants"
-version = "0.1.0"
+version = "1.0.1"
 dependencies = [
  "tsync",
 ]
 
 [[package]]
 name = "smbcloud-wallet-core"
-version = "1.0.0"
+version = "1.0.4"
 dependencies = [
  "bip39",
  "bs58",
@@ -3524,7 +3524,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core-http"
-version = "1.0.0"
+version = "1.0.4"
 dependencies = [
  "bip39",
  "bs58",
@@ -3546,7 +3546,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core-model"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "serde",
  "serde_json",
@@ -3558,7 +3558,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core-network"
-version = "0.1.0"
+version = "1.0.1"
 dependencies = [
  "bs58",
  "env_logger",
@@ -3576,7 +3576,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core-rpc"
-version = "1.0.0"
+version = "1.0.4"
 dependencies = [
  "log",
  "serde",
@@ -3592,7 +3592,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-kit-v3"
-version = "1.0.0"
+version = "1.0.4"
 dependencies = [
  "bs58",
  "chrono",
@@ -3600,6 +3600,7 @@ dependencies = [
  "smbcloud-wallet-core",
  "smbcloud-wallet-core-http",
  "smbcloud-wallet-core-model",
+ "smbcloud-wallet-core-network",
  "smbcloud-wallet-core-rpc",
  "solana-sdk",
  "uniffi",
