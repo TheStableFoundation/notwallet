@@ -4,6 +4,7 @@ export interface Translation {
   lessons: string;
   wallet?: string;
   profile: string;
+  settings: string;
   welcome: string;
   homeDesc: string;
   getStarted: string;
@@ -22,7 +23,7 @@ export interface Translation {
   startThisLesson: string;
 }
 
-export type SupportedLanguages = 'fa' | 'en' | 'sv';
+export type SupportedLanguages = "fa" | "en" | "sv";
 
 export const translations: Record<SupportedLanguages, Translation> = {
   fa: {
@@ -30,6 +31,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     home: "خانه",
     lessons: "درس‌ها",
     profile: "پروفایل",
+    settings: "تنظیمات",
     welcome: "به رومی خوش آمدید!",
     homeDesc: "روشی سرگرم‌کننده برای یادگیری زبان فارسی.",
     getStarted: "شروع یادگیری",
@@ -51,6 +53,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     appName: "NotWallet",
     home: "Home",
     lessons: "Lessons",
+    settings: "Settings",
     wallet: "Wallet",
     profile: "Profile",
     welcome: "Welcome to NotWallet Crypto!",
@@ -74,6 +77,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     appName: "NotWallet",
     home: "Hem",
     lessons: "Lektioner",
+    settings: "Inställningar",
     wallet: "Plånbok",
     profile: "Profil",
     welcome: "Välkommen till NotWallet Crypto!",
