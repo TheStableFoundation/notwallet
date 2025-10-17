@@ -12,12 +12,14 @@ keywords = ["solana", "wallet", "crypto"]
 readme = "README.md"
 
 [workspace]
-members = ["./wallet-core-model"]
+members = ["./wallet-core*", "./wallet-constants"]
 
 [workspace.dependencies]
 smbcloud-wallet-constants = { path = "./wallet-constants" }
 smbcloud-wallet-core-network = { path = "./wallet-core-network" }
 smbcloud-wallet-core-rpc = { path = "./wallet-core-rpc" }
+smbcloud-wallet-core-http = { path = "./wallet-core-http" }
+smbcloud-wallet-core-model = { path = "./wallet-core-model" }
 uniffi = { version = "0.29", features = ["cli", "tokio"] }
 
 [lib]
