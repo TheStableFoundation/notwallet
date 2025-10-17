@@ -16,6 +16,7 @@ members = ["./wallet-constants", "./wallet-core*"]
 
 [workspace.dependencies]
 smbcloud-wallet-constants = { version = "1", path = "./wallet-constants" }
+smbcloud-wallet-core = { version = "1", path = "./wallet-core" }
 smbcloud-wallet-core-http = { version = "1", path = "./wallet-core-http" }
 smbcloud-wallet-core-model = { version = "1", path = "./wallet-core-model" }
 smbcloud-wallet-core-network = { version = "1", path = "./wallet-core-network" }
