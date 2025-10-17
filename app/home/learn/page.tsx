@@ -16,6 +16,7 @@ import SendIcon from "@mui/icons-material/Send";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import PersonIcon from "@mui/icons-material/Person";
 import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useLang } from "../../../src/LanguageContext";
 
 interface ChatMessage {
   id: string;
@@ -24,54 +25,47 @@ interface ChatMessage {
   timestamp: Date;
 }
 
-const faqData = [
-  {
-    question: "What is The Stable Foundation?",
-    answer:
-      "The Stable Foundation is a decentralized organization focused on creating stable, accessible financial infrastructure built on blockchain technology. Our mission is to provide transparent, community-driven financial tools that empower users worldwide.",
-  },
-  {
-    question: "What is cryptocurrency?",
-    answer:
-      "Cryptocurrency is a digital or virtual form of currency that uses cryptography for security. It operates independently of traditional banking systems and enables peer-to-peer transactions without intermediaries.",
-  },
-  {
-    question: "What is a blockchain?",
-    answer:
-      "A blockchain is a distributed ledger technology that maintains a continuously growing list of records (blocks) linked and secured using cryptography. Each block contains transaction data, a timestamp, and a cryptographic hash of the previous block.",
-  },
-  {
-    question: "How do I keep my wallet secure?",
-    answer:
-      "Never share your private keys or seed phrases with anyone. Store your backup phrase in a secure, offline location. Use strong passwords and enable two-factor authentication when possible. Always verify transaction details before signing.",
-  },
-  {
-    question: "What are transaction fees?",
-    answer:
-      "Transaction fees are small amounts paid to network validators for processing and confirming transactions on the blockchain. These fees help secure the network and prevent spam transactions.",
-  },
-  {
-    question: "What is a DAO?",
-    answer:
-      "A DAO (Decentralized Autonomous Organization) is an organization governed by smart contracts and community voting rather than traditional management structures. Members can propose and vote on decisions that affect the organization.",
-  },
-  {
-    question: "How do I participate in governance?",
-    answer:
-      "You can participate in governance by holding governance tokens, reviewing proposals, and casting votes on important decisions. Active participation helps shape the future direction of the foundation.",
-  },
-  {
-    question: "What is DeFi?",
-    answer:
-      "DeFi (Decentralized Finance) refers to financial services built on blockchain technology that operate without traditional intermediaries like banks. This includes lending, borrowing, trading, and earning yield on digital assets.",
-  },
-];
-
 export default function LearnPage() {
+  const { t } = useLang();
+
+  const faqData = [
+    {
+      question: t.faqWhatIsStableFoundation,
+      answer: t.faqWhatIsStableFoundationAnswer,
+    },
+    {
+      question: t.faqWhatIsCryptocurrency,
+      answer: t.faqWhatIsCryptocurrencyAnswer,
+    },
+    {
+      question: t.faqWhatIsBlockchain,
+      answer: t.faqWhatIsBlockchainAnswer,
+    },
+    {
+      question: t.faqHowToKeepWalletSecure,
+      answer: t.faqHowToKeepWalletSecureAnswer,
+    },
+    {
+      question: t.faqWhatAreTransactionFees,
+      answer: t.faqWhatAreTransactionFeesAnswer,
+    },
+    {
+      question: t.faqWhatIsDao,
+      answer: t.faqWhatIsDaoAnswer,
+    },
+    {
+      question: t.faqHowToParticipateGovernance,
+      answer: t.faqHowToParticipateGovernanceAnswer,
+    },
+    {
+      question: t.faqWhatIsDefi,
+      answer: t.faqWhatIsDefiAnswer,
+    },
+  ];
   const [chatMessages, setChatMessages] = React.useState<ChatMessage[]>([
     {
       id: "welcome",
-      text: "Hello! I'm here to help you learn about cryptocurrency and The Stable Foundation. Ask me anything!",
+      text: t.aiWelcomeMessage,
       isUser: false,
       timestamp: new Date(),
     },
@@ -165,7 +159,7 @@ export default function LearnPage() {
         alignItems: "center",
       }}
     >
-      <PageChildrenTitleBar title="Learn" />
+      <PageChildrenTitleBar title={t.learnTitle} />
 
       <Box sx={{ width: "100%", maxWidth: 480, px: 2 }}>
         {/* AI Chat Section */}
@@ -191,7 +185,7 @@ export default function LearnPage() {
               }}
             >
               <SmartToyIcon sx={{ color: "#9932CC" }} />
-              AI Assistant
+              {t.aiAssistant}
             </Typography>
 
             {/* Chat Messages */}
@@ -268,7 +262,7 @@ export default function LearnPage() {
                     </Box>
                     <Paper sx={{ p: 2, bgcolor: "#fff" }}>
                       <Typography variant="body2" sx={{ color: "#666" }}>
-                        Thinking...
+                        {t.thinking}
                       </Typography>
                     </Paper>
                   </Box>
@@ -282,7 +276,7 @@ export default function LearnPage() {
               <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Ask me about crypto or The Stable Foundation..."
+                placeholder={t.askPlaceholder}
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -319,8 +313,7 @@ export default function LearnPage() {
                 display: "block",
               }}
             >
-              This is a demo AI assistant. Responses are simulated for
-              educational purposes.
+              {t.aiDisclaimerMessage}
             </Typography>
           </Box>
         </Card>
@@ -342,7 +335,7 @@ export default function LearnPage() {
                 textAlign: "center",
               }}
             >
-              Frequently Asked Questions
+              {t.frequentlyAskedQuestions}
             </Typography>
 
             {faqData.map((faq, index) => (

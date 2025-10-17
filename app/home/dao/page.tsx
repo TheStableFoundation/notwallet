@@ -9,6 +9,7 @@ import TreasuryCard from "./_components/treasury-card";
 import ProposalsCard from "./_components/proposals-card";
 import InfoCard from "./_components/info-card";
 import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useLang } from "../../../src/LanguageContext";
 
 enum State {
   Loading,
@@ -17,6 +18,7 @@ enum State {
 }
 
 export default function DAOPage() {
+  const { t } = useLang();
   const [state, setState] = React.useState(State.Loading);
 
   // Simple initialization - just check if we can load the page
@@ -40,7 +42,7 @@ export default function DAOPage() {
         alignItems: "center",
       }}
     >
-      <PageChildrenTitleBar title="DAO" />
+      <PageChildrenTitleBar title={t.daoTitle} />
 
       {state === State.Loading && <LoadingCard />}
       {state === State.Error && <ErrorCard />}

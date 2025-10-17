@@ -6,6 +6,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useLang } from "../../../../src/LanguageContext";
 
 enum LoadingState {
   Loading,
@@ -62,6 +63,7 @@ const getStatusColor = (status: Proposal["status"]) => {
 };
 
 export default function ProposalsCard() {
+  const { t } = useLang();
   const [state, setState] = React.useState<LoadingState>(LoadingState.Loading);
   const [proposals, setProposals] = React.useState<Proposal[]>([]);
 
@@ -98,7 +100,7 @@ export default function ProposalsCard() {
         fontWeight="bold"
         sx={{ mb: 3, color: "#9932CC" }}
       >
-        Active Proposals
+        {t.activeProposals}
       </Typography>
 
       {/* Loading State */}
@@ -112,7 +114,7 @@ export default function ProposalsCard() {
       {state === LoadingState.Error && (
         <Box sx={{ textAlign: "center", py: 4 }}>
           <Typography variant="body2" color="error" sx={{ mb: 2 }}>
-            Failed to load proposals
+            {t.failedToLoadProposals}
           </Typography>
           <Typography
             variant="body2"
@@ -123,7 +125,7 @@ export default function ProposalsCard() {
             }}
             onClick={loadProposals}
           >
-            Retry
+            {t.retry}
           </Typography>
         </Box>
       )}
@@ -134,7 +136,7 @@ export default function ProposalsCard() {
           {proposals.length === 0 ? (
             <Box sx={{ textAlign: "center", py: 4 }}>
               <Typography variant="body2" color="text.secondary">
-                No active proposals at this time
+                {t.noActiveProposals}
               </Typography>
             </Box>
           ) : (
@@ -196,7 +198,7 @@ export default function ProposalsCard() {
                   <Stack direction="row" spacing={3}>
                     <Box>
                       <Typography variant="caption" color="text.secondary">
-                        Yes Votes
+                        {t.yesVotes}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -208,7 +210,7 @@ export default function ProposalsCard() {
                     </Box>
                     <Box>
                       <Typography variant="caption" color="text.secondary">
-                        No Votes
+                        {t.noVotes}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -220,7 +222,7 @@ export default function ProposalsCard() {
                     </Box>
                     <Box>
                       <Typography variant="caption" color="text.secondary">
-                        Ends
+                        {t.ends}
                       </Typography>
                       <Typography variant="body2" fontWeight="bold">
                         {proposal.endsIn}

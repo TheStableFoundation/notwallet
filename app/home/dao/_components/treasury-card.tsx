@@ -22,6 +22,7 @@ import {
 } from "@lib/crate/generated";
 import { openExplorer } from "@lib/helper";
 import { AssetIcon } from "@lib/components/token-icons";
+import { useLang } from "../../../../src/LanguageContext";
 
 enum LoadingState {
   Loading,
@@ -30,6 +31,7 @@ enum LoadingState {
 }
 
 export default function TreasuryCard() {
+  const { t } = useLang();
   const [state, setState] = React.useState<LoadingState>(LoadingState.Loading);
   const [bachBalance, setBachBalance] = React.useState<string>("-");
   const [solBalance, setSolBalance] = React.useState<string>("-");
@@ -79,7 +81,7 @@ export default function TreasuryCard() {
         color="#fff"
         sx={{ mb: 2, textAlign: "center" }}
       >
-        Treasury
+        {t.treasury}
       </Typography>
 
       <Box
@@ -107,7 +109,7 @@ export default function TreasuryCard() {
         >
           {`${THE_STABLE_FOUNDATION_TREASURY_ADDRESS.slice(0, 8)}...${THE_STABLE_FOUNDATION_TREASURY_ADDRESS.slice(-8)}`}
         </Typography>
-        <Tooltip title="View on Explorer" arrow>
+        <Tooltip title={t.viewOnExplorer} arrow>
           <IconButton
             onClick={() => openExplorer(THE_STABLE_FOUNDATION_TREASURY_ADDRESS)}
             sx={{
@@ -136,7 +138,7 @@ export default function TreasuryCard() {
             variant="body2"
             sx={{ color: "rgba(255,255,255,0.8)", mb: 2 }}
           >
-            Failed to load treasury balances
+            {t.failedToLoadTreasuryBalances}
           </Typography>
           <Typography
             variant="body2"
@@ -147,7 +149,7 @@ export default function TreasuryCard() {
             }}
             onClick={loadTreasuryBalances}
           >
-            Retry
+            {t.retry}
           </Typography>
         </Box>
       )}
@@ -165,7 +167,7 @@ export default function TreasuryCard() {
               textAlign: "center",
             }}
           >
-            Treasury Balances
+            {t.treasuryBalances}
           </Typography>
 
           {/* BACH Balance */}
