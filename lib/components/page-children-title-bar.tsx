@@ -32,7 +32,6 @@ export default function PageChildrenTitleBar({ title }: { title: string }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          py: 2,
         }}
       >
         <Button
@@ -42,7 +41,6 @@ export default function PageChildrenTitleBar({ title }: { title: string }) {
             minWidth: 0,
             py: 1,
             fontSize: "16px",
-            fontWeight: 500,
             color: "#8B5CF6",
             borderRadius: "12px",
             textTransform: "none",

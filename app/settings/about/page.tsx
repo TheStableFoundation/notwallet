@@ -60,15 +60,18 @@ export default function AboutPage() {
             }}
           >
             <Box
+              component="img"
               sx={{
-                width: 80,
-                height: 80,
-                borderRadius: "20px",
-                mx: "auto",
-                mb: 3,
-                overflow: "hidden",
+                height: 100,
+                width: 100,
+                maxHeight: { xs: 75, md: 167 },
+                maxWidth: { xs: 75, md: 250 },
+                display: "block",
+                margin: "0 auto",
               }}
-            ></Box>
+              alt="The house from the offer."
+              src="/public/images/app-icon.png"
+            />
             <Typography
               variant="h5"
               sx={{

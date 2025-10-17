@@ -19,7 +19,6 @@ import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageTitleBar from "@lib/components/page-title-bar";
 import Confetti from "react-confetti";
 import { useI18n } from "@lib/i18n/provider";
 import { useNavigate } from "react-router-dom";
@@ -64,9 +63,9 @@ export default function SettingsPage() {
     if (type === "about") {
       router("/settings/about");
     } else if (type === "privacyPolicy") {
-      openUrl("https://bach.money/privacy-policy");
+      openUrl("https://notwallet.eu/privacy");
     } else if (type === "termsOfService") {
-      openUrl("https://bach.money/terms-of-service");
+      openUrl("https://notwallet.eu/terms");
     } else if (type === "openSource") {
       openUrl("https://github.com/TheStableFoundation/not");
     } else if (type === "footer") {
@@ -209,8 +208,6 @@ export default function SettingsPage() {
         pb: 8,
       }}
     >
-      <PageTitleBar title={t("common.settings")} />
-
       <Box sx={{ width: "100%", maxWidth: 420, px: 2, mt: 2 }}>
         {/* App Settings Section */}
         <Card
