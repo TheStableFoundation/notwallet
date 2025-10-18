@@ -4,6 +4,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLang } from "../LanguageContext";
 import { SupportedLanguages } from "../i18n";
 import { debug } from "@tauri-apps/plugin-log";
+import { haptics } from "@lib/utils/haptics";
 
 interface NavItem {
   path: string;
@@ -107,6 +108,10 @@ export default function Navbar() {
     return false;
   };
 
+  const handleNavClick = async () => {
+    await haptics.navigation();
+  };
+
   return (
     <>
       {/* Top bar with app name and language switcher, matching bottom bar width */}
@@ -121,6 +126,7 @@ export default function Navbar() {
           <select
             className="rounded border px-2 py-1 bg-white text-sm text-primay-light cursor-pointer shadow"
             value={lang}
+            onClick={handleNavClick}
             onChange={handleLanguageChange}
             aria-label="Change language"
           >
@@ -139,6 +145,7 @@ export default function Navbar() {
               <Tooltip.Trigger asChild>
                 <Link
                   to={item.path}
+                  onClick={handleNavClick}
                   className={`flex flex-col items-center justify-center gap-1 px-3 py-1 rounded transition-all duration-200
                     ${
                       isActivePath(item.path)
