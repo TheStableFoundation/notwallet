@@ -17,12 +17,11 @@ import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useColorScheme } from "@mui/material/styles";
 import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
-import { useI18n } from "@lib/i18n/provider";
-import type { Language } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 
 export default function AppPreferences() {
   const { mode, setMode } = useColorScheme();
-  const { t, language, setLanguage } = useI18n();
+  const { t, lang, setLang } = useLang();
 
   const handleThemeChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -35,7 +34,7 @@ export default function AppPreferences() {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     await selectionFeedback();
-    await setLanguage(event.target.value as Language);
+    setLang(event.target.value as "en" | "sv" | "id");
   };
 
   if (!mode) {
@@ -49,9 +48,7 @@ export default function AppPreferences() {
           justifyContent: "center",
         }}
       >
-        <Typography sx={{ color: "#6B7280" }}>
-          {t("common.loading")}...
-        </Typography>
+        <Typography sx={{ color: "#6B7280" }}>{t.loading}...</Typography>
       </Box>
     );
   }
@@ -68,7 +65,7 @@ export default function AppPreferences() {
         py: 4,
       }}
     >
-      <PageChildrenTitleBar title={t("common.preferences")} />
+      <PageChildrenTitleBar title={t.preferences} />
 
       {/* Main Content Card */}
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
@@ -93,7 +90,7 @@ export default function AppPreferences() {
                 letterSpacing: "-0.02em",
               }}
             >
-              {t("common.preferences")}
+              {t.preferences}
             </Typography>
           </Box>
 
@@ -138,7 +135,7 @@ export default function AppPreferences() {
                       mb: 0.5,
                     }}
                   >
-                    {t("common.theme")}
+                    {t.theme}
                   </Typography>
                   <Typography
                     sx={{
@@ -146,7 +143,7 @@ export default function AppPreferences() {
                       color: "#6B7280",
                     }}
                   >
-                    {t("common.chooseAppearance")}
+                    {t.chooseAppearance}
                   </Typography>
                 </Box>
               </Box>
@@ -187,7 +184,7 @@ export default function AppPreferences() {
                               color: "#1F2937",
                             }}
                           >
-                            {t("common.system")}
+                            {t.system}
                           </Typography>
                           <Typography
                             sx={{
@@ -196,7 +193,7 @@ export default function AppPreferences() {
                               mt: 0.25,
                             }}
                           >
-                            {t("common.matchDevice")}
+                            {t.matchDevice}
                           </Typography>
                         </Box>
                       }
@@ -237,7 +234,7 @@ export default function AppPreferences() {
                               color: "#1F2937",
                             }}
                           >
-                            {t("common.light")}
+                            {t.light}
                           </Typography>
                           <Typography
                             sx={{
@@ -246,7 +243,7 @@ export default function AppPreferences() {
                               mt: 0.25,
                             }}
                           >
-                            {t("common.cleanBright")}
+                            {t.cleanBright}
                           </Typography>
                         </Box>
                       }
@@ -287,7 +284,7 @@ export default function AppPreferences() {
                               color: "#1F2937",
                             }}
                           >
-                            {t("common.dark")}
+                            {t.dark}
                           </Typography>
                           <Typography
                             sx={{
@@ -296,7 +293,7 @@ export default function AppPreferences() {
                               mt: 0.25,
                             }}
                           >
-                            {t("common.easyEyes")}
+                            {t.easyEyes}
                           </Typography>
                         </Box>
                       }
@@ -362,7 +359,7 @@ export default function AppPreferences() {
                       mb: 0.5,
                     }}
                   >
-                    {t("language.language")}
+                    {t.language}
                   </Typography>
                   <Typography
                     sx={{
@@ -370,7 +367,7 @@ export default function AppPreferences() {
                       color: "#6B7280",
                     }}
                   >
-                    {t("language.selectLanguage")}
+                    {t.selectLanguage}
                   </Typography>
                 </Box>
               </Box>
@@ -386,7 +383,7 @@ export default function AppPreferences() {
                   <RadioGroup
                     aria-labelledby="language-selection"
                     name="language-selection"
-                    value={language}
+                    value={lang}
                     onChange={handleLanguageChange}
                     sx={{ gap: 1 }}
                   >
@@ -419,7 +416,7 @@ export default function AppPreferences() {
                                 color: "#1F2937",
                               }}
                             >
-                              {t("language.english")}
+                              {t.english}
                             </Typography>
                             <Typography
                               sx={{
@@ -429,6 +426,65 @@ export default function AppPreferences() {
                               }}
                             >
                               English
+                            </Typography>
+                          </Box>
+                        </Box>
+                      }
+                      sx={{
+                        mx: 0,
+                        py: 1.5,
+                        px: 2,
+                        borderRadius: "12px",
+                        border: "1px solid transparent",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "rgba(139, 92, 246, 0.04)",
+                          border: "1px solid rgba(139, 92, 246, 0.1)",
+                        },
+                        "& .MuiFormControlLabel-label": {
+                          flex: 1,
+                        },
+                      }}
+                    />
+                    <FormControlLabel
+                      value="sv"
+                      control={
+                        <Radio
+                          sx={{
+                            color: "#D1D5DB",
+                            "&.Mui-checked": {
+                              color: "#8B5CF6",
+                            },
+                          }}
+                        />
+                      }
+                      label={
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1.5,
+                          }}
+                        >
+                          <span style={{ fontSize: "16px" }}>🇸🇪</span>
+                          <Box>
+                            <Typography
+                              sx={{
+                                fontSize: "15px",
+                                fontWeight: 500,
+                                color: "#1F2937",
+                              }}
+                            >
+                              {t.swedish}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: "13px",
+                                color: "#6B7280",
+                                mt: 0.25,
+                              }}
+                            >
+                              Svenska
                             </Typography>
                           </Box>
                         </Box>
@@ -478,7 +534,7 @@ export default function AppPreferences() {
                                 color: "#1F2937",
                               }}
                             >
-                              {t("language.indonesian")}
+                              {t.indonesian}
                             </Typography>
                             <Typography
                               sx={{
@@ -531,7 +587,7 @@ export default function AppPreferences() {
                 lineHeight: 1.5,
               }}
             >
-              {t("common.changesApplyImmediately")}
+              {t.changesApplyImmediately}
             </Typography>
           </Box>
         </Card>

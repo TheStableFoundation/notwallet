@@ -92,6 +92,96 @@ export interface Translation {
   faqHowToParticipateGovernanceAnswer: string;
   faqWhatIsDefi: string;
   faqWhatIsDefiAnswer: string;
+  // Wallet specific translations
+  walletTitle: string;
+  switchKeypairTitle: string;
+  noKeypairsFound: string;
+  account: string;
+  active: string;
+  assets: string;
+  activity: string;
+  transactionHistory: string;
+  viewWalletActivity: string;
+  openInSolscan: string;
+  noAssetsFound: string;
+  defaultUsername: string;
+  pleaseSelectUsername: string;
+  usernameTooLong: string;
+  updateUsernameFailed: string;
+  editWallet: string;
+  success: string;
+  username: string;
+  maxCharacters: string;
+  saving: string;
+  pleaseEnterValidAmount: string;
+  pleaseSelectRecipient: string;
+  failedToSendTokens: string;
+  transactionCompletedSuccessfully: string;
+  tokenType: string;
+  amount: string;
+  available: string;
+  recipient: string;
+  enterCustomAddress: string;
+  recipientAddress: string;
+  enterRecipientPublicKey: string;
+  customAddress: string;
+  sending: string;
+  failedToGetQuote: string;
+  failedToSwap: string;
+  swapTokens: string;
+  swapCompleted: string;
+  from: string;
+  to: string;
+  swapTokensTooltip: string;
+  quoteDetails: string;
+  outputAmount: string;
+  fee: string;
+  priceImpact: string;
+  route: string;
+  direct: string;
+  transactionReady: string;
+  blockHeight: string;
+  priorityFee: string;
+  computeUnits: string;
+  finalSlippage: string;
+  executeSwap: string;
+  getQuote: string;
+  insufficientBalance: string;
+  sendToken: string;
+  simulationWarning: string;
+  buildNewTransaction: string;
+  slippage: string;
+  slippagePercent: string;
+  buildingTransaction: string;
+  prepareSwap: string;
+  toggleLockWallet: string;
+  walletSettings: string;
+  copyPubkey: string;
+  switchKeypair: string;
+  buySol: string;
+  // Common actions
+  cancel: string;
+  save: string;
+  // Wallet settings translations
+  addWallet: string;
+  createNew: string;
+  showSeedPhrase: string;
+  viewRecoveryPhrase: string;
+  importExisting: string;
+  management: string;
+  importRecovery: string;
+  destroyWallets: string;
+  destroyAllData: string;
+  // Security translations
+  securityNotice: string;
+  storeOffline: string;
+  // Common UI
+  dangerZone: string;
+  irreversibleActions: string;
+  // Finance translations
+  send: string;
+  swap: string;
+  balance: string;
   // Lib components translations
   importSeedPhrase: string;
   createNewWallet: string;
@@ -101,6 +191,44 @@ export interface Translation {
   incorrectPassword: string;
   unlockWallet: string;
   notwalletCrypto: string;
+  // Settings pages translations
+  congratulations: string;
+  congratulationsMessage: string;
+  gotIt: string;
+  stableFoundationCopyright: string;
+  easterEggFound: string;
+  easterEggDescription: string;
+  applicationInformation: string;
+  version: string;
+  installationId: string;
+  loading: string;
+  supportNote: string;
+  preferences: string;
+  theme: string;
+  chooseAppearance: string;
+  system: string;
+  matchDevice: string;
+  light: string;
+  cleanBright: string;
+  dark: string;
+  easyEyes: string;
+  changesApplyImmediately: string;
+  language: string;
+  selectLanguage: string;
+  english: string;
+  indonesian: string;
+  // Common translations
+  about: string;
+  appInfo: string;
+  app: string;
+  legalSupport: string;
+  termsOfService: string;
+  privacyPolicy: string;
+  openSource: string;
+  // About page translations
+  aboutDescription: string;
+  developedBy: string;
+  swedish: string;
 }
 
 export type SupportedLanguages = "en" | "sv" | "id";
@@ -156,7 +284,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     chooseUsernamePersonalize: "Choose a username to personalize your wallet.",
     enterYourUsername: "Enter your username",
     saveUsername: "Save Username",
-    saved: "Saved!",
+    saved: "Saved",
     usernameSavedSuccessfully: "Username saved successfully!",
     // DAO page translations
     daoTitle: "DAO",
@@ -216,6 +344,97 @@ export const translations: Record<SupportedLanguages, Translation> = {
     faqWhatIsDefi: "What is DeFi?",
     faqWhatIsDefiAnswer:
       "DeFi (Decentralized Finance) refers to financial services built on blockchain technology that operate without traditional intermediaries like banks. This includes lending, borrowing, trading, and earning yield on digital assets.",
+    // Wallet specific translations
+    walletTitle: "Wallet",
+    switchKeypairTitle: "Switch Wallet",
+    noKeypairsFound: "No wallets found",
+    account: "Account",
+    active: "Active",
+    assets: "Assets",
+    activity: "Activity",
+    transactionHistory: "Transaction History",
+    viewWalletActivity: "View all wallet activity on Solscan",
+    openInSolscan: "Open in Solscan",
+    noAssetsFound: "No assets found",
+    defaultUsername: "Wallet",
+    pleaseSelectUsername: "Please enter a username",
+    usernameTooLong: "Username too long (max 6 characters)",
+    updateUsernameFailed: "Failed to update username",
+    editWallet: "Edit Wallet",
+    success: "Success!",
+    username: "Username",
+    maxCharacters: "max 6 characters",
+    saving: "Saving...",
+    pleaseEnterValidAmount: "Please enter a valid amount",
+    pleaseSelectRecipient: "Please select or enter a recipient",
+    failedToSendTokens: "Failed to send tokens",
+    transactionCompletedSuccessfully: "Transaction completed successfully!",
+    tokenType: "Token Type",
+    amount: "Amount",
+    available: "Available",
+    recipient: "Recipient",
+    enterCustomAddress: "Enter custom address",
+    recipientAddress: "Recipient Address",
+    enterRecipientPublicKey: "Enter recipient public key",
+    customAddress: "Custom Address",
+    sending: "Sending...",
+    failedToGetQuote: "Failed to get swap quote",
+    failedToSwap: "Failed to execute swap",
+    swapTokens: "Swap Tokens",
+    swapCompleted: "Swap completed successfully!",
+    from: "From",
+    to: "To",
+    swapTokensTooltip: "Swap token positions",
+    quoteDetails: "Quote Details",
+    outputAmount: "Output Amount",
+    fee: "Fee",
+    priceImpact: "Price Impact",
+    route: "Route",
+    direct: "Direct",
+    transactionReady: "Transaction Ready",
+    blockHeight: "Block Height",
+    priorityFee: "Priority Fee",
+    computeUnits: "Compute Units",
+    finalSlippage: "Final Slippage",
+    executeSwap: "Execute Swap",
+    getQuote: "Get Quote",
+    insufficientBalance: "Insufficient balance",
+    sendToken: "Send Token",
+    simulationWarning: "Simulation Warning",
+    buildNewTransaction: "Build New Transaction",
+    slippage: "Slippage",
+    slippagePercent: "0.1%",
+    buildingTransaction: "Building Transaction...",
+    prepareSwap: "Prepare Swap",
+    toggleLockWallet: "Toggle lock wallet",
+    walletSettings: "Wallet settings",
+    copyPubkey: "Copy public key",
+    switchKeypair: "Switch wallet",
+    buySol: "Buy SOL",
+    // Common actions
+    cancel: "Cancel",
+    save: "Save",
+    // Wallet settings translations
+    addWallet: "Add Wallet",
+    createNew: "Create a new wallet",
+    showSeedPhrase: "Show Seed Phrase",
+    viewRecoveryPhrase: "View your recovery phrase",
+    importExisting: "Import an existing wallet",
+    management: "Wallet Management",
+    importRecovery: "Import & Recovery",
+    destroyWallets: "Destroy Wallets",
+    destroyAllData: "This will permanently delete all wallet data",
+    // Security translations
+    securityNotice: "Security Notice",
+    storeOffline: "Store your seed phrase in a secure, offline location",
+    // Common UI
+    dangerZone: "Danger Zone",
+    irreversibleActions:
+      "Irreversible actions that will permanently delete your data",
+    // Finance translations
+    send: "Send",
+    swap: "Swap",
+    balance: "Balance",
     // Lib components translations
     importSeedPhrase: "Import Seed Phrase",
     createNewWallet: "Create New Wallet",
@@ -225,6 +444,46 @@ export const translations: Record<SupportedLanguages, Translation> = {
     incorrectPassword: "Incorrect password. Please try again.",
     unlockWallet: "Unlock Wallet",
     notwalletCrypto: "NotWallet Crypto",
+    // Settings pages translations
+    congratulations: "🎉 Congratulations! 🎉",
+    congratulationsMessage:
+      "You just found one of many ways to get the BACH Token airdrop. Send an email to info@bach.money with subject SETTINGS_EASTER_EGG and your wallet address in the email body.",
+    gotIt: "Got it!",
+    stableFoundationCopyright: "© {year} The Stable Foundation",
+    easterEggFound: "Easter Egg Found!",
+    easterEggDescription: "You discovered a hidden feature in the settings.",
+    applicationInformation: "Application Information",
+    version: "Version",
+    installationId: "Installation ID",
+    loading: "Loading",
+    supportNote: "This information helps with support and debugging",
+    preferences: "Preferences",
+    theme: "Theme",
+    chooseAppearance: "Choose your preferred appearance",
+    system: "System",
+    matchDevice: "Match your device settings",
+    light: "Light",
+    cleanBright: "Clean and bright interface",
+    dark: "Dark",
+    easyEyes: "Easy on the eyes",
+    changesApplyImmediately: "Changes will apply immediately",
+    language: "Language",
+    selectLanguage: "Select Language",
+    english: "English",
+    indonesian: "Indonesian",
+    // Common translations
+    about: "About",
+    appInfo: "App Info",
+    app: "App",
+    legalSupport: "Legal & Support",
+    termsOfService: "Terms of Service",
+    privacyPolicy: "Privacy Policy",
+    openSource: "Open Source",
+    // About page translations
+    aboutDescription:
+      "A modern, community-owned, non-custodial open-source Solana wallet app built for privacy, simplicity, and security.",
+    developedBy: "Developed and maintained by The Stable Foundation.",
+    swedish: "Swedish",
   },
   sv: {
     appName: "NotWallet",
@@ -277,8 +536,8 @@ export const translations: Record<SupportedLanguages, Translation> = {
       "Välj ett användarnamn för att personalisera din plånbok.",
     enterYourUsername: "Ange ditt användarnamn",
     saveUsername: "Spara användarnamn",
-    saved: "Sparat!",
-    usernameSavedSuccessfully: "Användarnamn sparat framgångsrikt!",
+    saved: "Sparat",
+    usernameSavedSuccessfully: "Användarnamnet sparades framgångsrikt!",
     // DAO page translations
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
@@ -337,6 +596,97 @@ export const translations: Record<SupportedLanguages, Translation> = {
     faqWhatIsDefi: "Vad är DeFi?",
     faqWhatIsDefiAnswer:
       "DeFi (Decentraliserad Finans) hänvisar till finansiella tjänster byggda på blockchain-teknik som fungerar utan traditionella mellanhänder som banker. Detta inkluderar utlåning, upplåning, handel och avkastning på digitala tillgångar.",
+    // Wallet specific translations
+    walletTitle: "Plånbok",
+    switchKeypairTitle: "Byt plånbok",
+    noKeypairsFound: "Inga plånböcker hittades",
+    account: "Konto",
+    active: "Aktiv",
+    assets: "Tillgångar",
+    activity: "Aktivitet",
+    transactionHistory: "Transaktionshistorik",
+    viewWalletActivity: "Visa all plånboksaktivitet på Solscan",
+    openInSolscan: "Öppna i Solscan",
+    noAssetsFound: "Inga tillgångar hittades",
+    defaultUsername: "Plånbok",
+    pleaseSelectUsername: "Ange ett användarnamn",
+    usernameTooLong: "Användarnamnet för långt (max 6 tecken)",
+    updateUsernameFailed: "Misslyckades att uppdatera användarnamn",
+    editWallet: "Redigera plånbok",
+    success: "Framgång!",
+    username: "Användarnamn",
+    maxCharacters: "max 6 tecken",
+    saving: "Sparar...",
+    pleaseEnterValidAmount: "Ange ett giltigt belopp",
+    pleaseSelectRecipient: "Välj eller ange en mottagare",
+    failedToSendTokens: "Misslyckades att skicka tokens",
+    transactionCompletedSuccessfully: "Transaktion slutförd framgångsrikt!",
+    tokenType: "Token-typ",
+    amount: "Belopp",
+    available: "Tillgängligt",
+    recipient: "Mottagare",
+    enterCustomAddress: "Ange anpassad adress",
+    recipientAddress: "Mottagaradress",
+    enterRecipientPublicKey: "Ange mottagarens publika nyckel",
+    customAddress: "Anpassad adress",
+    sending: "Skickar...",
+    failedToGetQuote: "Misslyckades att få swap-offert",
+    failedToSwap: "Misslyckades att utföra swap",
+    swapTokens: "Swappa tokens",
+    swapCompleted: "Swap slutförd framgångsrikt!",
+    from: "Från",
+    to: "Till",
+    swapTokensTooltip: "Swappa token-positioner",
+    quoteDetails: "Offertdetaljer",
+    outputAmount: "Utdatabelopp",
+    fee: "Avgift",
+    priceImpact: "Prispåverkan",
+    route: "Rutt",
+    direct: "Direkt",
+    transactionReady: "Transaktion klar",
+    blockHeight: "Blockhöjd",
+    priorityFee: "Prioritetsavgift",
+    computeUnits: "Beräkningsenheter",
+    finalSlippage: "Slutlig glidning",
+    executeSwap: "Utför swap",
+    getQuote: "Få offert",
+    insufficientBalance: "Otillräckligt saldo",
+    sendToken: "Skicka Token",
+    simulationWarning: "Simuleringsvarning",
+    buildNewTransaction: "Bygg ny transaktion",
+    slippage: "Glidning",
+    slippagePercent: "0,1%",
+    buildingTransaction: "Bygger transaktion...",
+    prepareSwap: "Förbered swap",
+    toggleLockWallet: "Växla låsning av plånbok",
+    walletSettings: "Plånboksinställningar",
+    copyPubkey: "Kopiera publik nyckel",
+    switchKeypair: "Byt plånbok",
+    buySol: "Köp SOL",
+    // Common actions
+    cancel: "Avbryt",
+    save: "Spara",
+    // Wallet settings translations
+    addWallet: "Lägg till plånbok",
+    createNew: "Skapa en ny plånbok",
+    showSeedPhrase: "Visa fröfras",
+    viewRecoveryPhrase: "Visa din återställningsfras",
+    importExisting: "Importera en befintlig plånbok",
+    management: "Plånbokshantering",
+    importRecovery: "Import & återställning",
+    destroyWallets: "Förstör plånböcker",
+    destroyAllData: "Detta kommer permanent ta bort all plånboksdata",
+    // Security translations
+    securityNotice: "Säkerhetsmeddelande",
+    storeOffline: "Förvara din fröfras på en säker, offline-plats",
+    // Common UI
+    dangerZone: "Farlig zon",
+    irreversibleActions:
+      "Irreversibla åtgärder som permanent tar bort din data",
+    // Finance translations
+    send: "Skicka",
+    swap: "Swappa",
+    balance: "Saldo",
     // Lib components translations
     importSeedPhrase: "Importera fröfras",
     createNewWallet: "Skapa ny plånbok",
@@ -346,6 +696,46 @@ export const translations: Record<SupportedLanguages, Translation> = {
     incorrectPassword: "Felaktigt lösenord. Försök igen.",
     unlockWallet: "Lås upp plånbok",
     notwalletCrypto: "NotWallet Crypto",
+    // Settings pages translations
+    congratulations: "🎉 Grattis! 🎉",
+    congratulationsMessage:
+      "Du hittade ett av många sätt att få BACH Token airdrop. Skicka ett e-postmeddelande till info@bach.money med ämne SETTINGS_EASTER_EGG och din plånboksadress i e-postmeddelandets brödtext.",
+    gotIt: "Förstått!",
+    stableFoundationCopyright: "© {year} The Stable Foundation",
+    easterEggFound: "Påskägg funnet!",
+    easterEggDescription: "Du upptäckte en dold funktion i inställningarna.",
+    applicationInformation: "Applikationsinformation",
+    version: "Version",
+    installationId: "Installations-ID",
+    loading: "Laddar",
+    supportNote: "Denna information hjälper med support och felsökning",
+    preferences: "Inställningar",
+    theme: "Tema",
+    chooseAppearance: "Välj din föredragna utseende",
+    system: "System",
+    matchDevice: "Matcha dina enhetsinställningar",
+    light: "Ljus",
+    cleanBright: "Rent och ljust gränssnitt",
+    dark: "Mörk",
+    easyEyes: "Lätt för ögonen",
+    changesApplyImmediately: "Ändringar tillämpas omedelbart",
+    language: "Språk",
+    selectLanguage: "Välj språk",
+    english: "Engelska",
+    indonesian: "Indonesiska",
+    // Common translations
+    about: "Om",
+    appInfo: "App Info",
+    app: "App",
+    legalSupport: "Juridik & Support",
+    termsOfService: "Användarvillkor",
+    privacyPolicy: "Integritetspolicy",
+    openSource: "Öppen källkod",
+    // About page translations
+    aboutDescription:
+      "En modern, gemenskapsägd, icke-förvaringsbaserad open-source Solana-plånboksapp byggd för integritet, enkelhet och säkerhet.",
+    developedBy: "Utvecklad och underhållen av The Stable Foundation.",
+    swedish: "Svenska",
   },
   id: {
     appName: "NotWallet",
@@ -398,7 +788,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
       "Pilih nama pengguna untuk mempersonalisasi dompet Anda.",
     enterYourUsername: "Masukkan nama pengguna Anda",
     saveUsername: "Simpan Nama Pengguna",
-    saved: "Tersimpan!",
+    saved: "Tersimpan",
     usernameSavedSuccessfully: "Nama pengguna berhasil disimpan!",
     // DAO page translations
     daoTitle: "DAO",
@@ -459,6 +849,97 @@ export const translations: Record<SupportedLanguages, Translation> = {
     faqWhatIsDefi: "Apa itu DeFi?",
     faqWhatIsDefiAnswer:
       "DeFi (Keuangan Terdesentralisasi) mengacu pada layanan keuangan yang dibangun di atas teknologi blockchain yang beroperasi tanpa perantara tradisional seperti bank. Ini termasuk pinjam-meminjam, perdagangan, dan memperoleh yield pada aset digital.",
+    // Wallet specific translations
+    walletTitle: "Dompet",
+    switchKeypairTitle: "Ganti Dompet",
+    noKeypairsFound: "Tidak ada dompet ditemukan",
+    account: "Akun",
+    active: "Aktif",
+    assets: "Aset",
+    activity: "Aktivitas",
+    transactionHistory: "Riwayat Transaksi",
+    viewWalletActivity: "Lihat semua aktivitas dompet di Solscan",
+    openInSolscan: "Buka di Solscan",
+    noAssetsFound: "Tidak ada aset ditemukan",
+    defaultUsername: "Dompet",
+    pleaseSelectUsername: "Silakan masukkan nama pengguna",
+    usernameTooLong: "Nama pengguna terlalu panjang (maks 6 karakter)",
+    updateUsernameFailed: "Gagal memperbarui nama pengguna",
+    editWallet: "Edit Dompet",
+    success: "Berhasil!",
+    username: "Nama Pengguna",
+    maxCharacters: "maks 6 karakter",
+    saving: "Menyimpan...",
+    pleaseEnterValidAmount: "Silakan masukkan jumlah yang valid",
+    pleaseSelectRecipient: "Silakan pilih atau masukkan penerima",
+    failedToSendTokens: "Gagal mengirim token",
+    transactionCompletedSuccessfully: "Transaksi berhasil diselesaikan!",
+    tokenType: "Jenis Token",
+    amount: "Jumlah",
+    available: "Tersedia",
+    recipient: "Penerima",
+    enterCustomAddress: "Masukkan alamat khusus",
+    recipientAddress: "Alamat Penerima",
+    enterRecipientPublicKey: "Masukkan kunci publik penerima",
+    customAddress: "Alamat Khusus",
+    sending: "Mengirim...",
+    failedToGetQuote: "Gagal mendapatkan kutipan swap",
+    failedToSwap: "Gagal melakukan swap",
+    swapTokens: "Tukar Token",
+    swapCompleted: "Swap berhasil diselesaikan!",
+    from: "Dari",
+    to: "Ke",
+    swapTokensTooltip: "Tukar posisi token",
+    quoteDetails: "Detail Kutipan",
+    outputAmount: "Jumlah Output",
+    fee: "Biaya",
+    priceImpact: "Dampak Harga",
+    route: "Rute",
+    direct: "Langsung",
+    transactionReady: "Transaksi Siap",
+    blockHeight: "Tinggi Blok",
+    priorityFee: "Biaya Prioritas",
+    computeUnits: "Unit Komputasi",
+    finalSlippage: "Slippage Akhir",
+    executeSwap: "Jalankan Swap",
+    getQuote: "Dapatkan Kutipan",
+    insufficientBalance: "Saldo tidak mencukupi",
+    sendToken: "Kirim Token",
+    simulationWarning: "Peringatan Simulasi",
+    buildNewTransaction: "Buat Transaksi Baru",
+    slippage: "Slippage",
+    slippagePercent: "0,1%",
+    buildingTransaction: "Membangun Transaksi...",
+    prepareSwap: "Persiapkan Swap",
+    toggleLockWallet: "Alihkan kunci dompet",
+    walletSettings: "Pengaturan dompet",
+    copyPubkey: "Salin kunci publik",
+    switchKeypair: "Ganti dompet",
+    buySol: "Beli SOL",
+    // Common actions
+    cancel: "Batal",
+    save: "Simpan",
+    // Wallet settings translations
+    addWallet: "Tambah Dompet",
+    createNew: "Buat dompet baru",
+    showSeedPhrase: "Tampilkan Frasa Seed",
+    viewRecoveryPhrase: "Lihat frasa pemulihan Anda",
+    importExisting: "Impor dompet yang ada",
+    management: "Manajemen Dompet",
+    importRecovery: "Impor & Pemulihan",
+    destroyWallets: "Hancurkan Dompet",
+    destroyAllData: "Ini akan menghapus semua data dompet secara permanen",
+    // Security translations
+    securityNotice: "Pemberitahuan Keamanan",
+    storeOffline: "Simpan frasa seed Anda di lokasi yang aman dan offline",
+    // Common UI
+    dangerZone: "Zona Berbahaya",
+    irreversibleActions:
+      "Tindakan yang tidak dapat dibatalkan yang akan menghapus data Anda secara permanen",
+    // Finance translations
+    send: "Kirim",
+    swap: "Tukar",
+    balance: "Saldo",
     // Lib components translations
     importSeedPhrase: "Impor Frasa Seed",
     createNewWallet: "Buat Dompet Baru",
@@ -468,5 +949,45 @@ export const translations: Record<SupportedLanguages, Translation> = {
     incorrectPassword: "Kata sandi salah. Silakan coba lagi.",
     unlockWallet: "Buka Kunci Dompet",
     notwalletCrypto: "NotWallet Crypto",
+    // Settings pages translations
+    congratulations: "🎉 Selamat! 🎉",
+    congratulationsMessage:
+      "Anda baru saja menemukan salah satu dari banyak cara untuk mendapatkan airdrop Token BACH. Kirim email ke info@bach.money dengan subjek SETTINGS_EASTER_EGG dan alamat dompet Anda di badan email.",
+    gotIt: "Mengerti!",
+    stableFoundationCopyright: "© {year} The Stable Foundation",
+    easterEggFound: "Easter Egg Ditemukan!",
+    easterEggDescription: "Anda menemukan fitur tersembunyi di pengaturan.",
+    applicationInformation: "Informasi Aplikasi",
+    version: "Versi",
+    installationId: "ID Instalasi",
+    loading: "Memuat",
+    supportNote: "Informasi ini membantu dukungan dan debugging",
+    preferences: "Preferensi",
+    theme: "Tema",
+    chooseAppearance: "Pilih tampilan yang Anda sukai",
+    system: "Sistem",
+    matchDevice: "Sesuaikan dengan pengaturan perangkat",
+    light: "Terang",
+    cleanBright: "Antarmuka yang bersih dan cerah",
+    dark: "Gelap",
+    easyEyes: "Nyaman untuk mata",
+    changesApplyImmediately: "Perubahan akan diterapkan segera",
+    language: "Bahasa",
+    selectLanguage: "Pilih Bahasa",
+    english: "Bahasa Inggris",
+    indonesian: "Bahasa Indonesia",
+    // Common translations
+    about: "Tentang",
+    appInfo: "Info Aplikasi",
+    app: "Aplikasi",
+    legalSupport: "Legal & Dukungan",
+    termsOfService: "Syarat Layanan",
+    privacyPolicy: "Kebijakan Privasi",
+    openSource: "Sumber Terbuka",
+    // About page translations
+    aboutDescription:
+      "Aplikasi dompet Solana open-source modern yang dimiliki komunitas, non-custodial yang dibangun untuk privasi, kesederhanaan, dan keamanan.",
+    developedBy: "Dikembangkan dan dikelola oleh The Stable Foundation.",
+    swedish: "Bahasa Swedia",
   },
 };

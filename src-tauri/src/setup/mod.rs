@@ -1,6 +1,8 @@
-use crate::setup::{client::setup_client, store::setup_store};
-use log::info;
-use tauri::{App, Manager};
+use {
+    crate::setup::{client::setup_client, store::setup_store},
+    log::info,
+    tauri::{App, Manager},
+};
 
 mod client;
 pub(crate) mod commands;

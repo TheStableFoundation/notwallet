@@ -9,12 +9,12 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DestroyWalletsModal from "./destroy-wallets-modal";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import SettingListItem from "./setting-list-item";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../../src/LanguageContext";
 import { useNavigate } from "react-router-dom";
 
 export default function DestroyWalletsCard() {
   const router = useNavigate();
-  const { t } = useI18n();
+  const { t } = useLang();
   const [showDestroyModal, setShowDestroyModal] = React.useState(false);
   const handleClick = async () => {
     await selectionFeedback();
@@ -24,8 +24,8 @@ export default function DestroyWalletsCard() {
   const dangerItems = [
     {
       id: "destroyWallets",
-      label: t("wallet.destroyWallets"),
-      description: t("wallet.destroyAllData"),
+      label: t.destroyWallets,
+      description: t.destroyAllData,
       icon: <DeleteForeverIcon />,
       action: () => handleClick(),
       hasChevron: true,
@@ -59,7 +59,7 @@ export default function DestroyWalletsCard() {
               letterSpacing: "-0.02em",
             }}
           >
-            {t("common.dangerZone")}
+            {t.dangerZone}
           </Typography>
           <Typography
             variant="body2"
@@ -69,7 +69,7 @@ export default function DestroyWalletsCard() {
               mb: 1,
             }}
           >
-            {t("common.irreversibleActions")}
+            {t.irreversibleActions}
           </Typography>
         </Box>
         <List sx={{ p: 0, pb: 1 }}>

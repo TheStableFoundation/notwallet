@@ -13,12 +13,12 @@ import WalletSettingsSeedPhraseModal from "./_components/wallet-settings-seed-ph
 import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
 import SettingListItem from "./_components/setting-list-item";
 import DestroyWalletsCard from "./_components/destroy-wallets-card";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 import { useNavigate } from "react-router-dom";
 
 export default function WalletSettingsPage() {
   const router = useNavigate();
-  const { t } = useI18n();
+  const { t } = useLang();
   const [showSeedPhraseModal, setShowSeedPhraseModal] = React.useState(false);
 
   const handleClick = async (
@@ -41,16 +41,16 @@ export default function WalletSettingsPage() {
   const walletItems = [
     {
       id: "addWallet",
-      label: t("wallet.addWallet"),
-      description: t("wallet.createNew"),
+      label: t.addWallet,
+      description: t.createNew,
       icon: <AddIcon />,
       action: () => handleClick("addWallet"),
       hasChevron: true,
     },
     {
       id: "showSeedPhrase",
-      label: t("wallet.showSeedPhrase"),
-      description: t("wallet.viewRecoveryPhrase"),
+      label: t.showSeedPhrase,
+      description: t.viewRecoveryPhrase,
       icon: <VisibilityOutlinedIcon />,
       action: () => handleClick("showSeedPhrase"),
       hasChevron: true,
@@ -60,8 +60,8 @@ export default function WalletSettingsPage() {
   const importItems = [
     {
       id: "importSeedPhrase",
-      label: t("wallet.importSeedPhrase"),
-      description: t("wallet.importExisting"),
+      label: t.importSeedPhrase,
+      description: t.importExisting,
       icon: <FileDownloadOutlinedIcon />,
       action: () => handleClick("importSeedPhrase"),
       hasChevron: true,
@@ -80,7 +80,7 @@ export default function WalletSettingsPage() {
         pb: 8,
       }}
     >
-      <PageChildrenTitleBar title={t("wallet.settings")} />
+      <PageChildrenTitleBar title={t.walletSettings} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         {/* Security Notice */}
         <Box
@@ -102,7 +102,7 @@ export default function WalletSettingsPage() {
               p: 3,
             }}
           >
-            {t("security.securityNotice")}
+            {t.securityNotice}
             <br />
             <Box
               component="span"
@@ -113,7 +113,7 @@ export default function WalletSettingsPage() {
                 display: "block",
               }}
             >
-              {t("security.storeOffline")}
+              {t.storeOffline}
             </Box>
           </Typography>
         </Box>
@@ -141,7 +141,7 @@ export default function WalletSettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              {t("wallet.management")}
+              {t.management}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -174,7 +174,7 @@ export default function WalletSettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              {t("wallet.importRecovery")}
+              {t.importRecovery}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>

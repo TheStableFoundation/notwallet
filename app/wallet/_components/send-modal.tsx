@@ -16,7 +16,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { SEND_TOKEN } from "@lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 
 interface SendModalProps {
   open: boolean;
@@ -31,7 +31,7 @@ export default function SendModal({
   senderAddress,
   availableKeypairs,
 }: SendModalProps) {
-  const { t } = useI18n();
+  const { t } = useLang();
   const [amount, setAmount] = React.useState<string>("");
   const [recipient, setRecipient] = React.useState<string>("");
   const [customAddress, setCustomAddress] = React.useState<string>("");
@@ -82,13 +82,13 @@ export default function SendModal({
       await selectionFeedback();
 
       if (!amount || parseFloat(amount) <= 0) {
-        setError(t("wallet.pleaseEnterValidAmount"));
+        setError(t.pleaseEnterValidAmount);
         return;
       }
 
       const finalRecipient = recipient === "custom" ? customAddress : recipient;
       if (!finalRecipient) {
-        setError(t("wallet.pleaseSelectRecipient"));
+        setError(t.pleaseSelectRecipient);
         return;
       }
 
@@ -98,7 +98,7 @@ export default function SendModal({
         currentBalance !== "-" &&
         parseFloat(amount) > parseFloat(currentBalance)
       ) {
-        setError(t("wallet.insufficientBalance", { token: tokenType }));
+        setError(t.insufficientBalance);
         return;
       }
 
@@ -117,9 +117,7 @@ export default function SendModal({
       }, 2000);
     } catch (err) {
       console.error("Error sending tokens:", err);
-      setError(
-        err instanceof Error ? err.message : t("wallet.failedToSendTokens"),
-      );
+      setError(err instanceof Error ? err.message : t.failedToSendTokens);
     } finally {
       setIsLoading(false);
     }
@@ -166,7 +164,7 @@ export default function SendModal({
             WebkitBackgroundClip: "text",
           }}
         >
-          {t("wallet.sendToken", { token: tokenType })}
+          {t.sendToken}
         </Typography>
 
         {error && (
@@ -177,20 +175,18 @@ export default function SendModal({
 
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            {t("wallet.transactionCompletedSuccessfully")}
+            {t.transactionCompletedSuccessfully}
           </Alert>
         )}
 
         <Stack spacing={3}>
           <FormControl fullWidth>
-            <InputLabel id="token-type-label">
-              {t("wallet.tokenType")}
-            </InputLabel>
+            <InputLabel id="token-type-label">{t.tokenType}</InputLabel>
             <Select
               labelId="token-type-label"
               id="token-type"
               value={tokenType}
-              label={t("wallet.tokenType")}
+              label={t.tokenType}
               onChange={handleTokenTypeChange}
               disabled={isLoading}
             >
@@ -200,7 +196,7 @@ export default function SendModal({
           </FormControl>
 
           <TextField
-            label={t("wallet.amount")}
+            label={t.amount}
             fullWidth
             value={amount}
             onChange={handleAmountChange}
@@ -212,21 +208,19 @@ export default function SendModal({
             }}
             helperText={
               tokenType === "BACH"
-                ? `${t("wallet.available")}: ${bachBalance} BACH`
-                : `${t("wallet.available")}: ${solBalance} SOL`
+                ? `${t.available}: ${bachBalance} BACH`
+                : `${t.available}: ${solBalance} SOL`
             }
           />
 
           {filteredKeypairs.length > 0 ? (
             <FormControl fullWidth>
-              <InputLabel id="recipient-label">
-                {t("wallet.recipient")}
-              </InputLabel>
+              <InputLabel id="recipient-label">{t.recipient}</InputLabel>
               <Select
                 labelId="recipient-label"
                 id="recipient"
                 value={recipient}
-                label={t("wallet.recipient")}
+                label={t.recipient}
                 onChange={handleRecipientChange}
                 disabled={isLoading}
               >
@@ -236,29 +230,29 @@ export default function SendModal({
                   </MenuItem>
                 ))}
                 <MenuItem value="custom">
-                  <em>{t("wallet.enterCustomAddress")}</em>
+                  <em>{t.enterCustomAddress}</em>
                 </MenuItem>
               </Select>
             </FormControl>
           ) : (
             <TextField
-              label={t("wallet.recipientAddress")}
+              label={t.recipientAddress}
               fullWidth
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               disabled={isLoading}
-              placeholder={t("wallet.enterRecipientPublicKey")}
+              placeholder={t.enterRecipientPublicKey}
             />
           )}
 
           {recipient === "custom" && (
             <TextField
-              label={t("wallet.customAddress")}
+              label={t.customAddress}
               fullWidth
               value={customAddress}
               onChange={(e) => setCustomAddress(e.target.value)}
               disabled={isLoading}
-              placeholder={t("wallet.enterRecipientPublicKey")}
+              placeholder={t.enterRecipientPublicKey}
             />
           )}
         </Stack>
@@ -279,7 +273,7 @@ export default function SendModal({
               },
             }}
           >
-            {t("common.cancel")}
+            {t.cancel}
           </Button>
           <Button
             variant="contained"
@@ -298,7 +292,7 @@ export default function SendModal({
               isLoading ? <CircularProgress size={20} color="inherit" /> : null
             }
           >
-            {isLoading ? t("wallet.sending") : t("finance.send")}
+            {isLoading ? t.sending : t.send}
           </Button>
         </Stack>
       </Box>

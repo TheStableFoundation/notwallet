@@ -20,12 +20,12 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../src/LanguageContext";
 import { useNavigate } from "react-router-dom";
 
 export default function SettingsPage() {
   const router = useNavigate();
-  const { t } = useI18n();
+  const { t } = useLang();
   const [footerClickCount, setFooterClickCount] = React.useState(0);
   const [showModal, setShowModal] = React.useState(false);
   const [showConfetti, setShowConfetti] = React.useState(false);
@@ -95,14 +95,14 @@ export default function SettingsPage() {
   const settingsItems = [
     {
       id: "about",
-      label: t("common.about"),
+      label: t.about,
       icon: <InfoOutlinedIcon />,
       action: () => handleClick("about"),
       hasChevron: true,
     },
     {
       id: "appInfo",
-      label: t("common.appInfo"),
+      label: t.appInfo,
       icon: <PhoneAndroidOutlinedIcon />,
       action: () => handleClick("appInfo"),
       hasChevron: true,
@@ -112,21 +112,21 @@ export default function SettingsPage() {
   const legalItems = [
     {
       id: "termsOfService",
-      label: t("common.termsOfService"),
+      label: t.termsOfService,
       icon: <DescriptionOutlinedIcon />,
       action: () => handleClick("termsOfService"),
       hasChevron: true,
     },
     {
       id: "privacyPolicy",
-      label: t("common.privacyPolicy"),
+      label: t.privacyPolicy,
       icon: <PrivacyTipOutlinedIcon />,
       action: () => handleClick("privacyPolicy"),
       hasChevron: true,
     },
     {
       id: "openSource",
-      label: t("common.openSource"),
+      label: t.openSource,
       icon: <CodeOutlinedIcon />,
       action: () => handleClick("openSource"),
       hasChevron: true,
@@ -232,7 +232,7 @@ export default function SettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              {t("common.app")}
+              {t.app}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -265,7 +265,7 @@ export default function SettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              {t("common.legalSupport")}
+              {t.legalSupport}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -298,7 +298,10 @@ export default function SettingsPage() {
             }}
             onClick={() => handleClick("footer")}
           >
-            © {new Date().getFullYear()} The Stable Foundation
+            {t.stableFoundationCopyright.replace(
+              "{year}",
+              new Date().getFullYear().toString(),
+            )}
           </Typography>
         </Box>
       </Box>
@@ -347,7 +350,7 @@ export default function SettingsPage() {
               fontSize: { xs: "1.3rem", sm: "1.5rem" },
             }}
           >
-            🎉 Congratulations! 🎉
+            {t.congratulations}
           </Typography>
           <Typography
             id="congratulations-modal-description"
@@ -358,12 +361,33 @@ export default function SettingsPage() {
               textAlign: "center",
             }}
           >
-            You just found one of many ways to get the BACH Token airdrop. Send
-            an email to{" "}
-            <strong style={{ color: "#8B5CF6" }}>info@bach.money</strong> with
-            subject{" "}
-            <strong style={{ color: "#8B5CF6" }}>SETTINGS_EASTER_EGG</strong>{" "}
-            and your wallet address in the email body.
+            {t.congratulationsMessage
+              .split("info@bach.money")
+              .map((part, index) =>
+                index === 0 ? (
+                  part
+                ) : (
+                  <>
+                    <strong style={{ color: "#8B5CF6" }}>
+                      info@bach.money
+                    </strong>
+                    {part
+                      .split("SETTINGS_EASTER_EGG")
+                      .map((subpart, subindex) =>
+                        subindex === 0 ? (
+                          subpart
+                        ) : (
+                          <>
+                            <strong style={{ color: "#8B5CF6" }}>
+                              SETTINGS_EASTER_EGG
+                            </strong>
+                            {subpart}
+                          </>
+                        ),
+                      )}
+                  </>
+                ),
+              )}
           </Typography>
           <Button
             fullWidth
@@ -381,7 +405,7 @@ export default function SettingsPage() {
               fontWeight: 600,
             }}
           >
-            Got it!
+            {t.gotIt}
           </Button>
         </Box>
       </Modal>

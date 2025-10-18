@@ -31,7 +31,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { AssetIcon } from "@lib/components/token-icons";
 import { info, debug } from "@tauri-apps/plugin-log";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 
 interface SwapModalProps {
   open: boolean;
@@ -45,7 +45,7 @@ export default function SwapModal({
   onClose,
   senderAddress,
 }: SwapModalProps) {
-  const { t } = useI18n();
+  const { t } = useLang();
   const [inputAmount, setInputAmount] = React.useState<string>("");
   const [fromToken, setFromToken] = React.useState<"SOL" | "BACH">("SOL");
   const [toToken, setToToken] = React.useState<"SOL" | "BACH">("BACH");
@@ -100,9 +100,7 @@ export default function SwapModal({
         setQuote(quoteResult);
       } catch (err) {
         console.error("Error getting swap quote:", err);
-        setError(
-          err instanceof Error ? err.message : t("wallet.failedToGetQuote"),
-        );
+        setError(err instanceof Error ? err.message : t.failedToGetQuote);
         setQuote(null);
       } finally {
         setIsLoadingQuote(false);
@@ -255,7 +253,7 @@ export default function SwapModal({
       }
     } catch (err) {
       console.error("Error executing swap:", err);
-      setError(err instanceof Error ? err.message : t("wallet.failedToSwap"));
+      setError(err instanceof Error ? err.message : t.failedToSwap);
     } finally {
       setIsSwapping(false);
     }
@@ -307,7 +305,7 @@ export default function SwapModal({
             WebkitBackgroundClip: "text",
           }}
         >
-          {t("wallet.swapTokens")}
+          {t.swapTokens}
         </Typography>
 
         {error && (
@@ -318,7 +316,7 @@ export default function SwapModal({
 
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            {t("wallet.swapCompleted")}
+            {t.swapCompleted}
           </Alert>
         )}
 
@@ -342,7 +340,7 @@ export default function SwapModal({
                     sx={{ minWidth: 80 }}
                   >
                     <Typography variant="subtitle2" sx={{ color: "#666" }}>
-                      {t("wallet.from")}
+                      {t.from}
                     </Typography>
                     {getTokenIcon(fromToken)}
                     <Typography variant="body1" fontWeight="bold">
@@ -364,7 +362,7 @@ export default function SwapModal({
                 </Stack>
 
                 <Typography variant="caption" sx={{ color: "#666", ml: 9 }}>
-                  {t("wallet.available")}:{" "}
+                  {t.available}:{" "}
                   {fromToken === "SOL" ? solBalance : bachBalance} {fromToken}
                 </Typography>
 
@@ -376,7 +374,7 @@ export default function SwapModal({
                     sx={{ minWidth: 80 }}
                   >
                     <Typography variant="subtitle2" sx={{ color: "#666" }}>
-                      {t("wallet.to")}
+                      {t.to}
                     </Typography>
                     {getTokenIcon(toToken)}
                     <Typography variant="body1" fontWeight="bold">
@@ -407,7 +405,7 @@ export default function SwapModal({
                   </Box>
                 </Stack>
               </Stack>
-              <Tooltip title={t("wallet.swapTokensTooltip")}>
+              <Tooltip title={t.swapTokensTooltip}>
                 <IconButton
                   onClick={handleSwapTokens}
                   disabled={isSwapping}
@@ -439,12 +437,12 @@ export default function SwapModal({
                 variant="subtitle2"
                 sx={{ mb: 1, fontWeight: "bold" }}
               >
-                {t("wallet.quoteDetails")}
+                {t.quoteDetails}
               </Typography>
               <Stack spacing={1}>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.outputAmount")}:
+                    {t.outputAmount}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {getOutputAmount()} {toToken}
@@ -452,7 +450,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.fee")}:
+                    {t.fee}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {getFeeAmount()} {getFeeMintSymbol()}
@@ -460,7 +458,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.priceImpact")}:
+                    {t.priceImpact}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {quote.priceImpactPct}%
@@ -468,10 +466,10 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.route")}:
+                    {t.route}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
-                    {quote.routePlan[0]?.swapInfo.label || t("wallet.direct")}
+                    {quote.routePlan[0]?.swapInfo.label || t.direct}
                   </Typography>
                 </Stack>
               </Stack>
@@ -492,12 +490,12 @@ export default function SwapModal({
                 variant="subtitle2"
                 sx={{ mb: 1, fontWeight: "bold", color: "#2E7D32" }}
               >
-                {t("wallet.transactionReady")}
+                {t.transactionReady}
               </Typography>
               <Stack spacing={1}>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.blockHeight")}:
+                    {t.blockHeight}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {transactionResponse.lastValidBlockHeight.toLocaleString()}
@@ -505,7 +503,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.priorityFee")}:
+                    {t.priorityFee}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {(
@@ -516,7 +514,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.computeUnits")}:
+                    {t.computeUnits}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {transactionResponse.computeUnitLimit.toLocaleString()}
@@ -524,7 +522,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    {t("wallet.finalSlippage")}:
+                    {t.finalSlippage}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {(
@@ -536,8 +534,7 @@ export default function SwapModal({
                 </Stack>
                 {transactionResponse.simulationError && (
                   <Alert severity="warning" sx={{ mt: 1 }}>
-                    {t("wallet.simulationWarning")}:{" "}
-                    {transactionResponse.simulationError}
+                    {t.simulationWarning}: {transactionResponse.simulationError}
                   </Alert>
                 )}
               </Stack>
@@ -555,34 +552,26 @@ export default function SwapModal({
                   },
                 }}
               >
-                {t("wallet.buildNewTransaction")}
+                {t.buildNewTransaction}
               </Button>
             </Box>
           )}
 
           {/* Slippage Setting */}
           <FormControl fullWidth>
-            <InputLabel id="slippage-label">{t("wallet.slippage")}</InputLabel>
+            <InputLabel id="slippage-label">{t.slippage}</InputLabel>
             <Select
               labelId="slippage-label"
               id="slippage"
               value={slippage.toString()}
-              label={t("wallet.slippage")}
+              label={t.slippage}
               onChange={handleSlippageChange}
               disabled={isSwapping}
             >
-              <MenuItem value={10}>
-                {t("wallet.slippagePercent", { value: "0.1" })}
-              </MenuItem>
-              <MenuItem value={50}>
-                {t("wallet.slippagePercent", { value: "0.5" })}
-              </MenuItem>
-              <MenuItem value={100}>
-                {t("wallet.slippagePercent", { value: "1" })}
-              </MenuItem>
-              <MenuItem value={300}>
-                {t("wallet.slippagePercent", { value: "3" })}
-              </MenuItem>
+              <MenuItem value={10}>0.1%</MenuItem>
+              <MenuItem value={50}>0.5%</MenuItem>
+              <MenuItem value={100}>1%</MenuItem>
+              <MenuItem value={300}>3%</MenuItem>
             </Select>
           </FormControl>
         </Stack>
@@ -603,7 +592,7 @@ export default function SwapModal({
               },
             }}
           >
-            {t("common.cancel")}
+            {t.cancel}
           </Button>
           <Button
             variant="contained"
@@ -627,10 +616,10 @@ export default function SwapModal({
             }
           >
             {isSwapping
-              ? t("wallet.buildingTransaction")
+              ? t.buildingTransaction
               : transactionResponse
-                ? t("wallet.executeSwap")
-                : t("wallet.prepareSwap")}
+                ? t.executeSwap
+                : t.prepareSwap}
           </Button>
         </Stack>
       </Box>

@@ -9,14 +9,14 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 
 export default function AboutPage() {
-  const { t } = useI18n();
+  const { t } = useLang();
 
   const links = [
     {
-      title: t("about.stableFoundation"),
+      title: "The Stable Foundation",
       icon: <LanguageIcon />,
       url: "https://thestablefoundation.org/",
     },
@@ -38,7 +38,7 @@ export default function AboutPage() {
         py: 4,
       }}
     >
-      <PageChildrenTitleBar title={t("about.title")} />
+      <PageChildrenTitleBar title={t.about} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         <Card
           sx={{
@@ -82,7 +82,7 @@ export default function AboutPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              {t("about.appName")}
+              {t.notwalletCrypto}
             </Typography>
           </Box>
 
@@ -100,7 +100,7 @@ export default function AboutPage() {
                 textAlign: "center",
               }}
             >
-              {t("about.description")}
+              {t.aboutDescription}
             </Typography>
 
             <Typography
@@ -112,7 +112,7 @@ export default function AboutPage() {
                 mb: 4,
               }}
             >
-              {t("about.developedBy")}
+              {t.developedBy}
             </Typography>
 
             {/* Social Links */}
@@ -172,7 +172,10 @@ export default function AboutPage() {
                 fontWeight: 500,
               }}
             >
-              {t("about.copyright", { year: new Date().getFullYear() })}
+              {t.stableFoundationCopyright.replace(
+                "{year}",
+                new Date().getFullYear().toString(),
+              )}
             </Typography>
           </Box>
         </Card>

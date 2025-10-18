@@ -12,7 +12,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { UPDATE_USERNAME } from "@lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 
 interface EditKeyPairModalProps {
   open: boolean;
@@ -25,9 +25,9 @@ export default function EditKeyPairModal({
   onClose,
   wallet,
 }: EditKeyPairModalProps) {
-  const { t } = useI18n();
+  const { t } = useLang();
   const [username, setUsername] = React.useState<string>(
-    wallet.username || t("wallet.defaultUsername"),
+    wallet.username || t.defaultUsername,
   );
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -52,11 +52,11 @@ export default function EditKeyPairModal({
       setIsLoading(true);
       await selectionFeedback();
       if (!username) {
-        setError(t("wallet.pleaseSelectUsername"));
+        setError(t.pleaseSelectUsername);
         return;
       }
       if (username.length > 6) {
-        setError(t("wallet.usernameTooLong"));
+        setError(t.usernameTooLong);
         return;
       }
 
@@ -73,9 +73,7 @@ export default function EditKeyPairModal({
       }, 2000);
     } catch (err) {
       console.error("Error updating username:", err);
-      setError(
-        err instanceof Error ? err.message : t("wallet.updateUsernameFailed"),
-      );
+      setError(err instanceof Error ? err.message : t.updateUsernameFailed);
     } finally {
       setIsLoading(false);
     }
@@ -122,7 +120,7 @@ export default function EditKeyPairModal({
             WebkitBackgroundClip: "text",
           }}
         >
-          {t("wallet.editWallet")}
+          {t.editWallet}
         </Typography>
 
         {error && (
@@ -133,19 +131,19 @@ export default function EditKeyPairModal({
 
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            {t("wallet.success")}
+            {t.success}
           </Alert>
         )}
 
         <Stack spacing={3}>
           <FormControl fullWidth>
             <TextField
-              label={t("wallet.username")}
+              label={t.username}
               fullWidth
               value={username}
               onChange={handleUsernameChange}
               disabled={isLoading}
-              helperText={`${wallet.name} (${t("wallet.maxCharacters", { count: 6 })})`}
+              helperText={`${wallet.name} (${t.maxCharacters})`}
               inputProps={{ maxLength: 6 }}
             />
           </FormControl>
@@ -167,7 +165,7 @@ export default function EditKeyPairModal({
               },
             }}
           >
-            {t("common.cancel")}
+            {t.cancel}
           </Button>
           <Button
             variant="contained"
@@ -186,7 +184,7 @@ export default function EditKeyPairModal({
               isLoading ? <CircularProgress size={20} color="inherit" /> : null
             }
           >
-            {isLoading ? t("wallet.saving") : t("common.save")}
+            {isLoading ? t.saving : t.save}
           </Button>
         </Stack>
       </Box>

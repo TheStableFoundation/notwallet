@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { SolanaWallet } from "../../../lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 
 interface ActiveKeypairSelectionProps {
   open: boolean;
@@ -22,7 +22,7 @@ export default function ActiveKeypairSelectionModal({
   activePubkey,
   onSelect,
 }: ActiveKeypairSelectionProps) {
-  const { t } = useI18n();
+  const { t } = useLang();
   return (
     <Modal
       open={open}
@@ -68,7 +68,7 @@ export default function ActiveKeypairSelectionModal({
             fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
           }}
         >
-          {t("wallet.switchKeypairTitle")}
+          {t.switchKeypairTitle}
         </Typography>
         <Box
           sx={{
@@ -81,7 +81,7 @@ export default function ActiveKeypairSelectionModal({
         >
           {keypairs.length === 0 && (
             <Typography color="text.secondary" align="center">
-              {t("wallet.noKeypairsFound")}
+              {t.noKeypairsFound}
             </Typography>
           )}
           {keypairs.map((kp) => (
@@ -141,7 +141,7 @@ export default function ActiveKeypairSelectionModal({
                     textOverflow: "ellipsis",
                   }}
                 >
-                  ({t("wallet.account")} {kp.account})
+                  ({t.account} {kp.account})
                 </Typography>
                 <Typography
                   variant="caption"
@@ -170,7 +170,7 @@ export default function ActiveKeypairSelectionModal({
                     letterSpacing: 1,
                   }}
                 >
-                  {t("wallet.active")}
+                  {t.active}
                 </Typography>
               )}
             </Box>
@@ -193,7 +193,7 @@ export default function ActiveKeypairSelectionModal({
             onClose();
           }}
         >
-          {t("common.cancel")}
+          {t.cancel}
         </Button>
       </Box>
     </Modal>
