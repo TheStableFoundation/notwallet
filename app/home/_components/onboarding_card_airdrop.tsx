@@ -11,6 +11,7 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { invoke } from "@tauri-apps/api/core";
 import Confetti from "react-confetti";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useLang } from "../../../src/LanguageContext";
 
 type OnboardingCardAirdropProps = {
   open: boolean;
@@ -23,6 +24,7 @@ export default function OnboardingCardAirdrop({
   onSuccess,
   onClose,
 }: OnboardingCardAirdropProps) {
+  const { t } = useLang();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [signing, setSigning] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -96,7 +98,7 @@ export default function OnboardingCardAirdrop({
               letterSpacing: 1,
             }}
           >
-            🎉 Claim Your $BACH Airdrop!
+            {t.claimYourBachAirdrop}
           </Typography>
           {error ? (
             <Box sx={{ mt: 2 }}>
@@ -133,7 +135,7 @@ export default function OnboardingCardAirdrop({
                   "&:hover": { bgcolor: "#e3f2fd", color: "#1565c0" },
                 }}
               >
-                Try Again
+                {t.tryAgain}
               </Button>
             </Box>
           ) : !success ? (
@@ -154,7 +156,7 @@ export default function OnboardingCardAirdrop({
                 }}
                 onClick={() => setModalOpen(true)}
               >
-                Sign Up &amp; Claim
+                {t.signUpAndClaim}
               </Button>
               <Typography
                 variant="caption"
@@ -169,10 +171,10 @@ export default function OnboardingCardAirdrop({
                   openUrl("https://bach.money/");
                 }}
               >
-                Your wallet address will be used for the airdrop.
+                {t.walletAddressUsedAirdrop}
                 <br />
                 <span style={{ color: "#AD5AD7", textDecoration: "underline" }}>
-                  bach.money
+                  {t.bachMoney}
                 </span>
               </Typography>
             </>
@@ -187,7 +189,7 @@ export default function OnboardingCardAirdrop({
                 letterSpacing: 1,
               }}
             >
-              🎊 Success! You have claimed your airdrop.
+              {t.successClaimedAirdrop}
             </Typography>
           )}
         </Box>
@@ -228,7 +230,7 @@ export default function OnboardingCardAirdrop({
                 letterSpacing: 1,
               }}
             >
-              Claim Airdrop
+              {t.claimAirdrop}
             </Typography>
             <Typography
               id="sign-modal-desc"
@@ -239,8 +241,7 @@ export default function OnboardingCardAirdrop({
                 fontWeight: 500,
               }}
             >
-              Sign this message to prove wallet ownership and claim your
-              airdrop.
+              {t.signMessageProveOwnership}
             </Typography>
             <Button
               variant="contained"
@@ -262,7 +263,7 @@ export default function OnboardingCardAirdrop({
               }}
               disabled={signing}
             >
-              {signing ? "Signing..." : "Sign & Claim"}
+              {signing ? t.signing : t.signAndClaim}
             </Button>
             <Typography
               variant="caption"
@@ -272,7 +273,7 @@ export default function OnboardingCardAirdrop({
                 color: "#b0bec5",
               }}
             >
-              Your signature is only used to verify your wallet address.
+              {t.signatureOnlyForVerification}
             </Typography>
           </Box>
         </Card>

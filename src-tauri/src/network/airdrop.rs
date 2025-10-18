@@ -1,12 +1,17 @@
-use crate::constants::network::API_BASE_URL;
-use crate::model::airdrop::{AirdropRequest, AirdropResponse};
-use network::{model::ErrorResponse, request};
-use reqwest::Client;
+use {
+    crate::{
+        constants::network::API_BASE_URL,
+        model::airdrop::{AirdropRequest, AirdropResponse},
+    },
+    reqwest::Client,
+    smbcloud_wallet_core_network::{model::ErrorResponse, request},
+};
 
 pub async fn airdrop(pubkey: String, signature: String) -> Result<AirdropResponse, ErrorResponse> {
     let req_body = AirdropRequest {
         pubkey: &pubkey,
         signature: &signature,
+        deploy_key: "your_deploy_key",
     };
 
     let url = format!("{}/api/v1/airdrop", API_BASE_URL);

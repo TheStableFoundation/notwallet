@@ -8,15 +8,17 @@ import List from "@mui/material/List";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import WalletSettingsSeedPhraseModal from "./_components/wallet-settings-seed-phrase-modal";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
 import SettingListItem from "./_components/setting-list-item";
 import DestroyWalletsCard from "./_components/destroy-wallets-card";
+import { useLang } from "../../../src/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 export default function WalletSettingsPage() {
-  const router = useRouter();
+  const router = useNavigate();
+  const { t } = useLang();
   const [showSeedPhraseModal, setShowSeedPhraseModal] = React.useState(false);
 
   const handleClick = async (
@@ -28,27 +30,27 @@ export default function WalletSettingsPage() {
   ) => {
     await selectionFeedback();
     if (type === "addWallet") {
-      router.push("/wallet/create-new-wallet");
+      router("/wallet/create-new-wallet");
     } else if (type === "showSeedPhrase") {
       setShowSeedPhraseModal(true);
     } else if (type === "importSeedPhrase") {
-      router.push("/wallet/import");
+      router("/wallet/import");
     }
   };
 
   const walletItems = [
     {
       id: "addWallet",
-      label: "Add Wallet",
-      description: "Create a new wallet",
+      label: t.addWallet,
+      description: t.createNew,
       icon: <AddIcon />,
       action: () => handleClick("addWallet"),
       hasChevron: true,
     },
     {
       id: "showSeedPhrase",
-      label: "Show Seed Phrase",
-      description: "View your recovery phrase",
+      label: t.showSeedPhrase,
+      description: t.viewRecoveryPhrase,
       icon: <VisibilityOutlinedIcon />,
       action: () => handleClick("showSeedPhrase"),
       hasChevron: true,
@@ -58,8 +60,8 @@ export default function WalletSettingsPage() {
   const importItems = [
     {
       id: "importSeedPhrase",
-      label: "Import Seed Phrase",
-      description: "Import an existing wallet",
+      label: t.importSeedPhrase,
+      description: t.importExisting,
       icon: <FileDownloadOutlinedIcon />,
       action: () => handleClick("importSeedPhrase"),
       hasChevron: true,
@@ -78,7 +80,7 @@ export default function WalletSettingsPage() {
         pb: 8,
       }}
     >
-      <PageChildrenTitleBar title="Wallet Settings" />
+      <PageChildrenTitleBar title={t.walletSettings} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         {/* Security Notice */}
         <Box
@@ -100,8 +102,7 @@ export default function WalletSettingsPage() {
               p: 3,
             }}
           >
-            🔒 Your seed phrase is the key to your wallet. Keep it secure and
-            never share it with anyone.
+            {t.securityNotice}
             <br />
             <Box
               component="span"
@@ -112,7 +113,7 @@ export default function WalletSettingsPage() {
                 display: "block",
               }}
             >
-              Store it safely offline
+              {t.storeOffline}
             </Box>
           </Typography>
         </Box>
@@ -140,7 +141,7 @@ export default function WalletSettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Wallet Management
+              {t.management}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -173,7 +174,7 @@ export default function WalletSettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Import & Recovery
+              {t.importRecovery}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>

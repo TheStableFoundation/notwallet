@@ -6,12 +6,13 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
-import { UPDATE_USERNAME } from "@/lib/commands";
+import { UPDATE_USERNAME } from "@lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import { useLang } from "../../../src/LanguageContext";
 
 interface EditKeyPairModalProps {
   open: boolean;
@@ -24,8 +25,9 @@ export default function EditKeyPairModal({
   onClose,
   wallet,
 }: EditKeyPairModalProps) {
+  const { t } = useLang();
   const [username, setUsername] = React.useState<string>(
-    wallet.username || "NowhereMan",
+    wallet.username || t.defaultUsername,
   );
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -50,11 +52,11 @@ export default function EditKeyPairModal({
       setIsLoading(true);
       await selectionFeedback();
       if (!username) {
-        setError("Please select a username");
+        setError(t.pleaseSelectUsername);
         return;
       }
       if (username.length > 6) {
-        setError("Username must be 6 characters or less");
+        setError(t.usernameTooLong);
         return;
       }
 
@@ -71,11 +73,7 @@ export default function EditKeyPairModal({
       }, 2000);
     } catch (err) {
       console.error("Error updating username:", err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to update username. Try again.",
-      );
+      setError(err instanceof Error ? err.message : t.updateUsernameFailed);
     } finally {
       setIsLoading(false);
     }
@@ -122,7 +120,7 @@ export default function EditKeyPairModal({
             WebkitBackgroundClip: "text",
           }}
         >
-          Edit Wallet
+          {t.editWallet}
         </Typography>
 
         {error && (
@@ -133,19 +131,19 @@ export default function EditKeyPairModal({
 
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            Success!
+            {t.success}
           </Alert>
         )}
 
         <Stack spacing={3}>
           <FormControl fullWidth>
             <TextField
-              label="Username"
+              label={t.username}
               fullWidth
               value={username}
               onChange={handleUsernameChange}
               disabled={isLoading}
-              helperText={`${wallet.name} (max 6 characters)`}
+              helperText={`${wallet.name} (${t.maxCharacters})`}
               inputProps={{ maxLength: 6 }}
             />
           </FormControl>
@@ -167,7 +165,7 @@ export default function EditKeyPairModal({
               },
             }}
           >
-            Cancel
+            {t.cancel}
           </Button>
           <Button
             variant="contained"
@@ -186,7 +184,7 @@ export default function EditKeyPairModal({
               isLoading ? <CircularProgress size={20} color="inherit" /> : null
             }
           >
-            {isLoading ? "Saving..." : "Save"}
+            {isLoading ? t.saving : t.save}
           </Button>
         </Stack>
       </Box>

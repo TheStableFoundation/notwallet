@@ -32,7 +32,7 @@ dist-ssr
 *.jks
 upload-keystore.jks
 keystore.properties
-!override-gen/gen/android/keystore.properties
+!src-tauri/gen-override/android/keystore.properties
 
 # Allow encrypted keystore files
 !secrets/*.gpg

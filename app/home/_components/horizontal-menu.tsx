@@ -6,8 +6,9 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SchoolIcon from "@mui/icons-material/School";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useLang } from "../../../src/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -61,32 +62,28 @@ const MenuItem = ({ icon, label, onClick }: MenuItemProps) => (
 );
 
 export default function HorizontalMenu() {
-  const router = useRouter();
+  const router = useNavigate();
+  const { t } = useLang();
 
   const handleDAO = async () => {
     await selectionFeedback();
-    router.push("/home/dao");
+    router("/home/dao");
   };
 
   const handleLearn = async () => {
     await selectionFeedback();
-    router.push("/home/learn");
-  };
-
-  const handleM3m3 = async () => {
-    await selectionFeedback();
-    router.push("/home/meme");
+    router("/home/learn");
   };
 
   const menuItems = [
     {
       icon: <AccountBalanceIcon fontSize="medium" />,
-      label: "DAO",
+      label: t.dao,
       onClick: handleDAO,
     },
     {
       icon: <SchoolIcon fontSize="medium" />,
-      label: "Learn",
+      label: t.learn,
       onClick: handleLearn,
     },
     // Add more menu items here as needed
@@ -119,7 +116,7 @@ export default function HorizontalMenu() {
             textAlign: "center",
           }}
         >
-          Quick Actions
+          {t.quickActions}
         </Typography>
         <Box
           sx={{

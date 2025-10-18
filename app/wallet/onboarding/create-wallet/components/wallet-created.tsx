@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { useLang } from "@src/LanguageContext";
 
 type WalletCreatedProps = {
   mnemonic: string;
@@ -15,6 +16,7 @@ export default function WalletCreated({
   pubkey,
   privkey,
 }: WalletCreatedProps) {
+  const { t } = useLang();
   const [showPrivkeyModal, setShowPrivkeyModal] = React.useState(false);
   const [privkeyVisible, setPrivkeyVisible] = React.useState(false);
   const privkeyTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
@@ -43,7 +45,7 @@ export default function WalletCreated({
         fontWeight="medium"
         sx={{ mb: 2 }}
       >
-        Your new seed phrase:
+        {t.onboardingImportSeedPhraseDesc}:
       </Typography>
       <Box
         sx={{
@@ -101,7 +103,7 @@ export default function WalletCreated({
             sx={{ minWidth: 0, px: 1 }}
             onClick={() => navigator.clipboard.writeText(pubkey)}
           >
-            Copy
+            {t.copyPubkey}
           </Button>
         </Box>
       )}
@@ -114,7 +116,7 @@ export default function WalletCreated({
             sx={{ minWidth: 0, px: 1, mb: 1 }}
             onClick={handleShowPrivkey}
           >
-            Show Private Key
+            {t.showSeedPhrase}
           </Button>
           <Modal
             open={showPrivkeyModal}
@@ -187,7 +189,7 @@ export default function WalletCreated({
                     sx={{ minWidth: 0, px: 1 }}
                     onClick={() => navigator.clipboard.writeText(privkey)}
                   >
-                    Copy
+                    {t.copyPubkey}
                   </Button>
                 </Box>
               ) : (
@@ -196,7 +198,7 @@ export default function WalletCreated({
                   align="center"
                   sx={{ mb: 2 }}
                 >
-                  Private key is hidden for your safety.
+                  {t.securityNotice}
                 </Typography>
               )}
               <Button
@@ -205,7 +207,7 @@ export default function WalletCreated({
                 fullWidth
                 onClick={handleClosePrivkeyModal}
               >
-                Close
+                {t.cancel}
               </Button>
             </Box>
           </Modal>
@@ -217,8 +219,7 @@ export default function WalletCreated({
         align="center"
         sx={{ mb: 1 }}
       >
-        Please write down or securely store this seed phrase. It is the only way
-        to recover your wallet.
+        {t.storeOffline}
       </Typography>
     </>
   );

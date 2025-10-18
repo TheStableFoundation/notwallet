@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -13,20 +14,20 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ONBOARDING_CREATE_WALLET } from "@/lib/commands";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ONBOARDING_CREATE_WALLET } from "@lib/commands";
 import {
   OnboardingCreateWallet,
   STORE_ACTIVE_KEYPAIR,
-} from "@/lib/crate/generated";
+} from "@lib/crate/generated";
 import WalletCreated from "./components/wallet-created";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
-import { store } from "@/lib/store/store";
+import { store } from "@lib/store/store";
 import { Suspense } from "react";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useLang } from "@src/LanguageContext";
 
-// Add State enum
 enum State {
   Idle = "Idle",
   Creating = "Creating",
@@ -35,7 +36,7 @@ enum State {
 }
 
 function DetailContent() {
-  const searchParams = useSearchParams();
+  const [searchParams, _] = useSearchParams();
   const isOnboarding = Number(searchParams.get("onboarding"));
 
   const [mnemonic, setMnemonic] = React.useState("");
@@ -43,9 +44,9 @@ function DetailContent() {
   const [privkey, setPrivkey] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState<State>(State.Idle);
-  const router = useRouter();
+  const router = useNavigate();
+  const { t } = useLang();
 
-  // Handler function for wallet creation
   const createWalletHandler = React.useCallback(
     async (cancelledRef: { current: boolean }) => {
       setState(State.Creating);
@@ -77,36 +78,31 @@ function DetailContent() {
     },
     [],
   );
-  // Move this handler outside of the render to avoid closure issues
   const handleDialogClose = React.useCallback(async () => {
     await selectionFeedback();
     setOpen(false);
-    // Use setTimeout to ensure dialog closes before navigation
     setTimeout(() => {
       if (isOnboarding) {
-        router.replace("/wallet/onboarding/create-password");
+        router("/wallet/onboarding/create-password");
       } else {
-        router.replace("/wallet");
+        router("/wallet");
       }
     }, 100);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
+  }, [router, isOnboarding]);
 
   return (
     <Box
       sx={{
         minHeight: "100vh",
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         pb: 8,
       }}
     >
-      {/* Show confetti when wallet is created */}
       {state === State.Created && <Confetti />}
-      <PageChildrenTitleBar title="Create Wallet" />
+      <PageChildrenTitleBar title={t.onboardingCreateWalletTitle} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         <Card
           sx={{
@@ -144,7 +140,7 @@ function DetailContent() {
                     p: 3,
                   }}
                 >
-                  Failed to create wallet. Please try again.
+                  {t.errorOccurred}
                 </Typography>
               </Box>
             )}
@@ -180,7 +176,9 @@ function DetailContent() {
                 }}
                 disabled={state === State.Creating}
               >
-                {state === State.Creating ? "Creating..." : "Create my wallet"}
+                {state === State.Creating
+                  ? t.processing
+                  : t.onboardingCreateWalletTitle}
               </Button>
             )}
             {state === State.Created && (
@@ -204,7 +202,7 @@ function DetailContent() {
                 }}
                 onClick={() => setOpen(true)}
               >
-                I have saved my seed phrase
+                {t.onboardingSavedSeedPhrase}
               </Button>
             )}
           </CardActions>
@@ -231,7 +229,7 @@ function DetailContent() {
             letterSpacing: "-0.02em",
           }}
         >
-          Important!
+          {t.onboardingImportantDialogTitle}
         </DialogTitle>
         <DialogContent>
           <DialogContentText
@@ -241,10 +239,7 @@ function DetailContent() {
               lineHeight: 1.6,
             }}
           >
-            Your seed phrase is the <strong>only</strong> way to recover your
-            wallet. If you lose it, you will lose access to your funds forever.
-            Make sure you have securely saved your seed phrase before
-            continuing.
+            {t.onboardingImportantDialogDesc}
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ p: 3, pt: 1 }}>
@@ -266,7 +261,7 @@ function DetailContent() {
               },
             }}
           >
-            I understand
+            {t.onboardingUnderstandContinue}
           </Button>
         </DialogActions>
       </Dialog>
@@ -274,7 +269,7 @@ function DetailContent() {
   );
 }
 
-export default function Page() {
+export default function WalletOnboardingCreateWalletPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <DetailContent />

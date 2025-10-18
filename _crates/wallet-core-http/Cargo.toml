@@ -1,0 +1,28 @@
+[package]
+name = "smbcloud-wallet-core-http"
+version = "1.0.4"
+edition = "2021"
+description = "smbCloud Wallet Core HTTP for NotWallet Crypto."
+license = "MIT"
+
+[lib]
+crate-type = ["lib", "cdylib", "staticlib"]
+name = "smbcloud_wallet_core_http"
+
+[dependencies]
+bip39 = { version = "2", features = ["rand"] }
+bs58 = "0.5.0"
+log = "0.4.20"
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+smbcloud-wallet-constants = { workspace = true }
+smbcloud-wallet-core-model = { workspace = true }
+smbcloud-wallet-core-network = { workspace = true }
+solana-account-decoder = { workspace = true }
+solana-client = { workspace = true }
+solana-derivation-path = "3"
+solana-pubkey = "3"
+solana-rpc-client = { workspace = true }
+solana-sdk = "3"
+tokio = { version = "1.35.1", features = ["full"] }

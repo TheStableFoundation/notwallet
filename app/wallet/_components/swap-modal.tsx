@@ -20,17 +20,18 @@ import {
   SOL_DECIMALS,
   BACH_DECIMALS,
   BACH_TOKEN,
-} from "@/lib/crate/generated";
+} from "@lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
-import { GET_SWAP_QUOTE, BUILD_SWAP_TRANSACTION } from "@/lib/commands";
+import { GET_SWAP_QUOTE, BUILD_SWAP_TRANSACTION } from "@lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { AssetIcon } from "@/lib/components/token-icons";
+import { AssetIcon } from "@lib/components/token-icons";
 import { info, debug } from "@tauri-apps/plugin-log";
+import { useLang } from "../../../src/LanguageContext";
 
 interface SwapModalProps {
   open: boolean;
@@ -44,6 +45,7 @@ export default function SwapModal({
   onClose,
   senderAddress,
 }: SwapModalProps) {
+  const { t } = useLang();
   const [inputAmount, setInputAmount] = React.useState<string>("");
   const [fromToken, setFromToken] = React.useState<"SOL" | "BACH">("SOL");
   const [toToken, setToToken] = React.useState<"SOL" | "BACH">("BACH");
@@ -55,8 +57,8 @@ export default function SwapModal({
   const [transactionResponse, setTransactionResponse] =
     React.useState<SwapTransactionResponse | null>(null);
   const [slippage, setSlippage] = React.useState<number>(50); // 0.5% default slippage
-  const [bachBalance, setBachBalance] = React.useState<string>("-");
-  const [solBalance, setSolBalance] = React.useState<string>("-");
+  const [bachBalance, _setBachBalance] = React.useState<string>("-");
+  const [solBalance, _setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {
@@ -98,11 +100,7 @@ export default function SwapModal({
         setQuote(quoteResult);
       } catch (err) {
         console.error("Error getting swap quote:", err);
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Failed to get swap quote. Try again.",
-        );
+        setError(err instanceof Error ? err.message : t.failedToGetQuote);
         setQuote(null);
       } finally {
         setIsLoadingQuote(false);
@@ -255,11 +253,7 @@ export default function SwapModal({
       }
     } catch (err) {
       console.error("Error executing swap:", err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to execute swap. Try again.",
-      );
+      setError(err instanceof Error ? err.message : t.failedToSwap);
     } finally {
       setIsSwapping(false);
     }
@@ -311,7 +305,7 @@ export default function SwapModal({
             WebkitBackgroundClip: "text",
           }}
         >
-          Swap Tokens
+          {t.swapTokens}
         </Typography>
 
         {error && (
@@ -322,7 +316,7 @@ export default function SwapModal({
 
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            Swap completed successfully!
+            {t.swapCompleted}
           </Alert>
         )}
 
@@ -346,7 +340,7 @@ export default function SwapModal({
                     sx={{ minWidth: 80 }}
                   >
                     <Typography variant="subtitle2" sx={{ color: "#666" }}>
-                      From
+                      {t.from}
                     </Typography>
                     {getTokenIcon(fromToken)}
                     <Typography variant="body1" fontWeight="bold">
@@ -368,8 +362,8 @@ export default function SwapModal({
                 </Stack>
 
                 <Typography variant="caption" sx={{ color: "#666", ml: 9 }}>
-                  Available: {fromToken === "SOL" ? solBalance : bachBalance}{" "}
-                  {fromToken}
+                  {t.available}:{" "}
+                  {fromToken === "SOL" ? solBalance : bachBalance} {fromToken}
                 </Typography>
 
                 <Stack direction="row" alignItems="center" spacing={2}>
@@ -380,7 +374,7 @@ export default function SwapModal({
                     sx={{ minWidth: 80 }}
                   >
                     <Typography variant="subtitle2" sx={{ color: "#666" }}>
-                      To
+                      {t.to}
                     </Typography>
                     {getTokenIcon(toToken)}
                     <Typography variant="body1" fontWeight="bold">
@@ -411,7 +405,7 @@ export default function SwapModal({
                   </Box>
                 </Stack>
               </Stack>
-              <Tooltip title="Swap tokens">
+              <Tooltip title={t.swapTokensTooltip}>
                 <IconButton
                   onClick={handleSwapTokens}
                   disabled={isSwapping}
@@ -443,12 +437,12 @@ export default function SwapModal({
                 variant="subtitle2"
                 sx={{ mb: 1, fontWeight: "bold" }}
               >
-                Quote Details
+                {t.quoteDetails}
               </Typography>
               <Stack spacing={1}>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Output Amount:
+                    {t.outputAmount}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {getOutputAmount()} {toToken}
@@ -456,7 +450,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Fee:
+                    {t.fee}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {getFeeAmount()} {getFeeMintSymbol()}
@@ -464,7 +458,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Price Impact:
+                    {t.priceImpact}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {quote.priceImpactPct}%
@@ -472,10 +466,10 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Route:
+                    {t.route}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
-                    {quote.routePlan[0]?.swapInfo.label || "Direct"}
+                    {quote.routePlan[0]?.swapInfo.label || t.direct}
                   </Typography>
                 </Stack>
               </Stack>
@@ -496,12 +490,12 @@ export default function SwapModal({
                 variant="subtitle2"
                 sx={{ mb: 1, fontWeight: "bold", color: "#2E7D32" }}
               >
-                Transaction Ready
+                {t.transactionReady}
               </Typography>
               <Stack spacing={1}>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Block Height:
+                    {t.blockHeight}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {transactionResponse.lastValidBlockHeight.toLocaleString()}
@@ -509,7 +503,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Priority Fee:
+                    {t.priorityFee}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {(
@@ -520,7 +514,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Compute Units:
+                    {t.computeUnits}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {transactionResponse.computeUnitLimit.toLocaleString()}
@@ -528,7 +522,7 @@ export default function SwapModal({
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography variant="body2" color="#666">
-                    Final Slippage:
+                    {t.finalSlippage}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
                     {(
@@ -540,7 +534,7 @@ export default function SwapModal({
                 </Stack>
                 {transactionResponse.simulationError && (
                   <Alert severity="warning" sx={{ mt: 1 }}>
-                    Simulation Warning: {transactionResponse.simulationError}
+                    {t.simulationWarning}: {transactionResponse.simulationError}
                   </Alert>
                 )}
               </Stack>
@@ -558,26 +552,26 @@ export default function SwapModal({
                   },
                 }}
               >
-                Build New Transaction
+                {t.buildNewTransaction}
               </Button>
             </Box>
           )}
 
           {/* Slippage Setting */}
           <FormControl fullWidth>
-            <InputLabel id="slippage-label">Slippage Tolerance</InputLabel>
+            <InputLabel id="slippage-label">{t.slippage}</InputLabel>
             <Select
               labelId="slippage-label"
               id="slippage"
               value={slippage.toString()}
-              label="Slippage Tolerance"
+              label={t.slippage}
               onChange={handleSlippageChange}
               disabled={isSwapping}
             >
-              <MenuItem value="10">0.1%</MenuItem>
-              <MenuItem value="50">0.5%</MenuItem>
-              <MenuItem value="100">1.0%</MenuItem>
-              <MenuItem value="300">3.0%</MenuItem>
+              <MenuItem value={10}>0.1%</MenuItem>
+              <MenuItem value={50}>0.5%</MenuItem>
+              <MenuItem value={100}>1%</MenuItem>
+              <MenuItem value={300}>3%</MenuItem>
             </Select>
           </FormControl>
         </Stack>
@@ -598,7 +592,7 @@ export default function SwapModal({
               },
             }}
           >
-            Cancel
+            {t.cancel}
           </Button>
           <Button
             variant="contained"
@@ -622,10 +616,10 @@ export default function SwapModal({
             }
           >
             {isSwapping
-              ? "Building Transaction..."
+              ? t.buildingTransaction
               : transactionResponse
-                ? "Execute Swap"
-                : "Prepare Swap"}
+                ? t.executeSwap
+                : t.prepareSwap}
           </Button>
         </Stack>
       </Box>

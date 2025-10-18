@@ -14,11 +14,12 @@ use {
         wallet::{
             check_pubkey::check_pubkey,
             command_balance::get_wallet_balance,
+            command_onboarding_create_wallet::onboarding_create_wallet,
             command_other_assets_balance::get_other_assets_balance,
             commands::{
                 derive_next_keypair, destroy_all_wallets, get_all_keypairs, get_bach_balance,
-                get_sol_balance, get_token_info, get_treasury_bach_balance,
-                get_treasury_sol_balance, onboarding_create_wallet, send_token, update_username,
+                get_sol_balance, get_treasury_bach_balance, get_treasury_sol_balance, send_token,
+                update_username,
             },
             import_wallet::{derive_new_keypair, import_solana_wallet},
             set_active_keypair::set_active_keypair,
@@ -34,7 +35,6 @@ pub fn run() {
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_android_tv_check::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(
             tauri_plugin_log::Builder::default()
@@ -47,7 +47,14 @@ pub fn run() {
         )
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_haptics::init())
-        .setup(|app| setup(app))
+        .setup(|app| {
+            // Android-only plugin.
+            #[cfg(target_os = "android")]
+            {
+                app.handle().plugin(tauri_plugin_android_tv_check::init())?;
+            }
+            setup(app)
+        })
         .invoke_handler(tauri::generate_handler![
             onboarding_create_wallet,
             import_solana_wallet,
@@ -61,7 +68,6 @@ pub fn run() {
             get_bach_balance,
             get_sol_balance,
             get_wallet_balance,
-            get_token_info,
             onramp_session,
             get_all_keypairs,
             update_username,

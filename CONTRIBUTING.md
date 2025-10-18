@@ -1,6 +1,6 @@
-# Contributing to Not - Crypto Wallet
+# Contributing to NotWallet Crypto
 
-Thank you for your interest in contributing to **Not - Crypto Wallet**!  
+Thank you for your interest in contributing to **NotWallet Crypto**!
 Our vision is to build a secure, user-friendly, and privacy-focused Solana wallet—open to everyone, just like MetaMask is for Ethereum.
 
 We welcome contributions of all kinds: code, documentation, design, bug reports, feature requests, and community support.
@@ -45,7 +45,7 @@ We welcome contributions of all kinds: code, documentation, design, bug reports,
 
 ## Vision
 
-We aim to make Not - Crypto Wallet as trusted and widely used for Solana as MetaMask is for Ethereum.  
+We aim to make NotWallet Crypto as trusted and widely used for Solana as MetaMask is for Ethereum.
 Your contributions help us get there—thank you!
 
 ---

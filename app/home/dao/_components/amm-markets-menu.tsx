@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -9,6 +9,7 @@ import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { markets } from "./amm-markets";
 import { TokenIcon } from "./amm-token-info";
+import { useLang } from "../../../../src/LanguageContext";
 
 interface MarketItemProps {
   baseToken: string;
@@ -104,6 +105,7 @@ const MarketItem = ({
 );
 
 export default function AMMMarketsMenu() {
+  const { t } = useLang();
   const handleMarketClick = async (ammId: string) => {
     await selectionFeedback();
     const solscanUrl = `https://solscan.io/account/${ammId}`;
@@ -137,7 +139,7 @@ export default function AMMMarketsMenu() {
             textAlign: "center",
           }}
         >
-          Markets
+          {t.markets}
         </Typography>
         <Box
           sx={{

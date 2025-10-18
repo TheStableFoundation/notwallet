@@ -1,9 +1,9 @@
-import Image from "next/image";
+import { Box } from "@mui/material";
 import { BACH_TOKEN, JUPITER, SOLANA } from "../crate/generated";
+
 export const AssetIcon = ({
   id,
   size = 24,
-  name,
 }: {
   id: string;
   size?: number;
@@ -14,12 +14,16 @@ export const AssetIcon = ({
     logoUrl = "/images/spl-token.png";
   }
   return (
-    <Image
+    <Box
+      component="img"
+      sx={{
+        height: size,
+        width: size,
+        maxHeight: { xs: size, md: 167 },
+        maxWidth: { xs: size, md: 250 },
+      }}
+      alt="The house from the offer."
       src={logoUrl}
-      width={size}
-      height={size}
-      alt={name || "Asset"}
-      style={{ borderRadius: "50%" }}
     />
   );
 };

@@ -10,12 +10,13 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
-import { SEND_TOKEN } from "@/lib/commands";
+import { SEND_TOKEN } from "@lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import { useLang } from "../../../src/LanguageContext";
 
 interface SendModalProps {
   open: boolean;
@@ -30,6 +31,7 @@ export default function SendModal({
   senderAddress,
   availableKeypairs,
 }: SendModalProps) {
+  const { t } = useLang();
   const [amount, setAmount] = React.useState<string>("");
   const [recipient, setRecipient] = React.useState<string>("");
   const [customAddress, setCustomAddress] = React.useState<string>("");
@@ -37,8 +39,8 @@ export default function SendModal({
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<boolean>(false);
-  const [bachBalance, setBachBalance] = React.useState<string>("-");
-  const [solBalance, setSolBalance] = React.useState<string>("-");
+  const [bachBalance, _setBachBalance] = React.useState<string>("-");
+  const [solBalance, _setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {
@@ -80,13 +82,13 @@ export default function SendModal({
       await selectionFeedback();
 
       if (!amount || parseFloat(amount) <= 0) {
-        setError("Please enter a valid amount");
+        setError(t.pleaseEnterValidAmount);
         return;
       }
 
       const finalRecipient = recipient === "custom" ? customAddress : recipient;
       if (!finalRecipient) {
-        setError("Please select a recipient");
+        setError(t.pleaseSelectRecipient);
         return;
       }
 
@@ -96,7 +98,7 @@ export default function SendModal({
         currentBalance !== "-" &&
         parseFloat(amount) > parseFloat(currentBalance)
       ) {
-        setError(`Insufficient ${tokenType} balance`);
+        setError(t.insufficientBalance);
         return;
       }
 
@@ -115,11 +117,7 @@ export default function SendModal({
       }, 2000);
     } catch (err) {
       console.error("Error sending tokens:", err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Failed to send tokens. Try again.",
-      );
+      setError(err instanceof Error ? err.message : t.failedToSendTokens);
     } finally {
       setIsLoading(false);
     }
@@ -166,7 +164,7 @@ export default function SendModal({
             WebkitBackgroundClip: "text",
           }}
         >
-          Send {tokenType}
+          {t.sendToken}
         </Typography>
 
         {error && (
@@ -177,18 +175,18 @@ export default function SendModal({
 
         {success && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            Transaction completed successfully!
+            {t.transactionCompletedSuccessfully}
           </Alert>
         )}
 
         <Stack spacing={3}>
           <FormControl fullWidth>
-            <InputLabel id="token-type-label">Token Type</InputLabel>
+            <InputLabel id="token-type-label">{t.tokenType}</InputLabel>
             <Select
               labelId="token-type-label"
               id="token-type"
               value={tokenType}
-              label="Token Type"
+              label={t.tokenType}
               onChange={handleTokenTypeChange}
               disabled={isLoading}
             >
@@ -198,7 +196,7 @@ export default function SendModal({
           </FormControl>
 
           <TextField
-            label="Amount"
+            label={t.amount}
             fullWidth
             value={amount}
             onChange={handleAmountChange}
@@ -210,19 +208,19 @@ export default function SendModal({
             }}
             helperText={
               tokenType === "BACH"
-                ? `Available: ${bachBalance} BACH`
-                : `Available: ${solBalance} SOL`
+                ? `${t.available}: ${bachBalance} BACH`
+                : `${t.available}: ${solBalance} SOL`
             }
           />
 
           {filteredKeypairs.length > 0 ? (
             <FormControl fullWidth>
-              <InputLabel id="recipient-label">Recipient</InputLabel>
+              <InputLabel id="recipient-label">{t.recipient}</InputLabel>
               <Select
                 labelId="recipient-label"
                 id="recipient"
                 value={recipient}
-                label="Recipient"
+                label={t.recipient}
                 onChange={handleRecipientChange}
                 disabled={isLoading}
               >
@@ -232,29 +230,29 @@ export default function SendModal({
                   </MenuItem>
                 ))}
                 <MenuItem value="custom">
-                  <em>Enter custom address...</em>
+                  <em>{t.enterCustomAddress}</em>
                 </MenuItem>
               </Select>
             </FormControl>
           ) : (
             <TextField
-              label="Recipient Address"
+              label={t.recipientAddress}
               fullWidth
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               disabled={isLoading}
-              placeholder="Enter recipient's public key"
+              placeholder={t.enterRecipientPublicKey}
             />
           )}
 
           {recipient === "custom" && (
             <TextField
-              label="Custom Address"
+              label={t.customAddress}
               fullWidth
               value={customAddress}
               onChange={(e) => setCustomAddress(e.target.value)}
               disabled={isLoading}
-              placeholder="Enter recipient's public key"
+              placeholder={t.enterRecipientPublicKey}
             />
           )}
         </Stack>
@@ -275,7 +273,7 @@ export default function SendModal({
               },
             }}
           >
-            Cancel
+            {t.cancel}
           </Button>
           <Button
             variant="contained"
@@ -294,7 +292,7 @@ export default function SendModal({
               isLoading ? <CircularProgress size={20} color="inherit" /> : null
             }
           >
-            {isLoading ? "Sending..." : "Send"}
+            {isLoading ? t.sending : t.send}
           </Button>
         </Stack>
       </Box>

@@ -1,11 +1,12 @@
 use {
     crate::{
-        constants::{network::API_BASE_URL, store::store},
-        model::client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
+        constants::store::store,
+        model::client::{ClientApp, ClientInfoPayload},
         network::client::send_client_info,
     },
     log::{error, info},
     tauri::{async_runtime, App},
+    tauri_plugin_os::{platform, version},
     uuid::Uuid,
 };
 
@@ -54,15 +55,9 @@ pub fn setup_client(app: &App) -> Result<(), Box<dyn std::error::Error>> {
         new_id
     };
 
-    // Get OS information
-    let info = os_info::get();
-
-    // Print full information:
-    println!("OS information: {info}");
-
     // Print information separately:
-    println!("Type: {}", info.os_type());
-    println!("Version: {}", info.version());
+    println!("Type: {}", platform());
+    println!("Version: {}", version());
 
     // Simple device information with straightforward platform detection
     // For a production app, you might want to implement more sophisticated
@@ -72,8 +67,8 @@ pub fn setup_client(app: &App) -> Result<(), Box<dyn std::error::Error>> {
     let client_info = ClientInfoPayload {
         uuid: installation_id,
         app: ClientApp::NotWallet,
-        os_name: info.os_type().to_string(),
-        os_version: info.version().to_string(),
+        os_name: platform().to_string(),
+        os_version: version().to_string(),
         app_version: app.handle().package_info().version.to_string(),
     };
 

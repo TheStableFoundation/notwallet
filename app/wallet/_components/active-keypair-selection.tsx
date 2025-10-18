@@ -1,4 +1,3 @@
-import * as React from "react";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -6,6 +5,7 @@ import Box from "@mui/material/Box";
 import { SolanaWallet } from "../../../lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useLang } from "../../../src/LanguageContext";
 
 interface ActiveKeypairSelectionProps {
   open: boolean;
@@ -22,6 +22,7 @@ export default function ActiveKeypairSelectionModal({
   activePubkey,
   onSelect,
 }: ActiveKeypairSelectionProps) {
+  const { t } = useLang();
   return (
     <Modal
       open={open}
@@ -67,7 +68,7 @@ export default function ActiveKeypairSelectionModal({
             fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
           }}
         >
-          Switch Keypair
+          {t.switchKeypairTitle}
         </Typography>
         <Box
           sx={{
@@ -80,7 +81,7 @@ export default function ActiveKeypairSelectionModal({
         >
           {keypairs.length === 0 && (
             <Typography color="text.secondary" align="center">
-              No keypairs found.
+              {t.noKeypairsFound}
             </Typography>
           )}
           {keypairs.map((kp) => (
@@ -140,7 +141,7 @@ export default function ActiveKeypairSelectionModal({
                     textOverflow: "ellipsis",
                   }}
                 >
-                  (Account {kp.account})
+                  ({t.account} {kp.account})
                 </Typography>
                 <Typography
                   variant="caption"
@@ -169,7 +170,7 @@ export default function ActiveKeypairSelectionModal({
                     letterSpacing: 1,
                   }}
                 >
-                  Active
+                  {t.active}
                 </Typography>
               )}
             </Box>
@@ -192,7 +193,7 @@ export default function ActiveKeypairSelectionModal({
             onClose();
           }}
         >
-          Cancel
+          {t.cancel}
         </Button>
       </Box>
     </Modal>

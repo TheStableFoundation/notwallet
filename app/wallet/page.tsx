@@ -2,26 +2,24 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import LoadingCard from "@/lib/components/loading-card";
-import ErrorCard from "@/lib/components/error-card";
-import { store } from "@/lib/store/store";
+import ErrorCard from "@lib/components/error-card";
+import { store } from "@lib/store/store";
 import {
   SolanaWallet,
   STORE_ACTIVE_KEYPAIR,
   STORE_KEYPAIRS,
   STORE_PASSWORD,
-} from "@/lib/crate/generated";
+} from "@lib/crate/generated";
 import { debug } from "@tauri-apps/plugin-log";
-import { useRouter } from "next/navigation";
-import { useAppLock } from "@/lib/context/app-lock-context";
+import { useAppLock } from "@lib/context/app-lock-context";
 import WalletCard from "./_components/wallet-card";
 import ActivityCard from "./_components/activity_card";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ActiveKeypairSelectionModal from "./_components/active-keypair-selection";
-import { SET_ACTIVE_KEYPAIR } from "@/lib/commands";
-import PageTitleBar from "@/lib/components/page-title-bar";
-import { redirect } from "next/navigation";
+import { SET_ACTIVE_KEYPAIR } from "@lib/commands";
+import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 enum State {
   Loading,
@@ -31,29 +29,27 @@ enum State {
 
 export default function WalletHome() {
   const { lock } = useAppLock();
-  const router = useRouter();
+  const router = useNavigate();
   const [wallet, setWallet] = React.useState<SolanaWallet | undefined>(
     undefined,
   );
   const [state, setState] = React.useState(State.Loading);
   const [showSwitchModal, setShowSwitchModal] = React.useState(false);
   const [allKeypairs, setAllKeypairs] = React.useState<SolanaWallet[]>([]);
-  const [shouldOnboardUser, setShouldOnboardUser] = React.useState(false);
-  const [hasPassword, setHasPassword] = React.useState(true);
 
   const init = async () => {
     try {
       // Decide if we should redirect to onboarding
       const keypairs = await store().get<SolanaWallet[]>(STORE_KEYPAIRS);
       if (!keypairs || keypairs.length === 0) {
-        setShouldOnboardUser(true);
+        router("/wallet/onboarding");
         return;
       }
 
       // Check if we should redirect to create password onboarding
       const passwordCheck = await store().get<string>(STORE_PASSWORD);
       if (!passwordCheck) {
-        setHasPassword(false);
+        router("/wallet/onboarding/create-password");
         return;
       }
 
@@ -104,28 +100,20 @@ export default function WalletHome() {
     fetchKeypairs();
   }, []);
 
-  if (shouldOnboardUser) {
-    return redirect("/wallet/onboarding");
-  }
-
-  if (!hasPassword) {
-    return redirect("/wallet/onboarding/create-password");
-  }
-
   return (
     <Box
       sx={{
         minHeight: "unset",
         height: "auto",
-        bgcolor: "#f5f6fa",
         pb: 10,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <PageTitleBar title="Wallet" />
-      {state === State.Loading && <LoadingCard />}
+      {state === State.Loading && (
+        <CircularProgress className="bg-primary-light" />
+      )}
       {state === State.Error && <ErrorCard />}
       {state === State.Loaded && wallet && (
         <>
@@ -135,7 +123,7 @@ export default function WalletHome() {
               onLock={async () => {
                 await selectionFeedback();
                 lock();
-                router.replace("/");
+                router("/");
               }}
               onSwitchKeypair={async () => {
                 await selectionFeedback();

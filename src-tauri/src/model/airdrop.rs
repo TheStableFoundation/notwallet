@@ -11,6 +11,7 @@ pub(crate) struct AirdropResponse {
 pub(crate) struct AirdropRequest<'a> {
     pub(crate) pubkey: &'a str,
     pub(crate) signature: &'a str,
+    pub(crate) deploy_key: &'a str,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

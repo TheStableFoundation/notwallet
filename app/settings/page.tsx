@@ -15,17 +15,17 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { openUrl } from "@tauri-apps/plugin-opener";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageTitleBar from "@/lib/components/page-title-bar";
 import Confetti from "react-confetti";
+import { useLang } from "../../src/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SettingsPage() {
-  const router = useRouter();
+  const router = useNavigate();
+  const { t } = useLang();
   const [footerClickCount, setFooterClickCount] = React.useState(0);
   const [showModal, setShowModal] = React.useState(false);
   const [showConfetti, setShowConfetti] = React.useState(false);
@@ -56,15 +56,16 @@ export default function SettingsPage() {
       | "privacyPolicy"
       | "termsOfService"
       | "appInfo"
-      | "appPreferences",
+      | "appPreferences"
+      | "languagePreferences",
   ) => {
     await selectionFeedback();
     if (type === "about") {
-      router.push("/settings/about");
+      router("/settings/about");
     } else if (type === "privacyPolicy") {
-      openUrl("https://bach.money/privacy-policy");
+      openUrl("https://notwallet.eu/privacy");
     } else if (type === "termsOfService") {
-      openUrl("https://bach.money/terms-of-service");
+      openUrl("https://notwallet.eu/terms");
     } else if (type === "openSource") {
       openUrl("https://github.com/TheStableFoundation/not");
     } else if (type === "footer") {
@@ -78,9 +79,11 @@ export default function SettingsPage() {
         }, 5000);
       }
     } else if (type === "appInfo") {
-      router.push("/settings/app-info");
+      router("/settings/app-info");
     } else if (type === "appPreferences") {
-      router.push("/settings/app-preferences");
+      router("/settings/app-preferences");
+    } else if (type === "languagePreferences") {
+      router("/settings/app-preferences");
     }
   };
 
@@ -92,14 +95,14 @@ export default function SettingsPage() {
   const settingsItems = [
     {
       id: "about",
-      label: "About",
+      label: t.about,
       icon: <InfoOutlinedIcon />,
       action: () => handleClick("about"),
       hasChevron: true,
     },
     {
       id: "appInfo",
-      label: "App Info",
+      label: t.appInfo,
       icon: <PhoneAndroidOutlinedIcon />,
       action: () => handleClick("appInfo"),
       hasChevron: true,
@@ -109,21 +112,21 @@ export default function SettingsPage() {
   const legalItems = [
     {
       id: "termsOfService",
-      label: "Terms of Service",
+      label: t.termsOfService,
       icon: <DescriptionOutlinedIcon />,
       action: () => handleClick("termsOfService"),
       hasChevron: true,
     },
     {
       id: "privacyPolicy",
-      label: "Privacy Policy",
+      label: t.privacyPolicy,
       icon: <PrivacyTipOutlinedIcon />,
       action: () => handleClick("privacyPolicy"),
       hasChevron: true,
     },
     {
       id: "openSource",
-      label: "Open Source",
+      label: t.openSource,
       icon: <CodeOutlinedIcon />,
       action: () => handleClick("openSource"),
       hasChevron: true,
@@ -199,15 +202,12 @@ export default function SettingsPage() {
       sx={{
         minHeight: "100vh",
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         pb: 8,
       }}
     >
-      <PageTitleBar title="Settings" />
-
       <Box sx={{ width: "100%", maxWidth: 420, px: 2, mt: 2 }}>
         {/* App Settings Section */}
         <Card
@@ -232,7 +232,7 @@ export default function SettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              App
+              {t.app}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -265,7 +265,7 @@ export default function SettingsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Legal & Support
+              {t.legalSupport}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -298,7 +298,10 @@ export default function SettingsPage() {
             }}
             onClick={() => handleClick("footer")}
           >
-            © {new Date().getFullYear()} The Stable Foundation
+            {t.stableFoundationCopyright.replace(
+              "{year}",
+              new Date().getFullYear().toString(),
+            )}
           </Typography>
         </Box>
       </Box>
@@ -347,7 +350,7 @@ export default function SettingsPage() {
               fontSize: { xs: "1.3rem", sm: "1.5rem" },
             }}
           >
-            🎉 Congratulations! 🎉
+            {t.congratulations}
           </Typography>
           <Typography
             id="congratulations-modal-description"
@@ -358,12 +361,33 @@ export default function SettingsPage() {
               textAlign: "center",
             }}
           >
-            You just found one of many ways to get the BACH Token airdrop. Send
-            an email to{" "}
-            <strong style={{ color: "#8B5CF6" }}>info@bach.money</strong> with
-            subject{" "}
-            <strong style={{ color: "#8B5CF6" }}>SETTINGS_EASTER_EGG</strong>{" "}
-            and your wallet address in the email body.
+            {t.congratulationsMessage
+              .split("info@bach.money")
+              .map((part, index) =>
+                index === 0 ? (
+                  part
+                ) : (
+                  <>
+                    <strong style={{ color: "#8B5CF6" }}>
+                      info@bach.money
+                    </strong>
+                    {part
+                      .split("SETTINGS_EASTER_EGG")
+                      .map((subpart, subindex) =>
+                        subindex === 0 ? (
+                          subpart
+                        ) : (
+                          <>
+                            <strong style={{ color: "#8B5CF6" }}>
+                              SETTINGS_EASTER_EGG
+                            </strong>
+                            {subpart}
+                          </>
+                        ),
+                      )}
+                  </>
+                ),
+              )}
           </Typography>
           <Button
             fullWidth
@@ -381,7 +405,7 @@ export default function SettingsPage() {
               fontWeight: 600,
             }}
           >
-            Got it!
+            {t.gotIt}
           </Button>
         </Box>
       </Modal>

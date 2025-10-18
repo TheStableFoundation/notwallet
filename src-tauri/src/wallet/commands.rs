@@ -1,102 +1,28 @@
 use {
-    crate::constants::{
-        address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL},
-        rpc::{rpc_url, USE_LOCAL_RPC},
-        store::{
-            store, STORE_ACTIVE_KEYPAIR, STORE_KEYPAIRS, STORE_PASSWORD, STORE_SEEDS, STORE_WALLET,
+    crate::{
+        constants::{
+            address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL},
+            rpc::{rpc_url, USE_LOCAL_RPC},
+            store::{
+                store, STORE_ACTIVE_KEYPAIR, STORE_KEYPAIRS, STORE_PASSWORD, STORE_SEEDS,
+                STORE_WALLET,
+            },
         },
+        model::{keypair::SolanaWallet, seed::Seed},
     },
-    crate::model::keypair::SolanaWallet,
-    crate::model::seed::{Seed, SeedType},
-    crate::model::wallet::OnboardingCreateWallet,
-    bip39::{Language, Mnemonic},
-    chrono::Utc,
-    log::{debug, error, info},
-    network::model::{ErrorCode, ErrorResponse},
-    solana_sdk::signature::Signer,
-    tauri::{command, AppHandle},
-    uuid::Uuid,
-    wallet_kit::{
-        balance::{sol_balance, spl_balance},
-        constants::SPL_TOKEN_PROGRAM_ID,
-        derive_keypair::derive_keypair_default,
-        token_info::token_info,
+    log::{debug, info},
+    smbcloud_wallet_constants::constants::SPL_TOKEN_PROGRAM_ID,
+    smbcloud_wallet_core::derive_keypair::derive_keypair_default,
+    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
+    smbcloud_wallet_core_rpc::balance::spl_balance::spl_balance,
+    smbcloud_wallet_kit::{
+        balance::sol_balance,
         transactions::{create_token_transfer_ix, create_transfer_ix},
     },
+    solana_signer::Signer,
+    tauri::{command, AppHandle},
+    uuid::Uuid,
 };
-
-#[command]
-pub fn onboarding_create_wallet(app: AppHandle) -> Result<OnboardingCreateWallet, String> {
-    debug!("Starting Solana wallet creation");
-
-    // Generate a new 12-word mnemonic
-    let mnemonic = Mnemonic::generate_in(Language::English, 12)
-        .map_err(|e| format!("Mnemonic generation failed: {:?}", e))?;
-    let mnemonic_phrase = mnemonic.to_string();
-
-    // Derive keypair using helper (account 0)
-    let keypair = derive_keypair_default(&mnemonic_phrase, 0)?;
-
-    let pubkey = keypair.pubkey().to_string();
-    let privkey = bs58::encode(keypair.to_bytes()).into_string();
-    debug!("Wallet pubkey: {}", pubkey);
-    debug!("Wallet privkey (bs58, truncated): {}...", &privkey[..8]);
-
-    // Create Seed struct
-    let seed_id = Uuid::new_v4();
-    let seed_struct = Seed {
-        id: seed_id,
-        phrase: mnemonic_phrase.clone(),
-        seed_type: SeedType::Created {
-            timestamp: Utc::now(),
-        },
-    };
-
-    // Save the seed struct to the store_seeds
-    let store = match store(&app) {
-        Ok(store) => store,
-        Err(_) => {
-            return Err("Failed to load store".to_string());
-        }
-    };
-    let mut seeds: Vec<Seed> = match store.get(STORE_SEEDS) {
-        Some(value) => serde_json::from_value(value).unwrap_or_default(),
-        None => Vec::new(),
-    };
-    seeds.push(seed_struct);
-    store.set(STORE_SEEDS, serde_json::json!(seeds));
-    store.save().ok();
-    let name = "Account 0".to_string();
-    let wallet = SolanaWallet {
-        name,
-        username: None,
-        account: 0,
-        pubkey,
-        privkey,
-        seed_id: seed_id,
-        id: Uuid::new_v4(),
-    };
-    // Load existing keypairs, append, and save
-    let mut keypairs: Vec<SolanaWallet> = match store.get(STORE_KEYPAIRS) {
-        Some(value) => serde_json::from_value(value).unwrap_or_default(),
-        None => Vec::new(),
-    };
-    keypairs.push(wallet.clone());
-    store.set(STORE_KEYPAIRS, serde_json::json!(keypairs));
-    match store.save() {
-        Ok(_) => {
-            info!("Wallet stored successfully.");
-            Ok(OnboardingCreateWallet {
-                seed: mnemonic_phrase.clone(),
-                keypair: wallet,
-            })
-        }
-        Err(e) => {
-            error!("Failed to save wallet: {:?}", e);
-            Err("Error saving wallet".to_string())
-        }
-    }
-}
 
 #[command]
 pub async fn derive_next_keypair(app: AppHandle, seed_uuid: Uuid) -> Result<SolanaWallet, String> {
@@ -160,24 +86,22 @@ pub fn get_bach_balance(pubkey: String) -> String {
     } else {
         BACH_TOKEN_ADDRESS.to_string()
     };
-    spl_balance(
+
+    match spl_balance(
         rpc_url(),
         pubkey,
         SPL_TOKEN_PROGRAM_ID.to_string(),
         bach_token_address,
-    )
+    ) {
+        Ok(balance) => balance,
+        Err(_) => "0.0".to_string(),
+    }
 }
 
 #[command]
 pub fn get_sol_balance(pubkey: String) -> String {
     info!("Getting balance for {}", pubkey);
     sol_balance(rpc_url(), pubkey)
-}
-
-#[command]
-pub fn get_token_info(id: String) -> String {
-    info!("Getting token info for {}", id);
-    token_info(id)
 }
 
 #[command]
@@ -265,12 +189,15 @@ pub fn get_treasury_bach_balance() -> String {
     } else {
         BACH_TOKEN_ADDRESS.to_string()
     };
-    spl_balance(
+    match spl_balance(
         rpc_url(),
         treasury_address.to_string(),
         SPL_TOKEN_PROGRAM_ID.to_string(),
         bach_token_address,
-    )
+    ) {
+        Ok(balance) => balance,
+        Err(_) => "0.0".to_string(),
+    }
 }
 
 #[command]

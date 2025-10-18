@@ -1,25 +1,25 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { ActivityItem } from "./activity_component";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import OnboardingCard from "./onboarding_card";
-import { CHECK_PUBKEY } from "@/lib/commands";
+import { CHECK_PUBKEY } from "@lib/commands";
 import {
   SolanaWallet,
   CheckPubkeyResponse,
   STORE_ACTIVE_KEYPAIR,
-} from "@/lib/crate/generated";
-import { store } from "@/lib/store/store";
+} from "@lib/crate/generated";
+import { store } from "@lib/store/store";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { feed } from "./feed";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
+import { useLang } from "../../../src/LanguageContext";
 
 enum ActivityState {
   Loading,
@@ -29,27 +29,10 @@ enum ActivityState {
 }
 
 export default function ActivityListView() {
-  const [state, setState] = useState<ActivityState>(ActivityState.Loading);
+  const { t } = useLang();
+  const [, setState] = useState<ActivityState>(ActivityState.Loading);
   const [showOnboardingCard, setShowOnboardingCard] = useState(false);
-  const [activities, setActivities] = useState<ActivityItem[]>([]);
-  const [hasMore, setHasMore] = useState(true);
   const [pubkey, setPubkey] = useState<string | undefined>(undefined);
-
-  async function loadActivities() {
-    try {
-      setState(ActivityState.Loading);
-
-      // Simulate loading delay for initial load
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Use the initial feed data
-      setActivities(feed);
-      setState(ActivityState.Loaded);
-    } catch (error) {
-      console.error("Error loading activities:", error);
-      setState(ActivityState.Error);
-    }
-  }
 
   const init = async () => {
     try {
@@ -166,7 +149,7 @@ export default function ActivityListView() {
           fontSize: "1.1rem",
         }}
       >
-        Activity Feed
+        {t.activityFeed}
       </Typography>
 
       {/* BACH Airdrop Banner */}
@@ -189,7 +172,7 @@ export default function ActivityListView() {
                 mr: 1,
               }}
             >
-              🪂 BACH Airdrop Live!
+              {t.bachAirdropLive}
             </Typography>
           </Box>
           <Typography
@@ -200,8 +183,7 @@ export default function ActivityListView() {
               lineHeight: 1.5,
             }}
           >
-            Multiple ways to earn your BACH tokens! Complete tasks, contribute
-            to the music database, and participate in the ecosystem.
+            {t.airdropDescription}
           </Typography>
           <Button
             onClick={async () => {
@@ -227,7 +209,7 @@ export default function ActivityListView() {
               },
             }}
           >
-            Claim Your Airdrop →
+            {t.claimYourAirdrop}
           </Button>
         </CardContent>
       </Card>

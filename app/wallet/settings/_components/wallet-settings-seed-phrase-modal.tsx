@@ -6,14 +6,14 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { store } from "@/lib/store/store";
+import { store } from "@lib/store/store";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import {
   Seed,
   SolanaWallet,
   STORE_ACTIVE_KEYPAIR,
   STORE_SEEDS,
-} from "@/lib/crate/generated";
+} from "@lib/crate/generated";
 import { debug } from "@tauri-apps/plugin-log";
 
 interface WalletSettingsSeedPhraseModalProps {

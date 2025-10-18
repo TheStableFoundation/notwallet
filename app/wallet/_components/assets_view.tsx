@@ -9,23 +9,24 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
-import { AssetIcon } from "@/lib/components/token-icons";
+import { AssetIcon } from "@lib/components/token-icons";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconButton from "@mui/material/IconButton";
 import { openUrl } from "@tauri-apps/plugin-opener";
+import { useLang } from "../../../src/LanguageContext";
 
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import {
   GET_BACH_BALANCE,
   GET_SOL_BALANCE,
   GET_OTHER_ASSETS_BALANCE,
-} from "@/lib/commands";
+} from "@lib/commands";
 import { error } from "@tauri-apps/plugin-log";
 import VerifiedBadge from "./verified-badge";
 import { isAssetVerified } from "./verified-assets";
-import { BACH_TOKEN, SOLANA, AssetBalance } from "@/lib/crate/generated";
+import { BACH_TOKEN, SOLANA, AssetBalance } from "@lib/crate/generated";
 
 interface Asset {
   logo: React.ReactNode;
@@ -41,6 +42,7 @@ interface AssetsViewProps {
 }
 
 export default function AssetsView({ wallet }: AssetsViewProps) {
+  const { t } = useLang();
   const [assets, setAssets] = React.useState<Asset[]>([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -144,7 +146,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
       {assets.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 4 }}>
           <Typography variant="body2" color="text.secondary">
-            No assets found in this wallet
+            {t.noAssetsFound}
           </Typography>
         </Box>
       ) : (

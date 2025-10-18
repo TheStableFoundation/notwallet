@@ -5,28 +5,27 @@ import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
-import PaidIcon from "@mui/icons-material/Paid";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
-import SellIcon from "@mui/icons-material/Sell";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LockIcon from "@mui/icons-material/Lock";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
-import { SolanaWallet } from "@/lib/crate/generated";
+import { SolanaWallet } from "@lib/crate/generated";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { invoke } from "@tauri-apps/api/core";
-import { GET_ALL_KEYPAIRS, GET_WALLET_BALANCE } from "@/lib/commands";
+import { GET_ALL_KEYPAIRS, GET_WALLET_BALANCE } from "@lib/commands";
 import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import EditKeyPairModal from "./edit-keypair-modal";
 import { error } from "@tauri-apps/plugin-log";
+import { useLang } from "../../../src/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -39,10 +38,11 @@ export default function WalletCard({
   onLock,
   onSwitchKeypair,
 }: WalletCardProps) {
-  const router = useRouter();
+  const router = useNavigate();
+  const { t } = useLang();
   const [walletBalance, setWalletBalance] = React.useState<string>("-");
   const [walletUsername, setWalletUsername] = React.useState<string>(
-    wallet.username || "NowhereMan",
+    wallet.username || t.defaultUsername,
   );
   const [sendModalOpen, setSendModalOpen] = React.useState<boolean>(false);
   const [swapModalOpen, setSwapModalOpen] = React.useState<boolean>(false);
@@ -54,12 +54,12 @@ export default function WalletCard({
 
   // Update walletUsername when wallet.username changes
   React.useEffect(() => {
-    setWalletUsername(wallet.username || "NowhereMan");
-  }, [wallet.username]);
+    setWalletUsername(wallet.username || t.defaultUsername);
+  }, [wallet.username, t]);
 
   const handleWalletSettings = async () => {
     await selectionFeedback();
-    router.push("/wallet/settings");
+    router("/wallet/settings");
   };
 
   const handleSend = async () => {
@@ -109,12 +109,7 @@ export default function WalletCard({
 
   const onBuySol = React.useCallback(async () => {
     await selectionFeedback();
-    router.push("/wallet/buy?address=" + wallet.pubkey);
-  }, [router, wallet]);
-
-  const onSellCrypto = React.useCallback(async () => {
-    await selectionFeedback();
-    router.push("/wallet/sell?address=" + wallet.pubkey);
+    router("/wallet/buy/stripe?address=" + wallet.pubkey);
   }, [router, wallet]);
 
   const onEditKeypair = async () => {
@@ -182,7 +177,7 @@ export default function WalletCard({
           </IconButton>
         </Stack>
         <Stack direction="row" spacing={1}>
-          <Tooltip title="Toggle Lock Wallet" arrow>
+          <Tooltip title={t.toggleLockWallet} arrow>
             <IconButton
               size="small"
               sx={{
@@ -200,7 +195,7 @@ export default function WalletCard({
               <LockIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Wallet settings" arrow>
+          <Tooltip title={t.walletSettings} arrow>
             <IconButton
               sx={{
                 color: "#9932CC",
@@ -238,7 +233,7 @@ export default function WalletCard({
               boxShadow: "0 1px 4px #9932CC11",
             }}
           >
-            <Tooltip title="Copy pubkey" arrow>
+            <Tooltip title={t.copyPubkey} arrow>
               <Typography
                 variant="body2"
                 sx={{
@@ -263,7 +258,7 @@ export default function WalletCard({
                   : ""}
               </Typography>
             </Tooltip>
-            <Tooltip title="Switch keypair" arrow>
+            <Tooltip title={t.switchKeypair} arrow>
               <IconButton
                 sx={{
                   color: "#9932CC",
@@ -404,7 +399,7 @@ export default function WalletCard({
           spacing={1}
           sx={{ position: "relative", zIndex: 1 }}
         >
-          <Tooltip title="Send">
+          <Tooltip title={t.send}>
             <IconButton
               sx={{
                 color: "#9932CC",
@@ -418,7 +413,7 @@ export default function WalletCard({
               <SendIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Swap">
+          <Tooltip title={t.swap}>
             <IconButton
               sx={{
                 color: "#9932CC",
@@ -469,43 +464,7 @@ export default function WalletCard({
           fullWidth
           onClick={onBuySol}
         >
-          Buy SOL
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<PaidIcon />}
-          sx={{
-            background:
-              "linear-gradient(90deg, rgba(153, 50, 204, 0.9) 0%, rgba(166, 77, 255, 0.85) 100%)",
-            color: "#fff",
-            fontWeight: "bold",
-            borderRadius: 2,
-            boxShadow: "0 2px 10px rgba(153, 50, 204, 0.3)",
-            backdropFilter: "blur(8px)",
-            transition: "all 0.3s ease",
-            position: "relative",
-            overflow: "hidden",
-            "&:before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: "40%",
-              background:
-                "linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent)",
-              borderRadius: "2px 2px 0 0",
-            },
-            "&:hover": {
-              background:
-                "linear-gradient(90deg, rgba(166, 77, 255, 0.9) 0%, rgba(153, 50, 204, 0.85) 100%)",
-              boxShadow: "0 4px 15px rgba(153, 50, 204, 0.4)",
-            },
-          }}
-          fullWidth
-          onClick={onSellCrypto}
-        >
-          Sell
+          {t.buySol}
         </Button>
       </Stack>
 

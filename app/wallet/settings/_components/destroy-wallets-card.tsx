@@ -6,13 +6,15 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { useRouter } from "next/navigation";
 import DestroyWalletsModal from "./destroy-wallets-modal";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import SettingListItem from "./setting-list-item";
+import { useLang } from "../../../../src/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 export default function DestroyWalletsCard() {
-  const router = useRouter();
+  const router = useNavigate();
+  const { t } = useLang();
   const [showDestroyModal, setShowDestroyModal] = React.useState(false);
   const handleClick = async () => {
     await selectionFeedback();
@@ -22,8 +24,8 @@ export default function DestroyWalletsCard() {
   const dangerItems = [
     {
       id: "destroyWallets",
-      label: "Destroy All Wallets",
-      description: "Permanently delete all wallet data",
+      label: t.destroyWallets,
+      description: t.destroyAllData,
       icon: <DeleteForeverIcon />,
       action: () => handleClick(),
       hasChevron: true,
@@ -57,7 +59,7 @@ export default function DestroyWalletsCard() {
               letterSpacing: "-0.02em",
             }}
           >
-            Danger Zone
+            {t.dangerZone}
           </Typography>
           <Typography
             variant="body2"
@@ -67,7 +69,7 @@ export default function DestroyWalletsCard() {
               mb: 1,
             }}
           >
-            Irreversible actions that will permanently delete your data
+            {t.irreversibleActions}
           </Typography>
         </Box>
         <List sx={{ p: 0, pb: 1 }}>
@@ -81,7 +83,7 @@ export default function DestroyWalletsCard() {
         onClose={() => setShowDestroyModal(false)}
         onSuccess={() => {
           // Optionally redirect to onboarding or show success message
-          router.push("/home");
+          router("/home");
         }}
       />
     </>

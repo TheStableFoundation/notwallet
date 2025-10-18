@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
@@ -9,18 +8,20 @@ import Button from "@mui/material/Button";
 import LanguageIcon from "@mui/icons-material/Language";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { openUrl } from "@tauri-apps/plugin-opener";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
-import Image from "next/image";
-
-const links = [
-  {
-    title: "The Stable Foundation",
-    icon: <LanguageIcon />,
-    url: "https://thestablefoundation.org/",
-  },
-];
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useLang } from "../../../src/LanguageContext";
 
 export default function AboutPage() {
+  const { t } = useLang();
+
+  const links = [
+    {
+      title: "The Stable Foundation",
+      icon: <LanguageIcon />,
+      url: "https://thestablefoundation.org/",
+    },
+  ];
+
   const handleExternal = async (url: string) => {
     await selectionFeedback();
     await openUrl(url);
@@ -31,14 +32,13 @@ export default function AboutPage() {
       sx={{
         minHeight: "100vh",
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         py: 4,
       }}
     >
-      <PageChildrenTitleBar title="About" />
+      <PageChildrenTitleBar title={t.about} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         <Card
           sx={{
@@ -60,25 +60,18 @@ export default function AboutPage() {
             }}
           >
             <Box
+              component="img"
               sx={{
-                width: 80,
-                height: 80,
-                borderRadius: "20px",
-                mx: "auto",
-                mb: 3,
-                overflow: "hidden",
+                height: 100,
+                width: 100,
+                maxHeight: { xs: 75, md: 167 },
+                maxWidth: { xs: 75, md: 250 },
+                display: "block",
+                margin: "0 auto",
               }}
-            >
-              <Image
-                src="/images/app-icon-v4.svg"
-                alt="NotWallet App Icon"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            </Box>
+              alt="The house from the offer."
+              src="/public/images/app-icon.png"
+            />
             <Typography
               variant="h5"
               sx={{
@@ -89,7 +82,7 @@ export default function AboutPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              NotWallet Crypto
+              {t.notwalletCrypto}
             </Typography>
           </Box>
 
@@ -107,8 +100,7 @@ export default function AboutPage() {
                 textAlign: "center",
               }}
             >
-              A modern, community-owned, non-custodial open-source Solana wallet
-              app built for privacy, simplicity, and security.
+              {t.aboutDescription}
             </Typography>
 
             <Typography
@@ -120,7 +112,7 @@ export default function AboutPage() {
                 mb: 4,
               }}
             >
-              Developed and maintained by The Stable Foundation.
+              {t.developedBy}
             </Typography>
 
             {/* Social Links */}
@@ -180,7 +172,10 @@ export default function AboutPage() {
                 fontWeight: 500,
               }}
             >
-              © {new Date().getFullYear()} The Stable Foundation
+              {t.stableFoundationCopyright.replace(
+                "{year}",
+                new Date().getFullYear().toString(),
+              )}
             </Typography>
           </Box>
         </Card>

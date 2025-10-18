@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -9,14 +10,15 @@ import Tooltip from "@mui/material/Tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { invoke } from "@tauri-apps/api/core";
-import { GET_BACH_BALANCE } from "@/lib/commands";
+import { GET_BACH_BALANCE } from "@lib/commands";
 import { debug } from "@tauri-apps/plugin-log";
 import {
   BACH_TOKEN,
   THE_STABLE_FOUNDATION_ADDRESS,
-} from "@/lib/crate/generated";
-import { openExplorer } from "@/lib/helper";
-import { AssetIcon } from "@/lib/components/token-icons";
+} from "@lib/crate/generated";
+import { openExplorer } from "@lib/helper";
+import { AssetIcon } from "@lib/components/token-icons";
+import { useLang } from "../../../../src/LanguageContext";
 
 enum LoadingState {
   Loading,
@@ -25,6 +27,7 @@ enum LoadingState {
 }
 
 export default function DAOInfoCard() {
+  const { t } = useLang();
   const [state, setState] = React.useState<LoadingState>(LoadingState.Loading);
   const [lockedBachBalance, setLockedBachBalance] = React.useState<string>("-");
 
@@ -69,7 +72,7 @@ export default function DAOInfoCard() {
         color="#fff"
         sx={{ mb: 2, textAlign: "center" }}
       >
-        The Stable Foundation
+        {t.theStableFoundation}
       </Typography>
 
       <Box
@@ -97,7 +100,7 @@ export default function DAOInfoCard() {
         >
           {`${THE_STABLE_FOUNDATION_ADDRESS.slice(0, 8)}...${THE_STABLE_FOUNDATION_ADDRESS.slice(-8)}`}
         </Typography>
-        <Tooltip title="View on Explorer" arrow>
+        <Tooltip title={t.viewOnExplorer} arrow>
           <IconButton
             onClick={() => openExplorer(THE_STABLE_FOUNDATION_ADDRESS)}
             sx={{
@@ -122,7 +125,7 @@ export default function DAOInfoCard() {
           textAlign: "center",
         }}
       >
-        Locked DAO Tokens
+        {t.lockedDaoTokens}
       </Typography>
 
       {/* Loading State */}
@@ -139,7 +142,7 @@ export default function DAOInfoCard() {
             variant="body2"
             sx={{ color: "rgba(255,255,255,0.8)", mb: 2 }}
           >
-            Failed to load DAO balance
+            {t.failedToLoadDaoBalance}
           </Typography>
           <Typography
             variant="body2"
@@ -150,7 +153,7 @@ export default function DAOInfoCard() {
             }}
             onClick={loadDAOBalance}
           >
-            Retry
+            {t.retry}
           </Typography>
         </Box>
       )}
@@ -197,7 +200,7 @@ export default function DAOInfoCard() {
                 fontWeight: "bold",
               }}
             >
-              Locked
+              {t.locked}
             </Typography>
           </Box>
         </Stack>

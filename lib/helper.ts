@@ -1,5 +1,7 @@
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { check } from "@smbcloud/tauri-plugin-android-tv-check-api";
+import { platform } from "@tauri-apps/plugin-os";
 
 export const openExplorer = async (address: string) => {
   await selectionFeedback();
@@ -53,3 +55,21 @@ function arrangeStringAlphabetically(inputString: string): string {
 
   return sortedParams.toString();
 }
+
+export const checkIfMobileDevice = async () => {
+  if (platform() === "ios") return true;
+
+  if (platform() === "android") {
+    const checkResult = await check();
+    return !checkResult.isAndroidTv;
+  }
+  // It's desktop.
+  return false;
+};
+
+export const checkIfAndroidTv = async () => {
+  if (platform() !== "android") return false;
+
+  const checkResult = await check();
+  return checkResult.isAndroidTv;
+};

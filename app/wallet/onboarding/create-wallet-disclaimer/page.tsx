@@ -1,31 +1,30 @@
 "use client";
 
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/navigation";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageChildrenTitleBar from "@/lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { useNavigate } from "react-router-dom";
+import { useLang } from "@src/LanguageContext";
 
-export default function CreateWalletDisclaimerPage() {
-  const router = useRouter();
+export default function WalletOnboardingCreateWalletDisclaimerPage() {
+  const router = useNavigate();
+  const { t } = useLang();
 
   return (
     <Box
       sx={{
         minHeight: "100vh",
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         pb: 8,
       }}
     >
-      <PageChildrenTitleBar title="Create Wallet" />
+      <PageChildrenTitleBar title={t.onboardingCreateWalletTitle} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         <Card
           sx={{
@@ -49,7 +48,7 @@ export default function CreateWalletDisclaimerPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Important Disclaimer
+              {t.onboardingDisclaimerTitle}
             </Typography>
             <Typography
               sx={{
@@ -60,19 +59,7 @@ export default function CreateWalletDisclaimerPage() {
                 mb: 1,
               }}
             >
-              You are about to create a self-custody wallet.
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: "16px",
-                color: "#1F2937",
-                fontWeight: 600,
-                lineHeight: 1.6,
-                textAlign: "center",
-                mb: 1,
-              }}
-            >
-              You are the only one who controls your wallet and funds.
+              {t.onboardingDisclaimerDesc1}
             </Typography>
             <Typography
               sx={{
@@ -84,8 +71,19 @@ export default function CreateWalletDisclaimerPage() {
                 mb: 1,
               }}
             >
-              Your seed phrase is the ONLY way to recover your wallet and
-              assets.
+              {t.onboardingDisclaimerDesc2}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "16px",
+                color: "#1F2937",
+                fontWeight: 600,
+                lineHeight: 1.6,
+                textAlign: "center",
+                mb: 1,
+              }}
+            >
+              {t.onboardingDisclaimerDesc3}
             </Typography>
             <Typography
               sx={{
@@ -96,7 +94,7 @@ export default function CreateWalletDisclaimerPage() {
                 mb: 3,
               }}
             >
-              If you lose your seed phrase,{" "}
+              {t.onboardingDisclaimerDesc4.split("{red}")[0]}
               <Box
                 component="span"
                 sx={{
@@ -104,7 +102,7 @@ export default function CreateWalletDisclaimerPage() {
                   fontWeight: 600,
                 }}
               >
-                your funds cannot be recovered.
+                {t.onboardingDisclaimerDesc4.split("{red}")[1] || ""}
               </Box>
             </Typography>
           </Box>
@@ -128,8 +126,7 @@ export default function CreateWalletDisclaimerPage() {
               p: 3,
             }}
           >
-            🔒 This is a non-custodial wallet. Only you have access to your
-            private keys and funds.
+            🔒 {t.onboardingDisclaimerNonCustodial}
           </Typography>
         </Box>
 
@@ -151,10 +148,10 @@ export default function CreateWalletDisclaimerPage() {
           }}
           onClick={async () => {
             await selectionFeedback();
-            router.push("/wallet/onboarding/create-wallet?onboarding=1");
+            router("/wallet/onboarding/create-wallet?onboarding=1");
           }}
         >
-          I Understand, Continue
+          {t.onboardingUnderstandContinue}
         </Button>
       </Box>
     </Box>
