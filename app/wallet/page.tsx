@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import LoadingCard from "@lib/components/loading-card";
 import ErrorCard from "@lib/components/error-card";
 import { store } from "@lib/store/store";
 import {
@@ -20,6 +19,7 @@ import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ActiveKeypairSelectionModal from "./_components/active-keypair-selection";
 import { SET_ACTIVE_KEYPAIR } from "@lib/commands";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 enum State {
   Loading,
@@ -111,7 +111,9 @@ export default function WalletHome() {
         alignItems: "center",
       }}
     >
-      {state === State.Loading && <LoadingCard />}
+      {state === State.Loading && (
+        <CircularProgress className="bg-primary-light" />
+      )}
       {state === State.Error && <ErrorCard />}
       {state === State.Loaded && wallet && (
         <>
