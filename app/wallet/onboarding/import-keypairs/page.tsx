@@ -7,20 +7,22 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { SolanaWallet, STORE_KEYPAIRS } from "@lib/crate/generated";
+import { SolanaWallet, STORE_KEYPAIRS } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
-import { store } from "@lib/store/store";
+import { store } from "@app/lib/store/store";
 import { error } from "@tauri-apps/plugin-log";
-import { DERIVE_NEW_KEYPAIR } from "@lib/commands";
+import { DERIVE_NEW_KEYPAIR } from "@app/lib/commands";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import CircularProgress from "@mui/material/CircularProgress";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useNavigate } from "react-router-dom";
+import { useLang } from "@src/LanguageContext";
 
 export default function WalletOnboardingImportKeypairsPage() {
   const [keypairs, setKeypairs] = React.useState<SolanaWallet[]>([]);
   const [loading, setLoading] = React.useState(true);
   const router = useNavigate();
+  const { t } = useLang();
 
   // Fetch keypairs from store on mount
   React.useEffect(() => {
@@ -83,14 +85,13 @@ export default function WalletOnboardingImportKeypairsPage() {
       sx={{
         minHeight: "100vh",
         bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-        background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         pb: 8,
       }}
     >
-      <PageChildrenTitleBar title="Imported Keypairs" />
+      <PageChildrenTitleBar title={t.onboardingKeypairsTitle} />
       <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
         <Card
           sx={{
@@ -114,7 +115,7 @@ export default function WalletOnboardingImportKeypairsPage() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Your Wallet Addresses
+              {t.onboardingKeypairsTitle}
             </Typography>
           </Box>
           <List sx={{ p: 0, pb: 1 }}>
@@ -129,7 +130,7 @@ export default function WalletOnboardingImportKeypairsPage() {
                 }}
               >
                 <ListItemText
-                  primary="No keypairs found."
+                  primary={t.onboardingNoKeypairs}
                   primaryTypographyProps={{
                     sx: {
                       fontSize: "16px",
@@ -223,7 +224,7 @@ export default function WalletOnboardingImportKeypairsPage() {
           onClick={handleGenerateNew}
           disabled={keypairs.length >= 5}
         >
-          Generate New Address
+          {t.onboardingGenerateNewAddress}
         </Button>
         <Button
           variant="outlined"
@@ -247,7 +248,7 @@ export default function WalletOnboardingImportKeypairsPage() {
             router("/wallet/onboarding/create-password");
           }}
         >
-          Continue
+          {t.onboardingContinue}
         </Button>
       </Box>
     </Box>

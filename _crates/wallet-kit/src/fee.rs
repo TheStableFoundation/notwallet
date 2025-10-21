@@ -368,8 +368,8 @@ mod tests {
         let fee_units = breakdown.fee_token_units(SEMITONE_PER_BACH);
         let net_units = breakdown.net_token_units(SEMITONE_PER_BACH);
 
-        assert_eq!(fee_units, 2500000); // 0.0025 BACH in semitones
-        assert_eq!(net_units, 997500000); // 0.9975 BACH in semitones
+        assert_eq!(fee_units, 2500000); // 0.0025 BACH in st
+        assert_eq!(net_units, 997500000); // 0.9975 BACH in st
     }
 
     #[test]

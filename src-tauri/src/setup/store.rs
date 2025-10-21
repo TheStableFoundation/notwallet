@@ -1,6 +1,8 @@
-use crate::constants::store::store;
-use log::{error, info};
-use tauri::App;
+use {
+    crate::constants::store::store,
+    log::{error, info},
+    tauri::App,
+};
 
 /// We need to setup the debug store regardless so we
 /// can switch environment during runtime.

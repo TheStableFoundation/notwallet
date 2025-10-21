@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLang } from "../LanguageContext";
 import { SupportedLanguages } from "../i18n";
+import { debug } from "@tauri-apps/plugin-log";
+import { haptics } from "@app/lib/utils/haptics";
 
 interface NavItem {
   path: string;
@@ -40,13 +42,13 @@ const navItems: NavItem[] = [
     ),
   },
   {
-    path: "/profile",
-    key: "profile",
+    path: "/settings",
+    key: "settings",
     icon: (
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4" stroke="#a21caf" strokeWidth="1.5" />
+        <circle cx="12" cy="12" r="3" stroke="#a21caf" strokeWidth="1.5" />
         <path
-          d="M4 20v-1a7 7 0 0 1 14 0v1"
+          d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"
           stroke="#a21caf"
           strokeWidth="1.5"
         />
@@ -58,12 +60,56 @@ const navItems: NavItem[] = [
 export default function Navbar() {
   const location = useLocation();
   const { t, lang, setLang } = useLang();
-  const isRTL = lang === "fa";
+  const isRTL = false;
 
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setLang(event.target.value as SupportedLanguages);
+  };
+
+  const isActivePath = (path: string) => {
+    debug(`Current path: ${location.pathname}`);
+    if (path === "/") {
+      return (
+        location.pathname === "/" ||
+        location.pathname === "/home" ||
+        location.pathname === "/home/dao" ||
+        location.pathname === "/home/learn"
+      );
+    }
+    if (path === "/wallet") {
+      return (
+        location.pathname === "/wallet" ||
+        location.pathname === "/wallet/buy" ||
+        location.pathname === "/wallet/buy/stripe" ||
+        location.pathname === "/wallet/create-new-wallet" ||
+        location.pathname === "/wallet/create-new-wallet/done" ||
+        location.pathname === "/wallet/import" ||
+        location.pathname === "/wallet/onboarding" ||
+        location.pathname === "/wallet/onboarding/create-password" ||
+        location.pathname === "/wallet/onboarding/create-wallet" ||
+        location.pathname === "/wallet/onboarding/create-wallet-disclaimer" ||
+        location.pathname === "/wallet/onboarding/import" ||
+        location.pathname === "/wallet/onboarding/import-keypairs" ||
+        location.pathname === "/wallet/onboarding/import-wallet" ||
+        location.pathname === "/wallet/sell" ||
+        location.pathname === "/wallet/settings" ||
+        location.pathname === "/wallet/token"
+      );
+    }
+    if (path === "/settings") {
+      return (
+        location.pathname === "/settings" ||
+        location.pathname === "/settings/about" ||
+        location.pathname === "/settings/app-info"
+      );
+    }
+    return false;
+  };
+
+  const handleNavClick = async () => {
+    await haptics.navigation();
   };
 
   return (
@@ -80,11 +126,13 @@ export default function Navbar() {
           <select
             className="rounded border px-2 py-1 bg-white text-sm text-primay-light cursor-pointer shadow"
             value={lang}
+            onClick={handleNavClick}
             onChange={handleLanguageChange}
             aria-label="Change language"
           >
             <option value="en">English</option>
             <option value="sv">Svenska</option>
+            <option value="id">Bahasa Indonesia</option>
           </select>
         </div>
       </div>
@@ -97,9 +145,10 @@ export default function Navbar() {
               <Tooltip.Trigger asChild>
                 <Link
                   to={item.path}
+                  onClick={handleNavClick}
                   className={`flex flex-col items-center justify-center gap-1 px-3 py-1 rounded transition-all duration-200
                     ${
-                      location.pathname === item.path
+                      isActivePath(item.path)
                         ? "bg-fuchsia-100 text-primay-main shadow font-semibold"
                         : "hover:bg-fuchsia-50 text-slate-800"
                     }`}

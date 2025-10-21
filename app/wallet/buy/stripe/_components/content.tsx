@@ -1,15 +1,15 @@
 import * as React from "react";
-import LoadingCard from "@lib/components/loading-card";
-import ErrorCard from "@lib/components/error-card";
-import { OnrampSession } from "@lib/crate/generated";
+import ErrorCard from "@app/lib/components/error-card";
+import { OnrampSession } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import OnrampView from "./onramp-view";
-import { ONRAMP_SESSION } from "@lib/commands";
+import { ONRAMP_SESSION } from "@app/lib/commands";
 import Confetti from "react-confetti";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { error as logError, debug } from "@tauri-apps/plugin-log";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 enum State {
   Loading,
@@ -72,7 +72,9 @@ export default function Content() {
         height: "unset",
       }}
     >
-      {state === State.Loading && <LoadingCard />}
+      {state === State.Loading && (
+        <CircularProgress className="bg-primary-light" />
+      )}
       {state === State.Error && <ErrorCard />}
       {state === State.Loaded && clientSecret && (
         <OnrampView

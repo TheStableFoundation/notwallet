@@ -6,9 +6,11 @@ import Typography from "@mui/material/Typography";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
+import { useLang } from "@src/LanguageContext";
 
 export default function CreateOrImportWalletView() {
   const router = useNavigate();
+  const { t } = useLang();
 
   return (
     <Box
@@ -45,7 +47,7 @@ export default function CreateOrImportWalletView() {
               letterSpacing: "-0.02em",
             }}
           >
-            NotWallet Crypto
+            {t.notwalletCrypto}
           </Typography>
         </CardContent>
         <CardActions sx={{ flexDirection: "column", gap: 2, p: 4, pt: 2 }}>
@@ -70,7 +72,7 @@ export default function CreateOrImportWalletView() {
               router("/wallet/onboarding/import-wallet");
             }}
           >
-            Import Seed Phrase
+            {t.importSeedPhrase}
           </Button>
           <Button
             variant="outlined"
@@ -94,7 +96,7 @@ export default function CreateOrImportWalletView() {
               router("/wallet/onboarding/create-wallet-disclaimer");
             }}
           >
-            Create New Wallet
+            {t.createNewWallet}
           </Button>
         </CardActions>
       </Card>

@@ -55,3 +55,13 @@
         }
     }
 }
+
+::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+}
+/* Disable zoom */
+:root {
+    touch-action: pan-x pan-y;
+    height: 100%;
+}

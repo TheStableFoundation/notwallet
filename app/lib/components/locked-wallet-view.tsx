@@ -14,6 +14,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { STORE_PASSWORD } from "../crate/generated";
 import bcrypt from "bcryptjs";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
+import { useLang } from "@src/LanguageContext";
 
 type LockedWalletViewProps = {
   showPassword: boolean;
@@ -26,6 +27,7 @@ export default function LockedWalletView({
   setShowPassword,
   onUnlock,
 }: LockedWalletViewProps) {
+  const { t } = useLang();
   const [passwordInput, setPasswordInput] = React.useState<string>("");
   const [error, setError] = React.useState<string | null>(null);
 
@@ -39,7 +41,7 @@ export default function LockedWalletView({
       onUnlock();
       return;
     }
-    setError("Incorrect password. Please try again.");
+    setError(t.incorrectPassword);
   };
 
   return (
@@ -60,7 +62,7 @@ export default function LockedWalletView({
           fontWeight="bold"
           align="center"
         >
-          NotWallet Crypto
+          {t.notwalletCrypto}
         </Typography>
       </Box>
       <Card sx={{ maxWidth: 400, width: "100%", boxShadow: 3 }}>
@@ -76,10 +78,10 @@ export default function LockedWalletView({
           >
             <LockIcon sx={{ fontSize: 40, color: "#AD5AD7", mb: 1 }} />
             <Typography variant="subtitle1" align="center" sx={{ mb: 1 }}>
-              Wallet Locked
+              {t.walletLocked}
             </Typography>
             <TextField
-              label="Enter Password"
+              label={t.enterPassword}
               type={showPassword ? "text" : "password"}
               value={passwordInput}
               onChange={(e) => {
@@ -116,7 +118,7 @@ export default function LockedWalletView({
               disabled={!passwordInput}
               onClick={handleUnlock}
             >
-              Unlock Wallet
+              {t.unlockWallet}
             </Button>
           </Box>
         </CardContent>

@@ -11,7 +11,7 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { invoke } from "@tauri-apps/api/core";
 import Confetti from "react-confetti";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "../../../src/LanguageContext";
 
 type OnboardingCardAirdropProps = {
   open: boolean;
@@ -24,7 +24,7 @@ export default function OnboardingCardAirdrop({
   onSuccess,
   onClose,
 }: OnboardingCardAirdropProps) {
-  const { t } = useI18n();
+  const { t } = useLang();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [signing, setSigning] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -98,7 +98,7 @@ export default function OnboardingCardAirdrop({
               letterSpacing: 1,
             }}
           >
-            {t("home.claimYourBachAirdrop")}
+            {t.claimYourBachAirdrop}
           </Typography>
           {error ? (
             <Box sx={{ mt: 2 }}>
@@ -135,7 +135,7 @@ export default function OnboardingCardAirdrop({
                   "&:hover": { bgcolor: "#e3f2fd", color: "#1565c0" },
                 }}
               >
-                {t("home.tryAgain")}
+                {t.tryAgain}
               </Button>
             </Box>
           ) : !success ? (
@@ -156,7 +156,7 @@ export default function OnboardingCardAirdrop({
                 }}
                 onClick={() => setModalOpen(true)}
               >
-                {t("home.signUpAndClaim")}
+                {t.signUpAndClaim}
               </Button>
               <Typography
                 variant="caption"
@@ -171,10 +171,10 @@ export default function OnboardingCardAirdrop({
                   openUrl("https://bach.money/");
                 }}
               >
-                {t("home.walletAddressUsedAirdrop")}
+                {t.walletAddressUsedAirdrop}
                 <br />
                 <span style={{ color: "#AD5AD7", textDecoration: "underline" }}>
-                  {t("home.bachMoney")}
+                  {t.bachMoney}
                 </span>
               </Typography>
             </>
@@ -189,7 +189,7 @@ export default function OnboardingCardAirdrop({
                 letterSpacing: 1,
               }}
             >
-              {t("home.successClaimedAirdrop")}
+              {t.successClaimedAirdrop}
             </Typography>
           )}
         </Box>
@@ -230,7 +230,7 @@ export default function OnboardingCardAirdrop({
                 letterSpacing: 1,
               }}
             >
-              {t("home.claimAirdrop")}
+              {t.claimAirdrop}
             </Typography>
             <Typography
               id="sign-modal-desc"
@@ -241,7 +241,7 @@ export default function OnboardingCardAirdrop({
                 fontWeight: 500,
               }}
             >
-              {t("home.signMessageProveOwnership")}
+              {t.signMessageProveOwnership}
             </Typography>
             <Button
               variant="contained"
@@ -263,7 +263,7 @@ export default function OnboardingCardAirdrop({
               }}
               disabled={signing}
             >
-              {signing ? t("home.signing") : t("home.signAndClaim")}
+              {signing ? t.signing : t.signAndClaim}
             </Button>
             <Typography
               variant="caption"
@@ -273,7 +273,7 @@ export default function OnboardingCardAirdrop({
                 color: "#b0bec5",
               }}
             >
-              {t("home.signatureOnlyForVerification")}
+              {t.signatureOnlyForVerification}
             </Typography>
           </Box>
         </Card>

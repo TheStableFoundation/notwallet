@@ -69,12 +69,12 @@ let amount = 100.0;
 let fee_breakdown = FeeBreakdown::new(amount, "BACH".to_string())?;
 
 // Results:
-// fee_breakdown.fee_amount = 0.25 BACH (250,000,000 semitones)
-// fee_breakdown.net_amount = 99.75 BACH (99,750,000,000 semitones)
+// fee_breakdown.fee_amount = 0.25 BACH (250,000,000 st)
+// fee_breakdown.net_amount = 99.75 BACH (99,750,000,000 st)
 
 // Two instructions are created:
-// 1. Transfer 250,000,000 semitones to treasury token account
-// 2. Transfer 99,750,000,000 semitones to recipient token account
+// 1. Transfer 250,000,000 st to treasury token account
+// 2. Transfer 99,750,000,000 st to recipient token account
 ```
 
 ## API Reference

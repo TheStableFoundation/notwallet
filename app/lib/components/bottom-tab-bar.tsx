@@ -8,13 +8,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useI18n } from "@lib/i18n/provider";
+import { useLang } from "@src/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
   const pathname = useLocation().pathname;
   const router = useNavigate();
-  const { t } = useI18n();
+  const { t } = useLang();
 
   // Determine active tab based on pathname
   const getActiveTab = () => {
@@ -93,7 +93,7 @@ export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
         }}
       >
         <BottomNavigationAction
-          label={t("home.title")}
+          label={t.home}
           icon={<HomeIcon />}
           sx={{
             color: value === 0 ? "#AD5AD7" : undefined,
@@ -101,7 +101,7 @@ export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
           }}
         />
         <BottomNavigationAction
-          label={t("wallet.title")}
+          label={t.wallet}
           icon={<AccountBalanceWalletIcon />}
           sx={{
             color: value === 1 ? "#AD5AD7" : undefined,
@@ -109,7 +109,7 @@ export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {
           }}
         />
         <BottomNavigationAction
-          label={t("common.settings")}
+          label={t.settings}
           icon={<SettingsIcon />}
           sx={{
             color: value === 2 ? "#AD5AD7" : undefined,

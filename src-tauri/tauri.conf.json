@@ -2,12 +2,12 @@
   "$schema": "https://schema.tauri.app/config/2.0.0",
   "productName": "NotWallet Debug",
   "identifier": "xyz.notwallet.NotWallet-Debug",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
     "devUrl": "http://localhost:61234",
-    "frontendDist": "../out"
+    "frontendDist": "../dist"
   },
   "app": {
     "windows": [
@@ -46,7 +46,7 @@
     ],
     "android": {
       "minSdkVersion": 24,
-      "versionCode": 3025
+      "versionCode": 3028
     },
     "iOS": {
       "minimumSystemVersion": "13.0",

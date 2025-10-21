@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { store } from "@lib/store/store";
-import { useI18n } from "@lib/i18n/provider";
+import { store } from "@app/lib/store/store";
+import { useLang } from "../../../src/LanguageContext";
 
 type OnboardingCardUsernameProps = {
   open: boolean;
@@ -19,7 +19,7 @@ export default function OnboardingCardUsername({
   open,
   onClose,
 }: OnboardingCardUsernameProps) {
-  const { t } = useI18n();
+  const { t } = useLang();
   const [username, setUsername] = React.useState("");
   const [usernameSaved, setUsernameSaved] = React.useState(false);
 
@@ -79,7 +79,7 @@ export default function OnboardingCardUsername({
             letterSpacing: 1,
           }}
         >
-          {t("home.setYourUsername")}
+          {t.setYourUsername}
         </Typography>
         <Typography
           variant="subtitle1"
@@ -90,12 +90,12 @@ export default function OnboardingCardUsername({
             fontSize: "1.1rem",
           }}
         >
-          {t("home.chooseUsernamePersonalize")}
+          {t.chooseUsernamePersonalize}
         </Typography>
         <TextField
           fullWidth
           variant="outlined"
-          placeholder={t("home.enterYourUsername")}
+          placeholder={t.enterYourUsername}
           value={username}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setUsername(e.target.value)
@@ -152,7 +152,7 @@ export default function OnboardingCardUsername({
           onClick={handleSaveUsername}
           disabled={!username || usernameSaved}
         >
-          {usernameSaved ? t("home.saved") : t("home.saveUsername")}
+          {usernameSaved ? t.saved : t.saveUsername}
         </Button>
         {usernameSaved && (
           <Typography
@@ -163,7 +163,7 @@ export default function OnboardingCardUsername({
               fontWeight: 500,
             }}
           >
-            {t("home.usernameSavedSuccessfully")}
+            {t.usernameSavedSuccessfully}
           </Typography>
         )}
       </Box>

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Content from "./_components/content";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 
 export default function WalletBuyStripePage() {
   return (
@@ -12,7 +12,6 @@ export default function WalletBuyStripePage() {
         sx={{
           minHeight: "100vh",
           bgcolor: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
-          background: "linear-gradient(135deg, #FAFBFF 0%, #F8FAFF 100%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

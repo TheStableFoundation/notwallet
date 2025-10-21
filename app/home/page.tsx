@@ -2,7 +2,6 @@
 
 import Box from "@mui/material/Box";
 import HomeView from "./_components/home-view";
-import PageTitleBar from "@lib/components/page-title-bar";
 
 export default function HomePage() {
   return (
@@ -15,7 +14,6 @@ export default function HomePage() {
         alignItems: "center",
       }}
     >
-      <PageTitleBar title={""} />
       <HomeView />
     </Box>
   );

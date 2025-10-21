@@ -1,6 +1,6 @@
 import Avatar from "@mui/material/Avatar";
-import { AssetIcon } from "@lib/components/token-icons";
-import { BACH_TOKEN, SOLANA } from "@lib/crate/generated";
+import { AssetIcon } from "@app/lib/components/token-icons";
+import { BACH_TOKEN, SOLANA } from "@app/lib/crate/generated";
 
 interface TokenIconProps {
   symbol: string;

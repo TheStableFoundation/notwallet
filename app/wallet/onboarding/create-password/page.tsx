@@ -13,12 +13,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
-import { store } from "@lib/store/store";
-import { STORE_PASSWORD } from "@lib/crate/generated";
+import { store } from "@app/lib/store/store";
+import { STORE_PASSWORD } from "@app/lib/crate/generated";
 import bcrypt from "bcryptjs";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageTitleBar from "@lib/components/page-title-bar";
 import { useNavigate } from "react-router-dom";
+import { useLang } from "@src/LanguageContext";
 
 enum State {
   Loading,
@@ -35,15 +35,16 @@ export default function CreatePasswordPage() {
   const [showDialog, setShowDialog] = React.useState(false);
   const [, setStoredPassword] = React.useState<string | null>(null);
   const router = useNavigate();
+  const { t } = useLang();
 
   const handleContinue = async () => {
     await selectionFeedback();
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      setError(t.onboardingPasswordMinLength);
       return;
     }
     if (password !== confirm) {
-      setError("Passwords do not match.");
+      setError(t.onboardingPasswordMismatch);
       return;
     }
     setError("");
@@ -60,7 +61,7 @@ export default function CreatePasswordPage() {
       router("/wallet");
     } catch (e: any) {
       logError(`Failed to store password securely: ${e?.toString?.() ?? e}`);
-      setError("Failed to store password securely.");
+      setError(t.errorOccurred);
     } finally {
       setLoading(false);
     }
@@ -126,7 +127,7 @@ export default function CreatePasswordPage() {
             letterSpacing: "-0.02em",
           }}
         >
-          Password Found
+          {t.onboardingPasswordFoundTitle}
         </DialogTitle>
         <DialogContent>
           <Typography
@@ -136,8 +137,7 @@ export default function CreatePasswordPage() {
               lineHeight: 1.6,
             }}
           >
-            A password already exists for this wallet. Would you like to use the
-            existing password or create a new one?
+            {t.onboardingPasswordFoundDesc}
           </Typography>
         </DialogContent>
         <DialogActions sx={{ p: 3, pt: 1, flexDirection: "column", gap: 2 }}>
@@ -163,7 +163,7 @@ export default function CreatePasswordPage() {
               },
             }}
           >
-            Use Existing Password
+            {t.onboardingUseExistingPassword}
           </Button>
           <Button
             onClick={async () => {
@@ -193,7 +193,7 @@ export default function CreatePasswordPage() {
               },
             }}
           >
-            Create New Password
+            {t.onboardingCreateNewPassword}
           </Button>
         </DialogActions>
       </Dialog>
@@ -207,7 +207,6 @@ export default function CreatePasswordPage() {
           pb: 8,
         }}
       >
-        <PageTitleBar title="Create Password" />
         <Box sx={{ width: "100%", maxWidth: 420, px: 2 }}>
           <Typography
             sx={{
@@ -218,7 +217,7 @@ export default function CreatePasswordPage() {
               lineHeight: 1.5,
             }}
           >
-            Set a strong password to protect your wallet.
+            {t.onboardingSetPasswordDesc}
           </Typography>
           <Card
             sx={{
@@ -232,7 +231,7 @@ export default function CreatePasswordPage() {
           >
             <CardContent sx={{ p: 4 }}>
               <TextField
-                label="Password"
+                label={t.onboardingCreatePasswordTitle}
                 type="password"
                 fullWidth
                 sx={{
@@ -263,7 +262,7 @@ export default function CreatePasswordPage() {
                 autoComplete="new-password"
               />
               <TextField
-                label="Confirm Password"
+                label={`${t.confirm} ${t.onboardingCreatePasswordTitle}`}
                 type="password"
                 fullWidth
                 sx={{
@@ -340,8 +339,7 @@ export default function CreatePasswordPage() {
                 p: 3,
               }}
             >
-              🔒 This password will be required to access your wallet on this
-              device.
+              🔒 {t.onboardingPasswordRequired}
             </Typography>
           </Box>
 
@@ -372,7 +370,7 @@ export default function CreatePasswordPage() {
               loading ? <CircularProgress size={22} color="inherit" /> : null
             }
           >
-            {loading ? "Processing..." : "Continue"}
+            {loading ? t.processing : t.onboardingContinue}
           </Button>
         </Box>
       </Box>
