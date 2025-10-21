@@ -2,7 +2,7 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { SolanaWallet } from "../../../lib/crate/generated";
+import { SolanaWallet } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { useLang } from "../../../src/LanguageContext";

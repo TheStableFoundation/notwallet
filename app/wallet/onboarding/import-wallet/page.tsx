@@ -8,9 +8,9 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { invoke } from "@tauri-apps/api/core";
 import { debug } from "@tauri-apps/plugin-log";
-import { SolanaWallet } from "@lib/crate/generated";
-import { IMPORT_SOLANA_WALLET } from "@lib/commands";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import { SolanaWallet } from "@app/lib/crate/generated";
+import { IMPORT_SOLANA_WALLET } from "@app/lib/commands";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "@src/LanguageContext";
 

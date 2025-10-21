@@ -2,22 +2,22 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import ErrorCard from "@lib/components/error-card";
-import { store } from "@lib/store/store";
+import ErrorCard from "@app/lib/components/error-card";
+import { store } from "@app/lib/store/store";
 import {
   SolanaWallet,
   STORE_ACTIVE_KEYPAIR,
   STORE_KEYPAIRS,
   STORE_PASSWORD,
-} from "@lib/crate/generated";
+} from "@app/lib/crate/generated";
 import { debug } from "@tauri-apps/plugin-log";
-import { useAppLock } from "@lib/context/app-lock-context";
+import { useAppLock } from "@app/lib/context/app-lock-context";
 import WalletCard from "./_components/wallet-card";
 import ActivityCard from "./_components/activity_card";
 import { invoke } from "@tauri-apps/api/core";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import ActiveKeypairSelectionModal from "./_components/active-keypair-selection";
-import { SET_ACTIVE_KEYPAIR } from "@lib/commands";
+import { SET_ACTIVE_KEYPAIR } from "@app/lib/commands";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 

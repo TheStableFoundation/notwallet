@@ -1,9 +1,9 @@
 import * as React from "react";
-import ErrorCard from "@lib/components/error-card";
-import { OnrampSession } from "@lib/crate/generated";
+import ErrorCard from "@app/lib/components/error-card";
+import { OnrampSession } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import OnrampView from "./onramp-view";
-import { ONRAMP_SESSION } from "@lib/commands";
+import { ONRAMP_SESSION } from "@app/lib/commands";
 import Confetti from "react-confetti";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";

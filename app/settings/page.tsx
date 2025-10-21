@@ -20,7 +20,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
-import { useLang } from "../../src/LanguageContext";
+import { useLang } from "@src/LanguageContext";
 import { useNavigate } from "react-router-dom";
 
 export default function SettingsPage() {

@@ -1,9 +1,9 @@
 "use client";
 
-import { ONRAMPER_KEY } from "@lib/crate/generated";
+import { ONRAMPER_KEY } from "@app/lib/crate/generated";
 import { debug } from "@tauri-apps/plugin-log";
-import { generateSignature } from "@lib/helper";
-import { ONRAMPER_SIGNER_KEY } from "@lib/crate/generated";
+import { generateSignature } from "@app/lib/helper";
+import { ONRAMPER_SIGNER_KEY } from "@app/lib/crate/generated";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 

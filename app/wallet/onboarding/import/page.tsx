@@ -12,7 +12,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { invoke } from "@tauri-apps/api/core";
 import { debug } from "@tauri-apps/plugin-log";
 import { useNavigate } from "react-router-dom";
-import { SolanaWallet } from "@lib/crate/generated";
+import { SolanaWallet } from "@app/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { useLang } from "@src/LanguageContext";
 

@@ -2,13 +2,13 @@
 
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import { useAppLock } from "@lib/context/app-lock-context";
+import { useAppLock } from "@app/lib/context/app-lock-context";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
-import LockedWalletView from "@lib/components/locked-wallet-view";
-import { Seed, STORE_KEYPAIRS, STORE_PASSWORD } from "@lib/crate/generated";
+import LockedWalletView from "@app/lib/components/locked-wallet-view";
+import { Seed, STORE_KEYPAIRS, STORE_PASSWORD } from "@app/lib/crate/generated";
 import { useState, useEffect } from "react";
 import { redirect } from "react-router-dom";
-import { store } from "../lib/store/store";
+import { store } from "@app/lib/store/store";
 
 enum State {
   Loading,

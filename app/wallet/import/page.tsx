@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import { invoke } from "@tauri-apps/api/core";
 import { debug } from "@tauri-apps/plugin-log";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useNavigate } from "react-router-dom";
 
 export default function WalletImportPage() {

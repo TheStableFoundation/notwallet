@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useLang } from "../../src/LanguageContext";
+import { useLang } from "@src/LanguageContext";
 import { useNavigate } from "react-router-dom";
 
 export default function PageChildrenTitleBar({ title }: { title: string }) {

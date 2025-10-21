@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { store } from "@lib/store/store";
+import { store } from "@app/lib/store/store";
 import { useLang } from "../../../src/LanguageContext";
 
 type OnboardingCardUsernameProps = {

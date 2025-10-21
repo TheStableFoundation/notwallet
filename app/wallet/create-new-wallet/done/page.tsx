@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Confetti from "react-confetti";
 import Card from "@mui/material/Card";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 // Move the main content to a separate component

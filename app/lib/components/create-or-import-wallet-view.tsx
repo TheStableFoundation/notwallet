@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
-import { useLang } from "../../src/LanguageContext";
+import { useLang } from "@src/LanguageContext";
 
 export default function CreateOrImportWalletView() {
   const router = useNavigate();

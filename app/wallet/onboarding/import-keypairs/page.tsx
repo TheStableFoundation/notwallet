@@ -7,14 +7,14 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { SolanaWallet, STORE_KEYPAIRS } from "@lib/crate/generated";
+import { SolanaWallet, STORE_KEYPAIRS } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
-import { store } from "@lib/store/store";
+import { store } from "@app/lib/store/store";
 import { error } from "@tauri-apps/plugin-log";
-import { DERIVE_NEW_KEYPAIR } from "@lib/commands";
+import { DERIVE_NEW_KEYPAIR } from "@app/lib/commands";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import CircularProgress from "@mui/material/CircularProgress";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "@src/LanguageContext";
 

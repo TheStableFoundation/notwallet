@@ -4,7 +4,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLang } from "../LanguageContext";
 import { SupportedLanguages } from "../i18n";
 import { debug } from "@tauri-apps/plugin-log";
-import { haptics } from "@lib/utils/haptics";
+import { haptics } from "@app/lib/utils/haptics";
 
 interface NavItem {
   path: string;
