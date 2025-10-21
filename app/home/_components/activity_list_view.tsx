@@ -9,13 +9,13 @@ import CardContent from "@mui/material/CardContent";
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import OnboardingCard from "./onboarding_card";
-import { CHECK_PUBKEY } from "@lib/commands";
+import { CHECK_PUBKEY } from "@app/lib/commands";
 import {
   SolanaWallet,
   CheckPubkeyResponse,
   STORE_ACTIVE_KEYPAIR,
-} from "@lib/crate/generated";
-import { store } from "@lib/store/store";
+} from "@app/lib/crate/generated";
+import { store } from "@app/lib/store/store";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { debug, error as logError } from "@tauri-apps/plugin-log";

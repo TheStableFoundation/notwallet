@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { SolanaWallet } from "@lib/crate/generated";
+import { SolanaWallet } from "@app/lib/crate/generated";
 import AssetsView from "./assets_view";
 import ActivityView from "./activity_view";
 import { useLang } from "../../../src/LanguageContext";

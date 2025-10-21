@@ -8,7 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useLang } from "../../src/LanguageContext";
+import { useLang } from "@src/LanguageContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function BottomTabBar({ isMobile }: { isMobile: boolean }) {

@@ -14,7 +14,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { STORE_PASSWORD } from "../crate/generated";
 import bcrypt from "bcryptjs";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import { useLang } from "../../src/LanguageContext";
+import { useLang } from "@src/LanguageContext";
 
 type LockedWalletViewProps = {
   showPassword: boolean;

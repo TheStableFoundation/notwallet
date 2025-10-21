@@ -24,7 +24,7 @@ import WalletOnboardingImportWalletPage from "@app/wallet/onboarding/import-wall
 import WalletSellPage from "@app/wallet/sell/page";
 import WalletSettingsPage from "@app/wallet/settings/page";
 import WalletTokenPage from "@app/wallet/token/page";
-import { AppLockProvider } from "@lib/context/app-lock-context";
+import { AppLockProvider } from "@app/lib/context/app-lock-context";
 
 export default function App() {
   const location = useLocation();

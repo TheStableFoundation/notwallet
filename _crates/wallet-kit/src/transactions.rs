@@ -1,6 +1,9 @@
 use {
     crate::fee::TreasuryFeeManager,
     log::{debug, info, warn},
+    smbcloud_wallet_constants::constants::{
+        SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
+    },
     solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter},
     solana_sdk::{
         program_pack::Pack, pubkey::Pubkey, signature::Keypair, signer::Signer, system_instruction,
@@ -12,7 +15,6 @@ use {
     },
     std::str::FromStr,
     thiserror::Error,
-    smbcloud_wallet_constants::constants::{SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS},
 };
 
 #[derive(Error, Debug)]
@@ -239,27 +241,27 @@ pub async fn create_token_transfer_ix(
             }
         };
 
-    // Convert to semitones
-    let fee_semitones = fee_breakdown.fee_token_units(SEMITONE_PER_BACH);
-    let net_amount_semitones = fee_breakdown.net_token_units(SEMITONE_PER_BACH);
-    let total_amount_semitones = fee_breakdown.total_token_units(SEMITONE_PER_BACH);
+    // Convert to st
+    let fee_st = fee_breakdown.fee_token_units(SEMITONE_PER_BACH);
+    let net_amount_st = fee_breakdown.net_token_units(SEMITONE_PER_BACH);
+    let total_amount_st = fee_breakdown.total_token_units(SEMITONE_PER_BACH);
 
     debug!("Token fee breakdown: {}", fee_breakdown.format_summary());
 
     // Check token balance
     let token_balance = get_token_balance(&rpc_client, &sender_token_account).await?;
 
-    if token_balance < total_amount_semitones {
+    if token_balance < total_amount_st {
         warn!(
-            "Insufficient token funds: balance {} semitones, required {} semitones",
-            token_balance, total_amount_semitones
+            "Insufficient token funds: balance {} st, required {} st",
+            token_balance, total_amount_st
         );
         return Err(TransactionError::InsufficientFunds);
     }
 
     debug!(
-        "Creating token transfer: fee={} semitones, net={} semitones",
-        fee_semitones, net_amount_semitones
+        "Creating token transfer: fee={} st, net={} st",
+        fee_st, net_amount_st
     );
 
     // Create token transfer instructions
@@ -268,7 +270,7 @@ pub async fn create_token_transfer_ix(
         &sender_token_account,
         &treasury_token_account,
         &from_wallet,
-        fee_semitones,
+        fee_st,
     )
     .map_err(|e| TransactionError::TransactionError(e.to_string()))?;
 
@@ -278,7 +280,7 @@ pub async fn create_token_transfer_ix(
         &recipient_token_account,
         &from_wallet,
         &[&from_wallet],
-        net_amount_semitones,
+        net_amount_st,
     )
     .map_err(|e| TransactionError::TransactionError(e.to_string()))?;
 
@@ -483,7 +485,7 @@ pub async fn estimate_token_transaction_cost(
     let fee_breakdown = TreasuryFeeManager::calculate_fees(amount, "BACH".to_string())
         .map_err(|e| TransactionError::FeeCalculationError(e.to_string()))?;
 
-    // Convert to token units (semitones for BACH)
+    // Convert to token units (st for BACH)
     let total_amount_tokens = fee_breakdown.total_token_units(SEMITONE_PER_BACH);
 
     // Check if recipient and treasury need token accounts

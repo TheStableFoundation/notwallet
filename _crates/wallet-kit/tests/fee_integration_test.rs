@@ -68,9 +68,9 @@ fn test_token_units_conversion_accuracy() {
     let amount = 1.0; // 1 BACH
     let breakdown = FeeBreakdown::new(amount, "BACH".to_string()).unwrap();
 
-    // 1 BACH = 1,000,000,000 semitones
-    // Fee: 0.0025 BACH = 2,500,000 semitones
-    // Net: 0.9975 BACH = 997,500,000 semitones
+    // 1 BACH = 1,000,000,000 st
+    // Fee: 0.0025 BACH = 2,500,000 st
+    // Net: 0.9975 BACH = 997,500,000 st
     assert_eq!(breakdown.fee_token_units(SEMITONE_PER_BACH), 2_500_000);
     assert_eq!(breakdown.net_token_units(SEMITONE_PER_BACH), 997_500_000);
     assert_eq!(

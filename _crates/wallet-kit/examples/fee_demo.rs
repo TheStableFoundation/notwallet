@@ -108,10 +108,10 @@ fn demo_token_transaction_fees() {
 
         if token == "BACH" {
             // Show semitone conversion for BACH
-            let fee_semitones = breakdown.fee_token_units(1_000_000_000.0); // SEMITONE_PER_BACH
-            let net_semitones = breakdown.net_token_units(1_000_000_000.0);
-            println!("  Fee in semitones: {}", fee_semitones);
-            println!("  Net in semitones: {}", net_semitones);
+            let fee_st = breakdown.fee_token_units(1_000_000_000.0); // SEMITONE_PER_BACH
+            let net_st = breakdown.net_token_units(1_000_000_000.0);
+            println!("  Fee in st: {}", fee_st);
+            println!("  Net in st: {}", net_st);
         }
         println!();
     }
@@ -223,7 +223,7 @@ async fn demo_cost_estimation() {
                 estimate.total_cost_lamports
             );
             if let Some(token_cost) = estimate.total_cost_tokens {
-                println!("  Total Token Cost: {} semitones", token_cost);
+                println!("  Total Token Cost: {} st", token_cost);
             }
             println!(
                 "  Requires Treasury Account: {}",

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Content from "./_components/content";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 
 export default function Page() {
   return (

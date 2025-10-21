@@ -15,7 +15,7 @@ import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import PersonIcon from "@mui/icons-material/Person";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useLang } from "../../../src/LanguageContext";
 
 interface ChatMessage {

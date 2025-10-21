@@ -15,17 +15,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ONBOARDING_CREATE_WALLET } from "@lib/commands";
+import { ONBOARDING_CREATE_WALLET } from "@app/lib/commands";
 import {
   OnboardingCreateWallet,
   STORE_ACTIVE_KEYPAIR,
-} from "@lib/crate/generated";
+} from "@app/lib/crate/generated";
 import WalletCreated from "./components/wallet-created";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
-import { store } from "@lib/store/store";
+import { store } from "@app/lib/store/store";
 import { Suspense } from "react";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useLang } from "@src/LanguageContext";
 
 enum State {

@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import PageChildrenTitleBar from "@lib/components/page-children-title-bar";
+import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "@src/LanguageContext";
 

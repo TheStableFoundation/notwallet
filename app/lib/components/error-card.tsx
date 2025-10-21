@@ -2,7 +2,7 @@
 
 import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useLang } from "../../src/LanguageContext";
+import { useLang } from "@src/LanguageContext";
 
 const ErrorCard = () => {
   const { t } = useLang();
