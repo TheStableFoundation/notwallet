@@ -62,7 +62,7 @@ export default function LockedWalletView({
           fontWeight="bold"
           align="center"
         >
-          {t.notwalletCrypto}
+          {t.createYourWallet}
         </Typography>
       </Box>
       <Card sx={{ maxWidth: 400, width: "100%", boxShadow: 3 }}>
