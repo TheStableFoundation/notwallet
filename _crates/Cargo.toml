@@ -6,8 +6,8 @@ description = "smbCloud Wallet Kit V3 for NotWallet Crypto non-custodial Solana 
 authors = ["Seto Elkahfi <work@setoelkahfi.se>"]
 license = "MIT"
 homepage = "https://thestablefoundation.org/"
-repository = "https://github.com/TheStableFoundation/not/"
-documentation = "https://github.com/TheStableFoundation/not/tree/main/docs"
+repository = "https://github.com/TheStableFoundation/notwallet/"
+documentation = "https://github.com/TheStableFoundation/notwallet/tree/main/docs"
 keywords = ["solana", "wallet", "crypto"]
 readme = "README.md"
 

@@ -1,6 +1,6 @@
 # NotWallet Crypto
 
-[A community-owned Solana non-custodial crypto wallet](https://github.com/TheStableFoundation/not) and more.
+[A community-owned Solana non-custodial crypto wallet](https://github.com/TheStableFoundation/notwallet) and more.
 
 **Under active development**. **Do your own research**. **Use at your own risk**.
 

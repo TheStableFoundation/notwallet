@@ -68,7 +68,7 @@ export default function SettingsPage() {
     } else if (type === "termsOfService") {
       openUrl("https://notwallet.eu/terms");
     } else if (type === "openSource") {
-      openUrl("https://github.com/TheStableFoundation/not");
+      openUrl("https://github.com/TheStableFoundation/notwallet");
     } else if (type === "footer") {
       const newCount = footerClickCount + 1;
       setFooterClickCount(newCount);
