@@ -19,7 +19,7 @@ If you are using an older version, we strongly recommend upgrading to the latest
 If you discover a security vulnerability, please report it responsibly:
 
 - **Email:** info@bach.money
-- **GitHub:** [Open a security advisory](https://github.com/TheStableFoundation/not/security/advisories)
+- **GitHub:** [Open a security advisory](https://github.com/TheStableFoundation/notwallet/security/advisories)
 
 We aim to respond to all reports within 3 business days.
 You will receive updates as we investigate and address the issue.

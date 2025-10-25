@@ -21,7 +21,7 @@ impl Metadata {
             name: "Solana".to_string(),
             symbol: "SOL".to_string(),
             decimal: 9,
-            logo_uri: "https://raw.githubusercontent.com/TheStableFoundation/not/refs/heads/development/public/images/solana-coin.svg".to_string(),
+            logo_uri: "https://raw.githubusercontent.com/TheStableFoundation/notwallet/refs/heads/development/public/images/solana-coin.svg".to_string(),
         }
     }
 }
