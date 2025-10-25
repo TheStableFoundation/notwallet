@@ -83,7 +83,7 @@ export default function DestroyWalletsCard() {
         onClose={() => setShowDestroyModal(false)}
         onSuccess={() => {
           // Optionally redirect to onboarding or show success message
-          router("/home");
+          router("/");
         }}
       />
     </>

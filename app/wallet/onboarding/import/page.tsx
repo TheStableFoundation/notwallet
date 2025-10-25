@@ -155,7 +155,6 @@ export default function WalletOnboardingImportPage() {
             </Button>
           </CardActions>
         </Card>
-        {/* <BottomTabBar /> */}
       </Box>
     </Box>
   );
