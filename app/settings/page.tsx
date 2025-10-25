@@ -16,6 +16,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
@@ -83,7 +84,7 @@ export default function SettingsPage() {
     } else if (type === "appPreferences") {
       router("/settings/app-preferences");
     } else if (type === "languagePreferences") {
-      router("/settings/app-preferences");
+      router("/settings/language-preferences");
     }
   };
 
@@ -105,6 +106,13 @@ export default function SettingsPage() {
       label: t.appInfo,
       icon: <PhoneAndroidOutlinedIcon />,
       action: () => handleClick("appInfo"),
+      hasChevron: true,
+    },
+    {
+      id: "languagePreferences",
+      label: t.languagePreferences,
+      icon: <SettingsApplicationsIcon />,
+      action: () => handleClick("languagePreferences"),
       hasChevron: true,
     },
   ];
