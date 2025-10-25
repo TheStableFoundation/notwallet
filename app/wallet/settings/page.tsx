@@ -8,24 +8,45 @@ import List from "@mui/material/List";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import WalletSettingsSeedPhraseModal from "./_components/wallet-settings-seed-phrase-modal";
+import EditKeyPairModal from "../_components/edit-keypair-modal";
 import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
 import SettingListItem from "./_components/setting-list-item";
 import DestroyWalletsCard from "./_components/destroy-wallets-card";
 import { useLang } from "../../../src/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@app/lib/crate/generated";
+import { store } from "@app/lib/store/store";
 
 export default function WalletSettingsPage() {
   const router = useNavigate();
   const { t } = useLang();
   const [showSeedPhraseModal, setShowSeedPhraseModal] = React.useState(false);
+  const [showEditKeyPairModal, setShowEditKeyPairModal] = React.useState(false);
+  const [currentWallet, setCurrentWallet] = React.useState<SolanaWallet | null>(
+    null,
+  );
+
+  React.useEffect(() => {
+    const fetchCurrentWallet = async () => {
+      try {
+        const wallet = await store().get<SolanaWallet>(STORE_ACTIVE_KEYPAIR);
+        setCurrentWallet(wallet || null);
+      } catch (err) {
+        console.error("Error fetching current wallet:", err);
+      }
+    };
+    fetchCurrentWallet();
+  }, []);
 
   const handleClick = async (
     type:
       | "addWallet"
       | "showSeedPhrase"
       | "importSeedPhrase"
+      | "editWallet"
       | "destroyWallets",
   ) => {
     await selectionFeedback();
@@ -35,10 +56,33 @@ export default function WalletSettingsPage() {
       setShowSeedPhraseModal(true);
     } else if (type === "importSeedPhrase") {
       router("/wallet/import");
+    } else if (type === "editWallet") {
+      setShowEditKeyPairModal(true);
+    }
+  };
+
+  const handleCloseEditKeyPairModal = async (updatedUsername: string) => {
+    setShowEditKeyPairModal(false);
+    if (updatedUsername && currentWallet) {
+      // Refresh the current wallet data
+      try {
+        const wallet = await store().get<SolanaWallet>(STORE_ACTIVE_KEYPAIR);
+        setCurrentWallet(wallet || null);
+      } catch (err) {
+        console.error("Error refreshing wallet:", err);
+      }
     }
   };
 
   const walletItems = [
+    {
+      id: "editWallet",
+      label: t.editWallet,
+      description: "Change wallet name",
+      icon: <BorderColorRoundedIcon />,
+      action: () => handleClick("editWallet"),
+      hasChevron: true,
+    },
     {
       id: "addWallet",
       label: t.addWallet,
@@ -189,6 +233,13 @@ export default function WalletSettingsPage() {
         open={showSeedPhraseModal}
         onClose={() => setShowSeedPhraseModal(false)}
       />
+      {currentWallet && (
+        <EditKeyPairModal
+          open={showEditKeyPairModal}
+          onClose={handleCloseEditKeyPairModal}
+          wallet={currentWallet}
+        />
+      )}
     </Box>
   );
 }
