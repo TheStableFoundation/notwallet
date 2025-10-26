@@ -10,7 +10,10 @@ mod wallet;
 use {
     crate::{
         onramp::commands::onramp_session,
-        settings::commands::{get_airdrop_environment, set_airdrop_environment},
+        settings::commands::{
+            get_airdrop_environment, get_xlp_environment, set_airdrop_environment,
+            set_xlp_environment,
+        },
         setup::{
             commands::{get_installation_id, is_debug, register_client},
             setup,
@@ -87,6 +90,8 @@ pub fn run() {
             get_airdrop_environment,
             set_airdrop_environment,
             register_client,
+            set_xlp_environment,
+            get_xlp_environment,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

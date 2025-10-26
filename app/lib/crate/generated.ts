@@ -105,13 +105,10 @@ export type SeedType =
       }
     };
 
-export const ENVIRONMENT_DID_CHANGE = "environment_did_change";
-
-export interface AirdropEnvironmentDidChange {
-  environment: AirdropEnvironment;
-}
-
 export type AirdropEnvironment =
+  | "development" | "production";
+
+export type XlpEnvironment =
   | "development" | "production";
 
 export interface OnboardingCreateWallet {
@@ -120,6 +117,8 @@ export interface OnboardingCreateWallet {
 }
 
 export const KEY_AIRDROP_ENVIRONMENT = "airdrop_environment";
+
+export const KEY_XLP_ENVIRONMENT = "xlp_environment";
 
 export const SOLANA = "So11111111111111111111111111111111111111112";
 
