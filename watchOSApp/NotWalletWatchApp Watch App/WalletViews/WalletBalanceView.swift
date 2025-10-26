@@ -44,13 +44,15 @@ struct WalletBalanceView: View {
                         ForEach(balances, id: \.meta.address) { balance in
                             Button(action: { }) {
                                 HStack(alignment: .top) {
-                                    AsyncImage(url: URL(string: balance.meta.logo_uri)) { image in
-                                        image.resizable()
+                                    if let url = URL(string: balance.meta.logo_uri) {
+                                        AsyncImage(url: url) { image in
+                                            image.resizable()
                                         } placeholder: {
-                                            Color.red
+                                            Color.purple
                                         }
                                         .frame(width: 24, height: 24)
                                         .clipShape(.rect(cornerRadius: 12))
+                                    }
                                     
                                     VStack(alignment: .leading) {
                                         Text("\(balance.display())")
@@ -73,34 +75,6 @@ struct WalletBalanceView: View {
                             .buttonStyle(.plain)
                         }
                         .frame(minHeight: minRowHeight)
-                        
-                        /*
-                        Divider()
-
-                        Button(action: {
-                            Task {
-                                // Call the callback
-                                // onResetWallet()
-                            }
-                        }) {
-                            HStack {
-                                Image(systemName: "gear")
-                                Text("Balance settings")
-                                    .font(.system(size: 18, weight: .medium, design: .rounded))
-                                    .foregroundColor(.primary)
-                                    .frame(height: 24)
-
-                                Spacer()
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color(.darkGray).opacity(0.6))
-                            )
-                        }
-                        .buttonStyle(.plain)*/
-
                     }
                 }
             }

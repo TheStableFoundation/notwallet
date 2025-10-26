@@ -223,6 +223,7 @@ export interface Translation {
   incorrectPassword: string;
   unlockWallet: string;
   notwalletCrypto: string;
+  createYourWallet: string;
   // Settings pages translations
   congratulations: string;
   congratulationsMessage: string;
@@ -252,6 +253,8 @@ export interface Translation {
   // Common translations
   about: string;
   appInfo: string;
+  appPreferences: string;
+  languagePreferences: string;
   app: string;
   legalSupport: string;
   termsOfService: string;
@@ -517,6 +520,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     incorrectPassword: "Incorrect password. Please try again.",
     unlockWallet: "Unlock Wallet",
     notwalletCrypto: "NotWallet Crypto",
+    createYourWallet: "Create Your Wallet",
     // Settings pages translations
     congratulations: "🎉 Congratulations! 🎉",
     congratulationsMessage:
@@ -547,6 +551,8 @@ export const translations: Record<SupportedLanguages, Translation> = {
     // Common translations
     about: "About",
     appInfo: "App Info",
+    appPreferences: "App Preferences",
+    languagePreferences: "Language Preferences",
     app: "App",
     legalSupport: "Legal & Support",
     termsOfService: "Terms of Service",
@@ -812,6 +818,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     incorrectPassword: "Felaktigt lösenord. Försök igen.",
     unlockWallet: "Lås upp plånbok",
     notwalletCrypto: "NotWallet Crypto",
+    createYourWallet: "Skapa din plånbok",
     // Settings pages translations
     congratulations: "🎉 Grattis! 🎉",
     congratulationsMessage:
@@ -842,6 +849,8 @@ export const translations: Record<SupportedLanguages, Translation> = {
     // Common translations
     about: "Om",
     appInfo: "App Info",
+    appPreferences: "App Preferences",
+    languagePreferences: "Language Preferences",
     app: "App",
     legalSupport: "Juridik & Support",
     termsOfService: "Användarvillkor",
@@ -1107,6 +1116,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     incorrectPassword: "Kata sandi salah. Silakan coba lagi.",
     unlockWallet: "Buka Kunci Dompet",
     notwalletCrypto: "NotWallet Crypto",
+    createYourWallet: "Buat Dompet Anda",
     // Settings pages translations
     congratulations: "🎉 Selamat! 🎉",
     congratulationsMessage:
@@ -1137,6 +1147,8 @@ export const translations: Record<SupportedLanguages, Translation> = {
     // Common translations
     about: "Tentang",
     appInfo: "Info Aplikasi",
+    appPreferences: "Preferensi Aplikasi",
+    languagePreferences: "Preferensi Bahasa",
     app: "Aplikasi",
     legalSupport: "Legal & Dukungan",
     termsOfService: "Syarat Layanan",

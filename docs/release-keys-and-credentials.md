@@ -67,4 +67,4 @@ export const ONRAMPER_KEY = "your_onramper_key";
 export const ONRAMPER_SIGNER_KEY = "your_onramper_signer_key";
 ```
 
-Now you are ready to build [NotWallet Crypto non-custodial Solana crypto wallet](https://github.com/TheStableFoundation/not) for production release.
+Now you are ready to build [NotWallet Crypto non-custodial Solana crypto wallet](https://github.com/TheStableFoundation/notwallet) for production release.

@@ -16,6 +16,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { openUrl } from "@tauri-apps/plugin-opener";
@@ -79,7 +80,7 @@ export default function SettingsPage() {
     } else if (type === "termsOfService") {
       openUrl("https://notwallet.eu/terms");
     } else if (type === "openSource") {
-      openUrl("https://github.com/TheStableFoundation/not");
+      openUrl("https://github.com/TheStableFoundation/notwallet");
     } else if (type === "footer") {
       const newCount = footerClickCount + 1;
       setFooterClickCount(newCount);
@@ -95,7 +96,7 @@ export default function SettingsPage() {
     } else if (type === "appPreferences") {
       router("/settings/app-preferences");
     } else if (type === "languagePreferences") {
-      router("/settings/app-preferences");
+      router("/settings/language-preferences");
     } else if (type === "debugSetting") {
       router("/settings/debug");
     }
@@ -120,6 +121,13 @@ export default function SettingsPage() {
         label: t("common.appInfo"),
         icon: <PhoneAndroidOutlinedIcon />,
         action: () => handleClick("appInfo"),
+        hasChevron: true,
+      },
+      {
+        id: "languagePreferences",
+        label: t.languagePreferences,
+        icon: <SettingsApplicationsIcon />,
+        action: () => handleClick("languagePreferences"),
         hasChevron: true,
       },
     ];

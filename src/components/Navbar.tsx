@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLang } from "../LanguageContext";
-import { SupportedLanguages } from "../i18n";
 import { debug } from "@tauri-apps/plugin-log";
 import { haptics } from "@app/lib/utils/haptics";
 
@@ -59,14 +58,8 @@ const navItems: NavItem[] = [
 
 export default function Navbar() {
   const location = useLocation();
-  const { t, lang, setLang } = useLang();
+  const { t } = useLang();
   const isRTL = false;
-
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setLang(event.target.value as SupportedLanguages);
-  };
 
   const isActivePath = (path: string) => {
     debug(`Current path: ${location.pathname}`);
@@ -114,26 +107,15 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top bar with app name and language switcher, matching bottom bar width */}
+      {/* Top bar with app name, matching bottom bar width */}
       <div
         className={`fixed top-0 left-0 w-full bg-white/70 backdrop-blur-lg z-50 shadow top-nav-safe`}
         dir={isRTL ? "rtl" : "ltr"}
       >
-        <div className="max-w-2xl mx-auto flex flex-row justify-between items-center px-4 py-3 w-full">
+        <div className="max-w-2xl mx-auto flex flex-row justify-center items-center px-4 py-3 w-full">
           <span className="font-bold text-xl text-primary-main">
             {t.appName}
           </span>
-          <select
-            className="rounded border px-2 py-1 bg-white text-sm text-primay-light cursor-pointer shadow"
-            value={lang}
-            onClick={handleNavClick}
-            onChange={handleLanguageChange}
-            aria-label="Change language"
-          >
-            <option value="en">English</option>
-            <option value="sv">Svenska</option>
-            <option value="id">Bahasa Indonesia</option>
-          </select>
         </div>
       </div>
 

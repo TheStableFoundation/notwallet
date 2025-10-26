@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    select,
+    textarea,
+    input {
+        font-size: 16px !important;
+    }
+}
+
+/* Prevent iOS zoom on MUI TextField inputs */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea,
+.MuiInputBase-input,
+.MuiOutlinedInput-input {
+    font-size: 16px !important;
+}
 /* Safe Area Support */
 .safe-area {
     padding-top: env(safe-area-inset-top);

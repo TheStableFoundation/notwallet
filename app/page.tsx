@@ -130,11 +130,11 @@ function MainPageContent() {
     }
 
     // If user has seeds and password and is unlocked, redirect to home
-    redirect("/home");
+    redirect("/");
   }
 
   // If user has no seeds, redirect to wallet onboarding page
-  redirect("/home");
+  redirect("/");
   return <></>;
 }
 

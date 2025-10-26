@@ -120,7 +120,7 @@ export default function WalletOnboardingImportPage() {
               helperText={error}
               sx={{ mb: 2, bgcolor: "#f3f4f6", borderRadius: 2 }}
               inputProps={{
-                style: { fontFamily: "monospace", fontSize: "1.1rem" },
+                style: { fontFamily: "monospace" },
               }}
             />
             {pubkey && (
@@ -155,7 +155,6 @@ export default function WalletOnboardingImportPage() {
             </Button>
           </CardActions>
         </Card>
-        {/* <BottomTabBar /> */}
       </Box>
     </Box>
   );
