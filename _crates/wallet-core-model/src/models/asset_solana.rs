@@ -12,6 +12,7 @@ pub enum SolanaAsset {
     Sol { meta: Metadata },
     BachToken { meta: Metadata },
     ZBtc { meta: Metadata },
+    Usdc { meta: Metadata },
     // Local token
     BachToken0 { meta: Metadata },
     BachToken1 { meta: Metadata },
@@ -23,6 +24,7 @@ impl SolanaAsset {
             Self::Sol { meta } => meta.to_owned(),
             Self::BachToken { meta } => meta.to_owned(),
             Self::ZBtc { meta } => meta.to_owned(),
+            Self::Usdc { meta } => meta.to_owned(),
             Self::BachToken0 { meta } => meta.to_owned(),
             Self::BachToken1 { meta } => meta.to_owned(),
         }
@@ -57,6 +59,15 @@ impl SolanaAsset {
                     symbol: "zBTC".to_string(),
                     decimal: 8,
                     logo_uri: "https://statics.solscan.io/cdn/imgs/s60?ref=68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f5a6575734e6574776f726b48512f7a6274632d6d657461646174612f726566732f68656164732f6d61696e2f6c676f6f2d76322e706e67".to_string(),
+                },
+            }),
+            "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" => Some(Self::Usdc {
+                meta: Metadata {
+                    address,
+                    name: "USDC".to_string(),
+                    symbol: "USDC".to_string(),
+                    decimal: 6,
+                    logo_uri: "https://raw.githubusercontent.com/solana-labs/token-list/badd1dbe8c2d1e38c4f77b77f1d5fd5c60d3cccb/assets/mainnet/CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf/bach-token-logo-Est.2022.png".to_string(),
                 },
             }),
             // Local develoment tokens.
@@ -100,6 +111,12 @@ impl SolanaAsset {
                 meta.address,
             ),
             SolanaAsset::ZBtc { meta } => aggregate_spl_token_balance(
+                environment.rpc_url(),
+                address,
+                SPL_TOKEN_PROGRAM_ID.to_string(),
+                meta.address,
+            ),
+            SolanaAsset::Usdc { meta } => aggregate_spl_token_balance(
                 environment.rpc_url(),
                 address,
                 SPL_TOKEN_PROGRAM_ID.to_string(),

@@ -1,13 +1,10 @@
-use std::format;
+use std::{env, format};
 
 pub const SOLANA_MAINNET_RPC_BASE_URL: &str = "solana-mainnet.quiknode.pro";
 pub const SOLANA_TESTNET_RPC_BASE_URL: &str = "solana-testnet.quiknode.pro";
 pub const SOLANA_DEVNET_RPC_BASE_URL: &str = "solana-devnet.quiknode.pro";
 
 pub const SOLANA_LOCALHOST_RPC_URL: &str = "http://localhost:8899";
-
-pub const SOLANA_RPC_NAMESPACE: &str = "your_namespace";
-pub const SOLANA_RPC_ID: &str = "your_id";
 
 const USE_LOCAL_RPC: bool = false;
 
@@ -25,21 +22,27 @@ pub fn rpc_url() -> String {
 pub fn mainnet_rpc_url() -> String {
     format!(
         "https://{}.{}/{}",
-        SOLANA_RPC_NAMESPACE, SOLANA_MAINNET_RPC_BASE_URL, SOLANA_RPC_ID
+        env::var("SOLANA_RPC_NAMESPACE").unwrap_or_default(),
+        SOLANA_MAINNET_RPC_BASE_URL,
+        env::var("SOLANA_RPC_ID").unwrap_or_default()
     )
 }
 
 pub fn testnet_rpc_url() -> String {
     format!(
         "https://{}.{}/{}",
-        SOLANA_RPC_NAMESPACE, SOLANA_TESTNET_RPC_BASE_URL, SOLANA_RPC_ID
+        env::var("SOLANA_RPC_NAMESPACE").unwrap_or_default(),
+        SOLANA_TESTNET_RPC_BASE_URL,
+        env::var("SOLANA_RPC_ID").unwrap_or_default()
     )
 }
 
 pub fn devnet_rpc_url() -> String {
     format!(
         "https://{}.{}/{}",
-        SOLANA_RPC_NAMESPACE, SOLANA_DEVNET_RPC_BASE_URL, SOLANA_RPC_ID
+        env::var("SOLANA_RPC_NAMESPACE").unwrap_or_default(),
+        SOLANA_DEVNET_RPC_BASE_URL,
+        env::var("SOLANA_RPC_ID").unwrap_or_default()
     )
 }
 
