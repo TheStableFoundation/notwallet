@@ -28,3 +28,4 @@ pub const BIRDEYE_PRICE_PATH: &str = "defi/price";
 
 /// XLP API Service
 pub const XLP_WALLET_BALANCE_PATH: &str = "/v1/wallets/wallet_balance";
+pub const XLP_WALLET_TOKEN_LIST_PATH: &str = "/v1/wallets/token_list";

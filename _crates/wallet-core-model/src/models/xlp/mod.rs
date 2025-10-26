@@ -4,3 +4,5 @@ use serde::{Deserialize, Serialize};
 pub struct WalletBalanceResponse {
     pub value: String,
 }
+
+pub mod wallet_assets;

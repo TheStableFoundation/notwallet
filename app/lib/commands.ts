@@ -17,3 +17,4 @@ export const GET_SWAP_QUOTE = "get_swap_quote";
 export const BUILD_SWAP_TRANSACTION = "build_swap_transaction";
 export const CHECK_PUBKEY = "check_pubkey";
 export const GET_WALLET_BALANCE = "get_wallet_balance";
+export const GET_WALLET_ASSETS_BALANCE = "get_wallet_assets_balance";

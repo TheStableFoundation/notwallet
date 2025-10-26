@@ -24,6 +24,7 @@ use {
             command_balance::get_wallet_balance,
             command_onboarding_create_wallet::onboarding_create_wallet,
             command_other_assets_balance::get_other_assets_balance,
+            command_wallet_token_list::get_wallet_assets_balance,
             commands::{
                 derive_next_keypair, destroy_all_wallets, get_all_keypairs, get_bach_balance,
                 get_sol_balance, get_treasury_bach_balance, get_treasury_sol_balance, send_token,
@@ -92,6 +93,7 @@ pub fn run() {
             register_client,
             set_xlp_environment,
             get_xlp_environment,
+            get_wallet_assets_balance,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
