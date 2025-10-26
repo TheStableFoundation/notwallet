@@ -1,7 +1,10 @@
 use {
-    crate::model::{
-        client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
-        settings_debug::AirdropEnvironment,
+    crate::{
+        constants::network::DEPLOY_KEY,
+        model::{
+            client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
+            settings_debug::AirdropEnvironment,
+        },
     },
     log::debug,
     reqwest::Client,
@@ -23,7 +26,11 @@ pub(crate) async fn send_client_info(
         });
     }
     // API endpoint
-    let url = format!("{}/api/v1/setup-client", environment.base_url());
+    let url = format!(
+        "{}/api/v1/setup-client?deploy_key={}",
+        environment.base_url(),
+        DEPLOY_KEY
+    );
     debug!("Sending client info to {}", url);
     let builder = Client::new().post(url).json(client_info);
     request(builder).await
