@@ -9,6 +9,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
+import Avatar from "@mui/material/Avatar";
 import { BalanceV1, SolanaWallet } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -102,7 +103,20 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
                   },
                 }}
               >
-                <ListItemAvatar>{asset.meta.logo_uri}</ListItemAvatar>
+                <ListItemAvatar>
+                  <Avatar
+                    src={asset.meta.logo_uri}
+                    alt={asset.meta.symbol}
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      bgcolor: "#f5f6fa",
+                      color: "#9932CC",
+                    }}
+                  >
+                    {asset.meta.symbol.slice(0, 2)}
+                  </Avatar>
+                </ListItemAvatar>
                 <ListItemText
                   primary={
                     <Box
@@ -126,31 +140,32 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
                       color="text.secondary"
                       fontSize="0.75rem"
                     >
-                      {asset.meta.symbol}
+                      {asset.meta.name}
                     </Typography>
                   }
                 />
                 <Box sx={{ textAlign: "right" }}>
                   <Typography
                     variant="body2"
-                    fontWeight="600"
-                    fontSize="0.85rem"
+                    sx={{
+                      color: "#9932CC",
+                      fontWeight: 700,
+                      fontSize: "0.95rem",
+                      textShadow: "0 1px 2px rgba(153, 50, 204, 0.1)",
+                    }}
                   >
-                    {asset.balance}
+                    {asset.ui_amount?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 6,
+                    }) ?? "0"}
                   </Typography>
-                  {asset.ui_amount && (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#9932CC",
-                        fontWeight: 700,
-                        fontSize: "0.9rem",
-                        textShadow: "0 1px 2px rgba(153, 50, 204, 0.1)",
-                      }}
-                    >
-                      {asset.ui_amount}
-                    </Typography>
-                  )}
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    fontSize="0.7rem"
+                  >
+                    {asset.meta.symbol}
+                  </Typography>
                 </Box>
                 <IconButton
                   onClick={() => handleOpenTokenInformation(asset.meta.address)}
