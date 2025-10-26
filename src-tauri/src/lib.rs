@@ -12,7 +12,7 @@ use {
         onramp::commands::onramp_session,
         settings::commands::{get_airdrop_environment, set_airdrop_environment},
         setup::{
-            commands::{get_installation_id, is_debug},
+            commands::{get_installation_id, is_debug, register_client},
             setup,
         },
         swap::commands::{build_swap_transaction, get_swap_quote, send_swap_transaction},
@@ -86,6 +86,7 @@ pub fn run() {
             is_debug,
             get_airdrop_environment,
             set_airdrop_environment,
+            register_client,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

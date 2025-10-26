@@ -11,11 +11,13 @@ import {
 type AirdropEnvironmentContextType = {
   environment: AirdropEnvironment;
   setEnvironment: (environment: AirdropEnvironment) => void;
+  isInitialized: boolean;
 };
 
 const AirdropEnvironmentContext = createContext<AirdropEnvironmentContextType>({
   environment: "production",
   setEnvironment: () => {},
+  isInitialized: false,
 });
 
 export function AirdropEnvironmentProvider({
@@ -25,6 +27,7 @@ export function AirdropEnvironmentProvider({
 }) {
   const [environment, setEnvironment] =
     useState<AirdropEnvironment>("production");
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const init = async () => {
     try {
@@ -33,7 +36,9 @@ export function AirdropEnvironmentProvider({
       );
       if (environment) setEnvironment(environment);
     } catch (e) {
-      error(`AppLockProvider: ${e}`);
+      error(`AirdropEnvironmentProvider: ${e}`);
+    } finally {
+      setIsInitialized(true);
     }
   };
 
@@ -42,7 +47,9 @@ export function AirdropEnvironmentProvider({
   }, []);
 
   return (
-    <AirdropEnvironmentContext.Provider value={{ environment, setEnvironment }}>
+    <AirdropEnvironmentContext.Provider
+      value={{ environment, setEnvironment, isInitialized }}
+    >
       {children}
     </AirdropEnvironmentContext.Provider>
   );

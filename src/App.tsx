@@ -27,215 +27,232 @@ import WalletTokenPage from "@app/wallet/token/page";
 import { AppLockProvider } from "@app/lib/context/app-lock-context";
 import LanguagePreferencesPage from "@app/settings/language-preferences/page";
 import DebugPage from "@app/settings/debug/page";
-import { AirdropEnvironmentProvider } from "@app/lib/context/app-environment-context";
+import { useAirdropEnvironment } from "@app/lib/context/app-environment-context";
+import { useEffect } from "react";
+import { invoke } from "@tauri-apps/api/core";
+import { debug, error } from "@tauri-apps/plugin-log";
 
 export default function App() {
   const location = useLocation();
+  const { environment, isInitialized } = useAirdropEnvironment();
+
+  const registerClient = async () => {
+    try {
+      await invoke("register_client", { environment });
+      debug("Client registered successfully.");
+    } catch (e) {
+      error(`Error registering client: ${e}`);
+    }
+  };
+
+  useEffect(() => {
+    if (isInitialized) {
+      registerClient();
+    }
+  }, [isInitialized, environment]);
 
   return (
     <Tooltip.Provider>
       <AppLockProvider>
-        <AirdropEnvironmentProvider>
-          <div className="bg-gradient-to-tr from-fuchsia-100 to-sky-100 min-h-screen w-full font-sans relative safe-area">
-            <Navbar />
-            <main className="py-4 bottom-nav-safe max-w-2xl mx-auto px-4">
-              <Routes location={location} key={location.pathname}>
-                <Route
-                  path="/"
-                  element={
-                    <AnimatedPage>
-                      <HomePage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/home/dao"
-                  element={
-                    <AnimatedPage>
-                      <DAOPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/home/learn"
-                  element={
-                    <AnimatedPage>
-                      <LearnPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet"
-                  element={
-                    <AnimatedPage>
-                      <WalletHome />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/buy"
-                  element={
-                    <AnimatedPage>
-                      <WalletBuyPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/buy/stripe"
-                  element={
-                    <AnimatedPage>
-                      <WalletBuyStripePage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/create-new-wallet"
-                  element={
-                    <AnimatedPage>
-                      <WalletCreateNewWalletPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/create-new-wallet/done"
-                  element={
-                    <AnimatedPage>
-                      <WalletCreateNewWalletDonePage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/import"
-                  element={
-                    <AnimatedPage>
-                      <WalletImportPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/onboarding"
-                  element={
-                    <AnimatedPage>
-                      <WalletOnboardingPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/onboarding/create-password"
-                  element={
-                    <AnimatedPage>
-                      <CreatePasswordPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/onboarding/create-wallet"
-                  element={
-                    <AnimatedPage>
-                      <WalletOnboardingCreateWalletPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/onboarding/create-wallet-disclaimer"
-                  element={
-                    <AnimatedPage>
-                      <WalletOnboardingCreateWalletDisclaimerPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/onboarding/import"
-                  element={
-                    <AnimatedPage>
-                      <WalletOnboardingImportPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/onboarding/import-keypairs"
-                  element={
-                    <AnimatedPage>
-                      <WalletOnboardingImportKeypairsPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/onboarding/import-wallet"
-                  element={
-                    <AnimatedPage>
-                      <WalletOnboardingImportWalletPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/sell"
-                  element={
-                    <AnimatedPage>
-                      <WalletSellPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/settings"
-                  element={
-                    <AnimatedPage>
-                      <WalletSettingsPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/wallet/token"
-                  element={
-                    <AnimatedPage>
-                      <WalletTokenPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <AnimatedPage>
-                      <SettingsPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/settings/about"
-                  element={
-                    <AnimatedPage>
-                      <AboutPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/settings/app-info"
-                  element={
-                    <AnimatedPage>
-                      <AppInfoPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/settings/language-preferences"
-                  element={
-                    <AnimatedPage>
-                      <LanguagePreferencesPage />
-                    </AnimatedPage>
-                  }
-                />
-                <Route
-                  path="/settings/debug"
-                  element={
-                    <AnimatedPage>
-                      <DebugPage />
-                    </AnimatedPage>
-                  }
-                />
-              </Routes>
-            </main>
-          </div>
-        </AirdropEnvironmentProvider>
+        <div className="bg-gradient-to-tr from-fuchsia-100 to-sky-100 min-h-screen w-full font-sans relative safe-area">
+          <Navbar />
+          <main className="py-4 bottom-nav-safe max-w-2xl mx-auto px-4">
+            <Routes location={location} key={location.pathname}>
+              <Route
+                path="/"
+                element={
+                  <AnimatedPage>
+                    <HomePage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/home/dao"
+                element={
+                  <AnimatedPage>
+                    <DAOPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/home/learn"
+                element={
+                  <AnimatedPage>
+                    <LearnPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet"
+                element={
+                  <AnimatedPage>
+                    <WalletHome />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/buy"
+                element={
+                  <AnimatedPage>
+                    <WalletBuyPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/buy/stripe"
+                element={
+                  <AnimatedPage>
+                    <WalletBuyStripePage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/create-new-wallet"
+                element={
+                  <AnimatedPage>
+                    <WalletCreateNewWalletPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/create-new-wallet/done"
+                element={
+                  <AnimatedPage>
+                    <WalletCreateNewWalletDonePage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/import"
+                element={
+                  <AnimatedPage>
+                    <WalletImportPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding"
+                element={
+                  <AnimatedPage>
+                    <WalletOnboardingPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding/create-password"
+                element={
+                  <AnimatedPage>
+                    <CreatePasswordPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding/create-wallet"
+                element={
+                  <AnimatedPage>
+                    <WalletOnboardingCreateWalletPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding/create-wallet-disclaimer"
+                element={
+                  <AnimatedPage>
+                    <WalletOnboardingCreateWalletDisclaimerPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding/import"
+                element={
+                  <AnimatedPage>
+                    <WalletOnboardingImportPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding/import-keypairs"
+                element={
+                  <AnimatedPage>
+                    <WalletOnboardingImportKeypairsPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/onboarding/import-wallet"
+                element={
+                  <AnimatedPage>
+                    <WalletOnboardingImportWalletPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/sell"
+                element={
+                  <AnimatedPage>
+                    <WalletSellPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/settings"
+                element={
+                  <AnimatedPage>
+                    <WalletSettingsPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/token"
+                element={
+                  <AnimatedPage>
+                    <WalletTokenPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <AnimatedPage>
+                    <SettingsPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/settings/about"
+                element={
+                  <AnimatedPage>
+                    <AboutPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/settings/app-info"
+                element={
+                  <AnimatedPage>
+                    <AppInfoPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/settings/language-preferences"
+                element={
+                  <AnimatedPage>
+                    <LanguagePreferencesPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/settings/debug"
+                element={
+                  <AnimatedPage>
+                    <DebugPage />
+                  </AnimatedPage>
+                }
+              />
+            </Routes>
+          </main>
+        </div>
       </AppLockProvider>
     </Tooltip.Provider>
   );

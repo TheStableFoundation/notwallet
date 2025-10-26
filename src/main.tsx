@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { LanguageProvider } from "./LanguageContext";
+import { AirdropEnvironmentProvider } from "@app/lib/context/app-environment-context";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -14,7 +15,9 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <LanguageProvider>
       <BrowserRouter>
-        <App />
+        <AirdropEnvironmentProvider>
+          <App />
+        </AirdropEnvironmentProvider>
       </BrowserRouter>
     </LanguageProvider>
   </React.StrictMode>,

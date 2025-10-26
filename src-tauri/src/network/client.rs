@@ -1,6 +1,9 @@
 use {
-    crate::constants::network::API_BASE_URL,
-    crate::model::client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
+    crate::model::{
+        client::{ClientApp, ClientInfoPayload, RegisterClientResponse},
+        settings_debug::AirdropEnvironment,
+    },
+    log::debug,
     reqwest::Client,
     smbcloud_wallet_core_network::{
         model::{ErrorCode, ErrorResponse},
@@ -10,6 +13,7 @@ use {
 
 /// Send client information to the server
 pub(crate) async fn send_client_info(
+    environment: AirdropEnvironment,
     client_info: &ClientInfoPayload,
 ) -> Result<RegisterClientResponse, ErrorResponse> {
     if client_info.app == ClientApp::Splitfire {
@@ -19,7 +23,8 @@ pub(crate) async fn send_client_info(
         });
     }
     // API endpoint
-    let url = format!("{}/api/v1/setup-client", API_BASE_URL);
+    let url = format!("{}/api/v1/setup-client", environment.base_url());
+    debug!("Sending client info to {}", url);
     let builder = Client::new().post(url).json(client_info);
     request(builder).await
 }
