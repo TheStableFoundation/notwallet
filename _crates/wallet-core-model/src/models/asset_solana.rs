@@ -1,11 +1,16 @@
 use {
     crate::models::{asset_metadata::Metadata, environment::Environment},
-    smbcloud_wallet_constants::constants::SPL_TOKEN_PROGRAM_ID,
+    smbcloud_wallet_constants::{
+        assets_solana::{
+            ADDRESS_BACH_TOKEN, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1,
+            ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_ZBTC,
+        },
+        constants::SPL_TOKEN_PROGRAM_ID,
+    },
     smbcloud_wallet_core_network::model::ErrorResponse,
     smbcloud_wallet_core_rpc::balance::{
         aggregate_spl_token_balance::aggregate_spl_token_balance, sol_balance::sol_balance,
     },
-    tsync::tsync,
 };
 
 #[derive(Debug)]
@@ -48,36 +53,6 @@ impl SolanaAsset {
     }
 }
 
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_SOL: &str = "So11111111111111111111111111111111111111112";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_BACH_TOKEN: &str = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_JUPITER: &str = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_USDC: &str = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_USDT: &str = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_USDG: &str = "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_USDS: &str = "USDSwr9ApdHk5bvJKMjzff41FfuX8bSxdKcR81vTwcA";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_USD1: &str = "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_EURC: &str = "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr";
-#[tsync]
-#[allow(dead_code)]
-pub const ADDRESS_ZBTC: &str = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
 impl SolanaAsset {
     pub fn native() -> Self {
         Self::Sol {
@@ -99,7 +74,7 @@ impl SolanaAsset {
                     logo_uri: "https://raw.githubusercontent.com/solana-labs/token-list/badd1dbe8c2d1e38c4f77b77f1d5fd5c60d3cccb/assets/mainnet/CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf/bach-token-logo-Est.2022.png".to_string(),
                 },
             }),
-            "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg" => Some(Self::ZBtc {
+            ADDRESS_ZBTC => Some(Self::ZBtc {
                 meta: Metadata {
                     address,
                     name: "zBTC (zBTC)".to_string(),

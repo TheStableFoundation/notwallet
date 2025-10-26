@@ -9,7 +9,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
-import { SolanaWallet } from "@app/lib/crate/generated";
+import { ADDRESS_BACH_TOKEN, SolanaWallet } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import { AssetIcon } from "@app/lib/components/token-icons";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -26,7 +26,7 @@ import {
 import { error } from "@tauri-apps/plugin-log";
 import VerifiedBadge from "./verified-badge";
 import { isAssetVerified } from "./verified-assets";
-import { BACH_TOKEN, SOLANA, AssetBalance } from "@app/lib/crate/generated";
+import { SOLANA, AssetBalance } from "@app/lib/crate/generated";
 
 interface Asset {
   logo: React.ReactNode;
@@ -79,11 +79,11 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
         if (bachBalance && bachBalance !== "0" && bachBalance !== "0 BACH") {
           const bachAmount = bachBalance.replace(" BACH", "");
           assetsList.push({
-            logo: <AssetIcon id={BACH_TOKEN} />,
+            logo: <AssetIcon id={ADDRESS_BACH_TOKEN} />,
             symbol: "BACH",
             name: "Bach Token",
             balance: `${parseFloat(bachAmount).toFixed(4)} BACH`,
-            address: BACH_TOKEN,
+            address: ADDRESS_BACH_TOKEN,
           });
         }
 

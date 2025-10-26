@@ -22,7 +22,9 @@ pub fn spl_balance(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use smbcloud_wallet_constants::constants::{BACH_TOKEN, SPL_TOKEN_PROGRAM_ID};
+    use smbcloud_wallet_constants::{
+        assets_solana::ADDRESS_BACH_TOKEN, constants::SPL_TOKEN_PROGRAM_ID,
+    };
 
     #[test]
     fn test_spl_balance_error_handling() {
@@ -30,7 +32,7 @@ mod tests {
             "https://api.mainnet-beta.solana.com".to_string(),
             "invalid_pubkey".to_string(),
             SPL_TOKEN_PROGRAM_ID.to_string(),
-            BACH_TOKEN.to_string(),
+            ADDRESS_BACH_TOKEN.to_string(),
         ) {
             Ok(result) => result,
             Err(_) => panic!(),

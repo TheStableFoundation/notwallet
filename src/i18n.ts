@@ -264,6 +264,7 @@ export interface Translation {
   aboutDescription: string;
   developedBy: string;
   swedish: string;
+  debug: string;
 }
 
 export type SupportedLanguages = "en" | "sv" | "id";
@@ -563,6 +564,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
       "A modern, community-owned, non-custodial open-source Solana wallet app built for privacy, simplicity, and security.",
     developedBy: "Developed and maintained by The Stable Foundation.",
     swedish: "Swedish",
+    debug: "Debug",
   },
   sv: {
     appName: "NotWallet",
@@ -861,6 +863,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
       "En modern, gemenskapsägd, icke-förvaringsbaserad open-source Solana-plånboksapp byggd för integritet, enkelhet och säkerhet.",
     developedBy: "Utvecklad och underhållen av The Stable Foundation.",
     swedish: "Svenska",
+    debug: "Debug",
   },
   id: {
     appName: "NotWallet",
@@ -1159,5 +1162,6 @@ export const translations: Record<SupportedLanguages, Translation> = {
       "Aplikasi dompet Solana open-source modern yang dimiliki komunitas, non-custodial yang dibangun untuk privasi, kesederhanaan, dan keamanan.",
     developedBy: "Dikembangkan dan dikelola oleh The Stable Foundation.",
     swedish: "Bahasa Swedia",
+    debug: "Debug",
   },
 };

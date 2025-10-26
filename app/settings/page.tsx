@@ -22,9 +22,9 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
-import { useI18n } from "@app/lib/i18n/provider";
 import { invoke } from "@tauri-apps/api/core";
 import { useNavigate } from "react-router-dom";
+import { useLang } from "@src/LanguageContext";
 
 type SettingItem = {
   id: string;
@@ -111,14 +111,14 @@ export default function SettingsPage() {
     let settings: SettingItem[] = [
       {
         id: "about",
-        label: t("common.about"),
+        label: t.about,
         icon: <InfoOutlinedIcon />,
         action: () => handleClick("about"),
         hasChevron: true,
       },
       {
         id: "appInfo",
-        label: t("common.appInfo"),
+        label: t.appInfo,
         icon: <PhoneAndroidOutlinedIcon />,
         action: () => handleClick("appInfo"),
         hasChevron: true,

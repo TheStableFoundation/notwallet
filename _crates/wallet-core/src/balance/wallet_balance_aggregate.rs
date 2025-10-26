@@ -1,5 +1,8 @@
 use {
-    smbcloud_wallet_constants::constants::{SOLANA, SOL_DECIMALS, SPL_TOKEN_PROGRAM_ID},
+    smbcloud_wallet_constants::{
+        assets_solana::ADDRESS_SOL,
+        constants::{SOL_DECIMALS, SPL_TOKEN_PROGRAM_ID},
+    },
     smbcloud_wallet_core_model::models::balance::Balance,
     smbcloud_wallet_core_network::model::ErrorResponse,
     smbcloud_wallet_core_rpc::balance::{
@@ -23,7 +26,7 @@ pub async fn wallet_balance_aggregate(
     println!("🦀🦀  Balance {:?} SOL", sol_amount);
 
     aggregates.push(Balance {
-        mint: SOLANA.to_string(),
+        mint: ADDRESS_SOL.to_string(),
         symbol: "SOL".to_string(),
         balance: sol_amount,
         balance_string: format!("{:.9}", sol_amount),

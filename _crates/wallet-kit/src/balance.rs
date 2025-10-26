@@ -4,7 +4,9 @@ use {
         models::{asset::AssetBalance, currency::FiatCurrency},
     },
     log::error,
-    smbcloud_wallet_constants::constants::{BACH_TOKEN, SPL_TOKEN_PROGRAM_ID},
+    smbcloud_wallet_constants::{
+        assets_solana::ADDRESS_BACH_TOKEN, constants::SPL_TOKEN_PROGRAM_ID,
+    },
     smbcloud_wallet_core_http::price_data::{
         get_asset_price::get_asset_price, get_sol_price::get_sol_price,
     },
@@ -109,7 +111,7 @@ pub async fn other_assets_balance(
         .into_iter()
         .filter_map(|account| {
             // Only non-SOL and non-BCH tokens
-            if account.mint == SOLANA || account.mint == BACH_TOKEN {
+            if account.mint == SOLANA || account.mint == ADDRESS_BACH_TOKEN {
                 return None;
             }
 

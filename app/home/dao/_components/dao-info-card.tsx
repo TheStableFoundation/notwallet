@@ -13,7 +13,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { GET_BACH_BALANCE } from "@app/lib/commands";
 import { debug } from "@tauri-apps/plugin-log";
 import {
-  BACH_TOKEN,
+  ADDRESS_BACH_TOKEN,
   THE_STABLE_FOUNDATION_ADDRESS,
 } from "@app/lib/crate/generated";
 import { openExplorer } from "@app/lib/helper";
@@ -178,7 +178,7 @@ export default function DAOInfoCard() {
               boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
             }}
           >
-            <AssetIcon id={BACH_TOKEN} size={28} />
+            <AssetIcon id={ADDRESS_BACH_TOKEN} size={28} />
           </Box>
           <Box sx={{ textAlign: "center" }}>
             <Typography

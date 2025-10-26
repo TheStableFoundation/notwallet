@@ -16,7 +16,7 @@ import {
 } from "@app/lib/commands";
 import { debug } from "@tauri-apps/plugin-log";
 import {
-  BACH_TOKEN,
+  ADDRESS_BACH_TOKEN,
   SOLANA,
   THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
 } from "@app/lib/crate/generated";
@@ -190,7 +190,7 @@ export default function TreasuryCard() {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
               }}
             >
-              <AssetIcon id={BACH_TOKEN} size={28} />
+              <AssetIcon id={ADDRESS_BACH_TOKEN} size={28} />
             </Box>
             <Box sx={{ textAlign: "center" }}>
               <Typography

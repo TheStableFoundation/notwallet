@@ -1,6 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import { AssetIcon } from "@app/lib/components/token-icons";
-import { BACH_TOKEN, SOLANA } from "@app/lib/crate/generated";
+import { ADDRESS_BACH_TOKEN, SOLANA } from "@app/lib/crate/generated";
 
 interface TokenIconProps {
   symbol: string;
@@ -13,7 +13,7 @@ export const TokenIcon = ({ symbol, size = 24 }: TokenIconProps) => {
       case "SOL":
         return <AssetIcon id={SOLANA} size={size} />;
       case "BACH":
-        return <AssetIcon id={BACH_TOKEN} size={size} />;
+        return <AssetIcon id={ADDRESS_BACH_TOKEN} size={size} />;
       case "USDC":
         return (
           <Avatar

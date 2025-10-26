@@ -15,5 +15,4 @@ serde_json = "1.0"
 smbcloud-wallet-constants = { workspace = true }
 smbcloud-wallet-core-network = { workspace = true }
 smbcloud-wallet-core-rpc = { workspace = true }
-tsync = "2"
 uniffi = { workspace = true }

@@ -19,7 +19,7 @@ import {
   SOLANA,
   SOL_DECIMALS,
   BACH_DECIMALS,
-  BACH_TOKEN,
+  ADDRESS_BACH_TOKEN,
 } from "@app/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
@@ -86,8 +86,8 @@ export default function SwapModal({
         setIsLoadingQuote(true);
         setError(null);
 
-        const fromMint = fromToken === "SOL" ? SOLANA : BACH_TOKEN;
-        const toMint = toToken === "SOL" ? SOLANA : BACH_TOKEN;
+        const fromMint = fromToken === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
+        const toMint = toToken === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
 
         const amount = parseFloat(inputAmount);
         const quoteResult = await invoke<SwapQuoteResponse>(GET_SWAP_QUOTE, {
@@ -265,7 +265,7 @@ export default function SwapModal({
   };
 
   const getTokenIcon = (token: "SOL" | "BACH") => {
-    const id = token === "SOL" ? SOLANA : BACH_TOKEN;
+    const id = token === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
     return <AssetIcon id={id} size={20} />;
   };
 

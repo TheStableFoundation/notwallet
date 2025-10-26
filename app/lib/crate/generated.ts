@@ -105,6 +105,15 @@ export type SeedType =
       }
     };
 
+export const ENVIRONMENT_DID_CHANGE = "environment_did_change";
+
+export interface AirdropEnvironmentDidChange {
+  environment: AirdropEnvironment;
+}
+
+export type AirdropEnvironment =
+  | "development" | "production";
+
 export interface OnboardingCreateWallet {
   seed: string;
   keypair: SolanaWallet;
@@ -113,8 +122,6 @@ export interface OnboardingCreateWallet {
 export const SOLANA = "So11111111111111111111111111111111111111112";
 
 export const SOL_DECIMALS = 9;
-
-export const BACH_TOKEN = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
 
 export const BACH_DECIMALS = 12;
 
@@ -147,13 +154,6 @@ export const JITO_STAKED_SOL = "J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn";
 export const ZBTC = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
 
 export const USD1 = "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB";
-
-/** The Stable Foundation */
-export const THE_STABLE_FOUNDATION_ADDRESS = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW27rLDtfU8y5";
-
-export const THE_STABLE_FOUNDATION_TREASURY_ADDRESS = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
-
-export const SPL_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 export interface Asset {
   id: string;
@@ -264,3 +264,30 @@ export interface SwapTransactionResponse {
   simulationError?: string;
   addressesByLookupTableAddress?: Array<string>;
 }
+
+export const ADDRESS_SOL = "So11111111111111111111111111111111111111112";
+
+export const ADDRESS_BACH_TOKEN = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
+
+export const ADDRESS_JUPITER = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
+
+export const ADDRESS_USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+
+export const ADDRESS_USDT = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
+
+export const ADDRESS_USDG = "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH";
+
+export const ADDRESS_USDS = "USDSwr9ApdHk5bvJKMjzff41FfuX8bSxdKcR81vTwcA";
+
+export const ADDRESS_USD1 = "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB";
+
+export const ADDRESS_EURC = "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr";
+
+export const ADDRESS_ZBTC = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
+
+/** The Stable Foundation */
+export const THE_STABLE_FOUNDATION_ADDRESS = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW27rLDtfU8y5";
+
+export const THE_STABLE_FOUNDATION_TREASURY_ADDRESS = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
+
+export const SPL_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";

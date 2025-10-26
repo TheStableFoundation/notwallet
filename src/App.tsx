@@ -26,6 +26,7 @@ import WalletSettingsPage from "@app/wallet/settings/page";
 import WalletTokenPage from "@app/wallet/token/page";
 import { AppLockProvider } from "@app/lib/context/app-lock-context";
 import LanguagePreferencesPage from "@app/settings/language-preferences/page";
+import DebugPage from "@app/settings/debug/page";
 
 export default function App() {
   const location = useLocation();
@@ -218,6 +219,14 @@ export default function App() {
                 element={
                   <AnimatedPage>
                     <LanguagePreferencesPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/settings/debug"
+                element={
+                  <AnimatedPage>
+                    <DebugPage />
                   </AnimatedPage>
                 }
               />

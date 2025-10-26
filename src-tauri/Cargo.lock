@@ -6392,7 +6392,6 @@ dependencies = [
  "smbcloud-wallet-constants",
  "smbcloud-wallet-core-network",
  "smbcloud-wallet-core-rpc",
- "tsync",
  "uniffi",
 ]
 

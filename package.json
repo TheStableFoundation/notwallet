@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "publish-android": "./scripts/publish-android.sh",
     "publish-ios": "./scripts/publish-ios.sh \"$@\"",
-    "sync-types": "tsync -i src-tauri/src/ crates/wallet-kit/src/ -o lib/crate/generated.ts"
+    "tsync": "tsync -i src-tauri/src/ _crates/wallet-kit/src/ _crates/wallet-constants/src/ -o app/lib/crate/generated.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
