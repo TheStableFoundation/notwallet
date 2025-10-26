@@ -6,3 +6,4 @@ pub mod balance_v1;
 pub mod birdeye_price_response;
 pub mod environment;
 pub mod network;
+pub mod xlp;

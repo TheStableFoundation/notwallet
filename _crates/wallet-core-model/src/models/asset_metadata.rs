@@ -1,8 +1,9 @@
-use serde::{Deserialize, Serialize};
-
 use crate::models::asset_solana::SolanaAsset;
+use serde::{Deserialize, Serialize};
+use tsync::tsync;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[tsync]
 pub struct Metadata {
     pub address: String,
     pub name: String,

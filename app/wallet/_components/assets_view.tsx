@@ -9,33 +9,20 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
-import { ADDRESS_BACH_TOKEN, SolanaWallet } from "@app/lib/crate/generated";
+import Avatar from "@mui/material/Avatar";
+import { BalanceV1, SolanaWallet } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
-import { AssetIcon } from "@app/lib/components/token-icons";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import IconButton from "@mui/material/IconButton";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { useLang } from "../../../src/LanguageContext";
 
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
-import {
-  GET_BACH_BALANCE,
-  GET_SOL_BALANCE,
-  GET_OTHER_ASSETS_BALANCE,
-} from "@app/lib/commands";
 import { error } from "@tauri-apps/plugin-log";
 import VerifiedBadge from "./verified-badge";
 import { isAssetVerified } from "./verified-assets";
-import { SOLANA, AssetBalance } from "@app/lib/crate/generated";
-
-interface Asset {
-  logo: React.ReactNode;
-  symbol: string;
-  name: string;
-  balance: string;
-  usdValue?: string;
-  address: string;
-}
+import { SOLANA } from "@app/lib/crate/generated";
+import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
 
 interface AssetsViewProps {
   wallet: SolanaWallet;
@@ -43,76 +30,28 @@ interface AssetsViewProps {
 
 export default function AssetsView({ wallet }: AssetsViewProps) {
   const { t } = useLang();
-  const [assets, setAssets] = React.useState<Asset[]>([]);
+  const { xlpEnvironment } = useXlpEnvironment();
+  const [assets, setAssets] = React.useState<BalanceV1[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const fetchWalletAssetsBalance = async () => {
+    try {
+      setLoading(true);
+      // Fetch BACH balance
+      const tokenList = await invoke<BalanceV1[]>("get_wallet_assets_balance", {
+        pubkey: wallet.pubkey,
+        environment: xlpEnvironment,
+      });
+      setAssets(tokenList);
+    } catch (err) {
+      error(`Error fetching balances: ${err}`);
+      setAssets([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   React.useEffect(() => {
-    const fetchBalances = async () => {
-      try {
-        setLoading(true);
-
-        // Fetch SOL balance
-        const solBalance = await invoke<string>(GET_SOL_BALANCE, {
-          pubkey: wallet.pubkey,
-        });
-
-        // Fetch BACH balance
-        const bachBalance = await invoke<string>(GET_BACH_BALANCE, {
-          pubkey: wallet.pubkey,
-        });
-
-        const assetsList: Asset[] = [];
-
-        // Parse SOL balance
-        if (solBalance && solBalance !== "0.000000000 SOL") {
-          const solAmount = solBalance.replace(" SOL", "");
-          assetsList.push({
-            logo: <AssetIcon id={SOLANA} />,
-            symbol: "SOL",
-            name: "Solana",
-            balance: `${parseFloat(solAmount).toFixed(4)} SOL`,
-            address: SOLANA,
-          });
-        }
-
-        // Parse BACH balance
-        if (bachBalance && bachBalance !== "0" && bachBalance !== "0 BACH") {
-          const bachAmount = bachBalance.replace(" BACH", "");
-          assetsList.push({
-            logo: <AssetIcon id={ADDRESS_BACH_TOKEN} />,
-            symbol: "BACH",
-            name: "Bach Token",
-            balance: `${parseFloat(bachAmount).toFixed(4)} BACH`,
-            address: ADDRESS_BACH_TOKEN,
-          });
-        }
-
-        // Fetch other SPL token balance
-        const otherAssetsBalance = await invoke<AssetBalance[]>(
-          GET_OTHER_ASSETS_BALANCE,
-          {
-            pubkey: wallet.pubkey,
-          },
-        );
-        const otherAssets = otherAssetsBalance.map((asset) => ({
-          logo: <AssetIcon id={asset.id} />,
-          symbol: asset.id,
-          name: asset.id,
-          balance: `${asset.balance.toFixed(4)}`,
-          address: asset.id,
-        }));
-
-        assetsList.push(...otherAssets);
-        setAssets(assetsList);
-      } catch (err) {
-        error(`Error fetching balances: ${err}`);
-        setAssets([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBalances();
+    fetchWalletAssetsBalance();
   }, [wallet.pubkey]);
 
   const handleOpenTokenInformation = async (token: string) => {
@@ -152,7 +91,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
       ) : (
         <List sx={{ p: 0 }}>
           {assets.map((asset, index) => (
-            <React.Fragment key={asset.symbol}>
+            <React.Fragment key={asset.meta.address}>
               <ListItem
                 sx={{
                   px: 0,
@@ -164,7 +103,20 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
                   },
                 }}
               >
-                <ListItemAvatar>{asset.logo}</ListItemAvatar>
+                <ListItemAvatar>
+                  <Avatar
+                    src={asset.meta.logo_uri}
+                    alt={asset.meta.symbol}
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      bgcolor: "#f5f6fa",
+                      color: "#9932CC",
+                    }}
+                  >
+                    {asset.meta.symbol.slice(0, 2)}
+                  </Avatar>
+                </ListItemAvatar>
                 <ListItemText
                   primary={
                     <Box
@@ -175,9 +127,9 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
                         fontWeight="600"
                         fontSize="0.9rem"
                       >
-                        {asset.symbol.substring(0, 6)}
+                        {asset.meta.symbol}
                       </Typography>
-                      {isAssetVerified(asset.address) && (
+                      {isAssetVerified(asset.meta.address) && (
                         <VerifiedBadge size={14} />
                       )}
                     </Box>
@@ -188,34 +140,35 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
                       color="text.secondary"
                       fontSize="0.75rem"
                     >
-                      {asset.symbol}
+                      {asset.meta.name}
                     </Typography>
                   }
                 />
                 <Box sx={{ textAlign: "right" }}>
                   <Typography
                     variant="body2"
-                    fontWeight="600"
-                    fontSize="0.85rem"
+                    sx={{
+                      color: "#9932CC",
+                      fontWeight: 700,
+                      fontSize: "0.95rem",
+                      textShadow: "0 1px 2px rgba(153, 50, 204, 0.1)",
+                    }}
                   >
-                    {asset.balance}
+                    {asset.ui_amount?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 6,
+                    }) ?? "0"}
                   </Typography>
-                  {asset.usdValue && (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#9932CC",
-                        fontWeight: 700,
-                        fontSize: "0.9rem",
-                        textShadow: "0 1px 2px rgba(153, 50, 204, 0.1)",
-                      }}
-                    >
-                      {asset.usdValue}
-                    </Typography>
-                  )}
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    fontSize="0.7rem"
+                  >
+                    {asset.meta.symbol}
+                  </Typography>
                 </Box>
                 <IconButton
-                  onClick={() => handleOpenTokenInformation(asset.address)}
+                  onClick={() => handleOpenTokenInformation(asset.meta.address)}
                   sx={{
                     color: "#9932CC",
                     ml: 1,

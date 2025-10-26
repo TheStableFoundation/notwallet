@@ -23,6 +23,7 @@ import SwapModal from "./swap-modal";
 import { error } from "@tauri-apps/plugin-log";
 import { useLang } from "../../../src/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -36,6 +37,7 @@ export default function WalletCard({
 }: WalletCardProps) {
   const router = useNavigate();
   const { t } = useLang();
+  const { xlpEnvironment } = useXlpEnvironment();
   const [walletBalance, setWalletBalance] = React.useState<string>("-");
   const [walletUsername, setWalletUsername] = React.useState<string>(
     wallet.username || t.defaultUsername,
@@ -103,6 +105,7 @@ export default function WalletCard({
     try {
       const walletBalance = await invoke<string>(GET_WALLET_BALANCE, {
         pubkey: wallet.pubkey,
+        environment: xlpEnvironment,
       });
       setWalletBalance(`${walletBalance}`);
     } catch (err) {

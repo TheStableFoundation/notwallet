@@ -16,3 +16,4 @@ smbcloud-wallet-constants = { workspace = true }
 smbcloud-wallet-core-network = { workspace = true }
 smbcloud-wallet-core-rpc = { workspace = true }
 uniffi = { workspace = true }
+tsync = "2"

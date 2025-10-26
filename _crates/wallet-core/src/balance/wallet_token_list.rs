@@ -18,12 +18,14 @@ pub async fn wallet_token_list(
     let sol_balance = sol_balance(rpc_url.clone(), pubkey.clone()).unwrap_or((0, 0.0));
 
     println!("🦀🦀  Balance {:?} SOL", sol_balance);
-    let native_asset = SolanaAsset::native();
-    aggregates.push(BalanceV1 {
-        meta: native_asset.metadata(),
-        balance: sol_balance.0,
-        ui_amount: sol_balance.1,
-    });
+    if sol_balance.0 > 0 {
+        let native_asset = SolanaAsset::native();
+        aggregates.push(BalanceV1 {
+            meta: native_asset.metadata(),
+            balance: sol_balance.0,
+            ui_amount: sol_balance.1,
+        });
+    }
 
     // Try to get BACH price, but handle errors gracefully
     let spl_tokens = match spl_token_accounts_with_balance(

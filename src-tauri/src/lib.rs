@@ -10,7 +10,10 @@ mod wallet;
 use {
     crate::{
         onramp::commands::onramp_session,
-        settings::commands::{get_airdrop_environment, set_airdrop_environment},
+        settings::commands::{
+            get_airdrop_environment, get_xlp_environment, set_airdrop_environment,
+            set_xlp_environment,
+        },
         setup::{
             commands::{get_installation_id, is_debug, register_client},
             setup,
@@ -21,6 +24,7 @@ use {
             command_balance::get_wallet_balance,
             command_onboarding_create_wallet::onboarding_create_wallet,
             command_other_assets_balance::get_other_assets_balance,
+            command_wallet_token_list::get_wallet_assets_balance,
             commands::{
                 derive_next_keypair, destroy_all_wallets, get_all_keypairs, get_bach_balance,
                 get_sol_balance, get_treasury_bach_balance, get_treasury_sol_balance, send_token,
@@ -87,6 +91,9 @@ pub fn run() {
             get_airdrop_environment,
             set_airdrop_environment,
             register_client,
+            set_xlp_environment,
+            get_xlp_environment,
+            get_wallet_assets_balance,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
