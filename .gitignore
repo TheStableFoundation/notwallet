@@ -39,3 +39,6 @@ keystore.properties
 
 # App builds
 *.pkg
+
+# Zed
+target
