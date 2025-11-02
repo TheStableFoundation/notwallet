@@ -128,6 +128,7 @@ export interface Translation {
   // Wallet specific translations
   walletTitle: string;
   switchKeypairTitle: string;
+  addressQrCode: string;
   noKeypairsFound: string;
   account: string;
   active: string;
@@ -425,6 +426,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     // Wallet specific translations
     walletTitle: "Wallet",
     switchKeypairTitle: "Switch Wallet",
+    addressQrCode: "Scan Address",
     noKeypairsFound: "No wallets found",
     account: "Account",
     active: "Active",
@@ -724,6 +726,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     // Wallet specific translations
     walletTitle: "Plånbok",
     switchKeypairTitle: "Byt plånbok",
+    addressQrCode: "Skanningsadress",
     noKeypairsFound: "Inga plånböcker hittades",
     account: "Konto",
     active: "Aktiv",
@@ -1023,6 +1026,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     // Wallet specific translations
     walletTitle: "Dompet",
     switchKeypairTitle: "Ganti Dompet",
+    addressQrCode: "Scan Alamat Dompet",
     noKeypairsFound: "Tidak ada dompet ditemukan",
     account: "Akun",
     active: "Aktif",

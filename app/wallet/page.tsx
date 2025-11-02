@@ -20,6 +20,7 @@ import ActiveKeypairSelectionModal from "./_components/active-keypair-selection"
 import { SET_ACTIVE_KEYPAIR } from "@app/lib/commands";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import ModalQrCodeModal from "./_components/modal-qrcode";
 
 enum State {
   Loading,
@@ -35,6 +36,7 @@ export default function WalletHome() {
   );
   const [state, setState] = React.useState(State.Loading);
   const [showSwitchModal, setShowSwitchModal] = React.useState(false);
+  const [showQrCodeModal, setShowQrCodeModal] = React.useState(false);
   const [allKeypairs, setAllKeypairs] = React.useState<SolanaWallet[]>([]);
 
   const init = async () => {
@@ -129,6 +131,10 @@ export default function WalletHome() {
                 await selectionFeedback();
                 setShowSwitchModal(true);
               }}
+              onQrCodeClicked={async () => {
+                await selectionFeedback();
+                setShowQrCodeModal(true);
+              }}
             />
             <ActivityCard wallet={wallet} />
           </Box>
@@ -138,6 +144,11 @@ export default function WalletHome() {
             keypairs={allKeypairs}
             activePubkey={wallet?.pubkey}
             onSelect={onSelectWallet}
+          />
+          <ModalQrCodeModal
+            open={showQrCodeModal}
+            onClose={() => setShowQrCodeModal(false)}
+            activePubkey={wallet?.pubkey}
           />
         </>
       )}

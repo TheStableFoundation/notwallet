@@ -24,16 +24,20 @@ import { error } from "@tauri-apps/plugin-log";
 import { useLang } from "../../../src/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
   onLock: () => void;
   onSwitchKeypair: () => void;
+  onQrCodeClicked: () => void;
 }
 
 export default function WalletCard({
   wallet,
   onSwitchKeypair,
+  onQrCodeClicked,
 }: WalletCardProps) {
   const router = useNavigate();
   const { t } = useLang();
@@ -222,29 +226,22 @@ export default function WalletCard({
                 onClick={onSwitchKeypair}
                 size="small"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M16 17L21 12L16 7"
-                    stroke="#9932CC"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M21 12H9"
-                    stroke="#9932CC"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M8 7L3 12L8 17"
-                    stroke="#9932CC"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <SwitchAccountIcon></SwitchAccountIcon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={"QR Code"}>
+              <IconButton
+                sx={{
+                  color: "#9932CC",
+                  bgcolor: "#f5f6fa",
+                  "&:hover": { bgcolor: "#EDE7F6" },
+                  ml: 1,
+                  borderRadius: 2,
+                }}
+                onClick={onQrCodeClicked}
+                size="small"
+              >
+                <QrCodeIcon></QrCodeIcon>
               </IconButton>
             </Tooltip>
           </Box>
