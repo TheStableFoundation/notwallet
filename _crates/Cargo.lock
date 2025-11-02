@@ -3493,7 +3493,7 @@ checksum = "b7c388c1b5e93756d0c740965c41e8822f866621d41acbdf6336a6a168f8840c"
 
 [[package]]
 name = "smbcloud-wallet-constants"
-version = "1.0.5"
+version = "1.0.6"
 dependencies = [
  "tsync",
 ]
@@ -3546,7 +3546,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-core-model"
-version = "1.0.5"
+version = "1.0.6"
 dependencies = [
  "serde",
  "serde_json",
@@ -3593,7 +3593,7 @@ dependencies = [
 
 [[package]]
 name = "smbcloud-wallet-kit-v3"
-version = "1.0.5"
+version = "1.0.6"
 dependencies = [
  "bs58",
  "chrono",
