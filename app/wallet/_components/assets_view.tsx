@@ -58,7 +58,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
     await selectionFeedback();
     const url =
       token === SOLANA
-        ? "https://solana.org"
+        ? "https://notwallet.eu/t/solana"
         : `https://notwallet.eu/t/solana/${token}`;
     openUrl(url);
   };
