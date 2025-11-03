@@ -1,0 +1,18 @@
+{
+  "productName": "NotWallet",
+  "identifier": "xyz.notwallet.NotWallet",
+  "version": "1.0.9",
+  "app": {
+    "windows": [
+      {
+        "title": "NotWallet"
+      }
+    ]
+  },
+  "bundle": {
+    "android": {
+      "minSdkVersion": 24,
+      "versionCode": 3031
+    }
+  }
+}
