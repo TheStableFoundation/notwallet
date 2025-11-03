@@ -11,8 +11,11 @@ pub const THE_STABLE_FOUNDATION_ADDRESS: &str = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssE
 #[tsync]
 pub const THE_STABLE_FOUNDATION_TREASURY_ADDRESS: &str =
     "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
+#[tsync]
+pub const THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE: &str =
+    "GHwjki2QkzkY9ZsDWEpvxk8EAckm8FuAtsohQYW9RFnj";
 pub const PLATFORM_FEE_BPS: u16 = 10;
-pub const FEE_ACCOUNT: &str = THE_STABLE_FOUNDATION_TREASURY_ADDRESS;
+pub const FEE_ACCOUNT: &str = THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE;
 #[tsync]
 pub const SPL_TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
