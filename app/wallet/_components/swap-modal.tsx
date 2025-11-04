@@ -19,7 +19,6 @@ import {
   SOLANA,
   SOL_DECIMALS,
   BACH_DECIMALS,
-  ADDRESS_BACH_TOKEN,
   Environment,
   BalanceV1,
 } from "@app/lib/crate/generated";
