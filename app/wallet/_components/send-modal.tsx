@@ -10,7 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
-import { SolanaWallet } from "@app/lib/crate/generated";
+import { BalanceV1, SolanaWallet } from "@app/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
 import { SEND_TOKEN } from "@app/lib/commands";
@@ -18,12 +18,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { useLang } from "../../../src/LanguageContext";
 import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
+import { AssetIcon } from "@app/lib/components/token-icons";
+import { debug } from "@tauri-apps/plugin-log";
 
 interface SendModalProps {
   open: boolean;
   onClose: () => void;
   senderAddress: string;
   availableKeypairs: SolanaWallet[];
+  availableAssets: BalanceV1[];
 }
 
 export default function SendModal({
@@ -31,18 +34,19 @@ export default function SendModal({
   onClose,
   senderAddress,
   availableKeypairs,
+  availableAssets,
 }: SendModalProps) {
   const { t } = useLang();
   const { environment } = useNetworkEnvironment();
   const [amount, setAmount] = React.useState<string>("");
   const [recipient, setRecipient] = React.useState<string>("");
   const [customAddress, setCustomAddress] = React.useState<string>("");
-  const [tokenType, setTokenType] = React.useState<"BACH" | "SOL">("BACH");
+  const [selectedTokenAddress, setSelectedTokenAddress] =
+    React.useState<string>();
+  const [selectedBalance, setSelectedBalance] = React.useState<BalanceV1>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<boolean>(false);
-  const [bachBalance, _setBachBalance] = React.useState<string>("-");
-  const [solBalance, _setSolBalance] = React.useState<string>("-");
 
   // Reset form when modal opens/closes
   React.useEffect(() => {
@@ -50,9 +54,11 @@ export default function SendModal({
       setAmount("");
       setRecipient("");
       setCustomAddress("");
-      setTokenType("BACH");
       setError(null);
       setSuccess(false);
+      if (availableAssets.length > 0) {
+        updateSelectedToken(availableAssets[0].meta.address);
+      }
     }
   }, [open]);
 
@@ -73,8 +79,18 @@ export default function SendModal({
     setRecipient(event.target.value);
   };
 
-  const handleTokenTypeChange = (event: SelectChangeEvent) => {
-    setTokenType(event.target.value as "BACH" | "SOL");
+  const handleSelectedBalanceChange = (event: SelectChangeEvent) => {
+    updateSelectedToken(event.target.value);
+  };
+
+  const updateSelectedToken = (address: string) => {
+    setSelectedTokenAddress(address);
+    debug(`Selected address: ${selectedTokenAddress}`);
+    const selectedBalance = availableAssets.find(
+      (p) => p.meta.address == address,
+    );
+    setSelectedBalance(selectedBalance);
+    debug(`Selected balance: ${selectedBalance}`);
   };
 
   const handleSend = async () => {
@@ -95,11 +111,7 @@ export default function SendModal({
       }
 
       // Check if balance is sufficient
-      const currentBalance = tokenType === "BACH" ? bachBalance : solBalance;
-      if (
-        currentBalance !== "-" &&
-        parseFloat(amount) > parseFloat(currentBalance)
-      ) {
+      if (selectedBalance && parseFloat(amount) > selectedBalance.balance) {
         setError(t.insufficientBalance);
         return;
       }
@@ -111,7 +123,7 @@ export default function SendModal({
         from: senderAddress,
         to: finalRecipient,
         amount: parseFloat(amount),
-        tokenType: tokenType,
+        tokenType: selectedTokenAddress,
       });
 
       setSuccess(true);
@@ -188,13 +200,20 @@ export default function SendModal({
             <Select
               labelId="token-type-label"
               id="token-type"
-              value={tokenType}
+              value={selectedTokenAddress}
               label={t.tokenType}
-              onChange={handleTokenTypeChange}
+              onChange={handleSelectedBalanceChange}
               disabled={isLoading}
             >
-              <MenuItem value="BACH">BACH</MenuItem>
-              <MenuItem value="SOL">SOL</MenuItem>
+              {availableAssets.map((asset, index) => (
+                <MenuItem key={index} value={asset.meta.address}>
+                  <AssetIcon
+                    id={asset.meta.address}
+                    logoUrl={asset.meta.logo_uri}
+                  />{" "}
+                  {asset.meta.name} ({asset.meta.symbol})
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
@@ -206,14 +225,12 @@ export default function SendModal({
             disabled={isLoading}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">{tokenType}</InputAdornment>
+                <InputAdornment position="end">
+                  {selectedBalance?.meta.symbol}
+                </InputAdornment>
               ),
             }}
-            helperText={
-              tokenType === "BACH"
-                ? `${t.available}: ${bachBalance} BACH`
-                : `${t.available}: ${solBalance} SOL`
-            }
+            helperText={`${t.available}: ${selectedBalance?.ui_amount} ${selectedBalance?.meta.symbol}`}
           />
 
           {filteredKeypairs.length > 0 ? (
