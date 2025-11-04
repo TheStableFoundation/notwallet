@@ -130,15 +130,10 @@ export default function SwapModal({
         setIsLoadingQuote(true);
         setError(null);
 
-        const fromMint =
-          selectedFromTokenAddress === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
-        const toMint =
-          selectedToTokenAddress === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
-
         const amount = parseFloat(inputAmount);
         const quoteResult = await invoke<SwapQuoteResponse>(GET_SWAP_QUOTE, {
-          fromToken: fromMint,
-          toToken: toMint,
+          fromToken: selectedFromTokenAddress,
+          toToken: selectedToTokenAddress,
           amount: amount,
           slippageBps: slippage,
         });
