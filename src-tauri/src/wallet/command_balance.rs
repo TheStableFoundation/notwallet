@@ -5,6 +5,7 @@ use {
     },
     log::info,
     smbcloud_wallet_core_http::xlp::get_wallet_balance::wallet_balance,
+    smbcloud_wallet_core_model::models::environment::Environment,
     smbcloud_wallet_core_network::model::ErrorResponse,
     tauri::command,
 };
@@ -12,12 +13,13 @@ use {
 #[command]
 pub async fn get_wallet_balance(
     environment: XlpEnvironment,
+    network: Environment,
     pubkey: String,
 ) -> Result<String, ErrorResponse> {
     info!("Getting wallet balance for {}", pubkey);
     match wallet_balance(
         environment.base_url(),
-        "Mainnet",
+        network,
         &pubkey,
         XLP_API_KEY,
         USER_AGENT,

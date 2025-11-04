@@ -5,6 +5,9 @@ import Box from "@mui/material/Box";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { useLang } from "../../../src/LanguageContext";
 import QRCode from "react-qr-code";
+import { Container, IconButton, Stack, Tooltip } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 
 interface ModalQrCodeProps {
   open: boolean;
@@ -18,6 +21,12 @@ export default function ModalQrCodeModal({
   activePubkey,
 }: ModalQrCodeProps) {
   const { t } = useLang();
+
+  const onCopyButtonClicked = async (activePubkey: string) => {
+    await selectionFeedback();
+    await writeText(activePubkey);
+  };
+
   return (
     <Modal
       open={open}
@@ -47,24 +56,50 @@ export default function ModalQrCodeModal({
           mx: 1,
         }}
       >
-        <Typography
-          id="switch-keypair-modal"
-          variant="h6"
-          sx={{
-            mb: 2,
-            textAlign: "center",
-            fontWeight: "bold",
-            color: "transparent",
-            background: "linear-gradient(90deg, #9932CC 0%, #A64DFF 100%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            letterSpacing: "0.02em",
-            fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
-          }}
+        <Stack
+          direction="row"
+          alignItems="start"
+          justifyContent="space-between"
+          sx={{ mb: 2 }}
         >
-          {t.addressQrCode}
-        </Typography>
+          <Typography
+            id="switch-keypair-modal"
+            variant="h6"
+            sx={{
+              mb: 2,
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "transparent",
+              background: "linear-gradient(90deg, #9932CC 0%, #A64DFF 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              letterSpacing: "0.02em",
+              fontFamily: "Inter, Helvetica Neue, Arial, sans-serif",
+            }}
+          >
+            {t.addressQrCode}
+          </Typography>
+          {activePubkey && (
+            <Tooltip title={"Copy address"}>
+              <IconButton
+                sx={{
+                  color: "#9932CC",
+                  bgcolor: "#f5f6fa",
+                  "&:hover": { bgcolor: "#EDE7F6" },
+                  ml: 1,
+                  borderRadius: 2,
+                }}
+                onClick={() => {
+                  onCopyButtonClicked(activePubkey);
+                }}
+                size="small"
+              >
+                <ContentCopyIcon></ContentCopyIcon>
+              </IconButton>
+            </Tooltip>
+          )}
+        </Stack>
         {activePubkey && (
           <QRCode
             size={256}

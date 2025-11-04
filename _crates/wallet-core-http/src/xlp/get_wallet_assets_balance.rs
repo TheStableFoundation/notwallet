@@ -1,13 +1,15 @@
 use {
     reqwest::Client,
     smbcloud_wallet_constants::constants::XLP_WALLET_TOKEN_LIST_PATH,
-    smbcloud_wallet_core_model::models::xlp::wallet_assets::WalletAssetsBalanceResponse,
+    smbcloud_wallet_core_model::models::{
+        environment::Environment, xlp::wallet_assets::WalletAssetsBalanceResponse,
+    },
     smbcloud_wallet_core_network::{model::ErrorResponse, request},
 };
 
 pub async fn wallet_token_list(
     base_url: &str,
-    environment: &str,
+    environment: Environment,
     wallet_address: &str,
     api_key: &str,
     user_agent: &str,

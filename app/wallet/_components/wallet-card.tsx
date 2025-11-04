@@ -110,6 +110,7 @@ export default function WalletCard({
   const init = async () => {
     try {
       const walletBalance = await invoke<string>(GET_WALLET_BALANCE, {
+        network: environment,
         pubkey: wallet.pubkey,
         environment: xlpEnvironment,
       });
