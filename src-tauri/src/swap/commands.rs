@@ -1,9 +1,8 @@
-use crate::constants::{
-    rpc::rpc_url,
-    store::{store, STORE_ACTIVE_KEYPAIR},
-};
+use crate::constants::store::{store, STORE_ACTIVE_KEYPAIR};
 use crate::model::keypair::SolanaWallet;
 use bs58;
+use smbcloud_wallet_core_model::models::environment::Environment;
+use smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse};
 use smbcloud_wallet_kit::{
     models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
     swap::{
@@ -11,7 +10,6 @@ use smbcloud_wallet_kit::{
         send_jupiter_swap_transaction,
     },
 };
-use smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse};
 use solana_sdk::signature::{Keypair, Signature};
 use tauri::{command, AppHandle};
 
@@ -35,6 +33,7 @@ pub async fn build_swap_transaction(
 #[command]
 pub async fn send_swap_transaction(
     app: AppHandle,
+    network: Environment,
     swap_transaction: String,
 ) -> Result<Signature, ErrorResponse> {
     // Load wallet from store
@@ -68,5 +67,5 @@ pub async fn send_swap_transaction(
         code: ErrorCode::ParseError,
         message: "Failed to create keypair from private key".to_string(),
     })?;
-    send_jupiter_swap_transaction(rpc_url(), swap_transaction, keypair).await
+    send_jupiter_swap_transaction(network.rpc_url(), swap_transaction, keypair).await
 }

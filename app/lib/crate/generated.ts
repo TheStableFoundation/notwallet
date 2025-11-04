@@ -1,5 +1,7 @@
 /* This file is generated and managed by tsync */
 
+export const BACH_TOKEN_ADDRESS_LOCAL = "your_local_token_address";
+
 export const STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key";
 
 /**
@@ -267,6 +269,10 @@ export interface SwapTransactionResponse {
 export const ADDRESS_SOL = "So11111111111111111111111111111111111111112";
 
 export const ADDRESS_BACH_TOKEN = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
+
+export const ADDRESS_BACH_TOKEN_DEVNET = "DENNuKzCcrLhEtxZ8tm7nSeef8qvKgGGrdxX6euNkNS7";
+
+export const ADDRESS_BACH_TOKEN_TESTNET = "A6a2s9LTZcYZQgxrDatLHYfvHhJEfb5ZWuFENhHtxJtR";
 
 export const ADDRESS_JUPITER = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
 

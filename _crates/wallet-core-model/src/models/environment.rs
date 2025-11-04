@@ -2,14 +2,15 @@ use {
     log::warn,
     serde::{Deserialize, Serialize},
     serde_json::Value,
-    smbcloud_wallet_constants::rpc::{
-        devnet_rpc_url, local_rpc_url, mainnet_rpc_url, testnet_rpc_url,
+    smbcloud_wallet_constants::{
+        assets_solana::ADDRESS_BACH_TOKEN,
+        rpc::{devnet_rpc_url, local_rpc_url, mainnet_rpc_url, testnet_rpc_url},
     },
     std::fmt::Display,
     tsync::tsync,
 };
 
-#[derive(Debug, Serialize, Deserialize, uniffi::Enum)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, uniffi::Enum)]
 #[tsync]
 pub enum Environment {
     Local,
@@ -81,18 +82,6 @@ impl Environment {
             "testnet" => Some(Self::Testnet),
             "mainnet" => Some(Self::Mainnet),
             _ => None,
-        }
-    }
-}
-
-/// Token addresses based on environment
-impl Environment {
-    pub fn bach_token(self) -> String {
-        match self {
-            Self::Local => local_rpc_url(),
-            Self::Devnet => devnet_rpc_url(),
-            Self::Testnet => testnet_rpc_url(),
-            Self::Mainnet => mainnet_rpc_url(),
         }
     }
 }

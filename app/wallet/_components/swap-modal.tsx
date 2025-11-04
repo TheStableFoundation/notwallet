@@ -20,6 +20,7 @@ import {
   SOL_DECIMALS,
   BACH_DECIMALS,
   ADDRESS_BACH_TOKEN,
+  Environment,
 } from "@app/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
@@ -32,6 +33,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { AssetIcon } from "@app/lib/components/token-icons";
 import { info, debug } from "@tauri-apps/plugin-log";
 import { useLang } from "../../../src/LanguageContext";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 
 interface SwapModalProps {
   open: boolean;
@@ -46,6 +48,7 @@ export default function SwapModal({
   senderAddress,
 }: SwapModalProps) {
   const { t } = useLang();
+  const { environment } = useNetworkEnvironment();
   const [inputAmount, setInputAmount] = React.useState<string>("");
   const [fromToken, setFromToken] = React.useState<"SOL" | "BACH">("SOL");
   const [toToken, setToToken] = React.useState<"SOL" | "BACH">("BACH");
@@ -197,9 +200,11 @@ export default function SwapModal({
         info(
           `Executing swap transaction: ${transactionResponse.swapTransaction}`,
         );
-        const signature = await invoke("send_swap_transaction", {
+        const payload: { network: Environment; swapTransaction: string } = {
+          network: environment,
           swapTransaction: transactionResponse.swapTransaction,
-        });
+        };
+        const signature = await invoke("send_swap_transaction", payload);
         debug(`Transaction executed successfully: ${signature}`);
 
         return;

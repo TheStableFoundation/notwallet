@@ -9,7 +9,6 @@ pub(crate) mod command_get_treasury_bach_balance;
 pub(crate) mod command_get_treasury_sol_balance;
 pub(crate) mod command_import_solana_wallet;
 pub(crate) mod command_onboarding_create_wallet;
-pub(crate) mod command_other_assets_balance;
 pub(crate) mod command_send_token;
 pub(crate) mod command_set_active_keypair;
 pub(crate) mod command_sign_message;

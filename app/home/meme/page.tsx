@@ -21,6 +21,7 @@ import { GET_BACH_BALANCE, GET_SOL_BALANCE } from "@app/lib/commands";
 import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@app/lib/crate/generated";
 import { store } from "@app/lib/store/store";
 import PageChildrenTitleBar from "@app/lib/components/page-children-title-bar";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 
 interface MemeToken {
   id: string;
@@ -75,6 +76,7 @@ const mockTokens: MemeToken[] = [
 ];
 
 export default function MemePage() {
+  const { environment } = useNetworkEnvironment();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [tokenName, setTokenName] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
@@ -169,16 +171,15 @@ export default function MemePage() {
 
       setUserWallet(wallet);
 
+      const payload = {
+        network: environment,
+        pubkey: wallet.pubkey,
+      };
       // Fetch BACH balance
-      const bachBal = await invoke<string>(GET_BACH_BALANCE, {
-        pubkey: wallet.pubkey,
-      });
+      const bachBal = await invoke<string>(GET_BACH_BALANCE, payload);
       setBachBalance(bachBal);
-
       // Fetch SOL balance
-      const solBal = await invoke<string>(GET_SOL_BALANCE, {
-        pubkey: wallet.pubkey,
-      });
+      const solBal = await invoke<string>(GET_SOL_BALANCE, payload);
       setSolBalance(solBal);
     } catch (error) {
       console.error("Error fetching wallet and balances:", error);

@@ -1,10 +1,10 @@
 use {
-    crate::constants::rpc::rpc_url, log::info, smbcloud_wallet_kit::balance::sol_balance,
-    tauri::command,
+    log::info, smbcloud_wallet_core_model::models::environment::Environment,
+    smbcloud_wallet_kit::balance::sol_balance, tauri::command,
 };
 
 #[command]
-pub fn get_sol_balance(pubkey: String) -> String {
+pub fn get_sol_balance(network: Environment, pubkey: String) -> String {
     info!("Getting balance for {}", pubkey);
-    sol_balance(rpc_url(), pubkey)
+    sol_balance(network.rpc_url(), pubkey)
 }

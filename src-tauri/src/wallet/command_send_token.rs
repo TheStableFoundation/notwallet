@@ -1,14 +1,19 @@
 use {
     crate::{
         constants::{
-            address::{BACH_TOKEN_ADDRESS, BACH_TOKEN_ADDRESS_LOCAL},
-            rpc::{rpc_url, USE_LOCAL_RPC},
+            address::BACH_TOKEN_ADDRESS_LOCAL,
             store::{store, STORE_KEYPAIRS},
         },
         model::keypair::SolanaWallet,
     },
     log::info,
-    smbcloud_wallet_constants::constants::SPL_TOKEN_PROGRAM_ID,
+    smbcloud_wallet_constants::{
+        assets_solana::{
+            ADDRESS_BACH_TOKEN, ADDRESS_BACH_TOKEN_DEVNET, ADDRESS_BACH_TOKEN_TESTNET,
+        },
+        constants::SPL_TOKEN_PROGRAM_ID,
+    },
+    smbcloud_wallet_core_model::models::environment::Environment,
     smbcloud_wallet_kit::transactions::{create_token_transfer_ix, create_transfer_ix},
     tauri::{command, AppHandle},
 };
@@ -16,6 +21,7 @@ use {
 #[command]
 pub async fn send_token(
     app: AppHandle,
+    network: Environment,
     from: String,
     to: String,
     amount: f64,
@@ -46,15 +52,19 @@ pub async fn send_token(
     // Create and send the transaction based on token type
     let tx_signature = if token_type == "BACH" {
         // For BACH token transfers
-        let bach_token_address = if USE_LOCAL_RPC {
+        let bach_token_address = if network == Environment::Local {
             BACH_TOKEN_ADDRESS_LOCAL.to_string()
+        } else if network == Environment::Devnet {
+            ADDRESS_BACH_TOKEN_DEVNET.to_string()
+        } else if network == Environment::Testnet {
+            ADDRESS_BACH_TOKEN_TESTNET.to_string()
         } else {
-            BACH_TOKEN_ADDRESS.to_string()
+            ADDRESS_BACH_TOKEN.to_string()
         };
 
         // Create token transfer instruction
         create_token_transfer_ix(
-            rpc_url(),
+            network.rpc_url(),
             keypair,
             from,
             to,
@@ -66,7 +76,7 @@ pub async fn send_token(
         .map_err(|e| format!("Failed to send BACH tokens: {:?}", e))?
     } else {
         // Create SOL transfer instruction
-        create_transfer_ix(rpc_url(), keypair, from, to, amount)
+        create_transfer_ix(network.rpc_url(), keypair, from, to, amount)
             .await
             .map_err(|e| format!("Failed to send SOL: {:?}", e))?
     };

@@ -1,11 +1,11 @@
 use {
-    crate::constants::rpc::rpc_url, log::info, smbcloud_wallet_kit::balance::sol_balance,
-    tauri::command,
+    log::info, smbcloud_wallet_core_model::models::environment::Environment,
+    smbcloud_wallet_kit::balance::sol_balance, tauri::command,
 };
 
 #[command]
-pub fn get_treasury_sol_balance() -> String {
+pub fn get_treasury_sol_balance(network: Environment) -> String {
     info!("Getting treasury SOL balance");
     let treasury_address = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
-    sol_balance(rpc_url(), treasury_address.to_string())
+    sol_balance(network.rpc_url(), treasury_address.to_string())
 }
