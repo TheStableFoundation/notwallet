@@ -437,6 +437,7 @@ export default function WalletCard({
         onClose={handleCloseSwapModal}
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
+        availableAssets={availableAssets}
       />
     </Card>
   );
