@@ -5,7 +5,7 @@ use {
     },
     log::info,
     smbcloud_wallet_core_http::xlp::get_wallet_assets_balance::wallet_token_list,
-    smbcloud_wallet_core_model::models::balance_v1::BalanceV1,
+    smbcloud_wallet_core_model::models::{balance_v1::BalanceV1, environment::Environment},
     smbcloud_wallet_core_network::model::ErrorResponse,
     tauri::command,
 };
@@ -13,12 +13,13 @@ use {
 #[command]
 pub async fn get_wallet_assets_balance(
     environment: XlpEnvironment,
+    network: Environment,
     pubkey: String,
 ) -> Result<Vec<BalanceV1>, ErrorResponse> {
     info!("Getting wallet assets balance for {}", pubkey);
     match wallet_token_list(
         environment.base_url(),
-        "Mainnet",
+        network,
         &pubkey,
         XLP_API_KEY,
         USER_AGENT,
