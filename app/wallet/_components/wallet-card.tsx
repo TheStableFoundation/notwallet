@@ -153,16 +153,6 @@ export default function WalletCard({
         >
           {walletUsername}
         </Typography>
-        {environment != "Mainnet" && (
-          <Typography
-            variant="inherit"
-            color="warning"
-            fontWeight="bold"
-            sx={{ fontSize: 16, fontStyle: "italic" }}
-          >
-            {environment}
-          </Typography>
-        )}
         <Stack direction="row" spacing={1}>
           <Tooltip title={t.walletSettings} arrow>
             <IconButton
