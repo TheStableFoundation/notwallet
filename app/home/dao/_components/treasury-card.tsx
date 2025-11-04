@@ -23,6 +23,7 @@ import {
 import { openExplorer } from "@app/lib/helper";
 import { AssetIcon } from "@app/lib/components/token-icons";
 import { useLang } from "../../../../src/LanguageContext";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 
 enum LoadingState {
   Loading,
@@ -32,6 +33,7 @@ enum LoadingState {
 
 export default function TreasuryCard() {
   const { t } = useLang();
+  const { environment } = useNetworkEnvironment();
   const [state, setState] = React.useState<LoadingState>(LoadingState.Loading);
   const [bachBalance, setBachBalance] = React.useState<string>("-");
   const [solBalance, setSolBalance] = React.useState<string>("-");
@@ -41,8 +43,8 @@ export default function TreasuryCard() {
       setState(LoadingState.Loading);
 
       const [treasuryBachBalance, treasurySolBalance] = await Promise.all([
-        invoke<string>(GET_TREASURY_BACH_BALANCE),
-        invoke<string>(GET_TREASURY_SOL_BALANCE),
+        invoke<string>(GET_TREASURY_BACH_BALANCE, { network: environment }),
+        invoke<string>(GET_TREASURY_SOL_BALANCE, { network: environment }),
       ]);
 
       debug(`Treasury BACH balance: ${treasuryBachBalance}`);

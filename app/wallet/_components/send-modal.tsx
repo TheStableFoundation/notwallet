@@ -17,6 +17,7 @@ import { SEND_TOKEN } from "@app/lib/commands";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { useLang } from "../../../src/LanguageContext";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 
 interface SendModalProps {
   open: boolean;
@@ -32,6 +33,7 @@ export default function SendModal({
   availableKeypairs,
 }: SendModalProps) {
   const { t } = useLang();
+  const { environment } = useNetworkEnvironment();
   const [amount, setAmount] = React.useState<string>("");
   const [recipient, setRecipient] = React.useState<string>("");
   const [customAddress, setCustomAddress] = React.useState<string>("");
@@ -105,6 +107,7 @@ export default function SendModal({
       // Here you would invoke the Tauri command to send tokens
       // This is a placeholder - implement the actual invoke call
       await invoke(SEND_TOKEN, {
+        network: environment,
         from: senderAddress,
         to: finalRecipient,
         amount: parseFloat(amount),

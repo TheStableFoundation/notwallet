@@ -9,7 +9,6 @@ export const ONRAMP_SESSION = "onramp_session";
 export const GET_BACH_BALANCE = "get_bach_balance";
 export const GET_SOL_BALANCE = "get_sol_balance";
 export const GET_VERIFIED_ASSETS = "get_verified_assets";
-export const GET_OTHER_ASSETS_BALANCE = "get_other_assets_balance";
 export const SEND_TOKEN = "send_token";
 export const GET_TREASURY_BACH_BALANCE = "get_treasury_bach_balance";
 export const GET_TREASURY_SOL_BALANCE = "get_treasury_sol_balance";

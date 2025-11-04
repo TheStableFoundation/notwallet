@@ -4,6 +4,8 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLang } from "../LanguageContext";
 import { debug } from "@tauri-apps/plugin-log";
 import { haptics } from "@app/lib/utils/haptics";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
+import { Typography } from "@mui/material";
 
 interface NavItem {
   path: string;
@@ -59,6 +61,7 @@ const navItems: NavItem[] = [
 export default function Navbar() {
   const location = useLocation();
   const { t } = useLang();
+  const { environment } = useNetworkEnvironment();
   const isRTL = false;
 
   const isActivePath = (path: string) => {
@@ -115,6 +118,17 @@ export default function Navbar() {
         <div className="max-w-2xl mx-auto flex flex-row justify-center items-center px-4 py-3 w-full">
           <span className="font-bold text-xl text-primary-main">
             {t.appName}
+            {environment != "Mainnet" && (
+              <Typography
+                component="span"
+                color="warning"
+                fontWeight="bold"
+                sx={{ fontSize: 16, fontStyle: "italic" }}
+              >
+                {" "}
+                ({environment})
+              </Typography>
+            )}
           </span>
         </div>
       </div>

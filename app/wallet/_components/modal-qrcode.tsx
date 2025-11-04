@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { useLang } from "../../../src/LanguageContext";
 import QRCode from "react-qr-code";
-import { Container, IconButton, Stack, Tooltip } from "@mui/material";
+import { IconButton, Stack, Tooltip } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 

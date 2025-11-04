@@ -19,6 +19,7 @@ import {
 import { openExplorer } from "@app/lib/helper";
 import { AssetIcon } from "@app/lib/components/token-icons";
 import { useLang } from "../../../../src/LanguageContext";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 
 enum LoadingState {
   Loading,
@@ -28,6 +29,7 @@ enum LoadingState {
 
 export default function DAOInfoCard() {
   const { t } = useLang();
+  const { environment } = useNetworkEnvironment();
   const [state, setState] = React.useState<LoadingState>(LoadingState.Loading);
   const [lockedBachBalance, setLockedBachBalance] = React.useState<string>("-");
 
@@ -35,9 +37,11 @@ export default function DAOInfoCard() {
     try {
       setState(LoadingState.Loading);
 
-      const daoLockedBalance = await invoke<string>(GET_BACH_BALANCE, {
+      const payload = {
+        network: environment,
         pubkey: THE_STABLE_FOUNDATION_ADDRESS,
-      });
+      };
+      const daoLockedBalance = await invoke<string>(GET_BACH_BALANCE, payload);
 
       debug(`DAO locked BACH balance: ${daoLockedBalance}`);
       setLockedBachBalance(daoLockedBalance);

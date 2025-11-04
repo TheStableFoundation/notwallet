@@ -4,8 +4,11 @@ use tsync::tsync;
 #[allow(dead_code)]
 pub const ADDRESS_SOL: &str = "So11111111111111111111111111111111111111112";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_BACH_TOKEN: &str = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
+#[tsync]
+pub const ADDRESS_BACH_TOKEN_DEVNET: &str = "DENNuKzCcrLhEtxZ8tm7nSeef8qvKgGGrdxX6euNkNS7";
+#[tsync]
+pub const ADDRESS_BACH_TOKEN_TESTNET: &str = "A6a2s9LTZcYZQgxrDatLHYfvHhJEfb5ZWuFENhHtxJtR";
 #[tsync]
 #[allow(dead_code)]
 pub const ADDRESS_JUPITER: &str = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
