@@ -130,6 +130,8 @@ export interface Translation {
   switchKeypairTitle: string;
   addressQrCode: string;
   noKeypairsFound: string;
+  noSolWarningTitle: string;
+  noSolWarningDescription: string;
   account: string;
   active: string;
   assets: string;
@@ -429,6 +431,9 @@ export const translations: Record<SupportedLanguages, Translation> = {
     switchKeypairTitle: "Switch Wallet",
     addressQrCode: "Scan Address",
     noKeypairsFound: "No wallets found",
+    noSolWarningTitle: "No SOL balance",
+    noSolWarningDescription:
+      "You need SOL to pay transaction fee in the Solana blockchain.",
     account: "Account",
     active: "Active",
     assets: "Assets",
@@ -730,6 +735,9 @@ export const translations: Record<SupportedLanguages, Translation> = {
     switchKeypairTitle: "Byt plånbok",
     addressQrCode: "Skanningsadress",
     noKeypairsFound: "Inga plånböcker hittades",
+    noSolWarningTitle: "Ingen SOL balans",
+    noSolWarningDescription:
+      "Du behöver SOL för att betala transaktionsavgiften i Solana blockkedjan.",
     account: "Konto",
     active: "Aktiv",
     assets: "Tillgångar",
@@ -1031,6 +1039,9 @@ export const translations: Record<SupportedLanguages, Translation> = {
     switchKeypairTitle: "Ganti Dompet",
     addressQrCode: "Scan Alamat Dompet",
     noKeypairsFound: "Tidak ada dompet ditemukan",
+    noSolWarningTitle: "Tidak ada SOL",
+    noSolWarningDescription:
+      "Anda memerlukan SOL untuk membayar biaya transaksi di blockchain Solana.",
     account: "Akun",
     active: "Aktif",
     assets: "Aset",

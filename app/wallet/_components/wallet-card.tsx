@@ -8,7 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { BalanceV1, SolanaWallet } from "@app/lib/crate/generated";
+import { ADDRESS_SOL, BalanceV1, SolanaWallet } from "@app/lib/crate/generated";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
@@ -27,6 +27,7 @@ import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
+import NoSolModal from "./modal-no-sol";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -52,6 +53,7 @@ export default function WalletCard({
   );
   const [sendModalOpen, setSendModalOpen] = React.useState<boolean>(false);
   const [swapModalOpen, setSwapModalOpen] = React.useState<boolean>(false);
+  const [noSolModalOpen, setNoSolModalOpen] = React.useState<boolean>(false);
   const [availableKeypairs, setAvailableKeypairs] = React.useState<
     SolanaWallet[]
   >([]);
@@ -68,6 +70,15 @@ export default function WalletCard({
 
   const handleSend = async () => {
     await selectionFeedback();
+
+    // Warn if no SOL
+    const solBalance = availableAssets.find(
+      (asset) => asset.meta.address === ADDRESS_SOL,
+    );
+    if (!solBalance) {
+      setNoSolModalOpen(true);
+      return;
+    }
     // Get all available keypairs for the dropdown
     try {
       const keypairs = await invoke<SolanaWallet[]>(GET_ALL_KEYPAIRS);
@@ -81,6 +92,16 @@ export default function WalletCard({
 
   const handleSwap = async () => {
     await selectionFeedback();
+
+    // Warn if no SOL
+    const solBalance = availableAssets.find(
+      (asset) => asset.meta.address === ADDRESS_SOL,
+    );
+    if (!solBalance) {
+      setNoSolModalOpen(true);
+      return;
+    }
+
     // Get all available keypairs for the dropdown
     try {
       const keypairs = await invoke<SolanaWallet[]>(GET_ALL_KEYPAIRS);
@@ -101,6 +122,12 @@ export default function WalletCard({
   const handleCloseSwapModal = () => {
     setSwapModalOpen(false);
     // Refresh balances after swapping
+    init();
+  };
+
+  const handleCloseNoSolModal = () => {
+    setNoSolModalOpen(false);
+    // Refresh balances
     init();
   };
 
@@ -439,6 +466,7 @@ export default function WalletCard({
         availableKeypairs={availableKeypairs}
         availableAssets={availableAssets}
       />
+      <NoSolModal open={noSolModalOpen} onClose={handleCloseNoSolModal} />
     </Card>
   );
 }
