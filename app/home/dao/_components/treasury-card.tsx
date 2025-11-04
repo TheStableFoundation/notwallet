@@ -18,7 +18,7 @@ import { debug } from "@tauri-apps/plugin-log";
 import {
   ADDRESS_BACH_TOKEN,
   SOLANA,
-  THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
+  THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE,
 } from "@app/lib/crate/generated";
 import { openExplorer } from "@app/lib/helper";
 import { AssetIcon } from "@app/lib/components/token-icons";
@@ -109,11 +109,13 @@ export default function TreasuryCard() {
             flex: 1,
           }}
         >
-          {`${THE_STABLE_FOUNDATION_TREASURY_ADDRESS.slice(0, 8)}...${THE_STABLE_FOUNDATION_TREASURY_ADDRESS.slice(-8)}`}
+          {`${THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE.slice(0, 8)}...${THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE.slice(-8)}`}
         </Typography>
         <Tooltip title={t.viewOnExplorer} arrow>
           <IconButton
-            onClick={() => openExplorer(THE_STABLE_FOUNDATION_TREASURY_ADDRESS)}
+            onClick={() =>
+              openExplorer(THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE)
+            }
             sx={{
               color: "#9932CC",
               ml: 1,
