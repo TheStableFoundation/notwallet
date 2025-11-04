@@ -1,8 +1,5 @@
 use {
-    crate::{
-        assets::{BACH_DECIMALS, SOLANA, SOL_DECIMALS},
-        models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
-    },
+    crate::models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
     base64::{engine::general_purpose, Engine as _},
     bincode,
     log::debug,
@@ -11,6 +8,7 @@ use {
         JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS,
         THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE,
     },
+    smbcloud_wallet_core_model::models::asset_solana::SolanaAsset,
     smbcloud_wallet_core_network::{model::ErrorResponse, request},
     solana_client::rpc_client::RpcClient,
     solana_sdk::{
@@ -60,13 +58,12 @@ pub async fn get_jupiter_swap_quote(
     amount: f64,
     slippage_bps: u64,
 ) -> Result<SwapQuoteResponse, ErrorResponse> {
-    let amount_denomination = if from_token == SOLANA {
-        (amount * 10f64.powi(SOL_DECIMALS)) as i64
-    } else if from_token == SOLANA {
-        (amount * 10f64.powi(BACH_DECIMALS)) as i64
-    } else {
-        panic!("Only support BACH and SOL swap for now.")
-    };
+    let amount_denomination =
+        if let Some(from_token) = SolanaAsset::from_address(from_token.to_string()) {
+            (amount * 10f64.powi(from_token.metadata().decimal as i32)) as i64
+        } else {
+            panic!("Check supported assets in the wallet-core-model crate.")
+        };
     let url = format!(
         "{}{}?inputMint={}&outputMint={}&amount={}&slippageBps={}&platformFeeBps={}&feeAccount={}",
         JUPITER_BASE_URL,
