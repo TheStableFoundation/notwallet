@@ -121,8 +121,8 @@ pub async fn create_transfer_ix(
     Ok(signature.to_string())
 }
 
-/// Creates and sends an SPL token transfer transaction with 0.25% fee to treasury
-/// Only for BACH token transfer
+/// Creates and sends an SPL token transfer transaction with 0.25% fee to treasury wallet.
+/// Works for any spl-token transfer.
 pub async fn create_token_transfer_ix(
     rpc_url: String,
     sender_keypair: Keypair,
@@ -149,7 +149,7 @@ pub async fn create_token_transfer_ix(
         .map_err(|_| TransactionError::InvalidAddress(token_program_id.clone()))?;
 
     // Calculate fee breakdown for token transaction
-    let fee_breakdown = TreasuryFeeManager::calculate_fees(amount, "BACH".to_string())
+    let fee_breakdown = TreasuryFeeManager::calculate_fees(amount, token_mint_address.to_string())
         .map_err(|e| TransactionError::FeeCalculationError(e.to_string()))?;
 
     // Find the token accounts for the sender, recipient, and treasury
