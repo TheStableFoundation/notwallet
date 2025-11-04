@@ -2,9 +2,8 @@ use {
     log::warn,
     serde::{Deserialize, Serialize},
     serde_json::Value,
-    smbcloud_wallet_constants::{
-        assets_solana::ADDRESS_BACH_TOKEN,
-        rpc::{devnet_rpc_url, local_rpc_url, mainnet_rpc_url, testnet_rpc_url},
+    smbcloud_wallet_constants::rpc::{
+        devnet_rpc_url, local_rpc_url, mainnet_rpc_url, testnet_rpc_url,
     },
     std::fmt::Display,
     tsync::tsync,

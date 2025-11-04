@@ -8,7 +8,8 @@ use {
     log::debug,
     reqwest::{header::CONTENT_TYPE, Client},
     smbcloud_wallet_constants::constants::{
-        FEE_ACCOUNT, JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS,
+        JUPITER_BASE_URL, JUPITER_SWAP_PATH, JUPITER_SWAP_QUOTE_PATH, PLATFORM_FEE_BPS,
+        THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE,
     },
     smbcloud_wallet_core_network::{model::ErrorResponse, request},
     solana_client::rpc_client::RpcClient,
@@ -75,7 +76,7 @@ pub async fn get_jupiter_swap_quote(
         amount_denomination,
         slippage_bps,
         PLATFORM_FEE_BPS,
-        FEE_ACCOUNT
+        THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE
     );
     let client = Client::new().get(url);
     request(client).await

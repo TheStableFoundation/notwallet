@@ -8,14 +8,15 @@ pub const SOL_DECIMALS: u8 = 9;
 /// The Stable Foundation
 #[tsync]
 pub const THE_STABLE_FOUNDATION_ADDRESS: &str = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW27rLDtfU8y5";
+// Treasury main address
 #[tsync]
 pub const THE_STABLE_FOUNDATION_TREASURY_ADDRESS: &str =
     "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
+// Address for fee collection.
 #[tsync]
 pub const THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE: &str =
     "GHwjki2QkzkY9ZsDWEpvxk8EAckm8FuAtsohQYW9RFnj";
 pub const PLATFORM_FEE_BPS: u16 = 10;
-pub const FEE_ACCOUNT: &str = THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE;
 #[tsync]
 pub const SPL_TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 

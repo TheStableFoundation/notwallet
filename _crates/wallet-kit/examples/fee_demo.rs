@@ -315,7 +315,7 @@ fn demonstrate_instruction_creation() {
     println!("  To: {}", to_wallet);
     println!(
         "  Treasury: {}",
-        smbcloud_wallet_constants::constants::THE_STABLE_FOUNDATION_TREASURY_ADDRESS
+        smbcloud_wallet_constants::constants::THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE
     );
     println!();
 

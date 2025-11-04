@@ -2,7 +2,7 @@ use {
     crate::fee::TreasuryFeeManager,
     log::{debug, info, warn},
     smbcloud_wallet_constants::constants::{
-        SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
+        SEMITONE_PER_BACH, THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE,
     },
     solana_client::{nonblocking::rpc_client::RpcClient, rpc_request::TokenAccountsFilter},
     solana_sdk::{
@@ -177,8 +177,8 @@ pub async fn create_token_transfer_ix(
 
     // Check if treasury has a token account for this mint, if not we'll need to create one
     let treasury_wallet =
-        Pubkey::from_str(THE_STABLE_FOUNDATION_TREASURY_ADDRESS).map_err(|_| {
-            TransactionError::InvalidAddress(THE_STABLE_FOUNDATION_TREASURY_ADDRESS.to_string())
+        Pubkey::from_str(THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE).map_err(|_| {
+            TransactionError::InvalidAddress(THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE.to_string())
         })?;
 
     let treasury_token_account_result =
