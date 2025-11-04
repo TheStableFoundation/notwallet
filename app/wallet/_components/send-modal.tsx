@@ -123,7 +123,7 @@ export default function SendModal({
         from: senderAddress,
         to: finalRecipient,
         amount: parseFloat(amount),
-        tokenType: selectedTokenAddress,
+        tokenAddress: selectedTokenAddress,
       });
 
       setSuccess(true);

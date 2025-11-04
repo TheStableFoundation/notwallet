@@ -1,18 +1,10 @@
 use {
     crate::{
-        constants::{
-            address::BACH_TOKEN_ADDRESS_LOCAL,
-            store::{store, STORE_KEYPAIRS},
-        },
+        constants::store::{store, STORE_KEYPAIRS},
         model::keypair::SolanaWallet,
     },
     log::info,
-    smbcloud_wallet_constants::{
-        assets_solana::{
-            ADDRESS_BACH_TOKEN, ADDRESS_BACH_TOKEN_DEVNET, ADDRESS_BACH_TOKEN_TESTNET,
-        },
-        constants::SPL_TOKEN_PROGRAM_ID,
-    },
+    smbcloud_wallet_constants::{assets_solana::ADDRESS_SOL, constants::SPL_TOKEN_PROGRAM_ID},
     smbcloud_wallet_core_model::models::environment::Environment,
     smbcloud_wallet_kit::transactions::{create_token_transfer_ix, create_transfer_ix},
     tauri::{command, AppHandle},
@@ -25,9 +17,12 @@ pub async fn send_token(
     from: String,
     to: String,
     amount: f64,
-    token_type: String,
+    token_address: String,
 ) -> Result<String, String> {
-    info!("Sending {} {} from {} to {}", amount, token_type, from, to);
+    info!(
+        "Sending {} {} from {} to {}",
+        amount, token_address, from, to
+    );
 
     // Get the sender's keypair
     let store = store(&app).map_err(|_| "Failed to load store".to_string())?;
@@ -50,35 +45,24 @@ pub async fn send_token(
         .map_err(|_| "Failed to create keypair from private key".to_string())?;
 
     // Create and send the transaction based on token type
-    let tx_signature = if token_type == "BACH" {
-        // For BACH token transfers
-        let bach_token_address = if network == Environment::Local {
-            BACH_TOKEN_ADDRESS_LOCAL.to_string()
-        } else if network == Environment::Devnet {
-            ADDRESS_BACH_TOKEN_DEVNET.to_string()
-        } else if network == Environment::Testnet {
-            ADDRESS_BACH_TOKEN_TESTNET.to_string()
-        } else {
-            ADDRESS_BACH_TOKEN.to_string()
-        };
-
+    let tx_signature = if token_address == ADDRESS_SOL {
+        // Create SOL transfer instruction
+        create_transfer_ix(network.rpc_url(), keypair, from, to, amount)
+            .await
+            .map_err(|e| format!("Failed to send SOL: {:?}", e))?
+    } else {
         // Create token transfer instruction
         create_token_transfer_ix(
             network.rpc_url(),
             keypair,
             from,
             to,
-            bach_token_address,
+            token_address,
             SPL_TOKEN_PROGRAM_ID.to_string(),
             amount,
         )
         .await
         .map_err(|e| format!("Failed to send BACH tokens: {:?}", e))?
-    } else {
-        // Create SOL transfer instruction
-        create_transfer_ix(network.rpc_url(), keypair, from, to, amount)
-            .await
-            .map_err(|e| format!("Failed to send SOL: {:?}", e))?
     };
 
     info!("Transaction sent successfully: {}", tx_signature);
