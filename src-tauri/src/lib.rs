@@ -18,7 +18,11 @@ use {
             commands::{get_installation_id, is_debug, register_client},
             setup,
         },
-        swap::commands::{build_swap_transaction, get_swap_quote, send_swap_transaction},
+        swap::{
+            command_build_swap_transaction::build_swap_transaction,
+            command_get_swap_quote::get_swap_quote,
+            command_send_swap_transaction::send_swap_transaction,
+        },
         wallet::{
             command_balance::get_wallet_balance,
             command_check_pubkey::check_pubkey,

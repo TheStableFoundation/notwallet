@@ -72,7 +72,6 @@ export default function SwapModal({
   const [slippage, setSlippage] = React.useState<number>(50); // 0.5% default slippage
   const [bachBalance, _setBachBalance] = React.useState<string>("-");
   const [solBalance, _setSolBalance] = React.useState<string>("-");
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const handleSelectedFromTokenBalanceChange = (event: SelectChangeEvent) => {
     updateSelectedFromToken(event.target.value);
@@ -317,11 +316,6 @@ export default function SwapModal({
     onClose();
   };
 
-  const getTokenIcon = (token: "SOL" | "BACH") => {
-    const id = token === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
-    return <AssetIcon id={id} size={20} />;
-  };
-
   return (
     <Modal
       open={open}
@@ -401,7 +395,7 @@ export default function SwapModal({
                       value={selectedFromTokenAddress}
                       label={t.tokenType}
                       onChange={handleSelectedFromTokenBalanceChange}
-                      disabled={isLoading}
+                      disabled={isSwapping}
                     >
                       {availableAssets
                         .filter(
@@ -457,7 +451,7 @@ export default function SwapModal({
                       value={selectedToTokenAddress}
                       label={t.tokenType}
                       onChange={handleSelectedToTokenBalanceChange}
-                      disabled={isLoading}
+                      disabled={isSwapping}
                     >
                       {availableAssets
                         .filter(

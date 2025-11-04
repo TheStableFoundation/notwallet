@@ -1,34 +1,13 @@
-use crate::constants::store::{store, STORE_ACTIVE_KEYPAIR};
-use crate::model::keypair::SolanaWallet;
-use bs58;
-use smbcloud_wallet_core_model::models::environment::Environment;
-use smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse};
-use smbcloud_wallet_kit::{
-    models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
-    swap::{
-        build_swap_transaction as build_swap_tx, get_jupiter_swap_quote,
-        send_jupiter_swap_transaction,
-    },
+use {
+    crate::constants::store::{store, STORE_ACTIVE_KEYPAIR},
+    crate::model::keypair::SolanaWallet,
+    bs58,
+    smbcloud_wallet_core_model::models::environment::Environment,
+    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
+    smbcloud_wallet_kit::swap::send_jupiter_swap_transaction,
+    solana_sdk::signature::{Keypair, Signature},
+    tauri::{command, AppHandle},
 };
-use solana_sdk::signature::{Keypair, Signature};
-use tauri::{command, AppHandle};
-
-#[command]
-pub async fn get_swap_quote(
-    from_token: &str,
-    to_token: &str,
-    amount: f64,
-    slippage_bps: u64,
-) -> Result<SwapQuoteResponse, ErrorResponse> {
-    get_jupiter_swap_quote(from_token, to_token, amount, slippage_bps).await
-}
-
-#[command]
-pub async fn build_swap_transaction(
-    payload: SwapTransactionPayload,
-) -> Result<SwapTransactionResponse, ErrorResponse> {
-    build_swap_tx(payload).await
-}
 
 #[command]
 pub async fn send_swap_transaction(
