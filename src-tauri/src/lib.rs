@@ -11,8 +11,8 @@ use {
     crate::{
         onramp::commands::onramp_session,
         settings::commands::{
-            get_airdrop_environment, get_xlp_environment, set_airdrop_environment,
-            set_xlp_environment,
+            get_airdrop_environment, get_network_environment, get_xlp_environment,
+            set_airdrop_environment, set_network_environment, set_xlp_environment,
         },
         setup::{
             commands::{get_installation_id, is_debug, register_client},
@@ -97,6 +97,8 @@ pub fn run() {
             register_client,
             set_xlp_environment,
             get_xlp_environment,
+            get_network_environment,
+            set_network_environment,
             get_wallet_assets_balance,
         ])
         .run(tauri::generate_context!())

@@ -1,12 +1,16 @@
 use {
+    log::warn,
     serde::{Deserialize, Serialize},
+    serde_json::Value,
     smbcloud_wallet_constants::rpc::{
         devnet_rpc_url, local_rpc_url, mainnet_rpc_url, testnet_rpc_url,
     },
     std::fmt::Display,
+    tsync::tsync,
 };
 
 #[derive(Debug, Serialize, Deserialize, uniffi::Enum)]
+#[tsync]
 pub enum Environment {
     Local,
     Devnet,
@@ -17,10 +21,34 @@ pub enum Environment {
 impl Display for Environment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Local => write!(f, "Local network"),
-            Self::Devnet => write!(f, "Dev network"),
-            Self::Testnet => write!(f, "Test network"),
-            Self::Mainnet => write!(f, "Main network"),
+            Self::Local => write!(f, "Local"),
+            Self::Devnet => write!(f, "Devnet"),
+            Self::Testnet => write!(f, "Testnet"),
+            Self::Mainnet => write!(f, "Mainnet"),
+        }
+    }
+}
+
+impl Environment {
+    pub fn from_value(value: Value) -> Self {
+        let env = match serde_json::from_value::<String>(value) {
+            Ok(env) => env,
+            Err(e) => {
+                warn!("Cannot determine airdrop environment: {}", e);
+                return Environment::Mainnet;
+            }
+        };
+        match env.as_str() {
+            "Devnet" => Environment::Devnet,
+            "Testnet" => Environment::Testnet,
+            "Mainnet" => Environment::Mainnet,
+            _ => {
+                warn!(
+                    "Cannot determine Network environment from '{}'. Default to Mainnet.",
+                    env
+                );
+                Environment::Mainnet
+            }
         }
     }
 }
@@ -53,6 +81,18 @@ impl Environment {
             "testnet" => Some(Self::Testnet),
             "mainnet" => Some(Self::Mainnet),
             _ => None,
+        }
+    }
+}
+
+/// Token addresses based on environment
+impl Environment {
+    pub fn bach_token(self) -> String {
+        match self {
+            Self::Local => local_rpc_url(),
+            Self::Devnet => devnet_rpc_url(),
+            Self::Testnet => testnet_rpc_url(),
+            Self::Mainnet => mainnet_rpc_url(),
         }
     }
 }

@@ -1,5 +1,6 @@
 use {
     crate::setup::{client::setup_client, store::setup_store},
+    dotenv::dotenv,
     log::info,
     tauri::{App, Manager},
 };
@@ -9,6 +10,8 @@ pub(crate) mod commands;
 mod store;
 
 pub(crate) fn setup(app: &App) -> Result<(), Box<dyn std::error::Error>> {
+    // Load .env variables
+    dotenv().ok();
     let app_data_dir = app
         .path()
         .app_local_data_dir()

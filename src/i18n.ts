@@ -202,6 +202,7 @@ export interface Translation {
   showSeedPhrase: string;
   viewRecoveryPhrase: string;
   importExisting: string;
+  network: string;
   management: string;
   importRecovery: string;
   destroyWallets: string;
@@ -500,6 +501,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     showSeedPhrase: "Show Seed Phrase",
     viewRecoveryPhrase: "View your recovery phrase",
     importExisting: "Import an existing wallet",
+    network: "Network",
     management: "Wallet Management",
     importRecovery: "Import & Recovery",
     destroyWallets: "Destroy Wallets",
@@ -800,6 +802,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     showSeedPhrase: "Visa fröfras",
     viewRecoveryPhrase: "Visa din återställningsfras",
     importExisting: "Importera en befintlig plånbok",
+    network: "Natverk",
     management: "Plånbokshantering",
     importRecovery: "Import & återställning",
     destroyWallets: "Förstör plånböcker",
@@ -1100,6 +1103,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     showSeedPhrase: "Tampilkan Frasa Seed",
     viewRecoveryPhrase: "Lihat frasa pemulihan Anda",
     importExisting: "Impor dompet yang ada",
+    network: "Jaringan",
     management: "Manajemen Dompet",
     importRecovery: "Impor & Pemulihan",
     destroyWallets: "Hancurkan Dompet",

@@ -3548,6 +3548,7 @@ dependencies = [
 name = "smbcloud-wallet-core-model"
 version = "1.0.6"
 dependencies = [
+ "log",
  "serde",
  "serde_json",
  "smbcloud-wallet-constants",

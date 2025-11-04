@@ -26,6 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 
 interface WalletCardProps {
   wallet: SolanaWallet;
@@ -42,6 +43,7 @@ export default function WalletCard({
   const router = useNavigate();
   const { t } = useLang();
   const { xlpEnvironment } = useXlpEnvironment();
+  const { environment } = useNetworkEnvironment();
   const [walletBalance, setWalletBalance] = React.useState<string>("-");
   const [walletUsername, setWalletUsername] = React.useState<string>(
     wallet.username || t.defaultUsername,
@@ -150,6 +152,16 @@ export default function WalletCard({
         >
           {walletUsername}
         </Typography>
+        {environment != "Mainnet" && (
+          <Typography
+            variant="inherit"
+            color="warning"
+            fontWeight="bold"
+            sx={{ fontSize: 16, fontStyle: "italic" }}
+          >
+            {environment}
+          </Typography>
+        )}
         <Stack direction="row" spacing={1}>
           <Tooltip title={t.walletSettings} arrow>
             <IconButton

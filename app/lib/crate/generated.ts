@@ -112,6 +112,8 @@ export interface OnboardingCreateWallet {
   keypair: SolanaWallet;
 }
 
+export const KEY_NETWORK_ENVIRONMENT = "network_environment";
+
 export const KEY_AIRDROP_ENVIRONMENT = "airdrop_environment";
 
 export const KEY_XLP_ENVIRONMENT = "xlp_environment";
@@ -309,3 +311,6 @@ export interface BalanceV1 {
   /** Balance in its easy-to-read form. For example, a 0.01 SOL. */
   ui_amount: number;
 }
+
+export type Environment =
+  | "Local" | "Devnet" | "Testnet" | "Mainnet";
