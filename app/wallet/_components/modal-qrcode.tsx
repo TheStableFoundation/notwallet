@@ -103,10 +103,9 @@ export default function ModalQrCodeModal({
         {activePubkey && (
           <QRCode
             title="Wallet Address"
-            bgColor="#A64DFF"
+            bgColor="#C792EA"
             size={256}
             style={{
-              padding: 6,
               height: "auto",
               maxWidth: "100%",
               width: "100%",
