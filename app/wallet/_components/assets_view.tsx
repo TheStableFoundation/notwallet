@@ -27,9 +27,13 @@ import { useNetworkEnvironment } from "@app/lib/context/network-environment-cont
 
 interface AssetsViewProps {
   wallet: SolanaWallet;
+  onAvailableAssetsUpdated: (assets: BalanceV1[]) => void;
 }
 
-export default function AssetsView({ wallet }: AssetsViewProps) {
+export default function AssetsView({
+  wallet,
+  onAvailableAssetsUpdated,
+}: AssetsViewProps) {
   const { t } = useLang();
   const { xlpEnvironment } = useXlpEnvironment();
   const { environment } = useNetworkEnvironment();
@@ -45,6 +49,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
         environment: xlpEnvironment,
       });
       setAssets(tokenList);
+      onAvailableAssetsUpdated(tokenList);
     } catch (err) {
       error(`Error fetching balances: ${err}`);
       setAssets([]);

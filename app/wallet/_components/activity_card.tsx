@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { SolanaWallet } from "@app/lib/crate/generated";
+import { BalanceV1, SolanaWallet } from "@app/lib/crate/generated";
 import AssetsView from "./assets_view";
 import ActivityView from "./activity_view";
 import { useLang } from "../../../src/LanguageContext";
@@ -39,9 +39,13 @@ function a11yProps(index: number) {
 
 interface ActivityCardProps {
   wallet: SolanaWallet;
+  onAvailableAssetsUpdated: (assets: BalanceV1[]) => void;
 }
 
-export default function ActivityCard({ wallet }: ActivityCardProps) {
+export default function ActivityCard({
+  wallet,
+  onAvailableAssetsUpdated,
+}: ActivityCardProps) {
   const { t } = useLang();
   const [value, setValue] = React.useState(0);
 
@@ -86,7 +90,10 @@ export default function ActivityCard({ wallet }: ActivityCardProps) {
       </Box>
 
       <TabPanel value={value} index={0}>
-        <AssetsView wallet={wallet} />
+        <AssetsView
+          wallet={wallet}
+          onAvailableAssetsUpdated={onAvailableAssetsUpdated}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ActivityView wallet={wallet} />

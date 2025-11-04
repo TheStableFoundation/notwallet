@@ -8,7 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { SolanaWallet } from "@app/lib/crate/generated";
+import { BalanceV1, SolanaWallet } from "@app/lib/crate/generated";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
@@ -33,12 +33,14 @@ interface WalletCardProps {
   onLock: () => void;
   onSwitchKeypair: () => void;
   onQrCodeClicked: () => void;
+  availableAssets: BalanceV1[];
 }
 
 export default function WalletCard({
   wallet,
   onSwitchKeypair,
   onQrCodeClicked,
+  availableAssets,
 }: WalletCardProps) {
   const router = useNavigate();
   const { t } = useLang();
@@ -426,6 +428,7 @@ export default function WalletCard({
         onClose={handleCloseSendModal}
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
+        availableAssets={availableAssets}
       />
 
       {/* Swap Modal */}
