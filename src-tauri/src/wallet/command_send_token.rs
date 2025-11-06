@@ -62,7 +62,7 @@ pub async fn send_token(
             amount,
         )
         .await
-        .map_err(|e| format!("Failed to send BACH tokens: {:?}", e))?
+        .map_err(|e| format!("Failed to send tokens: {:?}", e))?
     };
 
     info!("Transaction sent successfully: {}", tx_signature);
