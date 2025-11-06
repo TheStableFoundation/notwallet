@@ -1,6 +1,25 @@
-# NotWallet Crypto
+<!-- LOGO -->
+<h1>
+<p align="center">
+  <img src="./assets/app-icon-v4.png" alt="Logo" width="128">
+  <br>NotWallet Crypto
+</h1>
+  <p align="center">
+    Non-custodial, multi-platform, simple Solana wallet.
+    <br />
+    <a href="#about">About</a>
+    ·
+    <a href="#about">Download</a>
+    ·
+    <a href="./docs">Documentation</a>
+    ·
+    <a href="CONTRIBUTING.md">Contributing</a>
+  </p>
+</p>
 
-Not just a crypto wallet: Self-custody, Simplified. ❄️
+## About
+
+Not just a crypto wallet: remittance, payment, DAO, DeFi. You name it.
 
 ## Download
 
