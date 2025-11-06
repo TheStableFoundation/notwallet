@@ -1831,6 +1831,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
 
 [[package]]
+name = "dotenv_codegen"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "56966279c10e4f8ee8c22123a15ed74e7c8150b658b26c619c53f4a56eb4a8aa"
+dependencies = [
+ "dotenv_codegen_implementation",
+ "proc-macro-hack",
+]
+
+[[package]]
+name = "dotenv_codegen_implementation"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "53e737a3522cd45f6adc19b644ce43ef53e1e9045f2d2de425c1f468abd4cf33"
+dependencies = [
+ "dotenv",
+ "proc-macro-hack",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
 name = "downcast-rs"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4018,7 +4041,6 @@ dependencies = [
  "bs58",
  "chrono",
  "curve25519-dalek 4.1.3",
- "dotenv",
  "log",
  "openssl",
  "reqwest",
@@ -6338,6 +6360,7 @@ checksum = "b7c388c1b5e93756d0c740965c41e8822f866621d41acbdf6336a6a168f8840c"
 name = "smbcloud-wallet-constants"
 version = "1.0.6"
 dependencies = [
+ "dotenv_codegen",
  "tsync",
 ]
 

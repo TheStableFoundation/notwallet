@@ -28,16 +28,6 @@ Price data and swap APIs are from Jupiter and Birdeye. Find them in the
 pub const BIRDEYE_API_KEY: &str = "YOUR_API_KEY_HERE";
 ```
 
-### Solana RPC Servers
-
-We are using Quiknode. Contact us if you want to sponsor us.
-
-`src-tauri/src/constants/rpc.rs`
-```rust
-const SOLANA_RPC_NAMESPACE: &str = "your_namespace";
-const SOLANA_RPC_ID: &str = "your_id";
-```
-
 ### Fiat-to-crypto Services
 
 We are using Stripe and only available in the EU.
