@@ -16,10 +16,11 @@ import {
   ADDRESS_BACH_TOKEN,
   THE_STABLE_FOUNDATION_ADDRESS,
 } from "@app/lib/crate/generated";
-import { openExplorer } from "@app/lib/helper";
+import { openDaoExplorer } from "@app/lib/helper";
 import { AssetIcon } from "@app/lib/components/token-icons";
 import { useLang } from "../../../../src/LanguageContext";
 import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
+import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 
 enum LoadingState {
   Loading,
@@ -50,6 +51,13 @@ export default function DAOInfoCard() {
       console.error("Error fetching DAO balance:", error);
       setState(LoadingState.Error);
     }
+  };
+
+  const prettyDisplay = (amount: string) => {
+    const parts = amount.split(" ");
+    const number = parseFloat(parts[0]);
+    const twoDecimals = Math.round(number * 100) / 100;
+    return twoDecimals + " " + parts[1];
   };
 
   React.useEffect(() => {
@@ -106,7 +114,10 @@ export default function DAOInfoCard() {
         </Typography>
         <Tooltip title={t.viewOnExplorer} arrow>
           <IconButton
-            onClick={() => openExplorer(THE_STABLE_FOUNDATION_ADDRESS)}
+            onClick={async () => {
+              await selectionFeedback();
+              openDaoExplorer(THE_STABLE_FOUNDATION_ADDRESS);
+            }}
             sx={{
               color: "#9932CC",
               ml: 1,
@@ -195,16 +206,7 @@ export default function DAOInfoCard() {
                 fontSize: 28,
               }}
             >
-              {lockedBachBalance}
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{
-                color: "rgba(255,255,255,0.8)",
-                fontWeight: "bold",
-              }}
-            >
-              {t.locked}
+              {prettyDisplay(lockedBachBalance)}
             </Typography>
           </Box>
         </Stack>

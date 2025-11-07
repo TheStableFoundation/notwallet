@@ -100,6 +100,8 @@ export interface Translation {
   treasuryFeeDescription: string;
   treasuryFundsUsage: string;
   markets: string;
+  viewProposals: string;
+  openInRealms: string;
   // Learn page translations
   learnTitle: string;
   aiAssistant: string;
@@ -372,7 +374,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
     lockedDaoTokens: "Locked DAO Tokens",
-    treasury: "Treasury",
+    treasury: "Treasury Wallet",
     treasuryBalances: "Treasury Balances",
     viewOnExplorer: "View on Explorer",
     failedToLoadDaoBalance: "Failed to load DAO balance",
@@ -387,10 +389,12 @@ export const translations: Record<SupportedLanguages, Translation> = {
     ends: "Ends",
     aboutTreasuryFees: "About Treasury Fees",
     treasuryFeeDescription:
-      "The Stable Foundation Treasury collects a 0.25% fee on all transactions to support the development and maintenance of the NotWallet ecosystem.",
+      "The Stable Foundation Treasury collects a 0.25% fee on all transactions to support the development and maintenance of the NotWallet Crypto ecosystem.",
     treasuryFundsUsage:
       "These funds are used for community development, security audits, infrastructure maintenance, and ecosystem growth initiatives.",
-    markets: "Markets",
+    markets: "Join the DAO",
+    viewProposals: "Proposals",
+    openInRealms: "See all proposals",
     // Learn page translations
     learnTitle: "Learn",
     aiAssistant: "AI Assistant",
@@ -676,7 +680,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
     lockedDaoTokens: "Låsta DAO-tokens",
-    treasury: "Treasury",
+    treasury: "Treasury Wallet",
     treasuryBalances: "Treasury-saldon",
     viewOnExplorer: "Visa på Explorer",
     failedToLoadDaoBalance: "Misslyckades att ladda DAO-saldo",
@@ -691,10 +695,12 @@ export const translations: Record<SupportedLanguages, Translation> = {
     ends: "Slutar",
     aboutTreasuryFees: "Om Treasury-avgifter",
     treasuryFeeDescription:
-      "The Stable Foundation Treasury tar ut en avgift på 0,25% på alla transaktioner för att stödja utveckling och underhåll av NotWallet-ekosystemet.",
+      "The Stable Foundation Treasury tar ut en avgift på 0,25% på alla transaktioner för att stödja utveckling och underhåll av NotWallet-Crypto-ekosystemet.",
     treasuryFundsUsage:
       "Dessa medel används för samhällsutveckling, säkerhetsrevisioner, infrastrukturunderhåll och ekosystemtillväxtinitiativ.",
-    markets: "Marknader",
+    markets: "Joina DAOn",
+    viewProposals: "Proposals",
+    openInRealms: "See all proposals",
     // Learn page translations
     learnTitle: "Lär dig",
     aiAssistant: "AI-assistent",
@@ -979,7 +985,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
     lockedDaoTokens: "Token DAO Terkunci",
-    treasury: "Perbendaharaan",
+    treasury: "Dompet Perbendaharaan",
     treasuryBalances: "Saldo Perbendaharaan",
     viewOnExplorer: "Lihat di Explorer",
     failedToLoadDaoBalance: "Gagal memuat saldo DAO",
@@ -994,10 +1000,12 @@ export const translations: Record<SupportedLanguages, Translation> = {
     ends: "Berakhir",
     aboutTreasuryFees: "Tentang Biaya Perbendaharaan",
     treasuryFeeDescription:
-      "Perbendaharaan The Stable Foundation mengenakan biaya 0,25% pada semua transaksi untuk mendukung pengembangan dan pemeliharaan ekosistem NotWallet.",
+      "Perbendaharaan The Stable Foundation mengenakan biaya 0,25% pada semua transaksi untuk mendukung pengembangan dan pemeliharaan ekosistem NotWallet Crypto.",
     treasuryFundsUsage:
       "Dana ini digunakan untuk pengembangan komunitas, audit keamanan, pemeliharaan infrastruktur, dan inisiatif pertumbuhan ekosistem.",
-    markets: "Pasar",
+    markets: "Gabung DAO",
+    viewProposals: "Proposal",
+    openInRealms: "Lihat semua proposal",
     // Learn page translations
     learnTitle: "Belajar",
     aiAssistant: "Asisten AI",

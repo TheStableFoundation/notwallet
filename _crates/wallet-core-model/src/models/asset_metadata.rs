@@ -81,10 +81,10 @@ impl Metadata {
     pub fn usdg() -> Self {
         Metadata {
             address: ADDRESS_USDG.to_string(),
-            name: "USDG Stablecoin".to_string(),
+            name: "Global Dollar".to_string(),
             symbol: "USDG".to_string(),
-            decimal: 9,
-            logo_uri: "https://cdn.glitterpays.com/usdgtoken.png".to_string(),
+            decimal: 6,
+            logo_uri: "https://424565.fs1.hubspotusercontent-na1.net/hubfs/424565/GDN-USDG-Token-512x512.png".to_string(),
         }
     }
     pub fn usds() -> Self {
