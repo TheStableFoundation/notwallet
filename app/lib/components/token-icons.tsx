@@ -4,13 +4,15 @@ import { ADDRESS_BACH_TOKEN, JUPITER, SOLANA } from "../crate/generated";
 export const AssetIcon = ({
   id,
   size = 24,
+  logoUrl,
 }: {
   id: string;
   size?: number;
   name?: string;
+  logoUrl?: string;
 }) => {
-  let logoUrl = assetLogoMap[id];
-  if (!logoUrl) {
+  let lookedUpLogoUrl = logoUrl ?? assetLogoMap[id];
+  if (!lookedUpLogoUrl) {
     logoUrl = "/images/spl-token.png";
   }
   return (
@@ -23,7 +25,7 @@ export const AssetIcon = ({
         maxWidth: { xs: size, md: 250 },
       }}
       alt="The house from the offer."
-      src={logoUrl}
+      src={lookedUpLogoUrl}
     />
   );
 };

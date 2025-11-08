@@ -19,6 +19,7 @@ import { useLang } from "../../../src/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { SolanaWallet, STORE_ACTIVE_KEYPAIR } from "@app/lib/crate/generated";
 import { store } from "@app/lib/store/store";
+import NetworkEnvironmentSetting from "./_components/setting-network-environment";
 
 export default function WalletSettingsPage() {
   const router = useNavigate();
@@ -160,6 +161,9 @@ export default function WalletSettingsPage() {
             </Box>
           </Typography>
         </Box>
+
+        {/* Network environment */}
+        <NetworkEnvironmentSetting />
 
         {/* Wallet Management Section */}
         <Card

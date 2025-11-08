@@ -11,10 +11,6 @@ Currently only support Stripe crypto onramp. See:
 - STRIPE_SECRET_KEY
 - STRIPE_PUBLISHABLE_KEY
 
-## RPC provider
+## RPC URLs
 
-Currently only support Quiknode. See:
-
-- SOLANA_RPC_BASE_URL
-- SOLANA_RPC_NAMESPACE
-- SOLANA_RPC_ID
+We use `dotenv_codegen` crate in the `smbcloud-wallet-constants` crate to get the RPC URLs for `mainnet`, `testnet`, and `devnet`. See the `.env.example` file to fill your `.env` file for production release. The crate will populate the environment variables during compile time.

@@ -9,6 +9,12 @@ export const openExplorer = async (address: string) => {
   openUrl(url);
 };
 
+export const openDaoExplorer = async (address: string) => {
+  await selectionFeedback();
+  const url = `https://v2.realms.today/dao/${address}`;
+  openUrl(url);
+};
+
 export const generateSignature = async (
   secretKey: string,
   data: string,

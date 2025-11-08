@@ -17,7 +17,7 @@ export default function ActivityView({ wallet }: ActivityViewProps) {
   const { t } = useLang();
   const handleOpenSolscan = async () => {
     await selectionFeedback();
-    const solscanUrl = `https://solscan.io/account/${wallet.pubkey}`;
+    const solscanUrl = `https://notwallet.eu/a/solana/${wallet.pubkey}`;
     await openUrl(solscanUrl);
   };
 

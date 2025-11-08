@@ -1,40 +1,18 @@
-use crate::constants::{
-    rpc::rpc_url,
-    store::{store, STORE_ACTIVE_KEYPAIR},
+use {
+    crate::constants::store::{store, STORE_ACTIVE_KEYPAIR},
+    crate::model::keypair::SolanaWallet,
+    bs58,
+    smbcloud_wallet_core_model::models::environment::Environment,
+    smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse},
+    smbcloud_wallet_kit::swap::send_jupiter_swap_transaction,
+    solana_sdk::signature::{Keypair, Signature},
+    tauri::{command, AppHandle},
 };
-use crate::model::keypair::SolanaWallet;
-use bs58;
-use smbcloud_wallet_kit::{
-    models::swap::{SwapQuoteResponse, SwapTransactionPayload, SwapTransactionResponse},
-    swap::{
-        build_swap_transaction as build_swap_tx, get_jupiter_swap_quote,
-        send_jupiter_swap_transaction,
-    },
-};
-use smbcloud_wallet_core_network::model::{ErrorCode, ErrorResponse};
-use solana_sdk::signature::{Keypair, Signature};
-use tauri::{command, AppHandle};
-
-#[command]
-pub async fn get_swap_quote(
-    from_token: &str,
-    to_token: &str,
-    amount: f64,
-    slippage_bps: u64,
-) -> Result<SwapQuoteResponse, ErrorResponse> {
-    get_jupiter_swap_quote(from_token, to_token, amount, slippage_bps).await
-}
-
-#[command]
-pub async fn build_swap_transaction(
-    payload: SwapTransactionPayload,
-) -> Result<SwapTransactionResponse, ErrorResponse> {
-    build_swap_tx(payload).await
-}
 
 #[command]
 pub async fn send_swap_transaction(
     app: AppHandle,
+    network: Environment,
     swap_transaction: String,
 ) -> Result<Signature, ErrorResponse> {
     // Load wallet from store
@@ -68,5 +46,5 @@ pub async fn send_swap_transaction(
         code: ErrorCode::ParseError,
         message: "Failed to create keypair from private key".to_string(),
     })?;
-    send_jupiter_swap_transaction(rpc_url(), swap_transaction, keypair).await
+    send_jupiter_swap_transaction(network.rpc_url(), swap_transaction, keypair).await
 }

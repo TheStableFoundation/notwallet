@@ -12,9 +12,10 @@ keywords = ["solana", "wallet", "crypto"]
 readme = "README.md"
 
 [workspace]
-members = ["./wallet-constants", "./wallet-core*"]
+members = ["./wallet-constants", "./wallet-core*", "./wallet-kit"]
 
 [workspace.dependencies]
+log = "0.4.20"
 smbcloud-wallet-constants = { version = "1", path = "./wallet-constants" }
 smbcloud-wallet-core = { version = "1", path = "./wallet-core" }
 smbcloud-wallet-core-http = { version = "1", path = "./wallet-core-http" }

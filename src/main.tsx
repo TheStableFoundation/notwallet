@@ -6,6 +6,7 @@ import "./index.css";
 import { LanguageProvider } from "./LanguageContext";
 import { AirdropEnvironmentProvider } from "@app/lib/context/app-environment-context";
 import { XlpEnvironmentProvider } from "@app/lib/context/xlp-environment-context";
+import { NetworkEnvironmentProvider } from "@app/lib/context/network-environment-context";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -16,11 +17,13 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <LanguageProvider>
       <BrowserRouter>
-        <AirdropEnvironmentProvider>
-          <XlpEnvironmentProvider>
-            <App />
-          </XlpEnvironmentProvider>
-        </AirdropEnvironmentProvider>
+        <NetworkEnvironmentProvider>
+          <AirdropEnvironmentProvider>
+            <XlpEnvironmentProvider>
+              <App />
+            </XlpEnvironmentProvider>
+          </AirdropEnvironmentProvider>
+        </NetworkEnvironmentProvider>
       </BrowserRouter>
     </LanguageProvider>
   </React.StrictMode>,

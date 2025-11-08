@@ -7,8 +7,6 @@ pub const SOLANA: &str = "So11111111111111111111111111111111111111112";
 #[allow(dead_code)]
 pub const SOL_DECIMALS: i32 = 9;
 #[tsync]
-pub const BACH_DECIMALS: i32 = 12;
-#[tsync]
 #[allow(dead_code)]
 pub const USDC: &str = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 #[tsync]

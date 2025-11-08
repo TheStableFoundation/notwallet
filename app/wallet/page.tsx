@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import ErrorCard from "@app/lib/components/error-card";
 import { store } from "@app/lib/store/store";
 import {
+  BalanceV1,
   SolanaWallet,
   STORE_ACTIVE_KEYPAIR,
   STORE_KEYPAIRS,
@@ -38,6 +39,7 @@ export default function WalletHome() {
   const [showSwitchModal, setShowSwitchModal] = React.useState(false);
   const [showQrCodeModal, setShowQrCodeModal] = React.useState(false);
   const [allKeypairs, setAllKeypairs] = React.useState<SolanaWallet[]>([]);
+  const [availableAssets, setAvailableAssets] = React.useState<BalanceV1[]>([]);
 
   const init = async () => {
     try {
@@ -83,6 +85,10 @@ export default function WalletHome() {
       // Optionally handle error
       setState(State.Error);
     }
+  };
+
+  const onAvailableAssetsUpdated = (assets: BalanceV1[]) => {
+    setAvailableAssets(assets);
   };
 
   React.useEffect(() => {
@@ -135,8 +141,12 @@ export default function WalletHome() {
                 await selectionFeedback();
                 setShowQrCodeModal(true);
               }}
+              availableAssets={availableAssets}
             />
-            <ActivityCard wallet={wallet} />
+            <ActivityCard
+              wallet={wallet}
+              onAvailableAssetsUpdated={onAvailableAssetsUpdated}
+            />
           </Box>
           <ActiveKeypairSelectionModal
             open={showSwitchModal}

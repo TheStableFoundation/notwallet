@@ -2,7 +2,7 @@ use {
     log::info,
     serde::{Deserialize, Serialize},
     smbcloud_wallet_constants::constants::{
-        LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_ADDRESS,
+        LAMPORTS_PER_SOL, THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE,
     },
     solana_address::Address,
     solana_instruction::Instruction,
@@ -143,20 +143,20 @@ pub struct TreasuryFeeManager;
 impl TreasuryFeeManager {
     /// Get the treasury wallet public key
     pub fn treasury_pubkey() -> Result<Pubkey, FeeError> {
-        Pubkey::from_str(THE_STABLE_FOUNDATION_TREASURY_ADDRESS).map_err(|e| {
+        Pubkey::from_str(THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE).map_err(|e| {
             FeeError::TreasuryAddressError(format!(
                 "Invalid treasury address {}: {}",
-                THE_STABLE_FOUNDATION_TREASURY_ADDRESS, e
+                THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE, e
             ))
         })
     }
 
     /// Get the treasury wallet public key
     pub fn treasury_pubkey_v3() -> Result<Address, FeeError> {
-        Address::from_str(THE_STABLE_FOUNDATION_TREASURY_ADDRESS).map_err(|e| {
+        Address::from_str(THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE).map_err(|e| {
             FeeError::TreasuryAddressError(format!(
                 "Invalid treasury address {}: {}",
-                THE_STABLE_FOUNDATION_TREASURY_ADDRESS, e
+                THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE, e
             ))
         })
     }
@@ -230,7 +230,7 @@ impl TreasuryFeeManager {
             fee_breakdown.currency,
             fee_breakdown.net_amount,
             fee_breakdown.currency,
-            THE_STABLE_FOUNDATION_TREASURY_ADDRESS
+            THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE
         );
     }
 }
@@ -253,7 +253,7 @@ impl Default for FeeConfig {
         Self {
             standard_fee_percentage: DEFAULT_FEE_PERCENTAGE,
             min_transaction_amount: MIN_TRANSACTION_AMOUNT,
-            treasury_address: THE_STABLE_FOUNDATION_TREASURY_ADDRESS.to_string(),
+            treasury_address: THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE.to_string(),
             fees_enabled: true,
         }
     }
@@ -375,7 +375,10 @@ mod tests {
     #[test]
     fn test_treasury_manager() {
         let treasury = TreasuryFeeManager::treasury_pubkey().unwrap();
-        assert_eq!(treasury.to_string(), THE_STABLE_FOUNDATION_TREASURY_ADDRESS);
+        assert_eq!(
+            treasury.to_string(),
+            THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE
+        );
 
         let fees = TreasuryFeeManager::calculate_fees(100.0, "SOL".to_string()).unwrap();
         assert_eq!(fees.fee_amount, 0.25);
@@ -387,7 +390,7 @@ mod tests {
         assert_eq!(config.standard_fee_percentage, DEFAULT_FEE_PERCENTAGE);
         assert_eq!(
             config.treasury_address,
-            THE_STABLE_FOUNDATION_TREASURY_ADDRESS
+            THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE
         );
         assert!(config.fees_enabled);
     }
@@ -397,7 +400,7 @@ mod tests {
         let config = FeeConfig::new(
             0.01,
             0.1,
-            THE_STABLE_FOUNDATION_TREASURY_ADDRESS.to_string(),
+            THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE.to_string(),
             true,
         )
         .unwrap();

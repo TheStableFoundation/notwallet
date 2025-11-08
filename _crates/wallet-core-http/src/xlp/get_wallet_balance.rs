@@ -1,13 +1,13 @@
 use {
     reqwest::Client,
     smbcloud_wallet_constants::constants::XLP_WALLET_BALANCE_PATH,
-    smbcloud_wallet_core_model::models::xlp::WalletBalanceResponse,
+    smbcloud_wallet_core_model::models::{environment::Environment, xlp::WalletBalanceResponse},
     smbcloud_wallet_core_network::{model::ErrorResponse, request},
 };
 
 pub async fn wallet_balance(
     base_url: &str,
-    environment: &str,
+    environment: Environment,
     wallet_address: &str,
     api_key: &str,
     user_agent: &str,

@@ -1,10 +1,8 @@
 /* This file is generated and managed by tsync */
 
+export const BACH_TOKEN_ADDRESS_LOCAL = "your_local_token_address";
+
 export const STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key";
-
-export const ONRAMPER_KEY = "your_onramper_key";
-
-export const ONRAMPER_SIGNER_KEY = "your_onramper_signer_key";
 
 /**
  * Generate:
@@ -116,6 +114,8 @@ export interface OnboardingCreateWallet {
   keypair: SolanaWallet;
 }
 
+export const KEY_NETWORK_ENVIRONMENT = "network_environment";
+
 export const KEY_AIRDROP_ENVIRONMENT = "airdrop_environment";
 
 export const KEY_XLP_ENVIRONMENT = "xlp_environment";
@@ -123,8 +123,6 @@ export const KEY_XLP_ENVIRONMENT = "xlp_environment";
 export const SOLANA = "So11111111111111111111111111111111111111112";
 
 export const SOL_DECIMALS = 9;
-
-export const BACH_DECIMALS = 12;
 
 export const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 
@@ -270,6 +268,10 @@ export const ADDRESS_SOL = "So11111111111111111111111111111111111111112";
 
 export const ADDRESS_BACH_TOKEN = "CTQBjyrX8pYyqbNa8vAhQfnRXfu9cUxnvrxj5PvbzTmf";
 
+export const ADDRESS_BACH_TOKEN_DEVNET = "DENNuKzCcrLhEtxZ8tm7nSeef8qvKgGGrdxX6euNkNS7";
+
+export const ADDRESS_BACH_TOKEN_TESTNET = "A6a2s9LTZcYZQgxrDatLHYfvHhJEfb5ZWuFENhHtxJtR";
+
 export const ADDRESS_JUPITER = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
 
 export const ADDRESS_USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
@@ -291,6 +293,8 @@ export const THE_STABLE_FOUNDATION_ADDRESS = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW2
 
 export const THE_STABLE_FOUNDATION_TREASURY_ADDRESS = "3YAyrP4mjiLRuHZQjfskmmVBbF7urtfDLfnLtW2jzgx3";
 
+export const THE_STABLE_FOUNDATION_TREASURY_WALLET_FEE = "GHwjki2QkzkY9ZsDWEpvxk8EAckm8FuAtsohQYW9RFnj";
+
 export const SPL_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 export interface Metadata {
@@ -300,6 +304,68 @@ export interface Metadata {
   decimal: number;
   logo_uri: string;
 }
+
+export type SolanaAsset =
+  | {
+      Sol: {
+        meta: Metadata;
+      };
+    }
+  | {
+      BachToken: {
+        meta: Metadata;
+      };
+    }
+  | {
+      ZBtc: {
+        meta: Metadata;
+      };
+    }
+  | {
+      Jupiter: {
+        meta: Metadata;
+      };
+    }
+  | {
+      Usdc: {
+        meta: Metadata;
+      };
+    }
+  | {
+      Usdt: {
+        meta: Metadata;
+      };
+    }
+  | {
+      Usdg: {
+        meta: Metadata;
+      };
+    }
+  | {
+      Usds: {
+        meta: Metadata;
+      };
+    }
+  | {
+      Usd1: {
+        meta: Metadata;
+      };
+    }
+  | {
+      Eurc: {
+        meta: Metadata;
+      };
+    }
+  | {
+      BachToken0: {
+        meta: Metadata;
+      };
+    }
+  | {
+      BachToken1: {
+        meta: Metadata;
+      };
+    };
 
 export interface BalanceV1 {
   meta: Metadata;
@@ -311,3 +377,6 @@ export interface BalanceV1 {
   /** Balance in its easy-to-read form. For example, a 0.01 SOL. */
   ui_amount: number;
 }
+
+export type Environment =
+  | "Local" | "Devnet" | "Testnet" | "Mainnet";

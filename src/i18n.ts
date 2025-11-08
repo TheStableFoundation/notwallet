@@ -100,6 +100,8 @@ export interface Translation {
   treasuryFeeDescription: string;
   treasuryFundsUsage: string;
   markets: string;
+  viewProposals: string;
+  openInRealms: string;
   // Learn page translations
   learnTitle: string;
   aiAssistant: string;
@@ -130,6 +132,8 @@ export interface Translation {
   switchKeypairTitle: string;
   addressQrCode: string;
   noKeypairsFound: string;
+  noSolWarningTitle: string;
+  noSolWarningDescription: string;
   account: string;
   active: string;
   assets: string;
@@ -202,6 +206,7 @@ export interface Translation {
   showSeedPhrase: string;
   viewRecoveryPhrase: string;
   importExisting: string;
+  network: string;
   management: string;
   importRecovery: string;
   destroyWallets: string;
@@ -369,7 +374,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
     lockedDaoTokens: "Locked DAO Tokens",
-    treasury: "Treasury",
+    treasury: "Treasury Wallet",
     treasuryBalances: "Treasury Balances",
     viewOnExplorer: "View on Explorer",
     failedToLoadDaoBalance: "Failed to load DAO balance",
@@ -384,10 +389,12 @@ export const translations: Record<SupportedLanguages, Translation> = {
     ends: "Ends",
     aboutTreasuryFees: "About Treasury Fees",
     treasuryFeeDescription:
-      "The Stable Foundation Treasury collects a 0.25% fee on all transactions to support the development and maintenance of the NotWallet ecosystem.",
+      "The Stable Foundation Treasury collects a 0.25% fee on all transactions to support the development and maintenance of the NotWallet Crypto ecosystem.",
     treasuryFundsUsage:
       "These funds are used for community development, security audits, infrastructure maintenance, and ecosystem growth initiatives.",
-    markets: "Markets",
+    markets: "Join the DAO",
+    viewProposals: "Proposals",
+    openInRealms: "See all proposals",
     // Learn page translations
     learnTitle: "Learn",
     aiAssistant: "AI Assistant",
@@ -428,13 +435,16 @@ export const translations: Record<SupportedLanguages, Translation> = {
     switchKeypairTitle: "Switch Wallet",
     addressQrCode: "Scan Address",
     noKeypairsFound: "No wallets found",
+    noSolWarningTitle: "No SOL balance",
+    noSolWarningDescription:
+      "You need SOL to pay transaction fee in the Solana blockchain.",
     account: "Account",
     active: "Active",
     assets: "Assets",
     activity: "Activity",
     transactionHistory: "Transaction History",
-    viewWalletActivity: "View all wallet activity on Solscan",
-    openInSolscan: "Open in Solscan",
+    viewWalletActivity: "View all wallet activity on NotWallet web",
+    openInSolscan: "Open in NotWallet web",
     noAssetsFound: "No assets found",
     defaultUsername: "Wallet",
     pleaseSelectUsername: "Please enter a username",
@@ -500,6 +510,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     showSeedPhrase: "Show Seed Phrase",
     viewRecoveryPhrase: "View your recovery phrase",
     importExisting: "Import an existing wallet",
+    network: "Network",
     management: "Wallet Management",
     importRecovery: "Import & Recovery",
     destroyWallets: "Destroy Wallets",
@@ -669,7 +680,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
     lockedDaoTokens: "Låsta DAO-tokens",
-    treasury: "Treasury",
+    treasury: "Treasury Wallet",
     treasuryBalances: "Treasury-saldon",
     viewOnExplorer: "Visa på Explorer",
     failedToLoadDaoBalance: "Misslyckades att ladda DAO-saldo",
@@ -684,10 +695,12 @@ export const translations: Record<SupportedLanguages, Translation> = {
     ends: "Slutar",
     aboutTreasuryFees: "Om Treasury-avgifter",
     treasuryFeeDescription:
-      "The Stable Foundation Treasury tar ut en avgift på 0,25% på alla transaktioner för att stödja utveckling och underhåll av NotWallet-ekosystemet.",
+      "The Stable Foundation Treasury tar ut en avgift på 0,25% på alla transaktioner för att stödja utveckling och underhåll av NotWallet-Crypto-ekosystemet.",
     treasuryFundsUsage:
       "Dessa medel används för samhällsutveckling, säkerhetsrevisioner, infrastrukturunderhåll och ekosystemtillväxtinitiativ.",
-    markets: "Marknader",
+    markets: "Joina DAOn",
+    viewProposals: "Proposals",
+    openInRealms: "See all proposals",
     // Learn page translations
     learnTitle: "Lär dig",
     aiAssistant: "AI-assistent",
@@ -728,13 +741,16 @@ export const translations: Record<SupportedLanguages, Translation> = {
     switchKeypairTitle: "Byt plånbok",
     addressQrCode: "Skanningsadress",
     noKeypairsFound: "Inga plånböcker hittades",
+    noSolWarningTitle: "Ingen SOL balans",
+    noSolWarningDescription:
+      "Du behöver SOL för att betala transaktionsavgiften i Solana blockkedjan.",
     account: "Konto",
     active: "Aktiv",
     assets: "Tillgångar",
     activity: "Aktivitet",
     transactionHistory: "Transaktionshistorik",
-    viewWalletActivity: "Visa all plånboksaktivitet på Solscan",
-    openInSolscan: "Öppna i Solscan",
+    viewWalletActivity: "Visa all plånboksaktivitet på NotWallet web",
+    openInSolscan: "Öppna i NotWallet web",
     noAssetsFound: "Inga tillgångar hittades",
     defaultUsername: "Plånbok",
     pleaseSelectUsername: "Ange ett användarnamn",
@@ -800,6 +816,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     showSeedPhrase: "Visa fröfras",
     viewRecoveryPhrase: "Visa din återställningsfras",
     importExisting: "Importera en befintlig plånbok",
+    network: "Natverk",
     management: "Plånbokshantering",
     importRecovery: "Import & återställning",
     destroyWallets: "Förstör plånböcker",
@@ -968,7 +985,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
     lockedDaoTokens: "Token DAO Terkunci",
-    treasury: "Perbendaharaan",
+    treasury: "Dompet Perbendaharaan",
     treasuryBalances: "Saldo Perbendaharaan",
     viewOnExplorer: "Lihat di Explorer",
     failedToLoadDaoBalance: "Gagal memuat saldo DAO",
@@ -983,10 +1000,12 @@ export const translations: Record<SupportedLanguages, Translation> = {
     ends: "Berakhir",
     aboutTreasuryFees: "Tentang Biaya Perbendaharaan",
     treasuryFeeDescription:
-      "Perbendaharaan The Stable Foundation mengenakan biaya 0,25% pada semua transaksi untuk mendukung pengembangan dan pemeliharaan ekosistem NotWallet.",
+      "Perbendaharaan The Stable Foundation mengenakan biaya 0,25% pada semua transaksi untuk mendukung pengembangan dan pemeliharaan ekosistem NotWallet Crypto.",
     treasuryFundsUsage:
       "Dana ini digunakan untuk pengembangan komunitas, audit keamanan, pemeliharaan infrastruktur, dan inisiatif pertumbuhan ekosistem.",
-    markets: "Pasar",
+    markets: "Gabung DAO",
+    viewProposals: "Proposal",
+    openInRealms: "Lihat semua proposal",
     // Learn page translations
     learnTitle: "Belajar",
     aiAssistant: "Asisten AI",
@@ -1028,13 +1047,16 @@ export const translations: Record<SupportedLanguages, Translation> = {
     switchKeypairTitle: "Ganti Dompet",
     addressQrCode: "Scan Alamat Dompet",
     noKeypairsFound: "Tidak ada dompet ditemukan",
+    noSolWarningTitle: "Tidak ada SOL",
+    noSolWarningDescription:
+      "Anda memerlukan SOL untuk membayar biaya transaksi di blockchain Solana.",
     account: "Akun",
     active: "Aktif",
     assets: "Aset",
     activity: "Aktivitas",
     transactionHistory: "Riwayat Transaksi",
-    viewWalletActivity: "Lihat semua aktivitas dompet di Solscan",
-    openInSolscan: "Buka di Solscan",
+    viewWalletActivity: "Lihat semua aktivitas dompet di NotWallet web",
+    openInSolscan: "Buka di NotWallet web",
     noAssetsFound: "Tidak ada aset ditemukan",
     defaultUsername: "Dompet",
     pleaseSelectUsername: "Silakan masukkan nama pengguna",
@@ -1100,6 +1122,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     showSeedPhrase: "Tampilkan Frasa Seed",
     viewRecoveryPhrase: "Lihat frasa pemulihan Anda",
     importExisting: "Impor dompet yang ada",
+    network: "Jaringan",
     management: "Manajemen Dompet",
     importRecovery: "Impor & Pemulihan",
     destroyWallets: "Hancurkan Dompet",

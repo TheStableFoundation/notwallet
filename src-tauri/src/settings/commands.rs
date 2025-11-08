@@ -4,14 +4,58 @@ use {
         model::settings_debug::{AirdropEnvironment, XlpEnvironment},
     },
     log::{error, info},
+    smbcloud_wallet_core_model::models::environment::Environment,
     tauri::{command, AppHandle},
     tsync::tsync,
 };
 
 #[tsync]
+const KEY_NETWORK_ENVIRONMENT: &str = "network_environment";
+#[tsync]
 const KEY_AIRDROP_ENVIRONMENT: &str = "airdrop_environment";
 #[tsync]
 const KEY_XLP_ENVIRONMENT: &str = "xlp_environment";
+
+#[command]
+pub async fn get_network_environment(app: AppHandle) -> Environment {
+    let store_result = store(&app);
+    match store_result {
+        Ok(store) => {
+            if let Some(env) = store.get(KEY_NETWORK_ENVIRONMENT) {
+                info!("Found existing Network environment: {}", env);
+                return Environment::from_value(env);
+            }
+            info!("No existing Network environment found. Setting to Mainnet.");
+            store.set(KEY_NETWORK_ENVIRONMENT, "Mainnet");
+            Environment::Mainnet
+        }
+        Err(err) => {
+            error!(
+                "Failed to get Network environment: {}. Setting to Mainnet.",
+                err
+            );
+            Environment::Mainnet
+        }
+    }
+}
+
+#[command]
+pub async fn set_network_environment(
+    app: AppHandle,
+    environment: Environment,
+) -> Result<Environment, String> {
+    let store_result = store(&app);
+    match store_result {
+        Ok(store) => {
+            store.set(KEY_NETWORK_ENVIRONMENT, environment.to_string());
+            Ok(environment)
+        }
+        Err(err) => {
+            error!("Failed to set Network environment: {}", err);
+            Err("Failed to set Network environment.".to_string())
+        }
+    }
+}
 
 /// Get the current airdrop environment.
 /// Or set it to the default production environment.

@@ -18,8 +18,10 @@ import {
   PrioritizationFeeLamports,
   SOLANA,
   SOL_DECIMALS,
-  BACH_DECIMALS,
-  ADDRESS_BACH_TOKEN,
+  Environment,
+  BalanceV1,
+  SolanaAsset,
+  Metadata,
 } from "@app/lib/crate/generated";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import { invoke } from "@tauri-apps/api/core";
@@ -32,23 +34,41 @@ import Tooltip from "@mui/material/Tooltip";
 import { AssetIcon } from "@app/lib/components/token-icons";
 import { info, debug } from "@tauri-apps/plugin-log";
 import { useLang } from "../../../src/LanguageContext";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
+import { ListItemIcon, ListItemText } from "@mui/material";
 
 interface SwapModalProps {
   open: boolean;
   onClose: () => void;
   senderAddress: string;
   availableKeypairs: SolanaWallet[];
+  availableAssets: BalanceV1[];
+  verifiedAssets: SolanaAsset[];
+}
+
+function getAssetMeta(asset: SolanaAsset): Metadata {
+  const values = Object.values(asset);
+  return values[0].meta;
 }
 
 export default function SwapModal({
   open,
   onClose,
   senderAddress,
+  availableAssets,
+  verifiedAssets,
 }: SwapModalProps) {
   const { t } = useLang();
+  const { environment } = useNetworkEnvironment();
   const [inputAmount, setInputAmount] = React.useState<string>("");
-  const [fromToken, setFromToken] = React.useState<"SOL" | "BACH">("SOL");
-  const [toToken, setToToken] = React.useState<"SOL" | "BACH">("BACH");
+  const [selectedFromTokenAddress, setSelectedFromTokenAddress] =
+    React.useState<string>();
+  const [selectedFromTokenBalance, setSelectedFromTokenBalance] =
+    React.useState<BalanceV1>();
+  const [selectedToTokenAddress, setSelectedToTokenAddress] =
+    React.useState<string>();
+  const [selectedToTokenBalance, setSelectedToTokenBalance] =
+    React.useState<BalanceV1>();
   const [isLoadingQuote, setIsLoadingQuote] = React.useState<boolean>(false);
   const [isSwapping, setIsSwapping] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -60,17 +80,48 @@ export default function SwapModal({
   const [bachBalance, _setBachBalance] = React.useState<string>("-");
   const [solBalance, _setSolBalance] = React.useState<string>("-");
 
+  const handleSelectedFromTokenBalanceChange = (event: SelectChangeEvent) => {
+    updateSelectedFromToken(event.target.value);
+  };
+
+  const updateSelectedFromToken = (address: string) => {
+    setSelectedFromTokenAddress(address);
+    debug(`Selected From address: ${selectedFromTokenAddress}`);
+    const selectedBalance = availableAssets.find(
+      (p) => p.meta.address == address,
+    );
+    setSelectedFromTokenBalance(selectedBalance);
+    debug(`Selected From balance: ${selectedBalance}`);
+  };
+
+  const handleSelectedToTokenBalanceChange = (event: SelectChangeEvent) => {
+    updateSelectedToToken(event.target.value);
+  };
+
+  const updateSelectedToToken = (address: string) => {
+    setSelectedToTokenAddress(address);
+    debug(`Selected To address: ${selectedToTokenAddress}`);
+    const selectedBalance = availableAssets.find(
+      (p) => p.meta.address == address,
+    );
+    setSelectedToTokenBalance(selectedBalance);
+    debug(`Selected To balance: ${selectedBalance}`);
+  };
+
   // Reset form when modal opens/closes
   React.useEffect(() => {
     if (open) {
       setInputAmount("");
-      setFromToken("SOL");
-      setToToken("BACH");
       setError(null);
       setSuccess(false);
       setQuote(null);
       setTransactionResponse(null);
       setSlippage(50);
+      // Set initial selection
+      if (availableAssets.length > 1) {
+        updateSelectedFromToken(availableAssets[0].meta.address);
+        updateSelectedToToken(availableAssets[1].meta.address);
+      }
     }
   }, [open]);
 
@@ -86,13 +137,10 @@ export default function SwapModal({
         setIsLoadingQuote(true);
         setError(null);
 
-        const fromMint = fromToken === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
-        const toMint = toToken === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
-
         const amount = parseFloat(inputAmount);
         const quoteResult = await invoke<SwapQuoteResponse>(GET_SWAP_QUOTE, {
-          fromToken: fromMint,
-          toToken: toMint,
+          fromToken: selectedFromTokenAddress,
+          toToken: selectedToTokenAddress,
           amount: amount,
           slippageBps: slippage,
         });
@@ -110,7 +158,7 @@ export default function SwapModal({
     // Debounce the quote request
     const timeoutId = setTimeout(getQuote, 500);
     return () => clearTimeout(timeoutId);
-  }, [inputAmount, fromToken, toToken, slippage]);
+  }, [inputAmount, selectedFromTokenAddress, selectedToTokenAddress, slippage]);
 
   const handleInputAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -121,12 +169,14 @@ export default function SwapModal({
   };
 
   const handleSwapTokens = async () => {
+    if (!selectedFromTokenAddress || !selectedToTokenAddress) return;
+
     await selectionFeedback();
     // Swap the from and to tokens
-    const newFromToken = toToken;
-    const newToToken = fromToken;
-    setFromToken(newFromToken);
-    setToToken(newToToken);
+    const newFromToken = selectedToTokenAddress;
+    const newToToken = selectedFromTokenAddress;
+    updateSelectedFromToken(newFromToken);
+    updateSelectedToToken(newToToken);
     setInputAmount("");
     setQuote(null);
   };
@@ -138,7 +188,7 @@ export default function SwapModal({
   const getOutputAmount = () => {
     if (!quote) return "0";
     const amount = parseInt(quote.outAmount);
-    const decimals = toToken === "SOL" ? SOL_DECIMALS : BACH_DECIMALS;
+    const decimals = selectedToTokenAddress === "SOL" ? SOL_DECIMALS : 12;
     return (amount / Math.pow(10, decimals)).toFixed(6);
   };
 
@@ -146,7 +196,7 @@ export default function SwapModal({
     if (!quote || !quote.routePlan[0]) return "0";
     const feeAmount = parseInt(quote.routePlan[0].swapInfo.feeAmount);
     const feeMint = quote.routePlan[0].swapInfo.feeMint;
-    const decimals = feeMint === SOLANA ? SOL_DECIMALS : BACH_DECIMALS;
+    const decimals = feeMint === SOLANA ? SOL_DECIMALS : 12;
     return (feeAmount / Math.pow(10, decimals)).toFixed(6);
   };
 
@@ -197,9 +247,11 @@ export default function SwapModal({
         info(
           `Executing swap transaction: ${transactionResponse.swapTransaction}`,
         );
-        const signature = await invoke("send_swap_transaction", {
+        const payload: { network: Environment; swapTransaction: string } = {
+          network: environment,
           swapTransaction: transactionResponse.swapTransaction,
-        });
+        };
+        const signature = await invoke("send_swap_transaction", payload);
         debug(`Transaction executed successfully: ${signature}`);
 
         return;
@@ -216,12 +268,13 @@ export default function SwapModal({
       }
 
       // Check if balance is sufficient
-      const currentBalance = fromToken === "SOL" ? solBalance : bachBalance;
+      const currentBalance =
+        selectedFromTokenAddress === "SOL" ? solBalance : bachBalance;
       if (
         currentBalance !== "-" &&
         parseFloat(inputAmount) > parseFloat(currentBalance)
       ) {
-        setError(`Insufficient ${fromToken} balance`);
+        setError(`Insufficient ${selectedFromTokenAddress} balance`);
         return;
       }
 
@@ -262,11 +315,6 @@ export default function SwapModal({
   const handleClose = async () => {
     await selectionFeedback();
     onClose();
-  };
-
-  const getTokenIcon = (token: "SOL" | "BACH") => {
-    const id = token === "SOL" ? SOLANA : ADDRESS_BACH_TOKEN;
-    return <AssetIcon id={id} size={20} />;
   };
 
   return (
@@ -342,10 +390,32 @@ export default function SwapModal({
                     <Typography variant="subtitle2" sx={{ color: "#666" }}>
                       {t.from}
                     </Typography>
-                    {getTokenIcon(fromToken)}
-                    <Typography variant="body1" fontWeight="bold">
-                      {fromToken}
-                    </Typography>
+                    <Select
+                      labelId="token-type-label"
+                      id="token-type"
+                      value={selectedFromTokenAddress}
+                      label={t.tokenType}
+                      onChange={handleSelectedFromTokenBalanceChange}
+                      disabled={isSwapping}
+                    >
+                      {availableAssets
+                        .filter(
+                          (asset) =>
+                            asset.meta.address !==
+                            selectedToTokenBalance?.meta.address,
+                        )
+                        .map((asset, index) => (
+                          <MenuItem key={index} value={asset.meta.address}>
+                            <ListItemIcon>
+                              <AssetIcon
+                                id={asset.meta.address}
+                                logoUrl={asset.meta.logo_uri}
+                              />
+                            </ListItemIcon>
+                            <ListItemText>{asset.meta.symbol}</ListItemText>
+                          </MenuItem>
+                        ))}
+                    </Select>
                   </Stack>
                   <TextField
                     value={inputAmount}
@@ -362,8 +432,8 @@ export default function SwapModal({
                 </Stack>
 
                 <Typography variant="caption" sx={{ color: "#666", ml: 9 }}>
-                  {t.available}:{" "}
-                  {fromToken === "SOL" ? solBalance : bachBalance} {fromToken}
+                  {t.available}: {selectedFromTokenBalance?.ui_amount}{" "}
+                  {selectedFromTokenBalance?.meta.symbol}
                 </Typography>
 
                 <Stack direction="row" alignItems="center" spacing={2}>
@@ -376,10 +446,37 @@ export default function SwapModal({
                     <Typography variant="subtitle2" sx={{ color: "#666" }}>
                       {t.to}
                     </Typography>
-                    {getTokenIcon(toToken)}
-                    <Typography variant="body1" fontWeight="bold">
-                      {toToken}
-                    </Typography>
+                    <Select
+                      labelId="token-type-label"
+                      id="token-type"
+                      value={selectedToTokenAddress}
+                      label={t.tokenType}
+                      onChange={handleSelectedToTokenBalanceChange}
+                      disabled={isSwapping}
+                    >
+                      {verifiedAssets
+                        .filter(
+                          (asset) =>
+                            getAssetMeta(asset).address !==
+                            selectedFromTokenBalance?.meta.address,
+                        )
+                        .map((asset, index) => (
+                          <MenuItem
+                            key={index}
+                            value={getAssetMeta(asset).address}
+                          >
+                            <ListItemIcon>
+                              <AssetIcon
+                                id={getAssetMeta(asset).address}
+                                logoUrl={getAssetMeta(asset).logo_uri}
+                              />
+                            </ListItemIcon>
+                            <ListItemText>
+                              {getAssetMeta(asset).symbol}
+                            </ListItemText>
+                          </MenuItem>
+                        ))}
+                    </Select>
                   </Stack>
                   <Box
                     sx={{
@@ -445,7 +542,7 @@ export default function SwapModal({
                     {t.outputAmount}:
                   </Typography>
                   <Typography variant="body2" fontWeight="bold">
-                    {getOutputAmount()} {toToken}
+                    {getOutputAmount()} {selectedToTokenBalance?.meta.symbol}
                   </Typography>
                 </Stack>
                 <Stack direction="row" justifyContent="space-between">

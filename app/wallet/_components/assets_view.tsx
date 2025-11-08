@@ -23,14 +23,20 @@ import VerifiedBadge from "./verified-badge";
 import { isAssetVerified } from "./verified-assets";
 import { SOLANA } from "@app/lib/crate/generated";
 import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
+import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 
 interface AssetsViewProps {
   wallet: SolanaWallet;
+  onAvailableAssetsUpdated: (assets: BalanceV1[]) => void;
 }
 
-export default function AssetsView({ wallet }: AssetsViewProps) {
+export default function AssetsView({
+  wallet,
+  onAvailableAssetsUpdated,
+}: AssetsViewProps) {
   const { t } = useLang();
   const { xlpEnvironment } = useXlpEnvironment();
+  const { environment } = useNetworkEnvironment();
   const [assets, setAssets] = React.useState<BalanceV1[]>([]);
   const [loading, setLoading] = React.useState(true);
   const fetchWalletAssetsBalance = async () => {
@@ -38,10 +44,12 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
       setLoading(true);
       // Fetch BACH balance
       const tokenList = await invoke<BalanceV1[]>("get_wallet_assets_balance", {
+        network: environment,
         pubkey: wallet.pubkey,
         environment: xlpEnvironment,
       });
       setAssets(tokenList);
+      onAvailableAssetsUpdated(tokenList);
     } catch (err) {
       error(`Error fetching balances: ${err}`);
       setAssets([]);
@@ -58,7 +66,7 @@ export default function AssetsView({ wallet }: AssetsViewProps) {
     await selectionFeedback();
     const url =
       token === SOLANA
-        ? "https://solana.org"
+        ? "https://notwallet.eu/t/solana"
         : `https://notwallet.eu/t/solana/${token}`;
     openUrl(url);
   };

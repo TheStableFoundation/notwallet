@@ -4,7 +4,6 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -18,24 +17,14 @@ export default function Content() {
   const [searchParams] = useSearchParams();
   const address = searchParams.get("address");
 
-  const handleClick = async (type: "onramper" | "stripe") => {
+  const handleClick = async (type: "stripe") => {
     await selectionFeedback();
-    if (type === "onramper") {
-      router("/wallet/buy/onramper?address=" + address);
-    } else if (type === "stripe") {
+    if (type === "stripe") {
       router("/wallet/buy/stripe?address=" + address);
     }
   };
 
   const onRampProviders = [
-    {
-      id: "onramper",
-      label: "Choose the best",
-      description: "Compare multiple providers and rates",
-      icon: <ShoppingCartIcon />,
-      action: () => handleClick("onramper"),
-      hasChevron: true,
-    },
     {
       id: "stripe",
       label: "Stripe",
