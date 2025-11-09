@@ -33,3 +33,6 @@ pub const ADDRESS_EURC: &str = "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr";
 #[tsync]
 #[allow(dead_code)]
 pub const ADDRESS_ZBTC: &str = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
+#[tsync]
+#[allow(dead_code)]
+pub const ADDRESS_CBBTC: &str = "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij";

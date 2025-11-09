@@ -3,8 +3,7 @@ use {
     serde::{Deserialize, Serialize},
     smbcloud_wallet_constants::{
         assets_solana::{
-            ADDRESS_BACH_TOKEN, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1,
-            ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_ZBTC,
+            ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_ZBTC
         },
         constants::SPL_TOKEN_PROGRAM_ID,
     },
@@ -20,15 +19,19 @@ use {
 pub enum SolanaAsset {
     Sol { meta: Metadata },
     BachToken { meta: Metadata },
-    ZBtc { meta: Metadata },
     Jupiter { meta: Metadata },
-    // US Dollar Stablecoins
+    /// Begin Bitcoin
+    ZBtc { meta: Metadata },
+    CbBtc { meta: Metadata },
+    /// End Bitcoin
+    /// Begin USD Stablecoins
     Usdc { meta: Metadata },
     Usdt { meta: Metadata },
     Usdg { meta: Metadata },
     Usds { meta: Metadata },
     Usd1 { meta: Metadata },
-    // Euro stablecoins
+    /// End USD Stablecoins
+    /// Begin Euro stablecoins
     Eurc { meta: Metadata },
     // Local token
     BachToken0 { meta: Metadata },
@@ -41,8 +44,8 @@ impl SolanaAsset {
             Self::Sol { meta } => meta.to_owned(),
             Self::BachToken { meta } => meta.to_owned(),
             Self::ZBtc { meta } => meta.to_owned(),
+            Self::CbBtc { meta } => meta.to_owned(),
             Self::Jupiter { meta } => meta.to_owned(),
-            // Stablecoins
             Self::Usdc { meta } => meta.to_owned(),
             Self::Usdt { meta } => meta.to_owned(),
             Self::Usdg { meta } => meta.to_owned(),
@@ -86,6 +89,11 @@ impl SolanaAsset {
     pub fn zbtc() -> Self {
         Self::Sol {
             meta: Metadata::zbtc(),
+        }
+    }
+    pub fn cbbtc() -> Self {
+        Self::Sol {
+            meta: Metadata::cbbtc(),
         }
     }
     pub fn jupiter() -> Self {
@@ -132,8 +140,9 @@ impl SolanaAsset {
         match address.as_str() {
             ADDRESS_SOL => Some(Self::native()),
             ADDRESS_BACH_TOKEN => Some(Self::bach_token()),
-            ADDRESS_ZBTC => Some(Self::zbtc()),
             ADDRESS_JUPITER => Some(Self::jupiter()),
+            ADDRESS_ZBTC => Some(Self::zbtc()),
+            ADDRESS_CBBTC => Some(Self::CbBtc()),
             ADDRESS_USDC => Some(Self::usdc()),
             ADDRESS_USDT => Some(Self::usdt()),
             ADDRESS_USDG => Some(Self::usdg()),
