@@ -4059,6 +4059,7 @@ dependencies = [
  "tauri",
  "tauri-build",
  "tauri-plugin-android-tv-check",
+ "tauri-plugin-barcode-scanner",
  "tauri-plugin-clipboard-manager",
  "tauri-plugin-haptics",
  "tauri-plugin-log",
@@ -11291,6 +11292,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "124cb8ae441fbe20cac5e1af4679c4f10e323bf47675e41534523dbb174f60fb"
 dependencies = [
  "serde",
+ "tauri",
+ "tauri-plugin",
+ "thiserror 2.0.17",
+]
+
+[[package]]
+name = "tauri-plugin-barcode-scanner"
+version = "2.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "afca04ac7b8363b8f054edf797ab688935dffb26bc1f88b35b762c508aa9d1bd"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
  "tauri",
  "tauri-plugin",
  "thiserror 2.0.17",
