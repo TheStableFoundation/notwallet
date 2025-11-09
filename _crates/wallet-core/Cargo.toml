@@ -29,4 +29,3 @@ solana-pubkey = "3"
 solana-rpc-client = { workspace = true }
 solana-sdk = "3"
 tokio = { version = "1.35.1", features = ["full"] }
-zerocopy = "0.8"

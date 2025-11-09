@@ -119,7 +119,8 @@ fn sign_transaction_example(mnemonic: &Mnemonic) -> Result<(), Box<dyn std::erro
     let amount_satoshis = 100_000; // 0.001 BTC
 
     // Recipient address (example)
-    let recipient_addr = Address::from_str("bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq")?;
+    let recipient_addr = Address::from_str("bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq")?
+        .require_network(network)?;
 
     // Build transaction
     let mut tx = Transaction {
@@ -205,7 +206,6 @@ fn restore_wallet(mnemonic_phrase: &str) -> Result<(), Box<dyn std::error::Error
 #[cfg(test)]
 mod tests {
     use super::*;
-    use zerocopy::IntoBytes;
 
     #[test]
     fn test_address_derivation() {
@@ -214,7 +214,7 @@ mod tests {
         let secp = Secp256k1::new();
         let network = Network::Bitcoin;
 
-        let master_xpriv = ExtendedPrivKey::new_master(network, seed.as_bytes()).unwrap();
+        let master_xpriv = ExtendedPrivKey::new_master(network, &seed).unwrap();
         let account_path = DerivationPath::from_str("m/84'/0'/0'").unwrap();
         let account_xpriv = master_xpriv.derive_priv(&secp, &account_path).unwrap();
 

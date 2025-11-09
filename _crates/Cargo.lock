@@ -4179,7 +4179,6 @@ dependencies = [
  "solana-rpc-client 3.1.0",
  "solana-sdk 3.0.0",
  "tokio",
- "zerocopy",
 ]
 
 [[package]]
