@@ -19,7 +19,11 @@ import Alert from "@mui/material/Alert";
 import { useLang } from "../../../src/LanguageContext";
 import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 import { AssetIcon } from "@app/lib/components/token-icons";
-import { debug } from "@tauri-apps/plugin-log";
+import { debug, error as logError } from "@tauri-apps/plugin-log";
+import { scan, Format } from '@tauri-apps/plugin-barcode-scanner';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+import { IconButton, Tooltip } from "@mui/material";
+import { platform } from "@tauri-apps/plugin-os";
 
 interface SendModalProps {
   open: boolean;
@@ -92,6 +96,16 @@ export default function SendModal({
     setSelectedBalance(selectedBalance);
     debug(`Selected balance: ${selectedBalance}`);
   };
+
+  const onCameraButtonClicked = async () => {
+    try {
+      let scanned = await scan({ formats: [Format.QRCode] });
+      debug(`Scanned: ${scanned}`);
+      setCustomAddress(scanned.content);
+    } catch (e) {
+      logError(`Error scanned: ${JSON.stringify(e)}`)
+    }
+  }
 
   const handleSend = async () => {
     try {
@@ -266,6 +280,7 @@ export default function SendModal({
           )}
 
           {recipient === "custom" && (
+            <>
             <TextField
               label={t.customAddress}
               fullWidth
@@ -274,6 +289,26 @@ export default function SendModal({
               disabled={isLoading}
               placeholder={t.enterRecipientPublicKey}
             />
+              {(platform() == "ios" || platform() == "android") && (
+                <Tooltip title={"Scan address"}>
+                  <IconButton
+                    sx={{
+                      color: "#9932CC",
+                      bgcolor: "#f5f6fa",
+                      "&:hover": { bgcolor: "#EDE7F6" },
+                      ml: 1,
+                      borderRadius: 2,
+                    }}
+                    onClick={() => {
+                      onCameraButtonClicked();
+                    }}
+                    size="small"
+                  >
+                    <QrCodeScannerIcon />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </>
           )}
         </Stack>
 
