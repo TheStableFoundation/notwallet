@@ -142,7 +142,7 @@ impl SolanaAsset {
             ADDRESS_BACH_TOKEN => Some(Self::bach_token()),
             ADDRESS_JUPITER => Some(Self::jupiter()),
             ADDRESS_ZBTC => Some(Self::zbtc()),
-            ADDRESS_CBBTC => Some(Self::CbBtc()),
+            ADDRESS_CBBTC => Some(Self::cbbtc()),
             ADDRESS_USDC => Some(Self::usdc()),
             ADDRESS_USDT => Some(Self::usdt()),
             ADDRESS_USDG => Some(Self::usdg()),
