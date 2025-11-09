@@ -65,8 +65,9 @@ impl SolanaAsset {
         vec![
             Self::native(),
             Self::bach_token(),
-            Self::zbtc(),
             Self::jupiter(),
+            Self::zbtc(),
+            Self::cbbtc(),
             Self::usdc(),
             Self::usdt(),
             Self::usdg(),
