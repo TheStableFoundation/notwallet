@@ -2,8 +2,7 @@ use {
     crate::models::asset_solana::SolanaAsset,
     serde::{Deserialize, Serialize},
     smbcloud_wallet_constants::assets_solana::{
-        ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL,
-        ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_ZBTC,
+        ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_XBTC, ADDRESS_ZBTC
     },
     tsync::tsync,
 };
@@ -59,6 +58,16 @@ impl Metadata {
             symbol: "cbBTC".to_string(),
             decimal: 8,
             logo_uri: "https://ipfs.io/ipfs/QmZ7L8yd5j36oXXydUiYFiFsRHbi3EdgC4RuFwvM7dcqge"
+                .to_string(),
+        }
+    }
+    pub fn xbtc() -> Self {
+        Metadata {
+            address: ADDRESS_XBTC.to_string(),
+            name: "OKX Wrapped BTC".to_string(),
+            symbol: "xBTC".to_string(),
+            decimal: 8,
+            logo_uri: "https://assets.coingecko.com/coins/images/66627/standard/xbtc.png"
                 .to_string(),
         }
     }
