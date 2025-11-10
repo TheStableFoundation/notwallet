@@ -41,6 +41,7 @@ keystore.properties
 *.pkg
 
 # Zed
+.zed
 target
 
 # Environment
