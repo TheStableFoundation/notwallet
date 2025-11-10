@@ -290,6 +290,8 @@ export const ADDRESS_ZBTC = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
 
 export const ADDRESS_CBBTC = "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij";
 
+export const ADDRESS_XBTC = "CtzPWv73Sn1dMGVU3ZtLv9yWSyUAanBni19YWDaznnkn";
+
 /** The Stable Foundation */
 export const THE_STABLE_FOUNDATION_ADDRESS = "9DWkPYFKcjpGVjwCjgAnYM8T6H4hssEnW27rLDtfU8y5";
 
@@ -331,6 +333,11 @@ export type SolanaAsset =
     }
   | {
       "CbBtc": {
+        meta: Metadata;
+      }
+    }
+  | {
+      "XBtc": {
         meta: Metadata;
       }
     }

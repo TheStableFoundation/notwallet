@@ -27,3 +27,5 @@ pub const ADDRESS_EURC: &str = "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr";
 pub const ADDRESS_ZBTC: &str = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
 #[tsync]
 pub const ADDRESS_CBBTC: &str = "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij";
+#[tsync]
+pub const ADDRESS_XBTC: &str = "CtzPWv73Sn1dMGVU3ZtLv9yWSyUAanBni19YWDaznnkn";
