@@ -28,5 +28,4 @@ pub const ADDRESS_ZBTC: &str = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
 #[tsync]
 pub const ADDRESS_CBBTC: &str = "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_XBTC: &str = "CtzPWv73Sn1dMGVU3ZtLv9yWSyUAanBni19YWDaznnkn";
