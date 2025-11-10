@@ -83,52 +83,52 @@ impl SolanaAsset {
         }
     }
     pub fn bach_token() -> Self {
-        Self::Sol {
+        Self::BachToken {
             meta: Metadata::bach_token(),
         }
     }
     pub fn zbtc() -> Self {
-        Self::Sol {
+        Self::ZBtc {
             meta: Metadata::zbtc(),
         }
     }
     pub fn cbbtc() -> Self {
-        Self::Sol {
+        Self::CbBtc {
             meta: Metadata::cbbtc(),
         }
     }
     pub fn jupiter() -> Self {
-        Self::Sol {
+        Self::Jupiter {
             meta: Metadata::jupiter(),
         }
     }
     pub fn usdc() -> Self {
-        Self::Sol {
+        Self::Usdc {
             meta: Metadata::usdc(),
         }
     }
     pub fn usdt() -> Self {
-        Self::Sol {
+        Self::Usdt {
             meta: Metadata::usdt(),
         }
     }
     pub fn usdg() -> Self {
-        Self::Sol {
+        Self::Usdg {
             meta: Metadata::usdg(),
         }
     }
     pub fn usds() -> Self {
-        Self::Sol {
+        Self::Usds {
             meta: Metadata::usds(),
         }
     }
     pub fn usd1() -> Self {
-        Self::Sol {
+        Self::Usd1 {
             meta: Metadata::usd1(),
         }
     }
     pub fn eurc() -> Self {
-        Self::Sol {
+        Self::Eurc {
             meta: Metadata::eurc(),
         }
     }
