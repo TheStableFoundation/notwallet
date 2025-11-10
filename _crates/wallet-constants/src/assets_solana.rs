@@ -10,26 +10,20 @@ pub const ADDRESS_BACH_TOKEN_DEVNET: &str = "DENNuKzCcrLhEtxZ8tm7nSeef8qvKgGGrdx
 #[tsync]
 pub const ADDRESS_BACH_TOKEN_TESTNET: &str = "A6a2s9LTZcYZQgxrDatLHYfvHhJEfb5ZWuFENhHtxJtR";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_JUPITER: &str = "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_USDC: &str = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_USDT: &str = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_USDG: &str = "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_USDS: &str = "USDSwr9ApdHk5bvJKMjzff41FfuX8bSxdKcR81vTwcA";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_USD1: &str = "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_EURC: &str = "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr";
 #[tsync]
-#[allow(dead_code)]
 pub const ADDRESS_ZBTC: &str = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
+#[tsync]
+pub const ADDRESS_CBBTC: &str = "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij";
