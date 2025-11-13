@@ -20,7 +20,7 @@ import { useLang } from "../../../src/LanguageContext";
 import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 import { AssetIcon } from "@app/lib/components/token-icons";
 import { debug, error as logError } from "@tauri-apps/plugin-log";
-import { scan, Format } from '@tauri-apps/plugin-barcode-scanner';
+import { scan, Format, requestPermissions } from '@tauri-apps/plugin-barcode-scanner';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import { IconButton, Tooltip } from "@mui/material";
 import { platform } from "@tauri-apps/plugin-os";
@@ -99,6 +99,7 @@ export default function SendModal({
 
   const onCameraButtonClicked = async () => {
     try {
+      await requestPermissions()
       let scanned = await scan({ formats: [Format.QRCode] });
       debug(`Scanned: ${scanned}`);
       setCustomAddress(scanned.content);
@@ -299,8 +300,8 @@ export default function SendModal({
                       ml: 1,
                       borderRadius: 2,
                     }}
-                    onClick={() => {
-                      onCameraButtonClicked();
+                    onClick={async () => {
+                      await onCameraButtonClicked();
                     }}
                     size="small"
                   >
