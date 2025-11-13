@@ -100,7 +100,7 @@ export default function SendModal({
   const onCameraButtonClicked = async () => {
     try {
       await requestPermissions()
-      let scanned = await scan({ formats: [Format.QRCode] });
+      const scanned = await scan({ formats: [Format.QRCode] });
       debug(`Scanned: ${scanned}`);
       setCustomAddress(scanned.content);
     } catch (e) {
