@@ -3,8 +3,7 @@ use {
     serde::{Deserialize, Serialize},
     smbcloud_wallet_constants::{
         assets_solana::{
-            ADDRESS_BACH_TOKEN, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1,
-            ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_ZBTC,
+            ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_XBTC, ADDRESS_ZBTC
         },
         constants::SPL_TOKEN_PROGRAM_ID,
     },
@@ -20,15 +19,20 @@ use {
 pub enum SolanaAsset {
     Sol { meta: Metadata },
     BachToken { meta: Metadata },
-    ZBtc { meta: Metadata },
     Jupiter { meta: Metadata },
-    // US Dollar Stablecoins
+    /// Begin Bitcoin
+    ZBtc { meta: Metadata },
+    CbBtc { meta: Metadata },
+    XBtc { meta: Metadata },
+    /// End Bitcoin
+    /// Begin USD Stablecoins
     Usdc { meta: Metadata },
     Usdt { meta: Metadata },
     Usdg { meta: Metadata },
     Usds { meta: Metadata },
     Usd1 { meta: Metadata },
-    // Euro stablecoins
+    /// End USD Stablecoins
+    /// Begin Euro stablecoins
     Eurc { meta: Metadata },
     // Local token
     BachToken0 { meta: Metadata },
@@ -41,8 +45,9 @@ impl SolanaAsset {
             Self::Sol { meta } => meta.to_owned(),
             Self::BachToken { meta } => meta.to_owned(),
             Self::ZBtc { meta } => meta.to_owned(),
+            Self::CbBtc { meta } => meta.to_owned(),
+            Self::XBtc { meta } => meta.to_owned(),
             Self::Jupiter { meta } => meta.to_owned(),
-            // Stablecoins
             Self::Usdc { meta } => meta.to_owned(),
             Self::Usdt { meta } => meta.to_owned(),
             Self::Usdg { meta } => meta.to_owned(),
@@ -62,8 +67,10 @@ impl SolanaAsset {
         vec![
             Self::native(),
             Self::bach_token(),
-            Self::zbtc(),
             Self::jupiter(),
+            Self::zbtc(),
+            Self::cbbtc(),
+            Self::xbtc(),
             Self::usdc(),
             Self::usdt(),
             Self::usdg(),
@@ -79,47 +86,57 @@ impl SolanaAsset {
         }
     }
     pub fn bach_token() -> Self {
-        Self::Sol {
+        Self::BachToken {
             meta: Metadata::bach_token(),
         }
     }
     pub fn zbtc() -> Self {
-        Self::Sol {
+        Self::ZBtc {
             meta: Metadata::zbtc(),
         }
     }
+    pub fn cbbtc() -> Self {
+        Self::CbBtc {
+            meta: Metadata::cbbtc(),
+        }
+    }
+    pub fn xbtc() -> Self {
+        Self::XBtc {
+            meta: Metadata::xbtc(),
+        }
+    }
     pub fn jupiter() -> Self {
-        Self::Sol {
+        Self::Jupiter {
             meta: Metadata::jupiter(),
         }
     }
     pub fn usdc() -> Self {
-        Self::Sol {
+        Self::Usdc {
             meta: Metadata::usdc(),
         }
     }
     pub fn usdt() -> Self {
-        Self::Sol {
+        Self::Usdt {
             meta: Metadata::usdt(),
         }
     }
     pub fn usdg() -> Self {
-        Self::Sol {
+        Self::Usdg {
             meta: Metadata::usdg(),
         }
     }
     pub fn usds() -> Self {
-        Self::Sol {
+        Self::Usds {
             meta: Metadata::usds(),
         }
     }
     pub fn usd1() -> Self {
-        Self::Sol {
+        Self::Usd1 {
             meta: Metadata::usd1(),
         }
     }
     pub fn eurc() -> Self {
-        Self::Sol {
+        Self::Eurc {
             meta: Metadata::eurc(),
         }
     }
@@ -132,8 +149,10 @@ impl SolanaAsset {
         match address.as_str() {
             ADDRESS_SOL => Some(Self::native()),
             ADDRESS_BACH_TOKEN => Some(Self::bach_token()),
-            ADDRESS_ZBTC => Some(Self::zbtc()),
             ADDRESS_JUPITER => Some(Self::jupiter()),
+            ADDRESS_ZBTC => Some(Self::zbtc()),
+            ADDRESS_CBBTC => Some(Self::cbbtc()),
+            ADDRESS_XBTC => Some(Self::xbtc()),
             ADDRESS_USDC => Some(Self::usdc()),
             ADDRESS_USDT => Some(Self::usdt()),
             ADDRESS_USDG => Some(Self::usdg()),
