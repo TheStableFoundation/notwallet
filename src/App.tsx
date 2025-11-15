@@ -30,6 +30,7 @@ import { useAirdropEnvironment } from "@app/lib/context/app-environment-context"
 import { useEffect } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { debug, error } from "@tauri-apps/plugin-log";
+import ScanPage from "@app/wallet/scan/page";
 
 export default function App() {
   const location = useLocation();
@@ -198,6 +199,14 @@ export default function App() {
                 element={
                   <AnimatedPage>
                     <WalletTokenPage />
+                  </AnimatedPage>
+                }
+              />
+              <Route
+                path="/wallet/scan"
+                element={
+                  <AnimatedPage>
+                    <ScanPage />
                   </AnimatedPage>
                 }
               />
