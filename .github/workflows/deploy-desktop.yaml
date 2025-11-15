@@ -29,6 +29,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: "Prepare .env file"
+        run: |
+          touch .env
+          echo SOLANA_MAINNET_RPC_BASE_URL=${{ secrets.SOLANA_MAINNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_TESTNET_RPC_BASE_URL=${{ secrets.SOLANA_TESTNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_DEVNET_RPC_BASE_URL=${{ secrets.SOLANA_DEVNET_RPC_BASE_URL }} >> .env
+          echo BIRDEYE_API_KEY=${{ secrets.BIRDEYE_API_KEY }} >> .env
+
       - name: setup node
         uses: actions/setup-node@v4
         with:

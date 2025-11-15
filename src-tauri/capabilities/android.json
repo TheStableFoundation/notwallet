@@ -1,6 +1,6 @@
 {
-  "$schema": "../gen/schemas/mobile-schema.json",
-  "identifier": "mobile-capability",
+  "$schema": "../gen/schemas/android-schema.json",
+  "identifier": "android-capability",
   "windows": ["main"],
   "platforms": ["android"],
   "permissions": ["android-tv-check:default"]
