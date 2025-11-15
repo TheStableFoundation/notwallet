@@ -70,6 +70,11 @@ pub fn run() {
             {
                 app.handle().plugin(tauri_plugin_android_tv_check::init())?;
             }
+            // Mobile-only plugin.
+            #[cfg(any(target_os = "android", target_os = "ios"))]
+            {
+                app.handle().plugin(tauri_plugin_barcode_scanner::init())?;
+            }
             setup(app)
         })
         .invoke_handler(tauri::generate_handler![

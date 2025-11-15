@@ -70,7 +70,7 @@ export default function AboutPage() {
                 margin: "0 auto",
               }}
               alt="The house from the offer."
-              src="/public/images/app-icon.png"
+              src="/images/app-icon.png"
             />
             <Typography
               variant="h5"
