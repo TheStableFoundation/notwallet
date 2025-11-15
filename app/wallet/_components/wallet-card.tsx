@@ -27,7 +27,7 @@ import SendModal from "./send-modal";
 import SwapModal from "./swap-modal";
 import { error } from "@tauri-apps/plugin-log";
 import { useLang } from "../../../src/LanguageContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
@@ -49,6 +49,7 @@ export default function WalletCard({
   availableAssets,
 }: WalletCardProps) {
   const router = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useLang();
   const { xlpEnvironment } = useXlpEnvironment();
   const { environment } = useNetworkEnvironment();
@@ -63,6 +64,9 @@ export default function WalletCard({
     SolanaWallet[]
   >([]);
   const [verifiedAssets, setVerifiedAssets] = React.useState<SolanaAsset[]>([]);
+  const [preSelectedTokenAddress, setPreSelectedTokenAddress] =
+    React.useState<string>();
+  const [scannedAddress, setScannedAddress] = React.useState<string>();
 
   // Update walletUsername when wallet.username changes
   React.useEffect(() => {
@@ -121,6 +125,8 @@ export default function WalletCard({
 
   const handleCloseSendModal = () => {
     setSendModalOpen(false);
+    // Cleanup query strings if any
+    setSearchParams("");
     // Refresh balances after sending
     init();
   };
@@ -144,14 +150,29 @@ export default function WalletCard({
 
   const init = async () => {
     try {
+      const verifiedAssets = await invoke<SolanaAsset[]>("get_verified_assets");
+      setVerifiedAssets(verifiedAssets);
+
+      // Check if we're coming from the scan QR page
+      const shouldOpenSendModal = searchParams.get("shouldOpenSendModal");
+      if (shouldOpenSendModal) {
+        setSendModalOpen(JSON.parse(shouldOpenSendModal));
+        const preSelectedTokenAddress = searchParams.get(
+          "preSelectedTokenAddress",
+        );
+        if (preSelectedTokenAddress)
+          setPreSelectedTokenAddress(preSelectedTokenAddress);
+
+        const scannedAddress = searchParams.get("scannedAddress");
+        if (scannedAddress) setScannedAddress(scannedAddress);
+      }
+      // We don't need to wait for the wallet balance to show the send modal when needed.
       const walletBalance = await invoke<string>(GET_WALLET_BALANCE, {
         network: environment,
         pubkey: wallet.pubkey,
         environment: xlpEnvironment,
       });
       setWalletBalance(`${walletBalance}`);
-      const verifiedAssets = await invoke<SolanaAsset[]>("get_verified_assets");
-      setVerifiedAssets(verifiedAssets);
     } catch (err) {
       error(`Error fetching balance: ${JSON.stringify(err)}`);
     }
@@ -464,6 +485,8 @@ export default function WalletCard({
         senderAddress={wallet.pubkey}
         availableKeypairs={availableKeypairs}
         availableAssets={availableAssets}
+        preSelectedTokenAddress={preSelectedTokenAddress}
+        scannedAddress={scannedAddress}
       />
 
       {/* Swap Modal */}
