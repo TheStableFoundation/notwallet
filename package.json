@@ -19,7 +19,7 @@
     "@mui/icons-material": "7.1.1",
     "@mui/material": "7.1.1",
     "@radix-ui/react-tooltip": "^1.2.8",
-    "@rive-app/react-canvas": "^4.23.4",
+    "@rive-app/react-canvas": "^4.24.0",
     "@smbcloud/tauri-plugin-android-tv-check-api": "1.1.4",
     "@stripe/crypto": "^0.0.4",
     "@stripe/stripe-js": "^7.9.0",
@@ -40,20 +40,20 @@
     "react-confetti": "^6.4.0",
     "react-dom": "^19.2.0",
     "react-qr-code": "^2.0.18",
-    "react-router-dom": "^6.30.1"
+    "react-router-dom": "^6.30.2"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2.9.2",
+    "@tauri-apps/cli": "^2.9.4",
     "@types/node": "22.7.5",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "^4.7.0",
-    "autoprefixer": "^10.4.21",
+    "autoprefixer": "^10.4.22",
     "esbuild": "^0.25.12",
     "eslint": "^9.39.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "typescript": "^5.9.3",
-    "vite": "^7.1.12"
+    "vite": "^7.2.2"
   }
 }
