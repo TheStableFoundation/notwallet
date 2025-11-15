@@ -229,12 +229,24 @@ export default function WalletCard({
         </Stack>
       </Stack>
       <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-        <Avatar sx={{ width: 56, height: 56, bgcolor: "#fff" }}>
-          <Typography variant="h5" color="#9932CC">
-            {walletUsername[0]}
-            {walletUsername[1]}
-          </Typography>
-        </Avatar>
+        <Tooltip title={t.switchKeypair} arrow>
+          <Avatar
+            onClick={onSwitchKeypair}
+            sx={{
+              color: "#9932CC",
+              bgcolor: "#f5f6fa",
+              "&:hover": { bgcolor: "#EDE7F6" },
+              ml: 1,
+              width: 54,
+              height: 54,
+            }}
+          >
+            <Typography variant="h5" color="#9932CC">
+              {walletUsername[0]}
+              {walletUsername[1]}
+            </Typography>
+          </Avatar>
+        </Tooltip>
         <Box sx={{ flex: 1 }}>
           <Box
             sx={{
@@ -271,24 +283,9 @@ export default function WalletCard({
                 }}
               >
                 {wallet?.pubkey
-                  ? `${wallet.pubkey.slice(0, 3)}...${wallet.pubkey.slice(-3)}`
+                  ? `${wallet.pubkey.slice(0, 5)}...${wallet.pubkey.slice(-5)}`
                   : ""}
               </Typography>
-            </Tooltip>
-            <Tooltip title={t.switchKeypair} arrow>
-              <IconButton
-                sx={{
-                  color: "#9932CC",
-                  bgcolor: "#f5f6fa",
-                  "&:hover": { bgcolor: "#EDE7F6" },
-                  ml: 1,
-                  borderRadius: 2,
-                }}
-                onClick={onSwitchKeypair}
-                size="small"
-              >
-                <SwitchAccountIcon></SwitchAccountIcon>
-              </IconButton>
             </Tooltip>
             <Tooltip title={"QR Code"}>
               <IconButton
