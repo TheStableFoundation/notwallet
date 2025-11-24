@@ -52,9 +52,12 @@ thiserror = "1.0"
 tsync = "2"
 uuid = { version = "1", features = ["v4"] }
 
-[target.'cfg(any(target_os = "android"))'.dependencies]
+# Android-only dependencies
+[target.'cfg(target_os = "android")'.dependencies]
 tauri-plugin-android-tv-check = "1"
+tauri-plugin-admob = { git = "https://github.com/setoelkahfi/tauri-plugin-admob.git", branch = "feature/android-update-deps" }
 
+# Mobile-only dependencies
 [target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]
 tauri-plugin-barcode-scanner = "2"
 

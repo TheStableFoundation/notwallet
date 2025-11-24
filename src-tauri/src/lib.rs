@@ -69,6 +69,7 @@ pub fn run() {
             #[cfg(target_os = "android")]
             {
                 app.handle().plugin(tauri_plugin_android_tv_check::init())?;
+                app.handle().plugin(tauri_plugin_admob::init())?;
             }
             // Mobile-only plugin.
             #[cfg(any(target_os = "android", target_os = "ios"))]

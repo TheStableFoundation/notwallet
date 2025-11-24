@@ -3,5 +3,5 @@
   "identifier": "android-capability",
   "windows": ["main"],
   "platforms": ["android"],
-  "permissions": ["android-tv-check:default"]
+  "permissions": ["android-tv-check:default", "admob:default"]
 }
