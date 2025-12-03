@@ -10,6 +10,8 @@
     <string>$TEAM_ID</string>
     <key>com.apple.security.network.client</key>
     <true/>
+    <key>com.apple.security.network.server</key>
+    <true/>
     <key>com.apple.security.device.camera</key>
     <true/>
   </dict>
