@@ -1,4 +1,5 @@
 mod constants;
+mod google;
 mod model;
 mod network;
 mod onramp;
@@ -7,14 +8,22 @@ mod setup;
 mod swap;
 mod wallet;
 
+#[macro_use]
+extern crate dotenv_codegen;
+
 use {
     crate::{
+        google::{
+            command_get_consent_url::get_consent_url, command_get_profile::get_profile,
+            command_get_token::get_token,
+        },
         onramp::commands::onramp_session,
         settings::commands::{
             get_airdrop_environment, get_network_environment, get_xlp_environment,
             set_airdrop_environment, set_network_environment, set_xlp_environment,
         },
         setup::{
+            command_start_server::start_server,
             commands::{get_installation_id, is_debug, register_client},
             setup,
         },
@@ -53,6 +62,7 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_store::Builder::default().build())
+        .plugin(tauri_plugin_oauth::init())
         .plugin(
             tauri_plugin_log::Builder::default()
                 .with_colors(
@@ -69,6 +79,7 @@ pub fn run() {
             #[cfg(target_os = "android")]
             {
                 app.handle().plugin(tauri_plugin_android_tv_check::init())?;
+                app.handle().plugin(tauri_plugin_admob::init())?;
             }
             // Mobile-only plugin.
             #[cfg(any(target_os = "android", target_os = "ios"))]
@@ -109,6 +120,10 @@ pub fn run() {
             set_network_environment,
             get_wallet_assets_balance,
             get_verified_assets,
+            start_server,
+            get_token,
+            get_profile,
+            get_consent_url,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -7,6 +7,7 @@ use {
 mod client;
 pub(crate) mod commands;
 mod store;
+pub(crate) mod command_start_server;
 
 pub(crate) fn setup(app: &App) -> Result<(), Box<dyn std::error::Error>> {
     let app_data_dir = app
