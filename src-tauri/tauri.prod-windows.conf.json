@@ -1,0 +1,20 @@
+{
+  "productName": "NotWallet",
+  "identifier": "xyz.notwallet.NotWallet",
+  "version": "1.0.0",
+  "bundle": {
+    "icon": [
+      "icons/icon.ico",
+      "icons/Square30x30Logo.png",
+      "icons/Square44x44Logo.png",
+      "icons/Square71x71Logo.png",
+      "icons/Square89x89Logo.png",
+      "icons/Square107x107Logo.png",
+      "icons/Square142x142Logo.png",
+      "icons/Square150x150Logo.png",
+      "icons/Square284x284Logo.png",
+      "icons/Square310x310Logo.png",
+      "icons/StoreLogo.png"
+    ]
+  }
+}

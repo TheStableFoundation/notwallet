@@ -1,7 +1,7 @@
 {
   "productName": "NotWallet",
   "identifier": "xyz.notwallet.NotWalletApp",
-  "version": "1.1.1",
+  "version": "1.0.0",
   "app": {
     "windows": [
       {
@@ -12,11 +12,7 @@
   "bundle": {
     "icon": ["icons/icon.icns"],
     "macOS": {
-      "entitlements": "./Entitlements-appstore.plist",
-      "signingIdentity": "your_signing_identity_here",
-      "files": {
-        "embedded.provisionprofile": "/path/to/provisionprofile.provisionprofile"
-      }
+      "entitlements": "./Entitlements.plist"
     }
   }
 }
