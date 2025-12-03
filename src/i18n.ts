@@ -6,6 +6,7 @@ export interface Translation {
   profile: string;
   settings: string;
   welcome: string;
+  welcomePersonal: (name: string) => string;
   homeDesc: string;
   getStarted: string;
   startLesson: string;
@@ -44,6 +45,8 @@ export interface Translation {
   chooseUsernamePersonalize: string;
   enterYourUsername: string;
   saveUsername: string;
+  googleOAuthLogin: string;
+  oAuthLoginExplanation: string;
 
   onboardingCreateWalletTitle: string;
   onboardingImportWalletTitle: string;
@@ -284,6 +287,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     wallet: "Wallet",
     profile: "Profile",
     welcome: "Welcome to NotWallet Crypto!",
+    welcomePersonal: (name) => `Welcome back, ${name}!`,
     homeDesc: "A fun way to learn Persian.",
     getStarted: "Start Learning",
     startLesson: "Start",
@@ -370,6 +374,8 @@ export const translations: Record<SupportedLanguages, Translation> = {
     saveUsername: "Save Username",
     saved: "Saved",
     usernameSavedSuccessfully: "Username saved successfully!",
+    oAuthLoginExplanation: "Claim with your Google account",
+    googleOAuthLogin: "Login with Google",
     // DAO page translations
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
@@ -587,6 +593,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     wallet: "Plånbok",
     profile: "Profil",
     welcome: "Välkommen till NotWallet Crypto!",
+    welcomePersonal: (name) => `Välkommen tillbaka, ${name}!`,
     homeDesc: "Ett roligt sätt att lära sig persiska.",
     getStarted: "Börja lära",
     startLesson: "Starta",
@@ -676,6 +683,8 @@ export const translations: Record<SupportedLanguages, Translation> = {
     confirm: "Bekräfta",
     saved: "Sparat",
     usernameSavedSuccessfully: "Användarnamn sparat framgångsrikt!",
+    oAuthLoginExplanation: "Claim with your Google account",
+    googleOAuthLogin: "Login with Google",
     // DAO page translations
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
@@ -893,6 +902,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     wallet: "Dompet",
     profile: "Profil",
     welcome: "Selamat datang di NotWallet Crypto!",
+    welcomePersonal: (name) => `Selamat datang kembali, ${name}!`,
     homeDesc: "Cara yang menyenangkan untuk belajar bahasa Persia.",
     getStarted: "Mulai Belajar",
     startLesson: "Mulai",
@@ -981,6 +991,8 @@ export const translations: Record<SupportedLanguages, Translation> = {
     saveUsername: "Simpan Nama Pengguna",
     saved: "Tersimpan",
     usernameSavedSuccessfully: "Nama pengguna berhasil disimpan!",
+    oAuthLoginExplanation: "Klaim dengan akun Google kamu",
+    googleOAuthLogin: "Masuk dengan Google",
     // DAO page translations
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",

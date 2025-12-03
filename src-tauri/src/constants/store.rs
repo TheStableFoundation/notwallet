@@ -10,6 +10,12 @@ use tsync::tsync;
 #[tsync]
 pub const STORE: &str = ".notwallet.dat";
 #[tsync]
+#[allow(dead_code)]
+pub const STORE_ACCOUNT: &str = ".account.dat";
+#[tsync]
+#[allow(dead_code)]
+pub const STORE_ACCESS_TOKEN_KEY: &str = "access_token";
+#[tsync]
 pub const STORE_KEYPAIRS: &str = "keypairs";
 #[tsync]
 pub const STORE_SEEDS: &str = "seeds";
