@@ -22,6 +22,7 @@ chrono = { version = "0.4", features = ["serde"] }
 
 # Transitive dependencies override.
 curve25519-dalek = "4.1.3"
+dotenv_codegen = "0.15"
 log = "0.4"
 openssl = { version = "0.10", features = ["vendored"] }
 reqwest = { version = "0.12", default-features = false, features = [
@@ -29,7 +30,10 @@ reqwest = { version = "0.12", default-features = false, features = [
     "native-tls-vendored",
 ] }
 serde = { version = "1", features = ["derive"] }
+serde_qs = "0.15"
 serde_json = "1"
+smbcloud-model = "0.3"
+smbcloud-networking-account = "0.3"
 smbcloud-wallet-constants = { path = "./../_crates/wallet-constants" }
 smbcloud-wallet-core = { path = "./../_crates/wallet-core" }
 smbcloud-wallet-core-http = { path = "./../_crates/wallet-core-http" }
@@ -44,6 +48,7 @@ tauri = { version = "2.0.0", features = [] }
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-haptics = "2"
 tauri-plugin-log = { version = "2", features = ["colored"] }
+tauri-plugin-oauth = "2"
 tauri-plugin-opener = "2"
 tauri-plugin-os = "2"
 tauri-plugin-shell = "2.0.0"
@@ -52,14 +57,14 @@ thiserror = "1.0"
 tsync = "2"
 uuid = { version = "1", features = ["v4"] }
 
-# Android-only dependencies
-[target.'cfg(target_os = "android")'.dependencies]
-tauri-plugin-android-tv-check = "1"
-tauri-plugin-admob = { git = "https://github.com/setoelkahfi/tauri-plugin-admob.git", branch = "feature/android-update-deps" }
-
 # Mobile-only dependencies
 [target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]
 tauri-plugin-barcode-scanner = "2"
+
+# Android-only dependencies
+[target.'cfg(target_os = "android")'.dependencies]
+tauri-plugin-admob = { git = "https://github.com/setoelkahfi/tauri-plugin-admob.git", branch = "feature/android-update-deps" }
+tauri-plugin-android-tv-check = "1"
 
 [build-dependencies]
 tauri-build = { version = "2.0.0", features = [] }

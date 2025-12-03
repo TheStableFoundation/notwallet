@@ -10,6 +10,10 @@ export const STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key";
  */
 export const STORE = ".notwallet.dat";
 
+export const STORE_ACCOUNT = ".account.dat";
+
+export const STORE_ACCESS_TOKEN_KEY = "access_token";
+
 export const STORE_KEYPAIRS = "keypairs";
 
 export const STORE_SEEDS = "seeds";
