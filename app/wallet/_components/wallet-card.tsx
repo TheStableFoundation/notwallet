@@ -30,7 +30,6 @@ import { useLang } from "../../../src/LanguageContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useXlpEnvironment } from "@app/lib/context/xlp-environment-context";
 import QrCodeIcon from "@mui/icons-material/QrCode";
-import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import { useNetworkEnvironment } from "@app/lib/context/network-environment-context";
 import NoSolModal from "./modal-no-sol";
 
@@ -283,7 +282,7 @@ export default function WalletCard({
                 }}
               >
                 {wallet?.pubkey
-                  ? `${wallet.pubkey.slice(0, 5)}...${wallet.pubkey.slice(-5)}`
+                  ? `${wallet.pubkey.slice(0, 3)}...${wallet.pubkey.slice(-3)}`
                   : ""}
               </Typography>
             </Tooltip>
