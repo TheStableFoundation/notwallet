@@ -47,6 +47,7 @@ export interface Translation {
   saveUsername: string;
   googleOAuthLogin: string;
   oAuthLoginExplanation: string;
+  logout: string;
 
   onboardingCreateWalletTitle: string;
   onboardingImportWalletTitle: string;
@@ -376,6 +377,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     usernameSavedSuccessfully: "Username saved successfully!",
     oAuthLoginExplanation: "Claim with your Google account",
     googleOAuthLogin: "Login with Google",
+    logout: "Log out",
     // DAO page translations
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
@@ -685,6 +687,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     usernameSavedSuccessfully: "Användarnamn sparat framgångsrikt!",
     oAuthLoginExplanation: "Claim with your Google account",
     googleOAuthLogin: "Login with Google",
+    logout: "Loga ut",
     // DAO page translations
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
@@ -993,6 +996,7 @@ export const translations: Record<SupportedLanguages, Translation> = {
     usernameSavedSuccessfully: "Nama pengguna berhasil disimpan!",
     oAuthLoginExplanation: "Klaim dengan akun Google kamu",
     googleOAuthLogin: "Masuk dengan Google",
+    logout: "Keluar",
     // DAO page translations
     daoTitle: "DAO",
     theStableFoundation: "The Stable Foundation",
