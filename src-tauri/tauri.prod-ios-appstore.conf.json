@@ -1,6 +1,7 @@
 {
   "productName": "NotWallet",
   "identifier": "xyz.notwallet.NotWalletApp",
+  "version": "1.1.2",
   "app": {
     "windows": [
       {
