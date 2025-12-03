@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 
 interface NavItem {
   path: string;
-  key: string;
+  key:  "home" | "wallet" | "settings";
   icon: React.ReactElement;
 }
 
@@ -152,13 +152,13 @@ export default function Navbar() {
                 >
                   {item.icon}
                   <span className="text-xs">
-                    {t[item.key as keyof typeof t]}
+                    {t[item.key]}
                   </span>
                 </Link>
               </Tooltip.Trigger>
               <Tooltip.Portal>
                 <Tooltip.Content className="text-xs bg-white border px-2 py-1 rounded shadow">
-                  {t[item.key as keyof typeof t]}
+                  {t[item.key]}
                   <Tooltip.Arrow className="fill-white" />
                 </Tooltip.Content>
               </Tooltip.Portal>
