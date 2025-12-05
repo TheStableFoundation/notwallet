@@ -2,7 +2,10 @@ use {
     crate::models::asset_solana::SolanaAsset,
     serde::{Deserialize, Serialize},
     smbcloud_wallet_constants::assets_solana::{
-        ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_XBTC, ADDRESS_ZBTC
+        ADDRESS_AAPLX, ADDRESS_AMZNX, ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC,
+        ADDRESS_GOOGLX, ADDRESS_JUPITER, ADDRESS_METAX, ADDRESS_MSFTX, ADDRESS_NVDAX, ADDRESS_SOL,
+        ADDRESS_TSLAX, ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT,
+        ADDRESS_XBTC, ADDRESS_ZBTC,
     },
     tsync::tsync,
 };
@@ -133,6 +136,69 @@ impl Metadata {
             symbol: "EURC".to_string(),
             decimal: 6,
             logo_uri: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr/logo.png".to_string(),
+        }
+    }
+    pub fn msftx() -> Self {
+        Metadata {
+            address: ADDRESS_MSFTX.to_string(),
+            name: "Microsoft xStock".to_string(),
+            symbol: "MSFTx".to_string(),
+            decimal: 8,
+            logo_uri: "https://cdn.prod.website-files.com/655f3efc4be468487052e35a/68497bdc918924ea97fd8211_Ticker%3DMSFT%2C%20Company%20Name%3DMicrosoft%20Inc.%2C%20size%3D256x256.svg".to_string(),
+        }
+    }
+    pub fn amznx() -> Self {
+        Metadata {
+            address: ADDRESS_AMZNX.to_string(),
+            name: "Amazon xStock".to_string(),
+            symbol: "AMZNx".to_string(),
+            decimal: 8,
+            logo_uri: "https://cdn.prod.website-files.com/655f3efc4be468487052e35a/68497d354d7140b01657a793_Ticker%3DAMZN%2C%20Company%20Name%3DAmazon.com%20Inc.%2C%20size%3D256x256.svg".to_string(),
+        }
+    }
+    pub fn metax() -> Self {
+        Metadata {
+            address: ADDRESS_METAX.to_string(),
+            name: "Meta xStock".to_string(),
+            symbol: "METAx".to_string(),
+            decimal: 8,
+            logo_uri: "https://cdn.prod.website-files.com/655f3efc4be468487052e35a/68497dee3db1bae97b91ac05_Ticker%3DMETA%2C%20Company%20Name%3DMeta%20Platforms%20Inc.%2C%20size%3D256x256.svg".to_string(),
+        }
+    }
+    pub fn aaplx() -> Self {
+        Metadata {
+            address: ADDRESS_AAPLX.to_string(),
+            name: "Apple xStock".to_string(),
+            symbol: "AAPLx".to_string(),
+            decimal: 8,
+            logo_uri: "https://cdn.prod.website-files.com/655f3efc4be468487052e35a/6849799260ee65bf38841f90_Ticker%3DAAPL%2C%20Company%20Name%3DApple%20Inc.%2C%20size%3D256x256.svg".to_string(),
+        }
+    }
+    pub fn googlx() -> Self {
+        Metadata {
+            address: ADDRESS_GOOGLX.to_string(),
+            name: "Alphabet xStock".to_string(),
+            symbol: "GOOGLx".to_string(),
+            decimal: 8,
+            logo_uri: "https://cdn.prod.website-files.com/655f3efc4be468487052e35a/684aae04a3d8452e0ae4bad8_Ticker%3DGOOG%2C%20Company%20Name%3DAlphabet%20Inc.%2C%20size%3D256x256.svg".to_string(),
+        }
+    }
+    pub fn nvdax() -> Self {
+        Metadata {
+            address: ADDRESS_NVDAX.to_string(),
+            name: "NVIDIA xStock".to_string(),
+            symbol: "NVDAx".to_string(),
+            decimal: 8,
+            logo_uri: "https://cdn.prod.website-files.com/655f3efc4be468487052e35a/684961bfb45e3c4d777b9997_Ticker%3DNVDA%2C%20Company%20Name%3DNVIDIA%20Corp%2C%20size%3D256x256.svg".to_string(),
+        }
+    }
+    pub fn tslax() -> Self {
+        Metadata {
+            address: ADDRESS_TSLAX.to_string(),
+            name: "Tesla xStock".to_string(),
+            symbol: "TSLAx".to_string(),
+            decimal: 8,
+            logo_uri: "https://cdn.prod.website-files.com/655f3efc4be468487052e35a/684aaf9559b2312c162731f5_Ticker%3DTSLA%2C%20Company%20Name%3DTesla%20Inc.%2C%20size%3D256x256.svg".to_string(),
         }
     }
 }
