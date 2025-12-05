@@ -52,6 +52,16 @@ jobs:
         with:
           platform: "win64"
 
+      - name: (Windows) Configure NASM for Ring
+        if: matrix.platform == 'windows-latest'
+        shell: bash
+        run: |
+          # Set NASM environment variable for ring build script
+          echo "NASM=$(which nasm.exe)" >> $GITHUB_ENV
+          # Also create NASM in the exact location ring expects
+          mkdir -p src-tauri/target/tools/windows/nasm
+          cp "$(which nasm.exe)" src-tauri/target/tools/windows/nasm/nasm.exe
+
       - name: Import Apple Developer Certificate
         if: matrix.platform == 'macos-latest'
         env:
