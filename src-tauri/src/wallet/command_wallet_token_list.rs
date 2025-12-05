@@ -1,8 +1,5 @@
 use {
-    crate::{
-        constants::network::{USER_AGENT, XLP_API_KEY},
-        model::settings_debug::XlpEnvironment,
-    },
+    crate::{constants::network::USER_AGENT, model::settings_debug::XlpEnvironment},
     log::info,
     smbcloud_wallet_core_http::xlp::get_wallet_assets_balance::wallet_token_list,
     smbcloud_wallet_core_model::models::{balance_v1::BalanceV1, environment::Environment},
@@ -21,7 +18,7 @@ pub async fn get_wallet_assets_balance(
         environment.base_url(),
         network,
         &pubkey,
-        XLP_API_KEY,
+        dotenv!("XLP_API_KEY"),
         USER_AGENT,
     )
     .await

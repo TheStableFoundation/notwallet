@@ -2,8 +2,6 @@
 
 export const BACH_TOKEN_ADDRESS_LOCAL = "your_local_token_address";
 
-export const STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key";
-
 /**
  * Generate:
  * tsync -i src-tauri/src/ crates/wallet-kit/src/ -o lib/crate/generated.ts

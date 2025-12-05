@@ -1,12 +1,11 @@
-use crate::{
-    constants::onramp::STRIPE_SECRET_KEY,
-    model::onramp::{OnrampSession, StripeError},
+use {
+    crate::model::onramp::{OnrampSession, StripeError},
+    reqwest::{
+        header::{HeaderMap, HeaderValue, AUTHORIZATION, CONTENT_TYPE},
+        Client,
+    },
+    std::collections::HashMap,
 };
-use reqwest::{
-    header::{HeaderMap, HeaderValue, AUTHORIZATION, CONTENT_TYPE},
-    Client,
-};
-use std::collections::HashMap;
 
 /// Creates a crypto onramp session with Stripe
 ///
@@ -89,5 +88,5 @@ pub async fn create_solana_onramp_session(
     let mut wallet_addresses = HashMap::new();
     wallet_addresses.insert("solana".to_string(), solana_address.to_string());
 
-    create_onramp_session(STRIPE_SECRET_KEY, wallet_addresses, None).await
+    create_onramp_session(dotenv!("STRIPE_SECRET_KEY"), wallet_addresses, None).await
 }

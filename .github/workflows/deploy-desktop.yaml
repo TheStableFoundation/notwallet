@@ -97,6 +97,12 @@ jobs:
           echo BIRDEYE_API_KEY=${{ secrets.BIRDEYE_API_KEY }} >> .env
           echo GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }} >> .env
           echo GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }} >> .env
+          echo API_BASE_URL=${{ secrets.API_BASE_URL }} >> .env
+          echo XLP_BASE_URL=${{ secrets.XLP_BASE_URL }} >> .env
+          echo XLP_API_KEY=${{ secrets.XLP_API_KEY }} >> .env
+          echo DEPLOY_KEY=${{ secrets.DEPLOY_KEY }} >> .env
+          echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
+          echo STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} >> .env
           cat .env
 
       - uses: tauri-apps/tauri-action@v0
