@@ -3,13 +3,14 @@ import {
   CryptoElements,
   OnrampElement,
 } from "@app/lib/components/stripe-crypto-elements";
-import { STRIPE_PUBLISHABLE_KEY } from "@app/lib/crate/generated";
 
 export default function OnrampView({
   clientSecret,
   onPurchaseComplete,
+  publishableKey,
 }: {
   clientSecret: string;
+  publishableKey: string;
   onPurchaseComplete: () => void;
 }) {
   const onFulfillmentComplete = () => {
@@ -18,7 +19,7 @@ export default function OnrampView({
   };
 
   return (
-    <CryptoElements stripeOnramp={loadStripeOnramp(STRIPE_PUBLISHABLE_KEY)}>
+    <CryptoElements stripeOnramp={loadStripeOnramp(publishableKey)}>
       <OnrampElement
         clientSecret={clientSecret}
         onFulfillmentComplete={onFulfillmentComplete}

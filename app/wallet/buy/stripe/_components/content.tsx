@@ -3,7 +3,7 @@ import ErrorCard from "@app/lib/components/error-card";
 import { OnrampSession } from "@app/lib/crate/generated";
 import { invoke } from "@tauri-apps/api/core";
 import OnrampView from "./onramp-view";
-import { ONRAMP_SESSION } from "@app/lib/commands";
+import { ONRAMP_SESSION, STRIPE_PUBLISHABLE_KEY } from "@app/lib/commands";
 import Confetti from "react-confetti";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -21,6 +21,7 @@ enum State {
 export default function Content() {
   const [state, setState] = React.useState(State.Loading);
   const [clientSecret, setClientSecret] = React.useState<string | null>(null);
+  const [publishableKey, setPublishableKey] = React.useState<string>();
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
   const [searchParams] = useSearchParams();
   const address = searchParams.get("address");
@@ -40,6 +41,11 @@ export default function Content() {
       });
       debug(`result: ${JSON.stringify(result)}`);
       setClientSecret(result.client_secret);
+      const publishableKey = await invoke<string>(STRIPE_PUBLISHABLE_KEY, {
+        solanaAddress: address,
+      });
+      debug(`publishableKey: ${JSON.stringify(publishableKey)}`);
+      setPublishableKey(publishableKey);
       setState(State.Loaded);
     } catch (error) {
       logError(`error: ${JSON.stringify(error)}`);
@@ -76,9 +82,10 @@ export default function Content() {
         <CircularProgress className="bg-primary-light" />
       )}
       {state === State.Error && <ErrorCard />}
-      {state === State.Loaded && clientSecret && (
+      {state === State.Loaded && clientSecret && publishableKey && (
         <OnrampView
           clientSecret={clientSecret}
+          publishableKey={publishableKey}
           onPurchaseComplete={onPurchaseComplete}
         />
       )}

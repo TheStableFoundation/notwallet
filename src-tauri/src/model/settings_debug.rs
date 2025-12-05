@@ -1,7 +1,4 @@
 use {
-    crate::constants::network::{
-        API_BASE_URL, API_BASE_URL_LOCAL, XLP_BASE_URL, XLP_BASE_URL_LOCAL,
-    },
     log::warn,
     serde::{Deserialize, Serialize},
     serde_json::Value,
@@ -50,8 +47,8 @@ impl AirdropEnvironment {
 
     pub fn base_url(&self) -> &'static str {
         match self {
-            AirdropEnvironment::Development => API_BASE_URL_LOCAL,
-            AirdropEnvironment::Production => API_BASE_URL,
+            AirdropEnvironment::Development => dotenv!("API_BASE_URL_LOCAL"),
+            AirdropEnvironment::Production => dotenv!("API_BASE_URL"),
         }
     }
 }
@@ -98,8 +95,8 @@ impl XlpEnvironment {
 
     pub fn base_url(&self) -> &'static str {
         match self {
-            XlpEnvironment::Development => XLP_BASE_URL_LOCAL,
-            XlpEnvironment::Production => XLP_BASE_URL,
+            XlpEnvironment::Development => dotenv!("XLP_BASE_URL_LOCAL"),
+            XlpEnvironment::Production => dotenv!("XLP_BASE_URL"),
         }
     }
 }
