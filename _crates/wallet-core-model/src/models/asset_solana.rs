@@ -3,7 +3,10 @@ use {
     serde::{Deserialize, Serialize},
     smbcloud_wallet_constants::{
         assets_solana::{
-            ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC, ADDRESS_JUPITER, ADDRESS_SOL, ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS, ADDRESS_USDT, ADDRESS_XBTC, ADDRESS_ZBTC
+            ADDRESS_AAPLX, ADDRESS_AMZNX, ADDRESS_BACH_TOKEN, ADDRESS_CBBTC, ADDRESS_EURC,
+            ADDRESS_GOOGLX, ADDRESS_JUPITER, ADDRESS_METAX, ADDRESS_MSFTX, ADDRESS_NVDAX,
+            ADDRESS_SOL, ADDRESS_TSLAX, ADDRESS_USD1, ADDRESS_USDC, ADDRESS_USDG, ADDRESS_USDS,
+            ADDRESS_USDT, ADDRESS_XBTC, ADDRESS_ZBTC,
         },
         constants::SPL_TOKEN_PROGRAM_ID,
     },
@@ -17,26 +20,78 @@ use {
 #[derive(Debug, Deserialize, Serialize)]
 #[tsync]
 pub enum SolanaAsset {
-    Sol { meta: Metadata },
-    BachToken { meta: Metadata },
-    Jupiter { meta: Metadata },
+    Sol {
+        meta: Metadata,
+    },
+    BachToken {
+        meta: Metadata,
+    },
+    Jupiter {
+        meta: Metadata,
+    },
     /// Begin Bitcoin
-    ZBtc { meta: Metadata },
-    CbBtc { meta: Metadata },
-    XBtc { meta: Metadata },
+    ZBtc {
+        meta: Metadata,
+    },
+    CbBtc {
+        meta: Metadata,
+    },
+    XBtc {
+        meta: Metadata,
+    },
     /// End Bitcoin
     /// Begin USD Stablecoins
-    Usdc { meta: Metadata },
-    Usdt { meta: Metadata },
-    Usdg { meta: Metadata },
-    Usds { meta: Metadata },
-    Usd1 { meta: Metadata },
+    Usdc {
+        meta: Metadata,
+    },
+    Usdt {
+        meta: Metadata,
+    },
+    Usdg {
+        meta: Metadata,
+    },
+    Usds {
+        meta: Metadata,
+    },
+    Usd1 {
+        meta: Metadata,
+    },
     /// End USD Stablecoins
     /// Begin Euro stablecoins
-    Eurc { meta: Metadata },
+    Eurc {
+        meta: Metadata,
+    },
+    /// End Euro stablecoins
+    /// Begin xStocks Tokenized US Stocks
+    MsftX {
+        meta: Metadata,
+    },
+    AmznX {
+        meta: Metadata,
+    },
+    MetaX {
+        meta: Metadata,
+    },
+    AaplX {
+        meta: Metadata,
+    },
+    GooglX {
+        meta: Metadata,
+    },
+    NvdaX {
+        meta: Metadata,
+    },
+    TslaX {
+        meta: Metadata,
+    },
+    /// End xStocks Tokenized US Stocks
     // Local token
-    BachToken0 { meta: Metadata },
-    BachToken1 { meta: Metadata },
+    BachToken0 {
+        meta: Metadata,
+    },
+    BachToken1 {
+        meta: Metadata,
+    },
 }
 
 impl SolanaAsset {
@@ -54,6 +109,13 @@ impl SolanaAsset {
             Self::Usds { meta } => meta.to_owned(),
             Self::Usd1 { meta } => meta.to_owned(),
             Self::Eurc { meta } => meta.to_owned(),
+            Self::MsftX { meta } => meta.to_owned(),
+            Self::AmznX { meta } => meta.to_owned(),
+            Self::MetaX { meta } => meta.to_owned(),
+            Self::AaplX { meta } => meta.to_owned(),
+            Self::GooglX { meta } => meta.to_owned(),
+            Self::NvdaX { meta } => meta.to_owned(),
+            Self::TslaX { meta } => meta.to_owned(),
             // Local token
             Self::BachToken0 { meta } => meta.to_owned(),
             Self::BachToken1 { meta } => meta.to_owned(),
@@ -77,6 +139,13 @@ impl SolanaAsset {
             Self::usds(),
             Self::usd1(),
             Self::eurc(),
+            Self::msftx(),
+            Self::amznx(),
+            Self::metax(),
+            Self::aaplx(),
+            Self::googlx(),
+            Self::nvdax(),
+            Self::tslax(),
         ]
     }
 
@@ -140,6 +209,41 @@ impl SolanaAsset {
             meta: Metadata::eurc(),
         }
     }
+    pub fn msftx() -> Self {
+        Self::MsftX {
+            meta: Metadata::msftx(),
+        }
+    }
+    pub fn amznx() -> Self {
+        Self::AmznX {
+            meta: Metadata::amznx(),
+        }
+    }
+    pub fn metax() -> Self {
+        Self::MetaX {
+            meta: Metadata::metax(),
+        }
+    }
+    pub fn aaplx() -> Self {
+        Self::AaplX {
+            meta: Metadata::aaplx(),
+        }
+    }
+    pub fn googlx() -> Self {
+        Self::GooglX {
+            meta: Metadata::googlx(),
+        }
+    }
+    pub fn nvdax() -> Self {
+        Self::NvdaX {
+            meta: Metadata::nvdax(),
+        }
+    }
+    pub fn tslax() -> Self {
+        Self::TslaX {
+            meta: Metadata::tslax(),
+        }
+    }
 
     pub fn smallest_denomination(self) -> f64 {
         10_u64.pow(self.metadata().decimal as u32) as f64
@@ -159,6 +263,13 @@ impl SolanaAsset {
             ADDRESS_USDS => Some(Self::usds()),
             ADDRESS_USD1 => Some(Self::usd1()),
             ADDRESS_EURC => Some(Self::eurc()),
+            ADDRESS_MSFTX => Some(Self::msftx()),
+            ADDRESS_AMZNX => Some(Self::amznx()),
+            ADDRESS_METAX => Some(Self::metax()),
+            ADDRESS_AAPLX => Some(Self::aaplx()),
+            ADDRESS_GOOGLX => Some(Self::googlx()),
+            ADDRESS_NVDAX => Some(Self::nvdax()),
+            ADDRESS_TSLAX => Some(Self::tslax()),
             // Local develoment tokens.
             "38JsCWEZ3dLRzcwxiCbL9rkkZqwwoWLAoCmqu7mWGSwq" => Some(Self::BachToken0 {
                 meta: Metadata {
