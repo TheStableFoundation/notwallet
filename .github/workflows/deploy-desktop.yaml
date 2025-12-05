@@ -14,12 +14,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "macos-latest" # for Arm based macs (M1 and above).
-            args: "--target aarch64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
-          - platform: "macos-latest" # for Intel based macs.
-            args: "--target x86_64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
-          - platform: "ubuntu-22.04"
-            args: "-c src-tauri/tauri.prod-linux.conf.json"
+          - platform: "windows-latest"
+            args: "-c src-tauri/tauri.prod-windows.conf.json"
 
     runs-on: ${{ matrix.platform }}
     env:
