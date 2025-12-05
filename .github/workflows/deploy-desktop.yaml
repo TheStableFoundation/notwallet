@@ -20,6 +20,8 @@ jobs:
             args: "--target x86_64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
           - platform: "ubuntu-22.04"
             args: "-c src-tauri/tauri.prod-linux.conf.json"
+          - platform: "windows-latest"
+            args: "-c src-tauri/tauri.prod-windows.conf.json"
 
     runs-on: ${{ matrix.platform }}
     env:
@@ -55,6 +57,39 @@ jobs:
         uses: ilammy/setup-nasm@v1
         with:
           platform: "win64"
+
+      - name: (Windows) Fetch Cargo dependencies
+        if: matrix.platform == 'windows-latest'
+        shell: bash
+        run: |
+          cd src-tauri
+          cargo fetch
+
+      - name: (Windows) Configure NASM for Ring
+        if: matrix.platform == 'windows-latest'
+        shell: bash
+        run: |
+          # Ring's build script looks for nasm at ./target/tools/windows/nasm/nasm
+          # relative to the cargo git checkout directory
+          NASM_PATH=$(which nasm.exe)
+          echo "Found NASM at: $NASM_PATH"
+
+          # Find the ring checkout and create nasm in the expected location
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+          echo "CARGO_HOME: $CARGO_HOME"
+
+          # Wait a moment for cargo to finish writing
+          sleep 2
+
+          # Find all ring checkouts
+          for ring_dir in "$CARGO_HOME"/git/checkouts/ring-*/*/; do
+            if [ -d "$ring_dir" ]; then
+              echo "Creating NASM in $ring_dir"
+              mkdir -p "${ring_dir}target/tools/windows/nasm"
+              cp "$NASM_PATH" "${ring_dir}target/tools/windows/nasm/nasm.exe"
+              echo "Created nasm.exe at ${ring_dir}target/tools/windows/nasm/nasm.exe"
+            fi
+          done
 
       - name: Import Apple Developer Certificate
         if: matrix.platform == 'macos-latest'
