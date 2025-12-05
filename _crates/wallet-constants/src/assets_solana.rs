@@ -29,3 +29,17 @@ pub const ADDRESS_ZBTC: &str = "zBTCug3er3tLyffELcvDNrKkCymbPWysGcWihESYfLg";
 pub const ADDRESS_CBBTC: &str = "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij";
 #[tsync]
 pub const ADDRESS_XBTC: &str = "CtzPWv73Sn1dMGVU3ZtLv9yWSyUAanBni19YWDaznnkn";
+#[tsync]
+pub const ADDRESS_GOOGLX: &str = "XsCPL9dNWBMvFtTmwcCA5v3xWPSMEBCszbQdiLLq6aN";
+#[tsync]
+pub const ADDRESS_AMZNX: &str = "Xs3eBt7uRfJX8QUs4suhyU8p2M6DoUDrJyWBa8LLZsg";
+#[tsync]
+pub const ADDRESS_AAPLX: &str = "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp";
+#[tsync]
+pub const ADDRESS_METAX: &str = "Xsa62P5mvPszXL1krVUnU5ar38bBSVcWAB6fmPCo5Zu";
+#[tsync]
+pub const ADDRESS_MSFTX: &str = "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX";
+#[tsync]
+pub const ADDRESS_NVDAX: &str = "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh";
+#[tsync]
+pub const ADDRESS_TSLAX: &str = "XsDoVfqeBukxuZHWhdvWHBhgEHjGNst4MLodqsJHzoB";
