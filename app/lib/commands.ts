@@ -6,6 +6,7 @@ export const SET_ACTIVE_KEYPAIR = "set_active_keypair";
 export const GET_ALL_KEYPAIRS = "get_all_keypairs";
 export const UPDATE_USERNAME = "update_username";
 export const ONRAMP_SESSION = "onramp_session";
+export const STRIPE_PUBLISHABLE_KEY = "stripe_publishable_key";
 export const GET_BACH_BALANCE = "get_bach_balance";
 export const GET_SOL_BALANCE = "get_sol_balance";
 export const GET_VERIFIED_ASSETS = "get_verified_assets";

@@ -17,7 +17,7 @@ use {
             command_get_consent_url::get_consent_url, command_get_profile::get_profile,
             command_get_token::get_token,
         },
-        onramp::commands::onramp_session,
+        onramp::commands::{onramp_session, stripe_publishable_key},
         settings::commands::{
             get_airdrop_environment, get_network_environment, get_xlp_environment,
             set_airdrop_environment, set_network_environment, set_xlp_environment,
@@ -102,6 +102,7 @@ pub fn run() {
             get_sol_balance,
             get_wallet_balance,
             onramp_session,
+            stripe_publishable_key,
             get_all_keypairs,
             update_username,
             send_token,

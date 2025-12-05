@@ -14,8 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "windows-latest"
-            args: "-c src-tauri/tauri.prod-windows.conf.json"
+          - platform: "macos-latest" # for Arm based macs (M1 and above).
+            args: "--target aarch64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
+          - platform: "macos-latest" # for Intel based macs.
+            args: "--target x86_64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
+          - platform: "ubuntu-22.04"
+            args: "-c src-tauri/tauri.prod-linux.conf.json"
 
     runs-on: ${{ matrix.platform }}
     env:
@@ -50,7 +54,7 @@ jobs:
         if: matrix.platform == 'windows-latest' # This must match the platform value defined above.
         uses: ilammy/setup-nasm@v1
         with:
-          platform: 'win64'
+          platform: "win64"
 
       - name: Import Apple Developer Certificate
         if: matrix.platform == 'macos-latest'
@@ -79,8 +83,8 @@ jobs:
       - name: (macOS) Create .p8 file
         if: matrix.platform == 'macos-latest'
         run: |
-            mkdir -p ~/.appstoreconnect/private_keys
-            echo "${{ secrets.APPLE_API_KEY_STRING }}" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APPLE_API_KEY }}.p8
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "${{ secrets.APPLE_API_KEY_STRING }}" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APPLE_API_KEY }}.p8
       - name: Install frontend dependencies
         run: pnpm install
 
@@ -93,6 +97,14 @@ jobs:
           echo BIRDEYE_API_KEY=${{ secrets.BIRDEYE_API_KEY }} >> .env
           echo GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }} >> .env
           echo GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }} >> .env
+          echo API_BASE_URL=${{ secrets.API_BASE_URL }} >> .env
+          echo API_BASE_URL_LOCAL=${{ secrets.API_BASE_URL_LOCAL }} >> .env
+          echo XLP_BASE_URL=${{ secrets.XLP_BASE_URL }} >> .env
+          echo XLP_BASE_URL_LOCAL=${{ secrets.XLP_BASE_URL_LOCAL }} >> .env
+          echo XLP_API_KEY=${{ secrets.XLP_API_KEY }} >> .env
+          echo DEPLOY_KEY=${{ secrets.DEPLOY_KEY }} >> .env
+          echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
+          echo STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} >> .env
           cat .env
 
       - uses: tauri-apps/tauri-action@v0
