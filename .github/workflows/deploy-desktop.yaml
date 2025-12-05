@@ -14,6 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - platform: "macos-latest" # for Arm based macs (M1 and above).
+            args: "--target aarch64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
+          - platform: "macos-latest" # for Intel based macs.
+            args: "--target x86_64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
+          - platform: "ubuntu-22.04"
+            args: "-c src-tauri/tauri.prod-linux.conf.json"
           - platform: "windows-latest"
             args: "-c src-tauri/tauri.prod-windows.conf.json"
 
@@ -67,14 +73,14 @@ jobs:
           # relative to the cargo git checkout directory
           NASM_PATH=$(which nasm.exe)
           echo "Found NASM at: $NASM_PATH"
-          
+
           # Find the ring checkout and create nasm in the expected location
           CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
           echo "CARGO_HOME: $CARGO_HOME"
-          
+
           # Wait a moment for cargo to finish writing
           sleep 2
-          
+
           # Find all ring checkouts
           for ring_dir in "$CARGO_HOME"/git/checkouts/ring-*/*/; do
             if [ -d "$ring_dir" ]; then
