@@ -22,11 +22,12 @@ mention it at all.
 
 ## Required dimensions
 
-App Store Connect accepts **only** the exact size its upload panel names for
-this app record. The existing assets are `1242×2688` portrait, which pins this
-record to the **iPhone 6.5"** class. Generate `1242×2688`; do not substitute a
-newer 6.9" size — it will be rejected with "The dimensions of one or more
-screenshots are wrong."
+The existing `APP_IPHONE_65` screenshot set accepts `1242×2688` portrait
+images, so generate that size when replacing the files in the set listed
+below. Apple also accepts a current large-iPhone set (6.9" at the time of this
+plan) and scales it for smaller displays. Before creating a new screenshot set,
+check Apple's current screenshot specification and the dimensions shown in App
+Store Connect; do not upload a 6.9" image to the existing 6.5" set.
 
 iPad set (`APP_IPAD_PRO_3GEN_129`) is `2048×2732` portrait.
 
@@ -71,8 +72,10 @@ tab order, flipped bubbles — matching the app's own RTL mode.
 - Caption at the top, device screenshot below, generous margin. Same type scale,
   same caption position, same device treatment in every frame.
 - Restrained palette: brand purple `#9932CC` plus neutrals. No neon, no 3D blobs.
-- Show a plausible, modest wallet balance. Do not imply investment returns —
-  it is a compliance risk on a financial listing and off-brand besides.
+- Keep the total displayed wallet value below US$250, with no gain/loss,
+  percentage change, APY, price chart, or return language. Use ordinary,
+  non-round token amounts so the screen reads as a wallet example rather than
+  an investment claim.
 
 ## How to generate
 
@@ -81,7 +84,7 @@ production stylesheet — no simulator or device needed:
 
 ```sh
 pnpm build                                                    # dist/assets/*.css
-(cd .ds-sync && npm i playwright@1.61.0)                      # matches cached chromium
+(cd .ds-sync && npm i playwright && npx playwright install chromium)
 node assets/aso/appstore/screenshots/generator/generate.mjs   # all devices + locales
 node assets/aso/appstore/screenshots/generator/generate.mjs --device mac --locale sv
 ```
