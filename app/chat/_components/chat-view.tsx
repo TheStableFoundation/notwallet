@@ -306,7 +306,7 @@ export default function ChatView() {
         <div ref={endRef} />
       </div>
 
-      <div className="sticky bottom-[4.5rem] z-10 flex items-end gap-2 rounded-2xl border bg-white/90 p-2 shadow-lg backdrop-blur-md">
+      <div className="sticky bottom-0 z-10 flex items-end gap-2 rounded-2xl border bg-white/90 p-2 shadow-lg backdrop-blur-md">
         <textarea
           ref={textareaRef}
           value={input}
