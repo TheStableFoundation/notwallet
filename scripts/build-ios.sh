@@ -139,14 +139,19 @@ derive_release_toolchain() {
     [[ -n "${RELEASE_DTXCODE:-}${RELEASE_XCODE_BUILD:-}" ]] \
       || fail "No release Xcode found to derive release stamps.\n       Install a release Xcode, or set RELEASE_DTXCODE / RELEASE_XCODE_BUILD / RELEASE_SDK_* by hand."
   fi
-  local xv sv xver xbuild sdkver sdkbuild d
+  local xv sv xver xbuild sdkver sdkbuild d xmajor xminor xpatch
   xv="$(DEVELOPER_DIR="$dd" xcodebuild -version 2>/dev/null)"
   sv="$(DEVELOPER_DIR="$dd" xcodebuild -version -sdk iphoneos 2>/dev/null)"
   xver="$(printf '%s\n' "$xv"  | awk '/^Xcode/{print $2}')"
   xbuild="$(printf '%s\n' "$xv" | awk '/Build version/{print $3}')"
   sdkver="$(printf '%s\n' "$sv" | awk -F': ' '/SDKVersion/{print $2; exit}')"
   sdkbuild="$(printf '%s\n' "$sv" | awk -F': ' '/ProductBuildVersion/{print $2; exit}')"
-  d="${xver//./}"; while [[ -n "$d" && ${#d} -lt 4 ]]; do d="${d}0"; done
+  IFS=. read -r xmajor xminor xpatch <<< "$xver"
+  xminor="${xminor:-0}"
+  xpatch="${xpatch:-0}"
+  [[ "$xmajor" =~ ^[0-9]+$ && "$xminor" =~ ^[0-9]+$ && "$xpatch" =~ ^[0-9]+$ ]] \
+    || fail "Could not encode Xcode version '${xver}' as DTXcode."
+  printf -v d '%04d' "$((10#$xmajor * 100 + 10#$xminor * 10 + 10#$xpatch))"
   REL_DTXCODE="${RELEASE_DTXCODE:-$d}"
   REL_XCODE_BUILD="${RELEASE_XCODE_BUILD:-$xbuild}"
   REL_SDK_VERSION="${RELEASE_SDK_VERSION:-$sdkver}"
@@ -272,7 +277,7 @@ do_fixplist() {
   : "${SIGN_IDENTITY:?set SIGN_IDENTITY (distribution identity for the re-sign) in .env.appstore}"
 
   WORK="$(mktemp -d)"
-  trap 'rm -rf "$WORK"' RETURN
+  trap 'rm -rf "$WORK"' RETURN EXIT
 
   unzip -q "$IPA_PATH" -d "$WORK"
 
