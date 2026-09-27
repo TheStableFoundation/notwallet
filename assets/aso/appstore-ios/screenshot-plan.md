@@ -67,7 +67,7 @@ tab order, flipped bubbles — matching the app's own RTL mode.
 ## Frame design system
 
 - Real UI only. No invented screens, no fabricated balances that imply returns.
-- One quiet background tint carried across all eight frames — the brand
+- One quiet background tint carried across all six frames — the brand
   fuchsia→sky gradient at low saturation, so the set reads as one object.
 - Caption at the top, device screenshot below, generous margin. Same type scale,
   same caption position, same device treatment in every frame.
@@ -92,7 +92,7 @@ node assets/aso/appstore/screenshots/generator/generate.mjs --device mac --local
 Output: `assets/aso/appstore/screenshots/<device>/[<locale>/]NN-slug.png`
 (`en` sits at the flat path; `sv`/`id`/`ar` in subfolders).
 
-72 files: 3 devices × 4 locales × 6 shots.
+72 files: iPhone 6.5", iPad 12.9", and Mac × 4 locales × 6 shots.
 
 ### Why a separate Tailwind sheet
 

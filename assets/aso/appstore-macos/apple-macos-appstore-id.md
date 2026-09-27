@@ -52,4 +52,4 @@ Juga baru: tata letak tiga tab yang lebih sederhana. Chat, Dompet, Profil.
 
 ## Keywords
 
-defi,web3,tukar,token,stablecoin,usdc,staking,blockchain,offline,guru,pemula,sol,dapp,nft,privat
+defi,web3,tukar,token,stablecoin,aman,staking,blockchain,offline,guru,pemula,sol,dapp,nft,privat

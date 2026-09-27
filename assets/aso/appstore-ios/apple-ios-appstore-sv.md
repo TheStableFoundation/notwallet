@@ -52,4 +52,4 @@ Den förklarar snarare än ger råd — inga prisprognoser — och den ber aldri
 
 ## Keywords
 
-defi,web3,byte,token,stablecoin,usdc,staking,blockchain,offline,lärare,nybörjare,sol,dapp,nft,valv
+defi,web3,byte,token,stablecoin,säker,staking,blockchain,offline,lärare,nybörjare,sol,dapp,nft,valv

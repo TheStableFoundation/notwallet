@@ -52,4 +52,4 @@ Also new: a simpler three-tab layout. Chat, Wallet, Profile.
 
 ## Keywords
 
-wallet,defi,web3,swap,token,stablecoin,usdc,staking,blockchain,offline,tutor,beginner,sol,dapp,nft
+wallet,defi,web3,swap,token,stablecoin,secure,staking,blockchain,offline,tutor,beginner,sol,dapp,nft
