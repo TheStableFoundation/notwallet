@@ -48,7 +48,7 @@ smbcloud-wallet-kit = { path = "./../_crates/wallet-kit" }
 smbcloud-wallet-kit-v3 = { path = "./../_crates/" }
 solana-sdk = "2.3.1"
 solana-signer = "3"
-tauri = { version = "2.0.0", features = [] }
+tauri = { version = "2.12.0", features = [] }
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-haptics = "2"
 tauri-plugin-log = { version = "2", features = ["colored"] }

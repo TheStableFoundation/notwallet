@@ -1,7 +1,7 @@
 # App Name
 
-NotWallet Crypto Self-Custody
+NotWallet: Solana Self-Custody
 
 ## Subtitle
 
-Non-Custodial · DeFi · Web3
+Learn crypto with private AI

@@ -1,7 +1,7 @@
 # App Name
 
-NotWallet Crypto Self-Custody
+NotWallet: Solana-plånbok
 
 ## Subtitle
 
-Icke-förvaringstjänst · DeFi · Web3
+Lär dig krypto med privat AI
