@@ -47,6 +47,9 @@ target
 # Environment
 .env
 
+# App Store / Play Store credentials (see .env.appstore.example)
+.env.appstore
+
 # Design sync (regenerated artifacts — durable set under .design-sync/ IS committed)
 .ds-sync/
 ds-bundle/
@@ -54,3 +57,6 @@ ds-bundle/
 .design-sync/learnings/
 .design-sync/node_modules
 notwallet-ds-entry.js
+
+# Screenshot generator's supplemental Tailwind build (regenerated on each run)
+assets/aso/**/generator/.gen-utilities.build.css
