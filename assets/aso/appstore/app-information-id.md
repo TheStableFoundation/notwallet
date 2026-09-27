@@ -1,7 +1,7 @@
 # App Name
 
-NotWallet Crypto Self-Custody
+NotWallet: Dompet Solana
 
 ## Subtitle
 
-Non-Custodial · DeFi · Web3
+Belajar kripto dengan AI

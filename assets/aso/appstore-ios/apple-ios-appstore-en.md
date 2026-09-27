@@ -1,37 +1,55 @@
 ## Promotional Text
 
-Trade tokens instantly and earn rewards while securing the Solana network. Your keys, your crypto, your freedom.
+Meet Amethyst: a crypto tutor built into the app that runs entirely on your device. Ask about fees, swaps, or stablecoins - nothing you type ever leaves your phone.
 
 ## Description
 
-Take full control of your crypto. NotWallet Crypto Self-Custody is a self-custody wallet for Solana — no middlemen, no restrictions.
+Take full control of your crypto — and finally understand it.
 
-Features:
+NotWallet is a self-custody wallet for Solana. You hold the keys, and a private AI tutor sits alongside them to explain how any of it actually works.
 
-• Full Control: You own your private keys — not us.
-• Solana & SPL Tokens: Fast, low-cost transactions built directly on Solana.
-• Token Swap: Exchange tokens instantly within the app.
-• Staking: Help secure the network and earn rewards.
-• Web3 & DeFi: Connect to dApps, NFT marketplaces, and more.
-• Security: Biometric lock, local encryption, and zero data collection.
+Meet Amethyst
 
-Why NotWallet Crypto Self-Custody?
+Amethyst is a crypto educator built into the app. Ask what a stablecoin is, why a swap has slippage, or what you are really paying in network fees — and get a plain-language answer.
 
-Simple design. High speed. Complete freedom.
-Built for Solana — for those who value control, security, and independence.
+• Runs entirely on your device. Nothing you type is sent anywhere.
+• Works offline once the model is downloaded.
+• Explains, never advises. No price predictions, no "what should I buy".
+• Will never ask for your seed phrase — and tells you to guard it.
 
-Get started in seconds:
+Your wallet
+
+• Full control: you own your private keys — not us.
+• Solana & SPL tokens: fast, low-cost transactions.
+• Token swap: exchange tokens inside the app.
+• Staking: help secure the network and earn rewards.
+• Web3 & DeFi: connect to dApps, NFT marketplaces, and more.
+• Security: biometric lock, local encryption, zero data collection.
+
+Three tabs, nothing hidden
+
+Chat to learn. Wallet to transact. Profile for everything else.
+
+Get started in seconds
 
 1. Download the app
 2. Create or import your wallet
-3. Send, receive, stake, and explore DeFi
+3. Ask Amethyst anything — then send, receive, stake, and explore
 
-Your crypto. Your keys.
+Open source and community-owned, built by The Stable Foundation.
+
+Your crypto. Your keys. Your questions answered privately.
 
 ## What's new in this version
 
-Bug fixes and performance improvements
+Amethyst — your on-device crypto tutor
+
+Ask what a stablecoin is, why you need SOL for fees, or how a token swap works. Amethyst answers in plain language and runs entirely on your device, so nothing you type ever leaves your phone.
+
+It explains rather than advises — no price calls — and it will never ask for your seed phrase.
+
+Also new: a simpler three-tab layout. Chat, Wallet, Profile.
 
 ## Keywords
 
-solana,crypto wallet,noncustodial,defi,web3,selfcustody,token swap,blockchain
+wallet,defi,web3,swap,token,stablecoin,usdc,staking,blockchain,offline,tutor,beginner,sol,dapp,nft

@@ -1,35 +1,55 @@
 ## Promotional Text
 
-Tukar token langsung dan dapatkan imbalan sambil mengamankan jaringan Solana. Kuncimu, kriptomu, kebebasanmu.
+Kenalan dengan Amethyst: tutor kripto di dalam aplikasi yang berjalan penuh di perangkatmu. Tanya soal biaya, swap, atau stablecoin - tidak ada yang dikirim keluar.
 
 ## Description
 
-Kontrol aset kriptomu dengan NotWallet Kripto Self-Custody – dompet non-kustodial untuk Solana & SPL token. Aman, cepat, dan tanpa perantara.
+Kendalikan penuh kriptomu — dan akhirnya benar-benar memahaminya.
 
-Fitur utama:
-• Kamu pegang kendali: Private key sepenuhnya milikmu.
-• Transaksi cepat & murah: Dibangun di jaringan Solana.
-• Swap token langsung: Tukar token dengan mudah di aplikasi.
-• Staking SOL: Dapatkan imbalan dan dukung jaringan.
-• Terhubung ke Web3 & DeFi: Gunakan dApp, NFT, dan platform Solana lainnya.
-• Keamanan maksimal: Enkripsi lokal, biometrik, tanpa pelacakan data.
+NotWallet adalah dompet non-kustodial untuk Solana. Kamu yang pegang kunci, dan seorang tutor AI privat ada di sampingnya untuk menjelaskan cara kerjanya.
 
-Kenapa NotWallet Kripto Self-Custody?
-Desain ringan, cepat, dan 100% di bawah kendalimu.
-Cocok untuk pengguna baru maupun DeFi pro.
+Kenalan dengan Amethyst
 
-Cara mulai:
+Amethyst adalah tutor kripto yang tertanam di dalam aplikasi. Tanya apa itu stablecoin, kenapa sebuah swap punya slippage, atau berapa sebenarnya biaya jaringan yang kamu bayar — dan dapatkan jawaban dengan bahasa sederhana.
 
-1. Unduh aplikasi
-2. Buat atau impor dompet
-3. Kirim, staking, dan jelajahi Web3
+• Berjalan sepenuhnya di perangkatmu. Tidak ada yang kamu ketik dikirim ke mana pun.
+• Bisa dipakai offline setelah modelnya diunduh.
+• Menjelaskan, bukan memberi saran. Tanpa prediksi harga, tanpa rekomendasi beli.
+• Tidak akan pernah meminta seed phrase-mu — dan mengingatkanmu untuk menjaganya.
 
-Kriptomu, asetmu.
+Dompetmu
+
+• Kendali penuh: private key milikmu — bukan kami.
+• Solana & token SPL: transaksi cepat dengan biaya rendah.
+• Swap token: tukar token langsung di aplikasi.
+• Staking: bantu amankan jaringan dan dapatkan imbalan.
+• Web3 & DeFi: terhubung ke dApp, marketplace NFT, dan lainnya.
+• Keamanan: kunci biometrik, enkripsi lokal, nol pengumpulan data.
+
+Tiga tab, tidak ada yang disembunyikan
+
+Chat untuk belajar. Dompet untuk bertransaksi. Profil untuk sisanya.
+
+Mulai dalam hitungan detik
+
+1. Unduh aplikasinya
+2. Buat atau impor dompetmu
+3. Tanya apa saja ke Amethyst — lalu kirim, terima, staking, dan jelajahi
+
+Open source dan dimiliki komunitas, dibangun oleh The Stable Foundation.
+
+Kriptomu. Kuncimu. Pertanyaanmu dijawab secara privat.
 
 ## What's new in this version
 
-Perbaikan bug dan peningkatan performa
+Amethyst — tutor kripto di perangkatmu
+
+Tanya apa itu stablecoin, kenapa kamu butuh SOL untuk biaya, atau bagaimana swap token bekerja. Amethyst menjawab dengan bahasa sederhana dan berjalan sepenuhnya di perangkatmu, jadi tidak ada yang kamu ketik keluar dari ponsel.
+
+Ia menjelaskan, bukan memberi saran — tanpa prediksi harga — dan tidak akan pernah meminta seed phrase-mu.
+
+Juga baru: tata letak tiga tab yang lebih sederhana. Chat, Dompet, Profil.
 
 ## Keywords
 
-solana,kripto,dompet,non kustodial,self custody,crypto wallet,defi,web3,swap token,sol wallet
+defi,web3,tukar,token,stablecoin,usdc,staking,blockchain,offline,guru,pemula,sol,dapp,nft,privat
