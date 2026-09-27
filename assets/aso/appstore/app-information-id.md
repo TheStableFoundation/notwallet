@@ -4,4 +4,4 @@ NotWallet: Dompet Solana
 
 ## Subtitle
 
-Belajar kripto dengan AI
+Belajar kripto via AI privat

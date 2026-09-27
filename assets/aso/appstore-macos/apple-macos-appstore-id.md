@@ -25,6 +25,7 @@ Dompetmu
 • Staking: bantu amankan jaringan dan dapatkan imbalan.
 • Web3 & DeFi: terhubung ke dApp, marketplace NFT, dan lainnya.
 • Keamanan: kunci biometrik, enkripsi lokal, nol pengumpulan data.
+• Pengalaman macOS native: dioptimalkan untuk Mac dengan performa mulus.
 
 Tiga tab, tidak ada yang disembunyikan
 
@@ -52,4 +53,4 @@ Juga baru: tata letak tiga tab yang lebih sederhana. Chat, Dompet, Profil.
 
 ## Keywords
 
-defi,web3,tukar,token,stablecoin,aman,staking,blockchain,offline,guru,pemula,sol,dapp,nft,privat
+defi,web3,tukar,token,stablecoin,aman,staking,blockchain,offline,guru,pemula,sol,dapp,nft,mandiri

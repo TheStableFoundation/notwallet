@@ -25,6 +25,7 @@ Din plånbok
 • Staking: hjälp till att säkra nätverket och tjäna belöningar.
 • Web3 och DeFi: anslut till dApps, NFT-marknadsplatser och mer.
 • Säkerhet: biometriskt lås, lokal kryptering, noll datainsamling.
+• Inbyggd för macOS: anpassad för Mac med smidig prestanda.
 
 Tre flikar, inget gömt
 
