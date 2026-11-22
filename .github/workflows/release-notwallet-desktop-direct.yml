@@ -37,15 +37,29 @@ jobs:
         run: |
           version="$(jq -r .version src-tauri/tauri.prod-macos.conf.json)"
           tag="app-v${version}"
-          if ! gh release view "$tag" >/dev/null 2>&1; then
+          # The releases list includes drafts; the by-tag endpoint does not, so
+          # a rerun would not find its own draft there.
+          find_release() {
+            gh api "repos/$GITHUB_REPOSITORY/releases" --paginate \
+              --jq ".[] | select(.tag_name == \"$tag\") | \"\(.id) \(.draft)\"" | head -n1
+          }
+          found="$(find_release)"
+          # Reuse an existing draft so a rerun fills the same release. A published
+          # release means the version was not bumped: stop before the jobs upload
+          # into (and overwrite assets on) a live release.
+          if [ -n "$found" ] && [ "${found#* }" != "true" ]; then
+            echo "::error::Release $tag is already published. Bump the version in the tauri.prod-*.conf.json overlays."
+            exit 1
+          fi
+          if [ -z "$found" ]; then
             gh release create "$tag" --draft \
               --target "$GITHUB_SHA" \
               --title "NotWallet Crypto v${version}" \
               --notes "See the assets to download this version and install."
+            found="$(find_release)"
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "release_id=$(gh api "repos/$GITHUB_REPOSITORY/releases" --paginate \
-            --jq ".[] | select(.tag_name == \"$tag\") | .id" | head -n1)" >> "$GITHUB_OUTPUT"
+          echo "release_id=${found% *}" >> "$GITHUB_OUTPUT"
 
   desktop:
     name: ${{ matrix.name }}
@@ -244,7 +258,7 @@ jobs:
         shell: pwsh
 
       - name: Sign Artifact with CodeSignTool
-        uses: sslcom/esigner-codesign@develop
+        uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747 # develop, 2025-06-23
         with:
           command: batch_sign
           username: ${{secrets.ES_USERNAME}}

@@ -104,7 +104,7 @@ jobs:
         shell: pwsh
 
       - name: Sign Artifact with CodeSignTool
-        uses: sslcom/esigner-codesign@develop
+        uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747 # develop, 2025-06-23
         with:
           command: batch_sign
           username: ${{secrets.ES_USERNAME}}

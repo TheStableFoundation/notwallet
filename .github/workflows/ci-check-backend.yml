@@ -35,7 +35,7 @@ permissions:
 
 jobs:
   check:
-    name: check (${{ matrix.platform }})
+    name: check (${{ matrix.platform }}${{ matrix.variant && format(' {0}', matrix.variant) || '' }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     strategy:
@@ -48,6 +48,11 @@ jobs:
           - platform: macos
             os: macos-latest
             target: aarch64-apple-darwin
+          # The direct release also builds this target.
+          - platform: macos
+            variant: x64
+            os: macos-latest
+            target: x86_64-apple-darwin
           - platform: windows
             os: windows-latest
             target: x86_64-pc-windows-msvc
