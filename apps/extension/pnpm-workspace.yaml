@@ -1,2 +1,22 @@
 onlyBuiltDependencies:
   - esbuild
+
+# Security floors for transitive deps (Dependabot). Each stays inside its
+# current major, so nothing gets a breaking upgrade.
+overrides:
+  '@babel/core@7': ^7.29.6
+  '@humanfs/node': ^0.16.8
+  baseline-browser-mapping@2: ^2.11.0
+  brace-expansion@1: ^1.1.21
+  brace-expansion@2: ^2.1.7
+  browserslist@4: ^4.28.7
+  flatted@3: ^3.4.2
+  js-yaml@4: ^4.3.2
+  minimatch@3: ^3.1.3
+  minimatch@9: ^9.0.7
+  nanoid@3: ^3.3.12
+  picomatch@2: ^2.3.2
+  picomatch@4: ^4.0.4
+  rollup@2: ^2.80.0
+  rollup@4: ^4.59.0
+  source-map-js@1: ^1.2.2
