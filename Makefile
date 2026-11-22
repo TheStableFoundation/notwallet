@@ -41,6 +41,7 @@
 # make ts              — regenerate app/lib/crate/generated.ts from Rust models
 # make fmt             — cargo fmt
 # make lint            — cargo check + tsc
+# make check           — check:tauri-config + check:skills + lint
 # make clean           — remove build artefacts
 
 .PHONY: dev build ts \
@@ -48,7 +49,7 @@
         asios asios-clean asios-init asios-icons asios-override asios-build asios-fixplist asios-upload \
         psmobile psmobile-clean psmobile-init psmobile-icons psmobile-override psmobile-keystore psmobile-build psmobile-open \
         release-macos release-linux release-windows release-windows-msstore \
-        screenshots fmt lint clean
+        screenshots fmt lint check clean
 
 # ── macOS App Store ────────────────────────────────────────────────────────
 
@@ -69,7 +70,12 @@ asmacos-upload:
 asios:
 	./scripts/build-ios.sh all
 
-asios-clean:
+asios-check:
+	pnpm check:tauri-config
+	pnpm check:skills
+	$(MAKE) lint
+
+clean:
 	./scripts/build-ios.sh clean
 
 asios-init:
@@ -148,7 +154,7 @@ build:
 	pnpm tauri build
 
 ts:
-	pnpm tsync
+	pnpm ts
 
 fmt:
 	cargo fmt --manifest-path src-tauri/Cargo.toml --all
