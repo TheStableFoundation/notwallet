@@ -10,3 +10,6 @@
 !/gen/apple/*.xcprivacy
 gen/android/*
 /gen/schemas/*
+
+icons/android
+icons/ios

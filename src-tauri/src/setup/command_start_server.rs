@@ -45,6 +45,11 @@ pub async fn start_server(app: AppHandle) -> Result<u16, String> {
         "
             .into(),
         ),
+        // Keep serving the inline HTML above rather than 302-redirecting
+        // (`redirect_uri: None`). Spreading `Default` instead of listing every
+        // field keeps this compiling when the plugin adds new ones — 2.1.0
+        // added `redirect_uri` in a *minor* release, which broke this literal.
+        ..Default::default()
     };
     start_with_config(config, move |url| {
         debug!("Received URL: {}", url);

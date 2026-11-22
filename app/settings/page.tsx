@@ -19,6 +19,7 @@ import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SettingsIcon from "@mui/icons-material/Settings";
+import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { selectionFeedback } from "@tauri-apps/plugin-haptics";
 import Confetti from "react-confetti";
@@ -70,11 +71,14 @@ export default function SettingsPage() {
       | "appInfo"
       | "debugSetting"
       | "appPreferences"
-      | "languagePreferences",
+      | "languagePreferences"
+      | "activityDashboard",
   ) => {
     await selectionFeedback();
     if (type === "about") {
       router("/settings/about");
+    } else if (type === "activityDashboard") {
+      router("/home");
     } else if (type === "privacyPolicy") {
       openUrl("https://notwallet.eu/privacy");
     } else if (type === "termsOfService") {
@@ -109,6 +113,13 @@ export default function SettingsPage() {
 
   const settingsItems = (isDebug: boolean) => {
     let settings: SettingItem[] = [
+      {
+        id: "activityDashboard",
+        label: t.activityFeed,
+        icon: <CampaignOutlinedIcon />,
+        action: () => handleClick("activityDashboard"),
+        hasChevron: true,
+      },
       {
         id: "about",
         label: t.about,

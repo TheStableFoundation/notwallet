@@ -1,0 +1,11 @@
+{
+  "pkg": "notwallet",
+  "globalName": "NotWallet",
+  "shape": "package",
+  "projectId": "b84b69bc-b787-4d6c-af2d-96d73db827eb",
+  "componentSrcMap": {},
+  "cssEntry": "./notwallet-tokens.css",
+  "tokensGlob": "./notwallet-tokens.css",
+  "guidelinesGlob": [],
+  "readmeHeader": ".design-sync/conventions.md"
+}

@@ -1,0 +1,57 @@
+name: Checks Extension
+
+on:
+  pull_request:
+    paths: &extension-paths
+      - "apps/extension/**"
+      - ".github/workflows/ci-check-extension.yml"
+  push:
+    branches:
+      - main
+      - development
+    paths: *extension-paths
+  workflow_dispatch:
+
+concurrency:
+  group: ci-check-extension-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
+    defaults:
+      run:
+        working-directory: apps/extension
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: apps/extension/.nvmrc
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build:${{ matrix.browser }}
+
+      - name: Upload extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: notwallet-extension-${{ matrix.browser }}
+          path: apps/extension/dist_${{ matrix.browser }}
+          retention-days: 7

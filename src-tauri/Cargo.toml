@@ -24,6 +24,10 @@ chrono = { version = "0.4", features = ["serde"] }
 curve25519-dalek = "4.1.3"
 dotenv_codegen = "0.15"
 log = "0.4"
+once_cell = "1"
+# On-device LLM inference engine (Metal on Apple, CPU on Android) powering the
+# AI Chat tab. Published crate: https://crates.io/crates/onde
+onde = "1.2.2"
 openssl = { version = "0.10", features = ["vendored"] }
 reqwest = { version = "0.12", default-features = false, features = [
     "json",
@@ -44,7 +48,7 @@ smbcloud-wallet-kit = { path = "./../_crates/wallet-kit" }
 smbcloud-wallet-kit-v3 = { path = "./../_crates/" }
 solana-sdk = "2.3.1"
 solana-signer = "3"
-tauri = { version = "2.0.0", features = [] }
+tauri = { version = "2.12.0", features = [] }
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-haptics = "2"
 tauri-plugin-log = { version = "2", features = ["colored"] }
@@ -54,6 +58,7 @@ tauri-plugin-os = "2"
 tauri-plugin-shell = "2"
 tauri-plugin-store = "2"
 thiserror = "1.0"
+tokio = { version = "1", features = ["macros", "rt"] }
 tsync = "2"
 uuid = { version = "1", features = ["v4"] }
 
@@ -65,8 +70,25 @@ tauri-plugin-barcode-scanner = "2"
 [target.'cfg(target_os = "android")'.dependencies]
 tauri-plugin-android-tv-check = "1"
 
+# Apple App Group container lookup — used to redirect the on-device chat
+# model's HuggingFace cache into the shared `group.com.ondeinference.apps`
+# container (see src-tauri/gen-override/apple entitlements).
+[target.'cfg(any(target_os = "ios", target_os = "macos"))'.dependencies]
+objc2-foundation = { version = "0.3", features = [
+    "NSFileManager",
+    "NSBundle",
+    "NSString",
+] }
+
 [build-dependencies]
 tauri-build = { version = "2.0.0", features = [] }
 
 [patch.crates-io]
 ring = { git = "https://github.com/setoelkahfi/ring.git", branch = "main" }
+
+# Optimise dependencies only. GGUF on-device inference (the AI Chat tab) is
+# unusably slow with unoptimised deps, and mistral.rs/candle do all the heavy
+# lifting — so they get opt-level 2, while notwallet's own crate stays at the
+# default (opt-level 0, incremental on) and remains fast to rebuild.
+[profile.dev.package."*"]
+opt-level = 2

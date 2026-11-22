@@ -1,4 +1,6 @@
+mod chat;
 mod constants;
+mod events;
 mod google;
 mod model;
 mod network;
@@ -13,6 +15,10 @@ extern crate dotenv_codegen;
 
 use {
     crate::{
+        chat::{
+            chat_clear_history, chat_get_history, chat_get_status, chat_load_model,
+            chat_send_message, chat_unload_model,
+        },
         google::{
             command_get_consent_url::get_consent_url, command_get_profile::get_profile,
             command_get_token::get_token,
@@ -88,6 +94,12 @@ pub fn run() {
             setup(app)
         })
         .invoke_handler(tauri::generate_handler![
+            chat_load_model,
+            chat_unload_model,
+            chat_get_status,
+            chat_send_message,
+            chat_clear_history,
+            chat_get_history,
             onboarding_create_wallet,
             import_solana_wallet,
             derive_new_keypair,

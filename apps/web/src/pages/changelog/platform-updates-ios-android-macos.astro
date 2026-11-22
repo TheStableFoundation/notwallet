@@ -1,0 +1,165 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const publishDate = "2025-11-03";
+const title = "Platform Updates: NotWallet Crypto for iOS, Android, and macOS";
+const description =
+    "Major updates across all platforms bringing enhanced performance, new features, and improved user experience to NotWallet Crypto.";
+---
+
+<Layout title={title} description={description}>
+    <Header />
+    <main class="min-h-screen bg-gradient-to-b from-nordic-bg to-white py-20">
+        <article class="container mx-auto px-4 max-w-4xl">
+            <!-- Header -->
+            <div class="mb-12">
+                <div class="text-sm text-nordic-text-secondary mb-4">
+                    <a
+                        href="/changelog"
+                        class="hover:text-nordic-accent transition-colors"
+                        >← Back to Changelog</a
+                    >
+                </div>
+                <time
+                    datetime={publishDate}
+                    class="text-sm text-nordic-text-secondary block mb-4"
+                >
+                    {
+                        new Date(publishDate).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })
+                    }
+                </time>
+                <h1
+                    class="text-4xl md:text-5xl font-bold text-nordic-text mb-6"
+                >
+                    {title}
+                </h1>
+                <p class="text-xl text-nordic-text-secondary leading-relaxed">
+                    {description}
+                </p>
+            </div>
+
+            <!-- Featured Image -->
+            <div class="mb-12 rounded-2xl overflow-hidden shadow-lg">
+                <div
+                    class="bg-gradient-to-br from-nordic-accent to-blue-500 aspect-video flex items-center justify-center"
+                >
+                    <div class="text-center text-white p-8">
+                        <div class="flex justify-center gap-6 mb-4">
+                            <span class="text-6xl">📱</span>
+                            <span class="text-6xl">🤖</span>
+                            <span class="text-6xl">💻</span>
+                        </div>
+                        <h2 class="text-3xl font-bold">Universal Updates</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="prose prose-lg max-w-none">
+                <!-- Introduction -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-4">
+                        What's New Across All Platforms
+                    </h2>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        We're excited to announce significant updates to
+                        NotWallet Crypto across iOS, Android, and macOS. These
+                        updates bring improved performance, new features, and a
+                        more refined user experience to all our platforms.
+                    </p>
+                    <p class="text-nordic-text-secondary leading-relaxed">
+                        Our commitment to providing a seamless, secure, and
+                        beautiful crypto wallet experience continues with these
+                        comprehensive platform improvements.
+                    </p>
+                </div>
+
+                <!-- iOS Updates -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">📱</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            iOS Updates (v1.0.4)
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Android Updates -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">🤖</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            Android Updates (v1.0.3)
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- macOS Updates -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">💻</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            macOS Updates (v1.0.3)
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Download Links -->
+                <div
+                    class="bg-gradient-to-br from-nordic-accent to-blue-500 rounded-xl p-8 mb-8 text-white"
+                >
+                    <h2 class="text-2xl font-bold mb-4">Update Now</h2>
+                    <p class="text-white/90 mb-6">
+                        Download the latest version of NotWallet Crypto on your
+                        preferred platform:
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <a
+                            href="https://apps.apple.com/se/app/notwallet-kryptosj%C3%A4lvf%C3%B6rvaring/id6749607570"
+                            class="bg-white text-nordic-accent px-6 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+                        >
+                            App Store
+                        </a>
+                        <a
+                            href="https://play.google.com/store/apps/details?id=xyz.notwallet.NotWallet"
+                            class="bg-white text-nordic-accent px-6 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+                        >
+                            Google PlayStore
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Changelog -->
+            <div class="mt-12 text-center">
+                <a
+                    href="/changelog"
+                    class="text-nordic-accent hover:text-nordic-accent-dark transition-colors font-semibold"
+                >
+                    ← Back to Changelog
+                </a>
+            </div>
+        </article>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    article {
+        line-height: 1.8;
+    }
+</style>

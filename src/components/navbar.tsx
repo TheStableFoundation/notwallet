@@ -9,21 +9,27 @@ import { Typography } from "@mui/material";
 
 interface NavItem {
   path: string;
-  key: "home" | "wallet" | "settings";
+  key: "chat" | "wallet" | "profile";
   icon: React.ReactElement;
 }
 
 const navItems: NavItem[] = [
   {
     path: "/",
-    key: "home",
+    key: "chat",
     icon: (
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
         <path
-          d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-4h-4v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10.5z"
+          d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-4.5 4.2c-.5.47-1.3.12-1.3-.57V5z"
           stroke="#a21caf"
           strokeWidth="1.5"
           strokeLinejoin="round"
+        />
+        <path
+          d="M8 9h8M8 12.5h5"
+          stroke="#a21caf"
+          strokeWidth="1.5"
+          strokeLinecap="round"
         />
       </svg>
     ),
@@ -44,7 +50,7 @@ const navItems: NavItem[] = [
   },
   {
     path: "/settings",
-    key: "settings",
+    key: "profile",
     icon: (
       <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="3" stroke="#a21caf" strokeWidth="1.5" />
@@ -58,47 +64,57 @@ const navItems: NavItem[] = [
   },
 ];
 
-export default function Navbar() {
-  const location = useLocation();
+// The bars are laid out as flex children of the app shell, not position:fixed
+// over a scrolling document — see the note in index.css.
+export function TopNav() {
   const { t, lang } = useLang();
   const { environment } = useNetworkEnvironment();
+  const isRTL = lang === "ar";
+
+  return (
+    <header
+      className="shrink-0 bg-white/70 backdrop-blur-lg shadow top-nav-safe"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      <div className="max-w-2xl mx-auto flex flex-row justify-center items-center px-4 py-3 w-full">
+        <span className="font-bold text-xl text-primary-main">
+          {t.appName}
+          {environment != "Mainnet" && (
+            <Typography
+              component="span"
+              color="warning"
+              fontWeight="bold"
+              sx={{ fontSize: 16, fontStyle: "italic" }}
+            >
+              {" "}
+              ({environment})
+            </Typography>
+          )}
+        </span>
+      </div>
+    </header>
+  );
+}
+
+export function BottomNav() {
+  const location = useLocation();
+  const { t, lang } = useLang();
   const isRTL = lang === "ar";
 
   const isActivePath = (path: string) => {
     debug(`Current path: ${location.pathname}`);
     if (path === "/") {
-      return (
-        location.pathname === "/" ||
-        location.pathname === "/home" ||
-        location.pathname === "/home/dao" ||
-        location.pathname === "/home/learn"
-      );
+      return location.pathname === "/";
     }
     if (path === "/wallet") {
-      return (
-        location.pathname === "/wallet" ||
-        location.pathname === "/wallet/buy" ||
-        location.pathname === "/wallet/buy/stripe" ||
-        location.pathname === "/wallet/create-new-wallet" ||
-        location.pathname === "/wallet/create-new-wallet/done" ||
-        location.pathname === "/wallet/import" ||
-        location.pathname === "/wallet/onboarding" ||
-        location.pathname === "/wallet/onboarding/create-password" ||
-        location.pathname === "/wallet/onboarding/create-wallet" ||
-        location.pathname === "/wallet/onboarding/create-wallet-disclaimer" ||
-        location.pathname === "/wallet/onboarding/import" ||
-        location.pathname === "/wallet/onboarding/import-keypairs" ||
-        location.pathname === "/wallet/onboarding/import-wallet" ||
-        location.pathname === "/wallet/sell" ||
-        location.pathname === "/wallet/settings" ||
-        location.pathname === "/wallet/token"
-      );
+      return location.pathname.startsWith("/wallet");
     }
     if (path === "/settings") {
+      // The activity dashboard lives under /home and is reached from Profile,
+      // so it keeps the Profile tab highlighted.
       return (
-        location.pathname === "/settings" ||
-        location.pathname === "/settings/about" ||
-        location.pathname === "/settings/app-info"
+        location.pathname.startsWith("/settings") ||
+        location.pathname.startsWith("/home")
       );
     }
     return false;
@@ -109,66 +125,38 @@ export default function Navbar() {
   };
 
   return (
-    <>
-      {/* Top bar with app name, matching bottom bar width */}
-      <div
-        className={`fixed top-0 left-0 w-full bg-white/70 backdrop-blur-lg z-50 shadow top-nav-safe`}
-        dir={isRTL ? "rtl" : "ltr"}
-      >
-        <div className="max-w-2xl mx-auto flex flex-row justify-center items-center px-4 py-3 w-full">
-          <span className="font-bold text-xl text-primary-main">
-            {t.appName}
-            {environment != "Mainnet" && (
-              <Typography
-                component="span"
-                color="warning"
-                fontWeight="bold"
-                sx={{ fontSize: 16, fontStyle: "italic" }}
-              >
-                {" "}
-                ({environment})
-              </Typography>
-            )}
-          </span>
-        </div>
-      </div>
-
-      {/* Bottom tab navigation */}
-      <nav
-        className="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t z-40 shadow-lg bottom-nav-safe"
-        dir={isRTL ? "rtl" : "ltr"}
-      >
-        <div className="max-w-2xl mx-auto flex justify-around items-center px-4 py-2 w-full">
-          {navItems.map((item) => (
-            <Tooltip.Root key={item.path} delayDuration={100}>
-              <Tooltip.Trigger asChild>
-                <Link
-                  to={item.path}
-                  onClick={handleNavClick}
-                  className={`flex flex-col items-center justify-center gap-1 px-3 py-1 rounded transition-all duration-200
+    <nav
+      className="shrink-0 bg-white/90 backdrop-blur-md border-t shadow-lg bottom-nav-safe"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      <div className="max-w-2xl mx-auto flex justify-around items-center px-4 py-2 w-full">
+        {navItems.map((item) => (
+          <Tooltip.Root key={item.path} delayDuration={100}>
+            <Tooltip.Trigger asChild>
+              <Link
+                to={item.path}
+                onClick={handleNavClick}
+                className={`flex flex-col items-center justify-center gap-1 px-3 py-1 rounded transition-all duration-200
                     ${
                       isActivePath(item.path)
-                        ? "bg-fuchsia-100 text-primay-main shadow font-semibold"
+                        ? "bg-fuchsia-100 text-primary-main shadow font-semibold"
                         : "hover:bg-fuchsia-50 text-slate-800"
                     }`}
-                  style={{ minWidth: 60 }}
-                >
-                  {item.icon}
-                  <span className="text-xs">{t[item.key]}</span>
-                </Link>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content className="text-xs bg-white border px-2 py-1 rounded shadow">
-                  {t[item.key]}
-                  <Tooltip.Arrow className="fill-white" />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          ))}
-        </div>
-      </nav>
-      {/* Add top and bottom padding to main content to prevent overlap */}
-      <div className="h-16" aria-hidden="true"></div>
-    </>
+                style={{ minWidth: 60 }}
+              >
+                {item.icon}
+                <span className="text-xs">{t[item.key]}</span>
+              </Link>
+            </Tooltip.Trigger>
+            <Tooltip.Portal>
+              <Tooltip.Content className="text-xs bg-white border px-2 py-1 rounded shadow">
+                {t[item.key]}
+                <Tooltip.Arrow className="fill-white" />
+              </Tooltip.Content>
+            </Tooltip.Portal>
+          </Tooltip.Root>
+        ))}
+      </div>
+    </nav>
   );
 }

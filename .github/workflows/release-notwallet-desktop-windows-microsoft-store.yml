@@ -1,0 +1,142 @@
+name: "Release NotWallet Windows (Microsoft Store)"
+
+# Builds the Windows package for the Microsoft Store and uploads the output to R2. Starts from a push to
+# release/desktop-windows-microsoft-store or a manual run, never from main.
+
+on:
+  push:
+    branches:
+      - release/desktop-windows-microsoft-store
+  workflow_dispatch:
+
+concurrency:
+  group: release-desktop-windows-microsoft-store
+  cancel-in-progress: false
+
+
+jobs:
+  release:
+    permissions:
+      contents: write
+
+    runs-on: "windows-latest"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.94.0
+
+      - name: Install NASM
+        uses: ilammy/setup-nasm@v1
+        with:
+          platform: "win64"
+
+      - name: Fetch Cargo dependencies
+        shell: bash
+        run: |
+          cd src-tauri
+          cargo fetch
+
+      - name: Configure NASM for Ring
+        shell: bash
+        run: |
+          # Ring's build script looks for nasm at ./target/tools/windows/nasm/nasm
+          # relative to the cargo git checkout directory
+          NASM_PATH=$(which nasm.exe)
+          echo "Found NASM at: $NASM_PATH"
+
+          # Find the ring checkout and create nasm in the expected location
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+          echo "CARGO_HOME: $CARGO_HOME"
+
+          # Wait a moment for cargo to finish writing
+          sleep 2
+
+          # Find all ring checkouts
+          for ring_dir in "$CARGO_HOME"/git/checkouts/ring-*/*/; do
+            if [ -d "$ring_dir" ]; then
+              echo "Creating NASM in $ring_dir"
+              mkdir -p "${ring_dir}target/tools/windows/nasm"
+              cp "$NASM_PATH" "${ring_dir}target/tools/windows/nasm/nasm.exe"
+              echo "Created nasm.exe at ${ring_dir}target/tools/windows/nasm/nasm.exe"
+            fi
+          done
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Create .env file
+        run: |
+          touch .env
+          echo SOLANA_MAINNET_RPC_BASE_URL=${{ secrets.SOLANA_MAINNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_TESTNET_RPC_BASE_URL=${{ secrets.SOLANA_TESTNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_DEVNET_RPC_BASE_URL=${{ secrets.SOLANA_DEVNET_RPC_BASE_URL }} >> .env
+          echo BIRDEYE_API_KEY=${{ secrets.BIRDEYE_API_KEY }} >> .env
+          echo GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }} >> .env
+          echo GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }} >> .env
+          echo API_BASE_URL=${{ secrets.API_BASE_URL }} >> .env
+          echo API_BASE_URL_LOCAL=${{ secrets.API_BASE_URL_LOCAL }} >> .env
+          echo XLP_BASE_URL=${{ secrets.XLP_BASE_URL }} >> .env
+          echo XLP_BASE_URL_LOCAL=${{ secrets.XLP_BASE_URL_LOCAL }} >> .env
+          echo XLP_API_KEY=${{ secrets.XLP_API_KEY }} >> .env
+          echo DEPLOY_KEY=${{ secrets.DEPLOY_KEY }} >> .env
+          echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
+          echo STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} >> .env
+
+      - name: Build App
+        run: |
+          pnpm tauri build -c src-tauri/tauri.prod-windows-microsoftstore.conf.json
+          # Move artifacts for code sign
+          mkdir "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign"
+          mkdir "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\signed"
+          Move-Item "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\msi\*" "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign\" -Force
+          Move-Item "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\nsis\*" "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign\" -Force
+        shell: pwsh
+
+      - name: Sign Artifact with CodeSignTool
+        uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747 # develop, 2025-06-23
+        with:
+          command: batch_sign
+          username: ${{secrets.ES_USERNAME}}
+          password: ${{secrets.ES_PASSWORD}}
+          credential_id: ${{secrets.ES_CREDENTIAL_ID}}
+          totp_secret: ${{secrets.ES_TOTP_SECRET}}
+          # Path of code object to be signed.
+          dir_path: ${GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign
+          output_path: ${GITHUB_WORKSPACE}\src-tauri\target\release\bundle\signed
+          # Scans your file for any possible malware in order to avoid code compromise and prevents signing of code if malware is detected.
+          # On batch_sign command: If you are getting 'Error: hash needs to be scanned first before submitting for signing: <hash_value>', you can set this value to true
+          malware_block: false
+          # Clean log files after code signing operations
+          clean_logs: true
+          # Maximumx JVM heap size
+          jvm_max_memory: 1024M
+          # Code signing method. Default is v1. Supported values: v1, v2
+          signing_method: v1
+
+      - name: Extract version from tauri.prod-windows-microsoftstore.conf.json
+        id: get_version
+        shell: pwsh
+        run: |
+          $json = Get-Content src-tauri/tauri.prod-windows-microsoftstore.conf.json | ConvertFrom-Json
+          echo "VERSION=$($json.version)" >> $env:GITHUB_ENV
+
+      - name: Upload artifact
+        uses: ryand56/r2-upload-action@latest
+        with:
+          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ secrets.R2_BUCKET }}
+          source-dir: src-tauri/target/release/bundle/signed
+          destination-dir: ./

@@ -6,12 +6,22 @@ use {
     },
     solana_address::Address,
     solana_instruction::Instruction,
-    solana_sdk::{pubkey::Pubkey, system_instruction},
+    solana_sdk::pubkey::Pubkey,
     solana_system_interface::instruction,
     spl_token::instruction as token_instruction,
     std::str::FromStr,
     thiserror::Error,
 };
+
+// `solana_sdk::system_instruction` is deprecated in favour of the
+// `solana_system_interface` crate, but that migration is blocked here: this
+// tree contains solana-instruction 2.3.3 (via solana-sdk 2.3.1) *and* 3.5.0
+// (via solana-system-interface 2). The new crate returns the v3 `Instruction`
+// while solana-sdk's `Transaction` still requires the v2 one, so swapping is a
+// type error, not a drop-in. Unblocked by moving the wallet to solana-sdk 3.x.
+// The v3 code paths in this crate already use the new interface directly.
+#[allow(deprecated)]
+use solana_sdk::system_instruction;
 
 #[derive(Error, Debug)]
 pub enum FeeError {

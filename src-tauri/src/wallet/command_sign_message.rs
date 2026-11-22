@@ -44,8 +44,7 @@ pub async fn sign_message(
                 message: "Failed to decode private key".to_string(),
             })?;
 
-    // Use Keypair::try_from instead of deprecated from_bytes
-    let keypair = Keypair::from_bytes(&privkey_bytes).map_err(|_| ErrorResponse::Error {
+    let keypair = Keypair::try_from(privkey_bytes.as_slice()).map_err(|_| ErrorResponse::Error {
         code: ErrorCode::ParseError,
         message: "Failed to create keypair from private key".to_string(),
     })?;

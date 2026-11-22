@@ -1,0 +1,94 @@
+/* NotWallet Design Tokens
+   Generated from tailwind.config.js + src/index.css
+   These variables define the full NotWallet color palette and utility system.
+*/
+
+:root {
+  /* Primary purple palette */
+  --color-primary-main: #9932CC;
+  --color-primary-light: #A64DFF;
+  --color-primary-dark: #800080;
+  --color-primary-contrast: #ffffff;
+
+  /* Secondary purple palette */
+  --color-secondary-main: #AD5AD7;
+  --color-secondary-light: #C792EA;
+  --color-secondary-dark: #9932CC;
+  --color-secondary-contrast: #ffffff;
+
+  /* Background */
+  --color-bg-default: #f5f6fa;
+  --color-bg-paper: #ffffff;
+
+  /* Text */
+  --color-text-primary: #222222;
+  --color-text-secondary: #5E81AC;
+
+  /* Info / neutral */
+  --color-info-main: #ECEFF4;
+
+  /* Gradient background (app root) */
+  --gradient-app-bg: linear-gradient(to top right, #fdf4ff, #f0f9ff); /* fuchsia-100 → sky-100 */
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Spacing scale (Tailwind default) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Shadows (MUI-inspired) */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Nav bar heights */
+  --nav-top-height: 3.5rem;
+  --nav-bottom-height: 3.5rem;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes wiggle {
+  0%   { transform: rotate(-2deg); }
+  25%  { transform: rotate(2deg); }
+  50%  { transform: rotate(-2deg); }
+  75%  { transform: rotate(2deg); }
+  100% { transform: rotate(0); }
+}
+
+.fade-in  { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+.wiggle   { animation: wiggle 0.25s linear; }
+
+/* Safe-area utilities (mobile) */
+.safe-area        { padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+.top-nav-safe     { padding-top: max(0.5rem, env(safe-area-inset-top)); }
+.bottom-nav-safe  { padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
+
+/* Backdrop utilities used in nav bars */
+.backdrop-blur-lg { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }

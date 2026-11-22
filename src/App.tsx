@@ -1,8 +1,9 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import Navbar from "@src/components/navbar";
+import { TopNav, BottomNav } from "@src/components/navbar";
 import AnimatedPage from "@app/lib/components/animated-page";
 import HomePage from "@app/home/page";
+import ChatPage from "@app/chat/page";
 import DAOPage from "@app/home/dao/page";
 import LearnPage from "@app/home/learn/page";
 import WalletHome from "@app/wallet/page";
@@ -64,15 +65,25 @@ export default function App() {
     <Tooltip.Provider>
       <AppLockProvider>
         <div
-          className="bg-gradient-to-tr from-fuchsia-100 to-sky-100 min-h-screen w-full font-sans relative safe-area"
+          className="bg-gradient-to-tr from-fuchsia-100 to-sky-100 h-full w-full font-sans relative flex flex-col overflow-hidden safe-area-x"
           dir={lang === "ar" ? "rtl" : "ltr"}
         >
-          <Navbar />
-          <main className="py-4 bottom-nav-safe max-w-2xl mx-auto px-4">
+          <TopNav />
+          {/* The app's only scroll container. min-h-0 lets it shrink inside the
+              flex column instead of pushing the bottom bar off-screen. */}
+          <main className="flex-1 min-h-0 overflow-y-auto overscroll-contain max-w-2xl w-full mx-auto px-4 py-4">
             <AccountProvider>
               <Routes location={location} key={location.pathname}>
                 <Route
                   path="/"
+                  element={
+                    <AnimatedPage>
+                      <ChatPage />
+                    </AnimatedPage>
+                  }
+                />
+                <Route
+                  path="/home"
                   element={
                     <AnimatedPage>
                       <HomePage />
@@ -274,6 +285,7 @@ export default function App() {
               </Routes>
             </AccountProvider>
           </main>
+          <BottomNav />
         </div>
       </AppLockProvider>
     </Tooltip.Provider>

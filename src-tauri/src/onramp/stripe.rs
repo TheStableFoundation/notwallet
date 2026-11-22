@@ -1,5 +1,6 @@
 use {
     crate::model::onramp::{OnrampSession, StripeError},
+    base64::{engine::general_purpose::STANDARD, Engine as _},
     reqwest::{
         header::{HeaderMap, HeaderValue, AUTHORIZATION, CONTENT_TYPE},
         Client,
@@ -29,7 +30,7 @@ pub async fn create_onramp_session(
     // Set up basic auth header with the API key
     let mut headers = HeaderMap::new();
     let auth_value = format!("{}:", api_key); // Note the colon at the end
-    let auth_header = HeaderValue::from_str(&format!("Basic {}", base64::encode(auth_value)))
+    let auth_header = HeaderValue::from_str(&format!("Basic {}", STANDARD.encode(auth_value)))
         .map_err(|_| StripeError::InvalidApiKey)?;
 
     headers.insert(AUTHORIZATION, auth_header);

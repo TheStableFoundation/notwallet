@@ -1,0 +1,46 @@
+name: Checks Web
+
+on:
+  pull_request:
+    paths: &web-paths
+      - "apps/web/**"
+      - ".github/workflows/ci-check-web.yml"
+  push:
+    branches:
+      - main
+      - development
+    paths: *web-paths
+  workflow_dispatch:
+
+concurrency:
+  group: ci-check-web-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: apps/web/.nvmrc
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Runs `astro check && astro build`.
+      - name: Build
+        run: pnpm build

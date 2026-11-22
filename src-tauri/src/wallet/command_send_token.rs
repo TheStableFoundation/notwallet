@@ -41,7 +41,7 @@ pub async fn send_token(
         .into_vec()
         .map_err(|_| "Failed to decode private key".to_string())?;
 
-    let keypair = solana_sdk::signer::keypair::Keypair::from_bytes(&privkey_bytes)
+    let keypair = solana_sdk::signer::keypair::Keypair::try_from(privkey_bytes.as_slice())
         .map_err(|_| "Failed to create keypair from private key".to_string())?;
 
     // Create and send the transaction based on token type

@@ -5,6 +5,21 @@ export interface Translation {
   wallet?: string;
   profile: string;
   settings: string;
+  // AI Chat page translations
+  chat: string;
+  chatAssistantName: string;
+  chatTagline: string;
+  chatEmptyTitle: string;
+  chatInputPlaceholder: string;
+  chatModelLoading: string;
+  chatModelReady: string;
+  chatModelError: string;
+  chatModelUnloaded: string;
+  chatSendError: string;
+  chatClearHistory: string;
+  chatDisclaimer: string;
+  chatUnsupportedPlatform: string;
+  chatSuggestions: string[];
   welcome: string;
   welcomePersonal: (name: string) => string;
   homeDesc: string;
@@ -592,6 +607,26 @@ export const translations: Record<SupportedLanguages, Translation> = {
     developedBy: "Developed and maintained by The Stable Foundation.",
     swedish: "Swedish",
     debug: "Debug",
+    chat: "Chat",
+    chatAssistantName: "Amethyst",
+    chatTagline: "Learn how crypto works. Private, on your device.",
+    chatEmptyTitle: "What would you like to learn?",
+    chatInputPlaceholder: "Ask about crypto…",
+    chatModelLoading: "Loading Amethyst…",
+    chatModelReady: "On-device · private",
+    chatModelError: "Model error",
+    chatModelUnloaded: "Tap to start chatting",
+    chatSendError: "Something went wrong. Please try again.",
+    chatClearHistory: "Clear conversation",
+    chatDisclaimer:
+      "Amethyst explains, it doesn't advise. Not financial advice.",
+    chatUnsupportedPlatform: "AI Chat isn't available on this platform yet.",
+    chatSuggestions: [
+      "What is a stablecoin?",
+      "How do I keep my wallet safe?",
+      "Why do I need SOL for fees?",
+      "How does a token swap work?",
+    ],
   },
   sv: {
     appName: "NotWallet",
@@ -905,6 +940,27 @@ export const translations: Record<SupportedLanguages, Translation> = {
     developedBy: "Utvecklad och underhållen av The Stable Foundation.",
     swedish: "Svenska",
     debug: "Debug",
+    chat: "Chatt",
+    chatAssistantName: "Amethyst",
+    chatTagline: "Lär dig hur krypto fungerar. Privat, på din enhet.",
+    chatEmptyTitle: "Vad vill du lära dig?",
+    chatInputPlaceholder: "Fråga om krypto…",
+    chatModelLoading: "Laddar Amethyst…",
+    chatModelReady: "På enheten · privat",
+    chatModelError: "Modellfel",
+    chatModelUnloaded: "Tryck för att börja chatta",
+    chatSendError: "Något gick fel. Försök igen.",
+    chatClearHistory: "Rensa konversation",
+    chatDisclaimer:
+      "Amethyst förklarar, men ger inte råd. Inte finansiell rådgivning.",
+    chatUnsupportedPlatform:
+      "AI-chatt är inte tillgängligt på den här plattformen än.",
+    chatSuggestions: [
+      "Vad är ett stablecoin?",
+      "Hur skyddar jag min plånbok?",
+      "Varför behöver jag SOL till avgifter?",
+      "Hur fungerar en token-swap?",
+    ],
   },
   id: {
     appName: "NotWallet",
@@ -1218,6 +1274,25 @@ export const translations: Record<SupportedLanguages, Translation> = {
     developedBy: "Dikembangkan dan dikelola oleh The Stable Foundation.",
     swedish: "Bahasa Swedia",
     debug: "Debug",
+    chat: "Obrolan",
+    chatAssistantName: "Amethyst",
+    chatTagline: "Pelajari cara kerja kripto. Privat, di perangkatmu.",
+    chatEmptyTitle: "Mau belajar apa?",
+    chatInputPlaceholder: "Tanya soal kripto…",
+    chatModelLoading: "Memuat Amethyst…",
+    chatModelReady: "Di perangkat · privat",
+    chatModelError: "Model bermasalah",
+    chatModelUnloaded: "Ketuk untuk mulai mengobrol",
+    chatSendError: "Terjadi kesalahan. Coba lagi.",
+    chatClearHistory: "Hapus percakapan",
+    chatDisclaimer: "Amethyst menjelaskan, bukan memberi nasihat keuangan.",
+    chatUnsupportedPlatform: "AI Chat belum tersedia di platform ini.",
+    chatSuggestions: [
+      "Apa itu stablecoin?",
+      "Bagaimana menjaga dompet tetap aman?",
+      "Kenapa perlu SOL untuk biaya?",
+      "Bagaimana cara kerja swap token?",
+    ],
   },
   fil: {
     appName: "NotWallet",
@@ -1533,6 +1608,27 @@ export const translations: Record<SupportedLanguages, Translation> = {
     developedBy: "Developed at maintained ng The Stable Foundation.",
     swedish: "Swedish",
     debug: "Debug",
+    chat: "Chat",
+    chatAssistantName: "Amethyst",
+    chatTagline: "Alamin kung paano gumagana ang crypto. Private, sa device mo.",
+    chatEmptyTitle: "Ano ang gusto mong matutunan?",
+    chatInputPlaceholder: "Magtanong tungkol sa crypto…",
+    chatModelLoading: "Nilo-load si Amethyst…",
+    chatModelReady: "Nasa device · private",
+    chatModelError: "May error sa model",
+    chatModelUnloaded: "I-tap para magsimulang mag-chat",
+    chatSendError: "May nangyaring mali. Subukan ulit.",
+    chatClearHistory: "I-clear ang usapan",
+    chatDisclaimer:
+      "Nagpapaliwanag si Amethyst — hindi ito financial advice.",
+    chatUnsupportedPlatform:
+      "Hindi pa available ang AI Chat sa platform na ito.",
+    chatSuggestions: [
+      "Ano ang stablecoin?",
+      "Paano ko poprotektahan ang wallet ko?",
+      "Bakit kailangan ng SOL para sa fees?",
+      "Paano gumagana ang token swap?",
+    ],
   },
   ar: {
     appName: "NotWallet",
@@ -1841,5 +1937,24 @@ export const translations: Record<SupportedLanguages, Translation> = {
     developedBy: "تم تطويره وصيانته بواسطة The Stable Foundation.",
     swedish: "السويدية",
     debug: "تصحيح الأخطاء",
+    chat: "الدردشة",
+    chatAssistantName: "أميثيست",
+    chatTagline: "تعلّم كيف تعمل العملات الرقمية. بخصوصية، على جهازك.",
+    chatEmptyTitle: "ماذا تريد أن تتعلم؟",
+    chatInputPlaceholder: "اسأل عن العملات الرقمية…",
+    chatModelLoading: "جارٍ تحميل أميثيست…",
+    chatModelReady: "على الجهاز · خاص",
+    chatModelError: "خطأ في النموذج",
+    chatModelUnloaded: "اضغط لبدء الدردشة",
+    chatSendError: "حدث خطأ ما. حاول مرة أخرى.",
+    chatClearHistory: "مسح المحادثة",
+    chatDisclaimer: "أميثيست يشرح ولا يقدّم نصيحة مالية.",
+    chatUnsupportedPlatform: "الدردشة الذكية غير متاحة على هذه المنصة بعد.",
+    chatSuggestions: [
+      "ما هي العملة المستقرة؟",
+      "كيف أحمي محفظتي؟",
+      "لماذا أحتاج SOL لدفع الرسوم؟",
+      "كيف تعمل مبادلة العملات؟",
+    ],
   },
 };
