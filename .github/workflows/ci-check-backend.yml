@@ -1,0 +1,129 @@
+name: Checks Backend
+
+# A cheap compile check per desktop platform. The release workflows are the only
+# other place a platform-specific build break shows up, and `cargo check` finds
+# the same errors much faster. The iOS and Android targets are not checked here;
+# they are built by the release pipelines.
+on:
+  pull_request:
+    # No branches filter: it matches the PR's base and would skip every PR
+    # stacked on another feature branch.
+    paths: &backend-paths
+      - "src-tauri/**"
+      - "!src-tauri/tauri*.json" # checked by ci-check-tauri-config.yml
+      # cargo check never reads these; Gradle, Xcode, MSIX packaging and bundling do.
+      - "!src-tauri/gen/**"
+      - "!src-tauri/gen-override/**"
+      - "!src-tauri/icons/**"
+      - "!src-tauri/Entitlements*.plist"
+      - "!src-tauri/Info*.plist"
+      - "_crates/**"
+      - ".github/workflows/ci-check-backend.yml"
+  push:
+    branches:
+      - main
+      - development
+    paths: *backend-paths
+  workflow_dispatch:
+
+concurrency:
+  group: ci-check-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check (${{ matrix.platform }}${{ matrix.variant && format(' {0}', matrix.variant) || '' }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+          - platform: macos
+            os: macos-latest
+            target: aarch64-apple-darwin
+          # The direct release also builds this target.
+          - platform: macos
+            variant: x64
+            os: macos-latest
+            target: x86_64-apple-darwin
+          - platform: windows
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.94.0
+          targets: ${{ matrix.target }}
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+          key: ${{ matrix.target }}
+
+      - name: (Linux) Install Tauri system libraries
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      # `openssl` is built vendored. Its build script runs even under
+      # `cargo check`, and its x64 assembly needs NASM.
+      - name: (Windows) Install NASM
+        if: matrix.platform == 'windows'
+        uses: ilammy/setup-nasm@v1
+        with:
+          platform: "win64"
+
+      # The repo's forked `ring` looks for nasm at ./target/tools/windows/nasm/nasm
+      # inside its cargo git checkout, not on PATH. Copy the installed binary there,
+      # as the release workflow does.
+      - name: (Windows) Fetch Cargo dependencies
+        if: matrix.platform == 'windows'
+        shell: bash
+        working-directory: src-tauri
+        run: cargo fetch
+
+      - name: (Windows) Configure NASM for ring
+        if: matrix.platform == 'windows'
+        shell: bash
+        run: |
+          NASM_PATH="$(which nasm.exe)"
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+          for ring_dir in "$CARGO_HOME"/git/checkouts/ring-*/*/; do
+            if [ -d "$ring_dir" ]; then
+              mkdir -p "${ring_dir}target/tools/windows/nasm"
+              cp "$NASM_PATH" "${ring_dir}target/tools/windows/nasm/nasm.exe"
+            fi
+          done
+
+      # dotenv macros read .env during expansion and panic on a missing key. A
+      # check never runs the binary, so placeholders are enough and no secrets
+      # are needed, which keeps PRs from forks working.
+      - name: Write placeholder .env
+        shell: bash
+        run: |
+          printf '%s=ci-placeholder\n' SOLANA_MAINNET_RPC_BASE_URL SOLANA_TESTNET_RPC_BASE_URL SOLANA_DEVNET_RPC_BASE_URL BIRDEYE_API_KEY GOOGLE_OAUTH_CLIENT_SECRET GOOGLE_OAUTH_CLIENT_ID API_BASE_URL API_BASE_URL_LOCAL XLP_BASE_URL XLP_BASE_URL_LOCAL XLP_API_KEY DEPLOY_KEY STRIPE_SECRET_KEY STRIPE_PUBLISHABLE_KEY > .env
+
+      # tauri::generate_context!() requires frontendDist (../dist) to exist. A
+      # stub index.html satisfies it and skips node, pnpm and Vite entirely.
+      - name: Stub the frontend
+        shell: bash
+        run: |
+          mkdir -p dist
+          echo '<!doctype html>' > dist/index.html
+
+      - name: cargo check
+        working-directory: src-tauri
+        run: cargo check --locked --target ${{ matrix.target }}

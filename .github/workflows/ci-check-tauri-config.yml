@@ -1,0 +1,40 @@
+name: Check Tauri config
+
+# Version bumps and overlay edits touch only src-tauri/tauri*.json. The backend
+# matrix ignores those files, so this short job stands in for it.
+on:
+  pull_request:
+    paths: &config-paths
+      - "src-tauri/tauri*.json"
+      - "scripts/check-tauri-config.mjs"
+      - ".github/workflows/ci-check-tauri-config.yml"
+  push:
+    branches:
+      - main
+      - development
+    paths: *config-paths
+  workflow_dispatch:
+
+concurrency:
+  group: ci-check-tauri-config-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check-tauri-config:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      # The script fetches the Tauri schema and Ajv into a temp dir itself, so
+      # no workspace install is needed.
+      - name: Check Tauri config
+        run: node scripts/check-tauri-config.mjs

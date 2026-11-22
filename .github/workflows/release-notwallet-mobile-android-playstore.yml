@@ -1,7 +1,18 @@
-name: "Build Android for Release"
+name: "Release NotWallet Android (Google Play)"
+
+# Builds the signed universal AAB and keeps it as a workflow artifact. Starts from a push to
+# release/mobile-android-playstore or a manual run.
 
 on:
+  push:
+    branches:
+      - release/mobile-android-playstore
   workflow_dispatch:
+
+concurrency:
+  group: release-mobile-android-playstore
+  cancel-in-progress: false
+
 
 jobs:
   publish-android:

@@ -1,0 +1,289 @@
+name: "Release NotWallet desktop (direct download)"
+
+# One draft GitHub release, app-v<version>, filled by three jobs: macOS (arm64 and
+# x64, notarized) and Linux through tauri-action, Windows through SSL.com eSigner and
+# gh. Store channels have their own workflows. Nothing releases on a push to main.
+#
+# The version comes from the macOS overlay. scripts/check-tauri-config.mjs fails a PR
+# when the macOS, Linux and Windows overlays disagree.
+on:
+  push:
+    branches:
+      - release/desktop-direct
+  workflow_dispatch:
+
+concurrency:
+  group: release-notwallet-desktop-direct
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      release_id: ${{ steps.release.outputs.release_id }}
+      tag: ${{ steps.release.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create or reuse the draft release
+        id: release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="$(jq -r .version src-tauri/tauri.prod-macos.conf.json)"
+          tag="app-v${version}"
+          # The releases list includes drafts; the by-tag endpoint does not, so
+          # a rerun would not find its own draft there.
+          find_release() {
+            gh api "repos/$GITHUB_REPOSITORY/releases" --paginate \
+              --jq ".[] | select(.tag_name == \"$tag\") | \"\(.id) \(.draft)\"" | head -n1
+          }
+          found="$(find_release)"
+          # Reuse an existing draft so a rerun fills the same release. A published
+          # release means the version was not bumped: stop before the jobs upload
+          # into (and overwrite assets on) a live release.
+          if [ -n "$found" ] && [ "${found#* }" != "true" ]; then
+            echo "::error::Release $tag is already published. Bump the version in the tauri.prod-*.conf.json overlays."
+            exit 1
+          fi
+          if [ -z "$found" ]; then
+            gh release create "$tag" --draft \
+              --target "$GITHUB_SHA" \
+              --title "NotWallet Crypto v${version}" \
+              --notes "See the assets to download this version and install."
+            found="$(find_release)"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "release_id=${found% *}" >> "$GITHUB_OUTPUT"
+
+  desktop:
+    name: ${{ matrix.name }}
+    needs: prepare
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS arm64
+            platform: "macos-latest" # for Arm based macs (M1 and above).
+            args: "--target aarch64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
+          - name: macOS x64
+            platform: "macos-latest" # for Intel based macs.
+            args: "--target x86_64-apple-darwin -c src-tauri/tauri.prod-macos.conf.json"
+          - name: Linux
+            platform: "ubuntu-22.04"
+            args: "-c src-tauri/tauri.prod-linux.conf.json"
+
+    runs-on: ${{ matrix.platform }}
+    env:
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.94.0
+          # Those targets are only used on macos runners so it's in an `if` to slightly speed up linux builds.
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: (Linux) Install Ubuntu dependencies
+        if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: (macOS) Import Apple Developer Certificate
+        if: matrix.platform == 'macos-latest'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          echo $APPLE_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -t 3600 -u build.keychain
+          security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" build.keychain
+          security find-identity -v -p codesigning build.keychain
+
+      - name: (macOS) Verify Certificate
+        if: matrix.platform == 'macos-latest'
+        run: |
+          CERT_INFO=$(security find-identity -v -p codesigning build.keychain | grep "Developer ID Application")
+          CERT_ID=$(echo "$CERT_INFO" | awk -F'"' '{print $2}')
+          echo "CERT_ID=$CERT_ID" >> $GITHUB_ENV
+          echo "Certificate imported."
+
+      - name: (macOS) Create .p8 file
+        if: matrix.platform == 'macos-latest'
+        run: |
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "${{ secrets.APPLE_API_KEY_STRING }}" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APPLE_API_KEY }}.p8
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Create .env file
+        run: |
+          touch .env
+          echo SOLANA_MAINNET_RPC_BASE_URL=${{ secrets.SOLANA_MAINNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_TESTNET_RPC_BASE_URL=${{ secrets.SOLANA_TESTNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_DEVNET_RPC_BASE_URL=${{ secrets.SOLANA_DEVNET_RPC_BASE_URL }} >> .env
+          echo BIRDEYE_API_KEY=${{ secrets.BIRDEYE_API_KEY }} >> .env
+          echo GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }} >> .env
+          echo GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }} >> .env
+          echo API_BASE_URL=${{ secrets.API_BASE_URL }} >> .env
+          echo API_BASE_URL_LOCAL=${{ secrets.API_BASE_URL_LOCAL }} >> .env
+          echo XLP_BASE_URL=${{ secrets.XLP_BASE_URL }} >> .env
+          echo XLP_BASE_URL_LOCAL=${{ secrets.XLP_BASE_URL_LOCAL }} >> .env
+          echo XLP_API_KEY=${{ secrets.XLP_API_KEY }} >> .env
+          echo DEPLOY_KEY=${{ secrets.DEPLOY_KEY }} >> .env
+          echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
+          echo STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} >> .env
+
+      - name: Release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ env.CERT_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        with:
+          releaseId: ${{ needs.prepare.outputs.release_id }}
+          args: ${{ matrix.args }}
+
+  windows:
+    name: Windows
+    needs: prepare
+    permissions:
+      contents: write
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.94.0
+
+      - name: Install NASM
+        uses: ilammy/setup-nasm@v1
+        with:
+          platform: "win64"
+
+      - name: Fetch Cargo dependencies
+        shell: bash
+        run: |
+          cd src-tauri
+          cargo fetch
+
+      - name: Configure NASM for Ring
+        shell: bash
+        run: |
+          # Ring's build script looks for nasm at ./target/tools/windows/nasm/nasm
+          # relative to the cargo git checkout directory
+          NASM_PATH=$(which nasm.exe)
+          echo "Found NASM at: $NASM_PATH"
+
+          # Find the ring checkout and create nasm in the expected location
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+          echo "CARGO_HOME: $CARGO_HOME"
+
+          # Wait a moment for cargo to finish writing
+          sleep 2
+
+          # Find all ring checkouts
+          for ring_dir in "$CARGO_HOME"/git/checkouts/ring-*/*/; do
+            if [ -d "$ring_dir" ]; then
+              echo "Creating NASM in $ring_dir"
+              mkdir -p "${ring_dir}target/tools/windows/nasm"
+              cp "$NASM_PATH" "${ring_dir}target/tools/windows/nasm/nasm.exe"
+              echo "Created nasm.exe at ${ring_dir}target/tools/windows/nasm/nasm.exe"
+            fi
+          done
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Create .env file
+        run: |
+          touch .env
+          echo SOLANA_MAINNET_RPC_BASE_URL=${{ secrets.SOLANA_MAINNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_TESTNET_RPC_BASE_URL=${{ secrets.SOLANA_TESTNET_RPC_BASE_URL }} >> .env
+          echo SOLANA_DEVNET_RPC_BASE_URL=${{ secrets.SOLANA_DEVNET_RPC_BASE_URL }} >> .env
+          echo BIRDEYE_API_KEY=${{ secrets.BIRDEYE_API_KEY }} >> .env
+          echo GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }} >> .env
+          echo GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }} >> .env
+          echo API_BASE_URL=${{ secrets.API_BASE_URL }} >> .env
+          echo API_BASE_URL_LOCAL=${{ secrets.API_BASE_URL_LOCAL }} >> .env
+          echo XLP_BASE_URL=${{ secrets.XLP_BASE_URL }} >> .env
+          echo XLP_BASE_URL_LOCAL=${{ secrets.XLP_BASE_URL_LOCAL }} >> .env
+          echo XLP_API_KEY=${{ secrets.XLP_API_KEY }} >> .env
+          echo DEPLOY_KEY=${{ secrets.DEPLOY_KEY }} >> .env
+          echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
+          echo STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} >> .env
+
+      - name: Build App
+        run: |
+          pnpm tauri build -c src-tauri/tauri.prod-windows.conf.json
+          # Move artifacts for code sign
+          mkdir "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign"
+          mkdir "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\signed"
+          Move-Item "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\msi\*" "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign\" -Force
+          Move-Item "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\nsis\*" "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign\" -Force
+        shell: pwsh
+
+      - name: Sign Artifact with CodeSignTool
+        uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747 # develop, 2025-06-23
+        with:
+          command: batch_sign
+          username: ${{secrets.ES_USERNAME}}
+          password: ${{secrets.ES_PASSWORD}}
+          credential_id: ${{secrets.ES_CREDENTIAL_ID}}
+          totp_secret: ${{secrets.ES_TOTP_SECRET}}
+          # Path of code object to be signed.
+          dir_path: ${GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign
+          output_path: ${GITHUB_WORKSPACE}\src-tauri\target\release\bundle\signed
+          # Scans your file for any possible malware in order to avoid code compromise and prevents signing of code if malware is detected.
+          # On batch_sign command: If you are getting 'Error: hash needs to be scanned first before submitting for signing: <hash_value>', you can set this value to true
+          malware_block: false
+          # Clean log files after code signing operations
+          clean_logs: true
+          # Maximumx JVM heap size
+          jvm_max_memory: 1024M
+          # Code signing method. Default is v1. Supported values: v1, v2
+          signing_method: v1
+
+      - name: Upload to the draft release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ needs.prepare.outputs.tag }}" \
+            src-tauri/target/release/bundle/signed/*.msi \
+            src-tauri/target/release/bundle/signed/*.exe \
+            --clobber
