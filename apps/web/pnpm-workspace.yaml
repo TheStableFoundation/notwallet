@@ -1,3 +1,12 @@
 onlyBuiltDependencies:
   - esbuild
   - sharp
+
+# Security floors for transitive deps (Dependabot). Each stays inside its
+# current major, so nothing gets a breaking upgrade.
+overrides:
+  ajv@8: ^8.18.0
+  fast-uri@3: ^3.1.9
+  path-to-regexp@8: ^8.4.0
+  postcss-selector-parser@6: ^6.1.5
+  source-map-js@1: ^1.2.2
