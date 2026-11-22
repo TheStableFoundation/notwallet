@@ -2,8 +2,7 @@
 """NotWallet icon exploration, round 2. Imports round 1 geometry. Deterministic.
 usage: python3 round2.py OUTDIR"""
 import hashlib, os, sys
-import round1 as r1
-from round1 import THEMES, PURPLE, ACCENT, svg, n_parts, X0, X1, Y0, Y1, W
+from round1 import THEMES, PURPLE, ACCENT, svg, n_parts, X0, X1, Y1
 
 DEEP = "#4B1272"          # a darker purple than the OneNote-like #9932CC square
 
@@ -36,7 +35,9 @@ def b4(t):  # four rising bars in a circle container (no square tile at all)
 
 
 def n_deep(t):  # 02 on a deeper tile: further from the OneNote purple
-    tile = DEEP if t is THEMES["light"] else "#1A1028"
+    # Dark uses a lifted purple tile of its own. On the near-black #1A1028 this
+    # was byte-identical to round 1's 02-n-accent-diagonal.dark.
+    tile = DEEP if t is THEMES["light"] else "#2E1450"
     return svg(n_parts(t["fg"], ACCENT if t is THEMES["light"] else t["accent"]), tile)
 
 
