@@ -1,0 +1,50 @@
+{
+  "name": "notwallet-crypto-extension",
+  "version": "1.0.0",
+  "description": "Not just a crypto wallet: remittance, payment, DAO, DeFi. You name it.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheStableFoundation/notwallet-extension"
+  },
+  "scripts": {
+    "build": "vite build --config vite.config.chrome.ts",
+    "build:chrome": "vite build --config vite.config.chrome.ts",
+    "build:firefox": "vite build --config vite.config.firefox.ts",
+    "dev": "nodemon --config nodemon.chrome.json",
+    "dev:chrome": "nodemon --config nodemon.chrome.json",
+    "dev:firefox": "nodemon --config nodemon.firefox.json"
+  },
+  "type": "module",
+  "dependencies": {
+    "framer-motion": "^12.23.24",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "webextension-polyfill": "^0.12.0"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.2.1",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/chrome": "^0.0.323",
+    "@types/node": "^22.19.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@types/webextension-polyfill": "^0.12.4",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "fs-extra": "^11.3.2",
+    "nodemon": "^3.1.11",
+    "tailwindcss": "^4.1.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
