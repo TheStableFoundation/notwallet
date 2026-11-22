@@ -8,9 +8,12 @@
     "dev": "vite",
     "gim": "./scripts/generate-icon-mobile.sh",
     "preview": "vite preview",
+    "tauri": "tauri",
+    "check:tauri-config": "node scripts/check-tauri-config.mjs",
+    "check:skills": "node scripts/check-skills.mjs",
     "publish-android": "./scripts/publish-android.sh",
     "publish-ios": "./scripts/publish-ios.sh \"$@\"",
-    "tsync": "tsync -i src-tauri/src/ _crates/wallet-kit/src/ _crates/wallet-constants/src/ _crates/wallet-core-model/src/ -o app/lib/crate/generated.ts"
+    "ts": "tsync -i src-tauri/src/ _crates/wallet-kit/src/ _crates/wallet-constants/src/ _crates/wallet-core-model/src/ -o app/lib/crate/generated.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -55,6 +58,7 @@
     "postcss": "^8.5.24",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3",
-    "vite": "^7.3.6"
+    "vite": "^7.3.6",
+    "yaml": "^2.8.1"
   }
 }
