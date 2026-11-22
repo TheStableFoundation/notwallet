@@ -26,8 +26,8 @@ tasks.register("clean").configure {
 // fails checkReleaseAarMetadata. Raise any library module that is below 36.
 //
 // finalizeDsl is AGP's hook for the last word on the DSL: it runs after the
-// module's own android { } block and after other afterEvaluate hooks, so a plugin
-// cannot set compileSdk back afterwards the way it could with our own afterEvaluate.
+// module's own android { } block, and once finalization completes the DSL is
+// locked, so a later afterEvaluate hook can no longer set compileSdk back.
 subprojects {
     plugins.withId("com.android.library") {
         extensions.getByType(com.android.build.api.variant.LibraryAndroidComponentsExtension::class.java)
