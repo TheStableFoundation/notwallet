@@ -7,7 +7,18 @@ import { parse } from "yaml";
 const root = new URL("../.agents/skills/", import.meta.url);
 const problems = [];
 
-const dirs = (await readdir(root, { withFileTypes: true })).filter((d) => d.isDirectory());
+let entries;
+try {
+  entries = await readdir(root, { withFileTypes: true });
+} catch (error) {
+  // A branch without any skills has nothing to check.
+  if (error.code === "ENOENT") {
+    console.log("No .agents/skills directory, nothing to check.");
+    process.exit(0);
+  }
+  throw error;
+}
+const dirs = entries.filter((d) => d.isDirectory());
 
 for (const dir of dirs) {
   const path = `.agents/skills/${dir.name}/SKILL.md`;
