@@ -81,6 +81,28 @@ jobs:
         with:
           platform: "win64"
 
+      # The repo's forked `ring` looks for nasm at ./target/tools/windows/nasm/nasm
+      # inside its cargo git checkout, not on PATH. Copy the installed binary there,
+      # as the release workflow does.
+      - name: (Windows) Fetch Cargo dependencies
+        if: matrix.platform == 'windows'
+        shell: bash
+        working-directory: src-tauri
+        run: cargo fetch
+
+      - name: (Windows) Configure NASM for ring
+        if: matrix.platform == 'windows'
+        shell: bash
+        run: |
+          NASM_PATH="$(which nasm.exe)"
+          CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+          for ring_dir in "$CARGO_HOME"/git/checkouts/ring-*/*/; do
+            if [ -d "$ring_dir" ]; then
+              mkdir -p "${ring_dir}target/tools/windows/nasm"
+              cp "$NASM_PATH" "${ring_dir}target/tools/windows/nasm/nasm.exe"
+            fi
+          done
+
       # dotenv macros read .env during expansion and panic on a missing key. A
       # check never runs the binary, so placeholders are enough and no secrets
       # are needed, which keeps PRs from forks working.
