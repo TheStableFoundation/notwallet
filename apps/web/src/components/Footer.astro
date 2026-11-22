@@ -1,0 +1,114 @@
+---
+import { Image } from "astro:assets";
+---
+
+<footer class="bg-nordic-text text-white py-12">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center space-x-2 mb-4">
+                    <Image
+                        src="/app-icon.png"
+                        alt="app icon"
+                        width={50}
+                        height={50}
+                    />
+                    <span class="text-2xl font-bold">NotWallet Crypto</span>
+                </div>
+                <p class="text-gray-400 mb-4">
+                    A modern non-custodial crypto wallet designed in Stockholm,
+                    Sweden. Simple, secure, and Nordic.
+                </p>
+                <p class="text-gray-500 mb-4 text-sm italic">
+                    All content presented here is for informational purposes
+                    only and does not constitute investment, financial, or other
+                    advice. Please consult a qualified advisor before making any
+                    financial decisions.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold mb-4">Company</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>
+                        <a
+                            href="/#about"
+                            class="hover:text-nordic-secondary transition-colors"
+                            >About</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/changelog"
+                            class="hover:text-nordic-secondary transition-colors"
+                            >Changelog</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/#features"
+                            class="hover:text-nordic-secondary transition-colors"
+                            >Features</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/#download"
+                            class="hover:text-nordic-secondary transition-colors"
+                            >Download</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/#contact"
+                            class="hover:text-nordic-secondary transition-colors"
+                            >Contact</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div>
+                    <h3 class="font-semibold mb-4">Networks</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>
+                            <a
+                                href="/t/solana"
+                                class="hover:text-nordic-secondary transition-colors"
+                                >Solana
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>
+                        <a
+                            href="/privacy"
+                            class="hover:text-nordic-secondary transition-colors"
+                            >Privacy Policy</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/terms"
+                            class="hover:text-nordic-secondary transition-colors"
+                            >Terms of Service</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div
+            class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400"
+        >
+            <p>
+                &copy; {new Date().getFullYear()} NotWallet Crypto. All rights reserved.
+                Made with ❄️ in Stockholm.
+            </p>
+        </div>
+    </div>
+</footer>

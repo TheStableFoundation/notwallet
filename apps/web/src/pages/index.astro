@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Features from "../components/Features.astro";
+import About from "../components/About.astro";
+import Download from "../components/Download.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="NotWallet Crypto - Self-custody, Simplified">
+    <Header />
+    <main>
+        <Hero />
+        <Features />
+        <About />
+        <Download />
+        <Contact />
+    </main>
+    <Footer />
+</Layout>
+
+<style is:global>
+    html {
+        scroll-behavior: smooth;
+    }
+</style>

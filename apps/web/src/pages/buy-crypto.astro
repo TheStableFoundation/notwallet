@@ -1,0 +1,412 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const STRIPE_PUBLISHABLE_KEY = import.meta.env.STRIPE_PUBLISHABLE_KEY;
+
+if (!STRIPE_PUBLISHABLE_KEY) {
+    throw new Error("STRIPE_PUBLISHABLE_KEY is not configured");
+}
+---
+
+<Layout
+    title="Buy Crypto - NotWallet"
+    description="Buy cryptocurrency easily with NotWallet using Stripe"
+>
+    <Header />
+    <main class="min-h-screen bg-gradient-to-b from-nordic-bg to-white py-20">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h1
+                    class="text-4xl md:text-5xl font-bold mb-4 text-nordic-text"
+                >
+                    Buy Crypto Instantly
+                </h1>
+                <p class="text-lg text-nordic-text-secondary max-w-2xl mx-auto">
+                    Purchase cryptocurrency directly to your Solana wallet using
+                    credit card, debit card, or bank transfer. Powered by
+                    Stripe.
+                </p>
+            </div>
+
+            <!-- Wallet Address Input Section -->
+            <div
+                class="bg-white rounded-2xl p-8 mb-8 border border-gray-200 shadow-lg"
+            >
+                <div class="mb-6">
+                    <label
+                        for="wallet-address"
+                        class="block text-sm font-medium text-nordic-text mb-2"
+                    >
+                        Your Solana Wallet Address
+                    </label>
+                    <input
+                        type="text"
+                        id="wallet-address"
+                        placeholder="Enter your Solana wallet address..."
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-nordic-accent text-nordic-text placeholder-gray-400"
+                    />
+                    <p class="text-sm text-nordic-text-secondary mt-2">
+                        Enter your Solana wallet address to receive crypto
+                    </p>
+                </div>
+
+                <div class="mb-6">
+                    <label
+                        for="destination-currency"
+                        class="block text-sm font-medium text-nordic-text mb-2"
+                    >
+                        Select Cryptocurrency
+                    </label>
+                    <select
+                        id="destination-currency"
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-nordic-accent text-nordic-text"
+                    >
+                        <option value="">Select currency</option>
+                        <option value="sol">Solana (SOL)</option>
+                        <option value="usdc">USD Coin (USDC)</option>
+                        <option value="usdt">Tether (USDT)</option>
+                    </select>
+                </div>
+
+                <button
+                    id="buy-crypto-btn"
+                    class="w-full bg-gradient-to-r from-nordic-accent to-blue-500 text-white font-semibold py-4 px-6 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Buy Crypto
+                </button>
+
+                <div
+                    id="error-message"
+                    class="mt-4 text-red-400 text-sm hidden"
+                >
+                </div>
+            </div>
+
+            <!-- Crypto Onramp Container -->
+            <div id="onramp-container" class="hidden mt-8">
+                <div id="onramp-element"></div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="grid md:grid-cols-3 gap-6 mt-12">
+                <div
+                    class="bg-white rounded-xl p-6 border border-gray-200 shadow-lg"
+                >
+                    <div
+                        class="w-12 h-12 bg-nordic-accent/20 rounded-lg flex items-center justify-center mb-4"
+                    >
+                        <svg
+                            class="w-6 h-6 text-nordic-accent"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-nordic-text">
+                        Secure & Safe
+                    </h3>
+                    <p class="text-nordic-text-secondary text-sm">
+                        Your transactions are secured by Stripe's
+                        industry-leading payment infrastructure.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-white rounded-xl p-6 border border-gray-200 shadow-lg"
+                >
+                    <div
+                        class="w-12 h-12 bg-nordic-accent/20 rounded-lg flex items-center justify-center mb-4"
+                    >
+                        <svg
+                            class="w-6 h-6 text-nordic-accent"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-nordic-text">
+                        Fast Processing
+                    </h3>
+                    <p class="text-nordic-text-secondary text-sm">
+                        Receive your crypto quickly with instant processing and
+                        delivery.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-white rounded-xl p-6 border border-gray-200 shadow-lg"
+                >
+                    <div
+                        class="w-12 h-12 bg-nordic-accent/20 rounded-lg flex items-center justify-center mb-4"
+                    >
+                        <svg
+                            class="w-6 h-6 text-nordic-accent"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-nordic-text">
+                        Multiple Payment Methods
+                    </h3>
+                    <p class="text-nordic-text-secondary text-sm">
+                        Pay with credit card, debit card, or bank transfer -
+                        whatever works for you.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>
+
+<script is:inline define:vars={{ STRIPE_PUBLISHABLE_KEY }}>
+    // Initialize Stripe and Crypto Onramp
+    // Stripe.js is loaded for PCI compliance and potential future features
+    // (e.g., payment method collection, card validation, etc.)
+    let stripe = null;
+    let stripeOnramp = null;
+
+    // Load Stripe.js
+    function loadStripeJS() {
+        return new Promise((resolve, reject) => {
+            if (window.Stripe) {
+                resolve();
+                return;
+            }
+            const script = document.createElement("script");
+            script.src = "https://js.stripe.com/v3/";
+            script.async = true;
+            script.onload = () => {
+                console.log("Stripe.js loaded");
+                resolve();
+            };
+            script.onerror = () =>
+                reject(new Error("Failed to load Stripe.js"));
+            document.head.appendChild(script);
+        });
+    }
+
+    // Load Stripe Crypto Onramp SDK
+    function loadCryptoOnrampSDK() {
+        return new Promise((resolve, reject) => {
+            if (window.StripeOnramp) {
+                resolve();
+                return;
+            }
+            const script = document.createElement("script");
+            script.src = "https://crypto-js.stripe.com/crypto-onramp-outer.js";
+            script.async = true;
+            script.onload = () => {
+                console.log("Stripe Crypto Onramp SDK loaded");
+                resolve();
+            };
+            script.onerror = () =>
+                reject(new Error("Failed to load Crypto Onramp SDK"));
+            document.head.appendChild(script);
+        });
+    }
+
+    // Initialize both Stripe scripts
+    Promise.all([loadStripeJS(), loadCryptoOnrampSDK()])
+        .then(() => {
+            stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
+            stripeOnramp = window.StripeOnramp(STRIPE_PUBLISHABLE_KEY);
+            console.log("Stripe.js and Crypto Onramp initialized");
+        })
+        .catch((error) => {
+            console.error("Error loading Stripe scripts:", error);
+            showError(
+                "Failed to load payment system. Please refresh the page.",
+            );
+        });
+
+    const buyButton = document.getElementById("buy-crypto-btn");
+    const walletAddressInput = document.getElementById("wallet-address");
+    const destinationCurrencySelect = document.getElementById(
+        "destination-currency",
+    );
+    const errorMessage = document.getElementById("error-message");
+    const onrampElement = document.getElementById("onramp-element");
+
+    function showError(message) {
+        if (errorMessage) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove("hidden");
+        }
+    }
+
+    function hideError() {
+        if (errorMessage) {
+            errorMessage.classList.add("hidden");
+        }
+    }
+
+    buyButton?.addEventListener("click", async () => {
+        hideError();
+
+        const walletAddress = walletAddressInput?.value.trim();
+
+        if (!walletAddress) {
+            showError("Please enter a valid wallet address");
+            return;
+        }
+
+        // Basic Solana address validation (32-44 characters, base58)
+        if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(walletAddress)) {
+            showError("Please enter a valid Solana wallet address");
+            return;
+        }
+
+        buyButton.disabled = true;
+        buyButton.textContent = "Creating session...";
+
+        try {
+            // Create onramp session
+            const response = await fetch("/api/create-onramp-session", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    wallet_address: walletAddress,
+                    destination_currency:
+                        destinationCurrencySelect?.value || "sol",
+                    destination_network: "solana",
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Failed to create session");
+            }
+
+            const { client_secret } = await response.json();
+
+            // Wait for Crypto Onramp to be initialized
+            if (!stripeOnramp) {
+                // Wait up to 5 seconds for initialization
+                let attempts = 0;
+                while (!stripeOnramp && attempts < 50) {
+                    await new Promise((resolve) => setTimeout(resolve, 100));
+                    attempts++;
+                }
+            }
+
+            if (stripeOnramp) {
+                const session = stripeOnramp.createSession({
+                    clientSecret: client_secret,
+                    appearance: {
+                        theme: "dark",
+                    },
+                });
+
+                // Mount the onramp element
+                const onrampContainer =
+                    document.getElementById("onramp-container");
+                if (onrampElement && onrampContainer) {
+                    onrampContainer.classList.remove("hidden");
+                    session.mount("#onramp-element");
+                }
+
+                // Listen for session events
+                session.addEventListener("onramp_session_updated", (e) => {
+                    console.log("Onramp session updated:", e.payload);
+
+                    if (e.payload.session.status === "fulfillment_complete") {
+                        console.log("Transaction complete!");
+                        // You can add custom success handling here
+                    }
+                });
+
+                // Hide the form section
+                walletAddressInput.parentElement.parentElement.classList.add(
+                    "hidden",
+                );
+            } else {
+                throw new Error("Stripe Onramp SDK not loaded");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            showError(
+                error.message ||
+                    "Failed to initialize crypto purchase. Please try again.",
+            );
+            buyButton.disabled = false;
+            buyButton.textContent = "Buy Crypto";
+        }
+    });
+</script>
+
+<style is:global>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Custom styles for Stripe Onramp element */
+    #onramp-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        padding: 0;
+    }
+
+    #onramp-element {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 600px;
+        min-height: 600px;
+        padding: 0 !important;
+        margin: 0 auto;
+    }
+
+    /* Target the Stripe iframe directly */
+    #onramp-element iframe,
+    #onramp-element > div,
+    #onramp-element > div > iframe {
+        width: 100% !important;
+        max-width: 600px !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        display: block !important;
+    }
+
+    @media (max-width: 768px) {
+        #onramp-element {
+            max-width: 100%;
+        }
+
+        #onramp-element iframe,
+        #onramp-element > div,
+        #onramp-element > div > iframe {
+            max-width: 100% !important;
+        }
+    }
+</style>
