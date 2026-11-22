@@ -1,0 +1,60 @@
+name: Checks Frontend
+
+on:
+  pull_request:
+    paths: &frontend-paths
+      - "src/**"
+      - "app/**"
+      - "public/**"
+      - "assets/**"
+      - "index.html"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "vite.config.ts"
+      - "tsconfig*.json"
+      - "tailwind.config.js"
+      - "postcss.config.cjs"
+      - ".nvmrc"
+      - "scripts/check-skills.mjs"
+      - ".agents/skills/**"
+      - ".github/workflows/ci-check-frontend.yml"
+  push:
+    branches:
+      - main
+      - development
+    paths: *frontend-paths
+  workflow_dispatch:
+
+# A new push makes the old run's result irrelevant, so stop paying for it.
+concurrency:
+  group: ci-check-frontend-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check-frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check skills
+        run: pnpm check:skills
+
+      - name: Build frontend
+        run: pnpm build

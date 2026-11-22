@@ -1,25 +1,33 @@
-name: "Release Windows"
+name: "Release NotWallet Windows (Microsoft Store)"
+
+# Builds the Windows package for the Microsoft Store and uploads the output to R2. Starts from a push to
+# release/desktop-windows-microsoft-store or a manual run, never from main.
 
 on:
   push:
     branches:
-      - main
+      - release/desktop-windows-microsoft-store
   workflow_dispatch:
+
+concurrency:
+  group: release-desktop-windows-microsoft-store
+  cancel-in-progress: false
+
 
 jobs:
   release:
     permissions:
       contents: write
-    runs-on: windows-latest
+
+    runs-on: "windows-latest"
     steps:
       - uses: actions/checkout@v4
-        with:
-          lfs: true
 
       - name: setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+
       - uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -84,11 +92,10 @@ jobs:
           echo DEPLOY_KEY=${{ secrets.DEPLOY_KEY }} >> .env
           echo STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} >> .env
           echo STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} >> .env
-          cat .env
 
       - name: Build App
         run: |
-          pnpm tauri build -c src-tauri/tauri.prod-windows.conf.json
+          pnpm tauri build -c src-tauri/tauri.prod-windows-microsoftstore.conf.json
           # Move artifacts for code sign
           mkdir "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\to-sign"
           mkdir "${env:GITHUB_WORKSPACE}\src-tauri\target\release\bundle\signed"
@@ -117,22 +124,19 @@ jobs:
           # Code signing method. Default is v1. Supported values: v1, v2
           signing_method: v1
 
-      - name: Extract version from tauri.prod-windows.conf.json
+      - name: Extract version from tauri.prod-windows-microsoftstore.conf.json
         id: get_version
         shell: pwsh
         run: |
-          $json = Get-Content src-tauri/tauri.prod-windows.conf.json | ConvertFrom-Json
+          $json = Get-Content src-tauri/tauri.prod-windows-microsoftstore.conf.json | ConvertFrom-Json
           echo "VERSION=$($json.version)" >> $env:GITHUB_ENV
 
-      # We use a separate Windows release until we figure out how to codesign Windows app with
-      # SSL.com eSigner and tauri-action.
-      - name: Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload artifact
+        uses: ryand56/r2-upload-action@latest
         with:
-          draft: true
-          prerelease: false
-          body: "See the assets to download this version and install."
-          name: "NotWallet Crypto v${{ env.VERSION }} (Windows)"
-          files: |
-            src-tauri/target/release/bundle/signed/*.msi
-            src-tauri/target/release/bundle/signed/*.exe
+          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ secrets.R2_BUCKET }}
+          source-dir: src-tauri/target/release/bundle/signed
+          destination-dir: ./

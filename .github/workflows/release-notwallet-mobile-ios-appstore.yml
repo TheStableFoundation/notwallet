@@ -1,7 +1,18 @@
-name: "publish iOS"
+name: "Release NotWallet iOS (App Store)"
+
+# Builds and uploads the iOS app to App Store Connect. Starts from a push to
+# release/mobile-ios-appstore or a manual run.
 
 on:
+  push:
+    branches:
+      - release/mobile-ios-appstore
   workflow_dispatch:
+
+concurrency:
+  group: release-mobile-ios-appstore
+  cancel-in-progress: false
+
 
 # These permissions are needed to interact with GitHub's OIDC Token endpoint
 
