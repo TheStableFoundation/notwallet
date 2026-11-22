@@ -198,12 +198,15 @@ PREWARM_MIN_SYSTEM_VERSION="11.0"
 # True when every host proc-macro dylib in target/release/deps can be loaded.
 # No dylibs yet (a clean tree) counts as "not ok" so the prewarm still runs.
 host_procmacros_loadable() {
-  local deps="${REPO_ROOT}/src-tauri/target/release/deps"
-  compgen -G "${deps}/*.dylib" >/dev/null || return 1
-  local d
-  for d in "${deps}"/*.dylib; do
+  # Cargo puts host proc-macro dylibs in target/release/deps on older layouts and
+  # in target/release/build/<crate>/<hash>/out on newer ones (cargo 1.94 here).
+  local release="${REPO_ROOT}/src-tauri/target/release" d found=0
+  [[ -d "${release}" ]] || return 1
+  while IFS= read -r d; do
+    found=1
     python3 -c 'import ctypes,sys; ctypes.CDLL(sys.argv[1])' "$d" >/dev/null 2>&1 || return 1
-  done
+  done < <(find "${release}/deps" "${release}/build" -name 'lib*.dylib' 2>/dev/null)
+  [[ "${found}" == 1 ]]
 }
 
 prewarm_host_procmacros() {
