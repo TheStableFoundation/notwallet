@@ -60,3 +60,10 @@ notwallet-ds-entry.js
 
 # Screenshot generator's supplemental Tailwind build (regenerated on each run)
 assets/aso/**/generator/.gen-utilities.build.css
+
+# Agent and tooling local state
+.playwright-mcp/
+.pnpm-store/
+.claude/settings.local.json
+.claude/worktrees/
+**/.DS_Store
