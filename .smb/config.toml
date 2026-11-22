@@ -1,0 +1,41 @@
+# smbCloud monorepo config for the notwallet repository.
+#
+# The repo's primary artifact is the NotWallet Crypto app (Tauri), which is NOT
+# deployed through smbCloud: it ships through the App Store, Google Play, the
+# Microsoft Store and GitHub releases. Only the web site is a smbCloud target.
+#
+# `runner = 255` on the root [project] is what activates monorepo behavior.
+# See smbcloud-cli skill: smbcloud-deploy-monorepo.
+#
+# `apps/extension` is built by CI and uploaded to the browser stores by hand, so
+# it has no entry here.
+#
+name = "notwallet"
+description = "NotWallet monorepo: Tauri app, marketing site and browser extension."
+
+[project]
+id = 0                      # TODO: smbCloud workspace id (create the project in the console)
+name = "notwallet"
+repository = "notwallet"
+runner = 255                # mandatory: activates monorepo mode
+description = "NotWallet monorepo: Tauri app, marketing site and browser extension."
+
+# ── NotWallet marketing site (Astro SSR) ─────────────────────────────────────
+# Left commented out on purpose. Registering it needs a FrontendApp from the
+# smbCloud console (frontend_app_id), and production runs Astro in `middleware`
+# mode through run-server.js on :3020, while the `astro-ssr` kind starts
+# `node dist/server/entry.mjs` (standalone mode). Switch the adapter and register
+# the app together, then uncomment. Until then deploys go through the old
+# `deploy` git remote; see apps/web/README.md.
+#
+# [[projects]]
+# id = 0                                  # same workspace id as [project].id
+# frontend_app_id = "TODO"
+# name = "notwallet-web"
+# repository = "notwallet-web"
+# description = "NotWallet Crypto marketing site."
+# source = "apps/web"
+# path = "apps/web/notwallet-web"         # remote dir on the server, under ~/
+# runner = 0
+# kind = "astro-ssr"
+# package_manager = "pnpm"

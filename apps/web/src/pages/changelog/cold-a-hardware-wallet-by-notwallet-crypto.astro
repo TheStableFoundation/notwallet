@@ -1,0 +1,731 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const publishDate = "2025-10-15";
+const title = "Introducing Cold ❄️: The Next Generation Hardware Wallet";
+const description =
+    "NotWallet Crypto announces Cold ❄️, our first hardware wallet designed for ultimate security and ease of use. Coming soon.";
+---
+
+<Layout title={title} description={description}>
+    <Header />
+    <main class="min-h-screen bg-gradient-to-b from-nordic-bg to-white py-20">
+        <article class="container mx-auto px-4 max-w-4xl">
+            <!-- Header -->
+            <div class="mb-12">
+                <div class="text-sm text-nordic-text-secondary mb-4">
+                    <a
+                        href="/changelog"
+                        class="hover:text-nordic-accent transition-colors"
+                        >← Back to Changelog</a
+                    >
+                </div>
+                <time
+                    datetime={publishDate}
+                    class="text-sm text-nordic-text-secondary block mb-4"
+                >
+                    {
+                        new Date(publishDate).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })
+                    }
+                </time>
+                <h1
+                    class="text-4xl md:text-5xl font-bold text-nordic-text mb-6"
+                >
+                    {title}
+                </h1>
+                <p class="text-xl text-nordic-text-secondary leading-relaxed">
+                    {description}
+                </p>
+            </div>
+
+            <!-- Featured Image -->
+            <div class="mb-12 rounded-2xl overflow-hidden shadow-lg">
+                <div
+                    class="bg-gradient-to-br from-nordic-accent to-blue-500 aspect-video flex items-center justify-center"
+                >
+                    <div class="text-center text-white p-8">
+                        <div class="text-8xl mb-4">❄️</div>
+                        <h2 class="text-3xl font-bold">Cold ❄️</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="prose prose-lg max-w-none">
+                <!-- Introduction -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-4">
+                        A New Era of Security
+                    </h2>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        We're thrilled to announce <strong>Cold ❄️</strong>,
+                        NotWallet Crypto's first hardware wallet. After months
+                        of development and rigorous security testing, we're
+                        working on a device that combines military-grade
+                        security with the simplicity our users love.
+                    </p>
+                    <p class="text-nordic-text-secondary leading-relaxed">
+                        Cold ❄️ represents our commitment to giving users
+                        complete control over their digital assets while
+                        maintaining the highest security standards in the
+                        industry. <strong>Coming soon.</strong>
+                    </p>
+                </div>
+
+                <!-- Key Features -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-6">
+                        Key Features
+                    </h2>
+
+                    <div class="space-y-6">
+                        <!-- Feature 1 -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-nordic-accent/10 rounded-lg flex items-center justify-center"
+                            >
+                                <span class="text-2xl">🛡️</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-lg font-semibold text-nordic-text mb-2"
+                                >
+                                    Secure Element Chip
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Bank-grade secure element (EAL6+) ensures
+                                    your private keys never leave the device.
+                                    Protected against physical tampering and
+                                    side-channel attacks.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-nordic-accent/10 rounded-lg flex items-center justify-center"
+                            >
+                                <span class="text-2xl">📱</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-lg font-semibold text-nordic-text mb-2"
+                                >
+                                    Bluetooth & USB-C Connectivity
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Connect wirelessly via Bluetooth 5.0 or use
+                                    USB-C for a wired connection. Works
+                                    seamlessly with both mobile and desktop
+                                    devices.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-nordic-accent/10 rounded-lg flex items-center justify-center"
+                            >
+                                <span class="text-2xl">🔋</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-lg font-semibold text-nordic-text mb-2"
+                                >
+                                    Long Battery Life
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Built-in rechargeable battery lasts up to 8
+                                    hours of continuous use. Weeks of standby
+                                    time ensure it's always ready when you need
+                                    it.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-nordic-accent/10 rounded-lg flex items-center justify-center"
+                            >
+                                <span class="text-2xl">🌐</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-lg font-semibold text-nordic-text mb-2"
+                                >
+                                    Multi-Chain Support
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Support for Bitcoin, Ethereum, Solana, and
+                                    1,000+ cryptocurrencies. Manage all your
+                                    digital assets from a single device.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 5 -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-nordic-accent/10 rounded-lg flex items-center justify-center"
+                            >
+                                <span class="text-2xl">📲</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-lg font-semibold text-nordic-text mb-2"
+                                >
+                                    OLED Touch Screen
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    2.4-inch OLED display with touch interface
+                                    makes transaction verification intuitive.
+                                    Verify every detail before signing.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 6 -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-nordic-accent/10 rounded-lg flex items-center justify-center"
+                            >
+                                <span class="text-2xl">🔐</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-lg font-semibold text-nordic-text mb-2"
+                                >
+                                    Biometric Authentication
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Built-in fingerprint sensor provides an
+                                    additional layer of security. Optional PIN
+                                    code backup for ultimate flexibility.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Specifications -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-6">
+                        Technical Specifications
+                    </h2>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-3">
+                                Hardware
+                            </h3>
+                            <ul class="space-y-2 text-nordic-text-secondary">
+                                <li>• Secure Element: EAL6+ certified chip</li>
+                                <li>
+                                    • Display: 2.4" OLED touch screen (320×240)
+                                </li>
+                                <li>• Processor: ARM Cortex-M4</li>
+                                <li>• Storage: 16MB encrypted flash</li>
+                                <li>• Battery: 1000mAh Li-Po</li>
+                                <li>• Charging: USB-C (fast charging)</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-3">
+                                Connectivity & Security
+                            </h3>
+                            <ul class="space-y-2 text-nordic-text-secondary">
+                                <li>• Bluetooth 5.0 (encrypted)</li>
+                                <li>• USB-C data & charging</li>
+                                <li>• Fingerprint sensor (360° recognition)</li>
+                                <li>• Anti-tamper detection</li>
+                                <li>• Open-source firmware</li>
+                                <li>• Reproducible builds</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-3">
+                                Software Support
+                            </h3>
+                            <ul class="space-y-2 text-nordic-text-secondary">
+                                <li>• NotWallet mobile app (iOS/Android)</li>
+                                <li>
+                                    • NotWallet desktop app
+                                    (macOS/Windows/Linux)
+                                </li>
+                                <li>• MetaMask integration</li>
+                                <li>• WalletConnect support</li>
+                                <li>• Ledger Live compatible</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-3">
+                                Physical
+                            </h3>
+                            <ul class="space-y-2 text-nordic-text-secondary">
+                                <li>• Dimensions: 68 × 40 × 9mm</li>
+                                <li>• Weight: 45g</li>
+                                <li>• Material: Aircraft-grade aluminum</li>
+                                <li>
+                                    • Colors: Space Gray, Silver, Nordic Blue
+                                </li>
+                                <li>• Water resistant: IP67</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Philosophy -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-4">
+                        Nordic Design Philosophy
+                    </h2>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        Cold ❄️ embodies our Nordic design principles:
+                        simplicity, functionality, and beauty. The device
+                        features a minimalist aesthetic with clean lines and
+                        premium materials.
+                    </p>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        The aircraft-grade aluminum body feels solid yet
+                        lightweight. The OLED touch screen provides a modern
+                        interface that's intuitive to use, even for first-time
+                        hardware wallet users.
+                    </p>
+                    <p class="text-nordic-text-secondary leading-relaxed">
+                        Every detail has been carefully considered, from the
+                        satisfying click of the buttons to the responsive touch
+                        interface. This is a device you'll be proud to use
+                        daily.
+                    </p>
+                </div>
+
+                <!-- Security First -->
+                <div
+                    class="bg-gradient-to-br from-nordic-accent/5 to-blue-500/5 rounded-xl p-8 mb-8 border border-nordic-accent/20"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-4">
+                        Security First, Always
+                    </h2>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        At NotWallet, security is not just a feature—it's our
+                        foundation. Cold ❄️ will incorporate multiple layers of
+                        security to protect your assets:
+                    </p>
+                    <ul class="space-y-3 text-nordic-text-secondary">
+                        <li class="flex gap-3">
+                            <span class="text-nordic-accent font-bold">✓</span>
+                            <span
+                                ><strong>Secure Element:</strong> Your private keys
+                                are stored in a bank-grade secure chip, protected
+                                against physical attacks and side-channel analysis.</span
+                            >
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-nordic-accent font-bold">✓</span>
+                            <span
+                                ><strong>Open Source:</strong> Our firmware is fully
+                                open-source and audited by security experts. Build
+                                it yourself to verify authenticity.</span
+                            >
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-nordic-accent font-bold">✓</span>
+                            <span
+                                ><strong>Anti-Tamper:</strong> Built-in sensors detect
+                                physical tampering attempts and automatically lock
+                                the device.</span
+                            >
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-nordic-accent font-bold">✓</span>
+                            <span
+                                ><strong>Encrypted Communication:</strong> All Bluetooth
+                                and USB communications are end-to-end encrypted.</span
+                            >
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-nordic-accent font-bold">✓</span>
+                            <span
+                                ><strong>Recovery Backup:</strong> 24-word recovery
+                                phrase ensures you can always recover your assets,
+                                even if the device is lost.</span
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Use Cases -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-6">
+                        Perfect For
+                    </h2>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                🏦 Long-Term Holders
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Store your Bitcoin, Ethereum, and other
+                                cryptocurrencies with peace of mind. Cold
+                                storage keeps your assets offline and safe from
+                                online threats.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                💼 Active Traders
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Quick Bluetooth connectivity lets you sign
+                                transactions on the go. Perfect for traders who
+                                need security without sacrificing convenience.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                🎮 NFT Collectors
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Protect your valuable NFTs with hardware-level
+                                security. Connect to OpenSea, Rarible, and other
+                                marketplaces via WalletConnect.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                🌍 DeFi Users
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Interact with DeFi protocols securely. Verify
+                                every transaction on the device screen before
+                                approving smart contract interactions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-6">
+                        How Cold-A Compares
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b-2 border-gray-200">
+                                    <th
+                                        class="py-3 px-4 text-nordic-text font-semibold"
+                                        >Feature</th
+                                    >
+                                    <th
+                                        class="py-3 px-4 text-nordic-accent font-semibold"
+                                        >Cold ❄️</th
+                                    >
+                                    <th
+                                        class="py-3 px-4 text-nordic-text-secondary"
+                                        >Competitor A</th
+                                    >
+                                    <th
+                                        class="py-3 px-4 text-nordic-text-secondary"
+                                        >Competitor B</th
+                                    >
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-nordic-text"
+                                        >Secure Element</td
+                                    >
+                                    <td class="py-3 px-4 text-center"
+                                        >✅ EAL6+</td
+                                    >
+                                    <td class="py-3 px-4 text-center"
+                                        >✅ EAL5+</td
+                                    >
+                                    <td class="py-3 px-4 text-center">❌</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-nordic-text"
+                                        >Bluetooth</td
+                                    >
+                                    <td class="py-3 px-4 text-center">✅</td>
+                                    <td class="py-3 px-4 text-center">❌</td>
+                                    <td class="py-3 px-4 text-center">✅</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-nordic-text"
+                                        >Touch Screen</td
+                                    >
+                                    <td class="py-3 px-4 text-center"
+                                        >✅ 2.4" OLED</td
+                                    >
+                                    <td class="py-3 px-4 text-center">❌</td>
+                                    <td class="py-3 px-4 text-center"
+                                        >✅ 1.3" LCD</td
+                                    >
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-nordic-text"
+                                        >Fingerprint</td
+                                    >
+                                    <td class="py-3 px-4 text-center">✅</td>
+                                    <td class="py-3 px-4 text-center">❌</td>
+                                    <td class="py-3 px-4 text-center">❌</td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-nordic-text"
+                                        >Battery Life</td
+                                    >
+                                    <td class="py-3 px-4 text-center"
+                                        >8 hours</td
+                                    >
+                                    <td class="py-3 px-4 text-center">N/A</td>
+                                    <td class="py-3 px-4 text-center"
+                                        >4 hours</td
+                                    >
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-nordic-text"
+                                        >Open Source</td
+                                    >
+                                    <td class="py-3 px-4 text-center">✅</td>
+                                    <td class="py-3 px-4 text-center"
+                                        >⚠️ Partial</td
+                                    >
+                                    <td class="py-3 px-4 text-center">❌</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="py-3 px-4 text-nordic-text font-semibold"
+                                        >Price</td
+                                    >
+                                    <td
+                                        class="py-3 px-4 text-center font-bold text-nordic-accent"
+                                        >Coming Soon</td
+                                    >
+                                    <td class="py-3 px-4 text-center">$149</td>
+                                    <td class="py-3 px-4 text-center">$179</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Coming Soon -->
+                <div
+                    class="bg-gradient-to-br from-nordic-accent to-blue-500 rounded-xl p-8 mb-8 text-white"
+                >
+                    <h2 class="text-2xl font-bold mb-4">Coming Soon</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-3xl font-bold mb-2">❄️ Cold ❄️</p>
+                            <p class="text-white/90">
+                                Our first hardware wallet is currently in
+                                development. Sign up to be notified when it
+                                becomes available.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                            <a
+                                href="#notify-me"
+                                class="bg-white text-nordic-accent px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+                            >
+                                Notify Me
+                            </a>
+                            <a
+                                href="/buy-crypto"
+                                class="bg-white/20 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/30 transition-colors text-center backdrop-blur-sm"
+                            >
+                                Buy Crypto Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What's in the Box -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-4">
+                        What's in the Box
+                    </h2>
+                    <ul class="space-y-2 text-nordic-text-secondary">
+                        <li class="flex items-center gap-3">
+                            <span class="text-nordic-accent">📦</span>
+                            Cold ❄️ Hardware Wallet
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-nordic-accent">🔌</span>
+                            USB-C to USB-A cable (1m)
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-nordic-accent">📝</span>
+                            Recovery phrase cards (3x stainless steel)
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-nordic-accent">📱</span>
+                            Quick start guide
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-nordic-accent">🎁</span>
+                            Leather carrying case
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-nordic-accent">🔐</span>
+                            Security seal & authenticity certificate
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- FAQ -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-6">
+                        Frequently Asked Questions
+                    </h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                Will Cold ❄️ be compatible with my existing
+                                wallets?
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Yes! Cold ❄️ will support BIP39/BIP44 standards,
+                                so you can import existing wallets. It works
+                                with MetaMask, Phantom, and most popular wallet
+                                applications.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                How secure is Bluetooth connectivity?
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                All Bluetooth communications are end-to-end
+                                encrypted. Your private keys never leave the
+                                secure element. Bluetooth is only used to
+                                transmit signed transactions, never sensitive
+                                key material.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                What happens if I lose my Cold ❄️?
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Your recovery phrase (24 words) allows you to
+                                restore your wallet on any BIP39-compatible
+                                device. Always keep your recovery phrase in a
+                                secure location.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                Can I verify the firmware?
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Absolutely. Our firmware is open-source and
+                                supports reproducible builds. You can compile
+                                the firmware yourself and verify it matches
+                                what's on your device.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                What cryptocurrencies will be supported?
+                            </h3>
+                            <p class="text-nordic-text-secondary text-sm">
+                                Cold ❄️ will support Bitcoin, Ethereum, Solana,
+                                and over 1,000 cryptocurrencies and tokens.
+                                We're constantly adding support for new chains
+                                and tokens.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div
+                    class="text-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-12"
+                >
+                    <h2 class="text-3xl font-bold text-nordic-text mb-4">
+                        Get Notified When Cold ❄️ Launches
+                    </h2>
+                    <p
+                        class="text-lg text-nordic-text-secondary mb-8 max-w-2xl mx-auto"
+                    >
+                        Join the waitlist and be among the first to know when
+                        Cold ❄️ becomes available. In the meantime, secure your
+                        crypto with NotWallet app.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a
+                            href="#notify-me"
+                            class="bg-gradient-to-r from-nordic-accent to-blue-500 text-white px-10 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                        >
+                            Join Waitlist
+                        </a>
+                        <a
+                            href="/buy-crypto"
+                            class="bg-white text-nordic-accent px-10 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors border-2 border-nordic-accent"
+                        >
+                            Buy Crypto Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Changelog -->
+            <div class="mt-12 text-center">
+                <a
+                    href="/changelog"
+                    class="text-nordic-accent hover:text-nordic-accent-dark transition-colors font-semibold"
+                >
+                    ← Back to Changelog
+                </a>
+            </div>
+        </article>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    article {
+        line-height: 1.8;
+    }
+</style>

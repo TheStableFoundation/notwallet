@@ -1,0 +1,102 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+
+export const prerender = false;
+const { address } = Astro.params;
+
+interface Explorer {
+    name: string;
+    url: string;
+    icon: string;
+    description: string;
+}
+
+const explorers: Explorer[] = [
+    {
+        name: "Jupiter",
+        url: `https://jup.ag/tokens/${address}`,
+        icon: "🪐",
+        description: "Trade & swap",
+    },
+    {
+        name: "Solscan",
+        url: `https://solscan.io/token/${address}`,
+        icon: "🔍",
+        description: "Analytics & holders",
+    },
+    {
+        name: "Solana Explorer",
+        url: `https://explorer.solana.com/address/${address}`,
+        icon: "⚡",
+        description: "Official explorer",
+    },
+    {
+        name: "Birdeye",
+        url: `https://birdeye.so/solana/token/${address}`,
+        icon: "🐦",
+        description: "Charts & markets",
+    },
+];
+---
+
+<Layout
+    title="Token Detail - NotWallet Crypto"
+    description="Solana token detail."
+>
+    <Header />
+    <main class="min-h-screen bg-gradient-to-b from-nordic-bg to-white py-20">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            <!-- Header Card -->
+            <div class="bg-nordic-paper rounded-2xl shadow-xl p-6 sm:p-8 mb-6">
+                <h1
+                    class="text-2xl sm:text-3xl font-bold text-nordic-text mb-4"
+                >
+                    Token Details
+                </h1>
+                <div
+                    class="bg-nordic-info rounded-nordic p-4 border border-gray-200"
+                >
+                    <p
+                        class="font-mono text-xs sm:text-sm text-nordic-text-secondary break-all"
+                    >
+                        {address}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Explorers Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {
+                    explorers.map((explorer) => (
+                        <a
+                            href={explorer.url}
+                            class="group bg-nordic-paper rounded-2xl shadow-lg hover:shadow-2xl p-6 transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-nordic-primary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-3xl" aria-hidden="true">
+                                        {explorer.icon}
+                                    </span>
+                                    <h2 class="text-xl font-semibold text-nordic-text">
+                                        {explorer.name}
+                                    </h2>
+                                </div>
+                                <span class="text-2xl text-nordic-muted group-hover:text-nordic-primary transition-colors group-hover:translate-x-1 transform duration-300">
+                                    →
+                                </span>
+                            </div>
+                            <p class="text-sm text-nordic-text-secondary ml-12">
+                                {explorer.description}
+                            </p>
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+        <Footer />
+    </main>
+</Layout>

@@ -1,0 +1,219 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+
+export const prerender = false;
+
+interface Explorer {
+    name: string;
+    url: string;
+    icon: string;
+    description: string;
+}
+
+const explorers: Explorer[] = [
+    {
+        name: "Jupiter",
+        url: "https://jup.ag/swap/SOL-USDC",
+        icon: "🪐",
+        description: "Swap SOL",
+    },
+    {
+        name: "Solscan",
+        url: "https://solscan.io/token/So11111111111111111111111111111111111111112",
+        icon: "🔍",
+        description: "Network analytics",
+    },
+    {
+        name: "Solana Explorer",
+        url: "https://explorer.solana.com/",
+        icon: "⚡",
+        description: "Official explorer",
+    },
+    {
+        name: "Birdeye",
+        url: "https://birdeye.so/token/So11111111111111111111111111111111111111112",
+        icon: "🐦",
+        description: "Price & markets",
+    },
+];
+
+const features = [
+    {
+        title: "Fast Transactions",
+        description: "~400ms block times with 65,000+ TPS capacity",
+        icon: "⚡",
+    },
+    {
+        title: "Low Fees",
+        description: "Average transaction cost of $0.00025",
+        icon: "💰",
+    },
+    {
+        title: "Proof of Stake",
+        description: "Energy-efficient consensus mechanism",
+        icon: "🌱",
+    },
+    {
+        title: "Native Token",
+        description: "Powers the entire Solana ecosystem",
+        icon: "🔗",
+    },
+];
+---
+
+<Layout
+    title="Solana (SOL) - NotWallet Crypto"
+    description="Solana native token information and resources."
+>
+    <Header />
+    <main class="min-h-screen bg-gradient-to-b from-nordic-bg to-white py-20">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            <!-- Hero Section -->
+            <div class="bg-gradient-to-br from-nordic-primary to-nordic-primary-dark rounded-3xl shadow-2xl p-8 sm:p-12 mb-8 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full -ml-48 -mb-48"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center text-4xl sm:text-5xl">
+                            ◎
+                        </div>
+                        <div>
+                            <h1 class="text-3xl sm:text-5xl font-bold mb-2">
+                                Solana
+                            </h1>
+                            <p class="text-lg sm:text-xl text-white/90">
+                                SOL · Native Token
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-lg text-white/90 max-w-3xl leading-relaxed">
+                        Solana is a high-performance blockchain supporting builders around the world creating crypto apps that scale. SOL is the native token used for transaction fees, staking, and governance.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                {features.map((feature) => (
+                    <div class="bg-nordic-paper rounded-2xl shadow-lg p-6 border border-gray-100">
+                        <div class="text-4xl mb-3">{feature.icon}</div>
+                        <h3 class="text-lg font-semibold text-nordic-text mb-2">
+                            {feature.title}
+                        </h3>
+                        <p class="text-sm text-nordic-text-secondary">
+                            {feature.description}
+                        </p>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Token Address Section -->
+            <div class="bg-nordic-paper rounded-2xl shadow-xl p-6 sm:p-8 mb-8">
+                <h2 class="text-xl sm:text-2xl font-bold text-nordic-text mb-4">
+                    Token Information
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-nordic-text-secondary mb-2 font-medium">
+                            Wrapped SOL Address
+                        </p>
+                        <div class="bg-nordic-info rounded-nordic p-4 border border-gray-200">
+                            <p class="font-mono text-xs sm:text-sm text-nordic-text break-all">
+                                So11111111111111111111111111111111111111112
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-r from-nordic-primary/5 to-nordic-secondary/5 rounded-nordic p-4 border border-nordic-primary/20">
+                        <p class="text-sm text-nordic-text-secondary">
+                            <span class="font-semibold text-nordic-text">Note:</span> Native SOL doesn't have a token address in the traditional sense. The address above is for Wrapped SOL, which is used in SPL token programs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explorers Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-nordic-text mb-6">
+                    Explore Solana
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {explorers.map((explorer) => (
+                        <a
+                            href={explorer.url}
+                            class="group bg-nordic-paper rounded-2xl shadow-lg hover:shadow-2xl p-6 transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-nordic-primary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-3xl" aria-hidden="true">
+                                        {explorer.icon}
+                                    </span>
+                                    <h3 class="text-xl font-semibold text-nordic-text">
+                                        {explorer.name}
+                                    </h3>
+                                </div>
+                                <span class="text-2xl text-nordic-muted group-hover:text-nordic-primary transition-colors group-hover:translate-x-1 transform duration-300">
+                                    →
+                                </span>
+                            </div>
+                            <p class="text-sm text-nordic-text-secondary ml-12">
+                                {explorer.description}
+                            </p>
+                        </a>
+                    ))}
+                </div>
+            </div>
+
+            <!-- Additional Resources -->
+            <div class="bg-gradient-to-br from-nordic-info to-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-100">
+                <h2 class="text-xl font-bold text-nordic-text mb-4">
+                    Learn More
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a
+                        href="https://solana.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-3 text-nordic-primary hover:text-nordic-primary-dark transition-colors group"
+                    >
+                        <span class="text-xl">🌐</span>
+                        <span class="font-medium group-hover:underline">Official Website</span>
+                    </a>
+                    <a
+                        href="https://docs.solana.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-3 text-nordic-primary hover:text-nordic-primary-dark transition-colors group"
+                    >
+                        <span class="text-xl">📚</span>
+                        <span class="font-medium group-hover:underline">Documentation</span>
+                    </a>
+                    <a
+                        href="https://solana.com/ecosystem"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-3 text-nordic-primary hover:text-nordic-primary-dark transition-colors group"
+                    >
+                        <span class="text-xl">🏗️</span>
+                        <span class="font-medium group-hover:underline">Ecosystem</span>
+                    </a>
+                    <a
+                        href="https://solana.com/developers"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-3 text-nordic-primary hover:text-nordic-primary-dark transition-colors group"
+                    >
+                        <span class="text-xl">👨‍💻</span>
+                        <span class="font-medium group-hover:underline">For Developers</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>

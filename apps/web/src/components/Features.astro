@@ -1,0 +1,77 @@
+---
+const features = [
+    {
+        title: "Simple & Intuitive",
+        description:
+            "Clean Nordic design that makes managing your crypto effortless and enjoyable.",
+        icon: `<path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>`,
+    },
+    {
+        title: "Bank-Grade Security",
+        description:
+            "Your keys, your crypto. Advanced encryption keeps your assets safe and secure.",
+        icon: `<path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>`,
+    },
+    {
+        title: "Multi-Currency Support",
+        description:
+            "Support for Bitcoin, Ethereum, and all major cryptocurrencies in one place.",
+        icon: `<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>`,
+    },
+    {
+        title: "Real-Time Tracking",
+        description:
+            "Monitor your portfolio value with live price updates and market insights.",
+        icon: `<path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/>`,
+    },
+    {
+        title: "Instant Transfers",
+        description:
+            "Send and receive crypto quickly with minimal fees and maximum efficiency.",
+        icon: `<path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/>`,
+    },
+    {
+        title: "24/7 Support",
+        description:
+            "Our Nordic team is always here to help you with any questions or concerns.",
+        icon: `<path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>`,
+    },
+];
+---
+
+<section id="features" class="py-20 bg-nordic-paper">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-nordic-text mb-4">
+                Why Choose NotWallet Crypto?
+            </h2>
+            <p class="text-xl text-nordic-text-secondary max-w-2xl mx-auto">
+                Experience the perfect blend of Nordic simplicity and powerful
+                crypto management
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {
+                features.map((feature) => (
+                    <div class="p-6 rounded-nordic bg-gradient-to-br from-nordic-info to-nordic-paper hover:shadow-xl transition-shadow duration-300">
+                        <div class="w-12 h-12 bg-nordic-accent rounded-nordic flex items-center justify-center mb-4">
+                            <svg
+                                class="w-6 h-6 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                                set:html={feature.icon}
+                            />
+                        </div>
+                        <h3 class="text-xl font-semibold text-nordic-text mb-2">
+                            {feature.title}
+                        </h3>
+                        <p class="text-nordic-text-secondary">
+                            {feature.description}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

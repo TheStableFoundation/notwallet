@@ -1,0 +1,478 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const publishDate = "2025-12-02";
+const title = "Two of Us: NotWallet x Web3 Community Data Provider Program";
+const description =
+    "Join the NotWallet Community Data Provider Program and earn rewards for contributing to the future of decentralized finance while maintaining your privacy.";
+---
+
+<Layout title={title} description={description}>
+    <Header />
+    <main class="min-h-screen bg-gradient-to-b from-nordic-bg to-white py-20">
+        <article class="container mx-auto px-4 max-w-4xl">
+            <!-- Header -->
+            <div class="mb-12">
+                <div class="text-sm text-nordic-text-secondary mb-4">
+                    <a
+                        href="/changelog"
+                        class="hover:text-nordic-accent transition-colors"
+                        >← Back to Changelog</a
+                    >
+                </div>
+                <time
+                    datetime={publishDate}
+                    class="text-sm text-nordic-text-secondary block mb-4"
+                >
+                    {
+                        new Date(publishDate).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })
+                    }
+                </time>
+                <h1
+                    class="text-4xl md:text-5xl font-bold text-nordic-text mb-6"
+                >
+                    {title}
+                </h1>
+                <p class="text-xl text-nordic-text-secondary leading-relaxed">
+                    {description}
+                </p>
+            </div>
+
+            <!-- Featured Image -->
+            <div class="mb-12 rounded-2xl overflow-hidden shadow-lg">
+                <div
+                    class="bg-gradient-to-br from-nordic-accent to-purple-600 aspect-video flex items-center justify-center"
+                >
+                    <div class="text-center text-white p-8">
+                        <div class="flex justify-center gap-6 mb-4">
+                            <span class="text-6xl">🤝</span>
+                            <span class="text-6xl">🌐</span>
+                            <span class="text-6xl">💎</span>
+                        </div>
+                        <h2 class="text-3xl font-bold">
+                            Community Powered Web3
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="prose prose-lg max-w-none">
+                <!-- Introduction -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <h2 class="text-2xl font-bold text-nordic-text mb-4">
+                        Two of Us: Building the Future Together
+                    </h2>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        It takes two to tango. 💃🕺
+                    </p>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        We're excited to announce the NotWallet Community Data
+                        Provider Program, a revolutionary initiative that
+                        empowers our Web3 community to contribute valuable
+                        blockchain insights while earning rewards—all while
+                        maintaining complete pseudonymity and privacy.
+                    </p>
+                    <p class="text-nordic-text-secondary leading-relaxed">
+                        This isn't just another rewards program. It's a movement
+                        towards community-driven data ownership in the
+                        decentralized economy.
+                    </p>
+                </div>
+
+                <!-- What is Data Provider Program -->
+                <div
+                    class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-8 mb-8 border border-blue-200"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">🌐</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            Become a Data Provider
+                        </h2>
+                    </div>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        As a NotWallet Data Provider, you contribute anonymized
+                        transaction patterns and usage insights that help
+                        improve the entire Web3 ecosystem. Your data helps us:
+                    </p>
+                    <ul class="space-y-3 text-nordic-text-secondary">
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">✓</span>
+                            <span
+                                >Enhance security protocols and fraud detection</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">✓</span>
+                            <span
+                                >Improve user experience across all platforms</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">✓</span>
+                            <span
+                                >Optimize gas fees and transaction routing</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">✓</span>
+                            <span
+                                >Build better DeFi integrations and features</span
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- How to Participate -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">🎯</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            How to Join the Program
+                        </h2>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 bg-nordic-accent text-white rounded-full flex items-center justify-center font-bold"
+                            >
+                                1
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-nordic-text mb-2">
+                                    Download NotWallet
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Get the latest version of NotWallet on iOS,
+                                    Android, or macOS.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 bg-nordic-accent text-white rounded-full flex items-center justify-center font-bold"
+                            >
+                                2
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-nordic-text mb-2">
+                                    Enable Data Provider Mode
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Navigate to Settings → Community → Data
+                                    Provider and opt-in to the program with full
+                                    transparency about what data is shared.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 bg-nordic-accent text-white rounded-full flex items-center justify-center font-bold"
+                            >
+                                3
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-nordic-text mb-2">
+                                    Start Earning Rewards
+                                </h3>
+                                <p class="text-nordic-text-secondary">
+                                    Earn $BACH tokens for every contribution.
+                                    Track your earnings in real-time through
+                                    your dashboard.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy First -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">🔒</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            Privacy-First Approach
+                        </h2>
+                    </div>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        Your privacy is non-negotiable. Here's how we protect
+                        you:
+                    </p>
+                    <ul class="space-y-3 text-nordic-text-secondary">
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">🛡️</span>
+                            <span
+                                ><strong>Pseudonymous by design:</strong> All data
+                                is anonymized and cannot be traced back to your wallet
+                                addresses</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">🛡️</span>
+                            <span
+                                ><strong>Zero knowledge proofs:</strong> We use cryptographic
+                                techniques to verify data without exposing sensitive
+                                information</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">🛡️</span>
+                            <span
+                                ><strong>Full control:</strong> Opt-in or opt-out
+                                anytime with one tap—no questions asked</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-1">🛡️</span>
+                            <span
+                                ><strong>Transparent reporting:</strong> See exactly
+                                what data points are shared in real-time</span
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Rewards & Tokenomics -->
+                <div
+                    class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-8 mb-8 border border-purple-200"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">💎</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            Rewards & Benefits
+                        </h2>
+                    </div>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        As a Data Provider, you'll earn:
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-lg p-4">
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                🪙 $BACH Tokens
+                            </h3>
+                            <p class="text-sm text-nordic-text-secondary">
+                                Earn governance tokens for participating in the
+                                program
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                🎁 Exclusive Airdrops
+                            </h3>
+                            <p class="text-sm text-nordic-text-secondary">
+                                Get early access to partner tokens and NFT drops
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                ⚡ Fee Discounts
+                            </h3>
+                            <p class="text-sm text-nordic-text-secondary">
+                                Enjoy reduced transaction fees within NotWallet
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h3 class="font-semibold text-nordic-text mb-2">
+                                🏆 Community Status
+                            </h3>
+                            <p class="text-sm text-nordic-text-secondary">
+                                Unlock special badges and community recognition
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Not into Web3? -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">🤔</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            Not Ready for Data Sharing?
+                        </h2>
+                    </div>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        That's totally fine. You can use NotWallet without
+                        participating in the Data Provider Program. We've got
+                        you covered.
+                    </p>
+                    <p class="text-nordic-text-secondary leading-relaxed">
+                        NotWallet is first and foremost a self-custody wallet
+                        designed for your financial sovereignty. The Data
+                        Provider Program is completely optional—your wallet,
+                        your choice. 🙌
+                    </p>
+                </div>
+
+                <!-- Pure Player -->
+                <div
+                    class="bg-white rounded-xl p-8 mb-8 border border-gray-200 shadow-sm"
+                >
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-4xl">⚡</span>
+                        <h2 class="text-2xl font-bold text-nordic-text">
+                            Just Want to Transact?
+                        </h2>
+                    </div>
+                    <p class="text-nordic-text-secondary leading-relaxed mb-4">
+                        In that case, just download our apps and focus on what
+                        matters most: managing your crypto with ease and
+                        security. Simplicity is key in the modern Web3 economy.
+                    </p>
+                    <ul class="space-y-3 text-nordic-text-secondary">
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">→</span>
+                            <span>Create your wallet in under 30 seconds</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">→</span>
+                            <span
+                                >Send and receive crypto across multiple chains</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">→</span>
+                            <span>Track your portfolio in real-time</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-nordic-accent mt-1">→</span>
+                            <span>Enjoy Nordic-inspired minimal design</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Download CTA -->
+                <div
+                    class="bg-gradient-to-br from-nordic-accent to-blue-500 rounded-xl p-8 mb-8 text-white"
+                >
+                    <h2 class="text-2xl font-bold mb-4">Join the Movement</h2>
+                    <p class="text-white/90 mb-6">
+                        Download NotWallet today and explore how you can be part
+                        of the Web3 community data revolution—or simply enjoy
+                        the best self-custody wallet experience available.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <a
+                            href="https://apps.apple.com/se/app/notwallet-kryptosj%C3%A4lvf%C3%B6rvaring/id6749607570"
+                            class="bg-white text-nordic-accent px-6 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+                        >
+                            📱 App Store
+                        </a>
+                        <a
+                            href="https://play.google.com/store/apps/details?id=xyz.notwallet.NotWallet"
+                            class="bg-white text-nordic-accent px-6 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+                        >
+                            🤖 Google Play
+                        </a>
+                        <a
+                            href="/"
+                            class="bg-white text-nordic-accent px-6 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+                        >
+                            💻 macOS
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div
+                    class="bg-yellow-50 rounded-xl p-6 mb-8 border border-yellow-200"
+                >
+                    <h3 class="text-lg font-semibold text-nordic-text mb-3">
+                        ⚠️ Disclaimer
+                    </h3>
+                    <ul class="space-y-2 text-sm text-nordic-text-secondary">
+                        <li>
+                            • The material provided is intended for
+                            informational purposes only and does not constitute
+                            investment or financial advice.
+                        </li>
+                        <li>
+                            • $BACH tokens are governance tokens for the
+                            NotWallet DAO and community features.
+                        </li>
+                        <li>
+                            • Participation in the Data Provider Program is
+                            completely voluntary and can be discontinued at any
+                            time.
+                        </li>
+                        <li>
+                            • All data shared through the program is anonymized
+                            and encrypted according to our Privacy Policy.
+                        </li>
+                        <li>
+                            • Cryptocurrency investments carry risk. Only invest
+                            what you can afford to lose.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <span
+                        class="px-4 py-2 bg-nordic-accent/10 text-nordic-accent rounded-full text-sm font-medium"
+                    >
+                        web3
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-nordic-accent/10 text-nordic-accent rounded-full text-sm font-medium"
+                    >
+                        community
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-nordic-accent/10 text-nordic-accent rounded-full text-sm font-medium"
+                    >
+                        data-provider
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-nordic-accent/10 text-nordic-accent rounded-full text-sm font-medium"
+                    >
+                        rewards
+                    </span>
+                    <span
+                        class="px-4 py-2 bg-nordic-accent/10 text-nordic-accent rounded-full text-sm font-medium"
+                    >
+                        privacy
+                    </span>
+                </div>
+            </div>
+
+            <!-- Back to Changelog -->
+            <div class="mt-12 text-center">
+                <a
+                    href="/changelog"
+                    class="text-nordic-accent hover:text-nordic-accent-dark transition-colors font-semibold"
+                >
+                    ← Back to Changelog
+                </a>
+            </div>
+        </article>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    article {
+        line-height: 1.8;
+    }
+
+    .prose ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .prose li {
+        margin: 0;
+    }
+</style>

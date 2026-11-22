@@ -1,0 +1,197 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const changelogPosts = [
+    {
+        slug: "web3-community-data-provider",
+        title: "Two of Us: NotWallet x Web3 Community Data Provider Program",
+        description: "Join the NotWallet Community Data Provider Program and earn rewards for contributing to the future of decentralized finance while maintaining your privacy.",
+        date: "2025-12-02",
+        category: "Community",
+        featured: true,
+    },
+    {
+        slug: "platform-updates-ios-android-macos",
+        title: "Platform Updates: NotWallet Crypto for iOS, Android, and macOS",
+        description: "Major updates across all platforms bringing enhanced performance, new features, and improved user experience to NotWallet Crypto.",
+        date: "2025-11-03",
+        category: "Updates",
+        featured: false,
+    },
+    {
+        slug: "cold-a-hardware-wallet-by-notwallet-crypto",
+        title: "Introducing Cold ❄️: The Next Generation Hardware Wallet",
+        description: "NotWallet Crypto announces Cold ❄️, our first hardware wallet designed for ultimate security and ease of use. Coming soon.",
+        date: "2025-10-15",
+        category: "Product Launch",
+        featured: false,
+    },
+];
+---
+
+<Layout
+    title="Changelog - NotWallet Crypto"
+    description="Stay updated with the latest announcements, product launches, and updates from NotWallet Crypto."
+>
+    <Header />
+    <main class="min-h-screen bg-gradient-to-b from-nordic-bg to-white py-20">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold text-nordic-text mb-6">
+                    Changelog
+                </h1>
+                <p class="text-xl text-nordic-text-secondary max-w-2xl mx-auto">
+                    Stay updated with the latest announcements, product launches, and updates from NotWallet Crypto.
+                </p>
+            </div>
+
+            <!-- Posts Grid -->
+            <div class="space-y-8">
+                {changelogPosts.map((post) => (
+                    <article class={`bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow ${post.featured ? 'border-2 border-nordic-accent' : 'border border-gray-200'}`}>
+                        <div class="flex flex-col md:flex-row">
+                            <!-- Featured Badge & Image -->
+                            <div class="md:w-2/5 relative">
+                                {post.featured && (
+                                    <div class="absolute top-4 left-4 z-10">
+                                        <span class="bg-nordic-accent text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                                            ⭐ Featured
+                                        </span>
+                                    </div>
+                                )}
+                                <div class={`h-64 md:h-full flex items-center justify-center ${
+                                    post.slug === "web3-community-data-provider"
+                                        ? "bg-gradient-to-br from-nordic-accent to-purple-600"
+                                        : post.slug === "platform-updates-ios-android-macos"
+                                        ? "bg-gradient-to-br from-nordic-accent to-blue-500"
+                                        : "bg-gradient-to-br from-nordic-accent to-blue-500"
+                                }`}>
+                                    <div class="text-center text-white p-8">
+                                        {post.slug === "web3-community-data-provider" ? (
+                                            <>
+                                                <div class="flex justify-center gap-4 mb-4">
+                                                    <span class="text-4xl">🤝</span>
+                                                    <span class="text-4xl">🌐</span>
+                                                    <span class="text-4xl">💎</span>
+                                                </div>
+                                                <h3 class="text-2xl font-bold">Community Program</h3>
+                                                <p class="text-sm mt-2 text-white/80">Earn Rewards</p>
+                                            </>
+                                        ) : post.slug === "platform-updates-ios-android-macos" ? (
+                                            <>
+                                                <div class="flex justify-center gap-4 mb-4">
+                                                    <span class="text-4xl">📱</span>
+                                                    <span class="text-4xl">🤖</span>
+                                                    <span class="text-4xl">💻</span>
+                                                </div>
+                                                <h3 class="text-2xl font-bold">v3.2.0</h3>
+                                                <p class="text-sm mt-2 text-white/80">All Platforms</p>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <div class="text-6xl mb-4">❄️</div>
+                                                <h3 class="text-2xl font-bold">Cold ❄️</h3>
+                                                <p class="text-sm mt-2 text-white/80">Coming Soon</p>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="md:w-3/5 p-8">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <time datetime={post.date} class="text-sm text-nordic-text-secondary">
+                                        {new Date(post.date).toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </time>
+                                    <span class="text-nordic-text-secondary">•</span>
+                                    <span class="text-sm bg-nordic-accent/10 text-nordic-accent px-3 py-1 rounded-full font-medium">
+                                        {post.category}
+                                    </span>
+                                </div>
+
+                                <h2 class="text-2xl md:text-3xl font-bold text-nordic-text mb-4 hover:text-nordic-accent transition-colors">
+                                    <a href={`/changelog/${post.slug}`}>
+                                        {post.title}
+                                    </a>
+                                </h2>
+
+                                <p class="text-nordic-text-secondary leading-relaxed mb-6">
+                                    {post.description}
+                                </p>
+
+                                <a
+                                    href={`/changelog/${post.slug}`}
+                                    class="inline-flex items-center gap-2 bg-gradient-to-r from-nordic-accent to-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                                >
+                                    Read Full Story
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                ))}
+            </div>
+
+            <!-- Newsletter Signup -->
+            <div class="mt-16 bg-gradient-to-br from-nordic-accent to-blue-500 rounded-2xl p-12 text-center text-white">
+                <h2 class="text-3xl font-bold mb-4">
+                    Never Miss an Update
+                </h2>
+                <p class="text-lg mb-8 text-white/90 max-w-xl mx-auto">
+                    Subscribe to our newsletter and be the first to know about new products, features, and important updates.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        class="flex-1 px-6 py-4 rounded-lg text-nordic-text focus:outline-none focus:ring-2 focus:ring-white"
+                    />
+                    <button
+                        class="bg-white text-nordic-accent px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                    >
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="mt-12 text-center">
+                <h3 class="text-lg font-semibold text-nordic-text mb-4">Browse by Category</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="/changelog?category=community" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-nordic-text hover:border-nordic-accent hover:text-nordic-accent transition-colors">
+                        Community
+                    </a>
+                    <a href="/changelog?category=product-launch" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-nordic-text hover:border-nordic-accent hover:text-nordic-accent transition-colors">
+                        Product Launch
+                    </a>
+                    <a href="/changelog?category=updates" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-nordic-text hover:border-nordic-accent hover:text-nordic-accent transition-colors">
+                        Updates
+                    </a>
+                    <a href="/changelog?category=security" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-nordic-text hover:border-nordic-accent hover:text-nordic-accent transition-colors">
+                        Security
+                    </a>
+                    <a href="/changelog?category=features" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-nordic-text hover:border-nordic-accent hover:text-nordic-accent transition-colors">
+                        Features
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    article:hover h2 {
+        color: var(--nordic-accent);
+    }
+</style>
