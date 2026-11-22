@@ -64,10 +64,41 @@ const navItems: NavItem[] = [
   },
 ];
 
-export default function Navbar() {
-  const location = useLocation();
+// The bars are laid out as flex children of the app shell, not position:fixed
+// over a scrolling document — see the note in index.css.
+export function TopNav() {
   const { t, lang } = useLang();
   const { environment } = useNetworkEnvironment();
+  const isRTL = lang === "ar";
+
+  return (
+    <header
+      className="shrink-0 bg-white/70 backdrop-blur-lg shadow top-nav-safe"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      <div className="max-w-2xl mx-auto flex flex-row justify-center items-center px-4 py-3 w-full">
+        <span className="font-bold text-xl text-primary-main">
+          {t.appName}
+          {environment != "Mainnet" && (
+            <Typography
+              component="span"
+              color="warning"
+              fontWeight="bold"
+              sx={{ fontSize: 16, fontStyle: "italic" }}
+            >
+              {" "}
+              ({environment})
+            </Typography>
+          )}
+        </span>
+      </div>
+    </header>
+  );
+}
+
+export function BottomNav() {
+  const location = useLocation();
+  const { t, lang } = useLang();
   const isRTL = lang === "ar";
 
   const isActivePath = (path: string) => {
@@ -94,66 +125,38 @@ export default function Navbar() {
   };
 
   return (
-    <>
-      {/* Top bar with app name, matching bottom bar width */}
-      <div
-        className={`fixed top-0 left-0 w-full bg-white/70 backdrop-blur-lg z-50 shadow top-nav-safe`}
-        dir={isRTL ? "rtl" : "ltr"}
-      >
-        <div className="max-w-2xl mx-auto flex flex-row justify-center items-center px-4 py-3 w-full">
-          <span className="font-bold text-xl text-primary-main">
-            {t.appName}
-            {environment != "Mainnet" && (
-              <Typography
-                component="span"
-                color="warning"
-                fontWeight="bold"
-                sx={{ fontSize: 16, fontStyle: "italic" }}
-              >
-                {" "}
-                ({environment})
-              </Typography>
-            )}
-          </span>
-        </div>
-      </div>
-
-      {/* Bottom tab navigation */}
-      <nav
-        className="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t z-40 shadow-lg bottom-nav-safe"
-        dir={isRTL ? "rtl" : "ltr"}
-      >
-        <div className="max-w-2xl mx-auto flex justify-around items-center px-4 py-2 w-full">
-          {navItems.map((item) => (
-            <Tooltip.Root key={item.path} delayDuration={100}>
-              <Tooltip.Trigger asChild>
-                <Link
-                  to={item.path}
-                  onClick={handleNavClick}
-                  className={`flex flex-col items-center justify-center gap-1 px-3 py-1 rounded transition-all duration-200
+    <nav
+      className="shrink-0 bg-white/90 backdrop-blur-md border-t shadow-lg bottom-nav-safe"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      <div className="max-w-2xl mx-auto flex justify-around items-center px-4 py-2 w-full">
+        {navItems.map((item) => (
+          <Tooltip.Root key={item.path} delayDuration={100}>
+            <Tooltip.Trigger asChild>
+              <Link
+                to={item.path}
+                onClick={handleNavClick}
+                className={`flex flex-col items-center justify-center gap-1 px-3 py-1 rounded transition-all duration-200
                     ${
                       isActivePath(item.path)
-                        ? "bg-fuchsia-100 text-primay-main shadow font-semibold"
+                        ? "bg-fuchsia-100 text-primary-main shadow font-semibold"
                         : "hover:bg-fuchsia-50 text-slate-800"
                     }`}
-                  style={{ minWidth: 60 }}
-                >
-                  {item.icon}
-                  <span className="text-xs">{t[item.key]}</span>
-                </Link>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content className="text-xs bg-white border px-2 py-1 rounded shadow">
-                  {t[item.key]}
-                  <Tooltip.Arrow className="fill-white" />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          ))}
-        </div>
-      </nav>
-      {/* Add top and bottom padding to main content to prevent overlap */}
-      <div className="h-16" aria-hidden="true"></div>
-    </>
+                style={{ minWidth: 60 }}
+              >
+                {item.icon}
+                <span className="text-xs">{t[item.key]}</span>
+              </Link>
+            </Tooltip.Trigger>
+            <Tooltip.Portal>
+              <Tooltip.Content className="text-xs bg-white border px-2 py-1 rounded shadow">
+                {t[item.key]}
+                <Tooltip.Arrow className="fill-white" />
+              </Tooltip.Content>
+            </Tooltip.Portal>
+          </Tooltip.Root>
+        ))}
+      </div>
+    </nav>
   );
 }
