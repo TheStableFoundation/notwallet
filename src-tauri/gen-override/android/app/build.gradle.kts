@@ -62,7 +62,13 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
+    }
+    // lintVitalAnalyzeRelease crashes inside AGP 9.3.1's lint (Kotlin analysis:
+    // "findFirCompiledSymbol only works on compiled declarations"). It only gates
+    // release builds, so skip it until AGP ships a fixed lint.
+    lint {
+        checkReleaseBuilds = false
     }
     buildFeatures {
         buildConfig = true
